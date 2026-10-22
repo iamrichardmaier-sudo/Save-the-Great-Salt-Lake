@@ -1,0 +1,381 @@
+import { describe, expect, it } from 'vitest';
+import {
+  chargeModel,
+  DEFAULT_DIALS,
+  expectedExcess,
+  lawnModel,
+  levyModel,
+  normalCdf,
+  pkgModel,
+  reconcile,
+  seasonCoverage,
+  type Dials,
+} from './model';
+import { COEFS, CONSUMERS, V, withCoefs } from './data';
+import { budgetSweep, mulberry32, optimise, scorePackage, SEARCH_SPACE, sensitivity, simulate } from './simulate';
+
+const base = pkgModel();
+
+describe('the reconciliation checks all pass at the defaults', () => {
+  for (const check of reconcile(base)) {
+    it(check.label, () => {
+      expect(check.ok, `${check.detail} (${check.lhs} vs ${check.rhs})`).toBe(true);
+    });
+  }
+});
+
+describe('the reconciliation checks pass wherever the dials are put', () => {
+  const variants: Partial<Dials>[] = [
+    { scarcityRatePerAf: 120, escalatorOn: true },
+    { cropLevyPerAf: 200, levyThresholdAfPerAcre: 2 },
+    { lawnCutAsked: 0.3, citationsPerThousandJuly: 8, finePerViolation: 500 },
+    { mandateFloorKaf: 0 },
+    { mandateFloorKaf: 1000, mandatePenaltyPerAf: 2440 },
+    { repossessOn: true, budgetM: 400 },
+    { budgetM: 25, monitoringM: 0, leaseToOwnM: 0 },
+    { baselineId: 'warming' },
+    { baselineId: 'long', horizon: 2040 },
+  ];
+  for (const v of variants) {
+    it(`holds for ${JSON.stringify(v)}`, () => {
+      for (const check of reconcile(pkgModel(v))) {
+        expect(check.ok, `${check.label}: ${check.lhs} vs ${check.rhs}`).toBe(true);
+      }
+    });
+  }
+});
+
+describe('units and conversions', () => {
+  it('reports lawn depth consistent with area and volume', () => {
+    const lawn = lawnModel(DEFAULT_DIALS);
+    const acreFeet = (lawn.lawnAcres * lawn.inchesApplied) / 12;
+    expect(acreFeet / 1000).toBeCloseTo(V('lawn_water'), 1);
+  });
+
+  it('implies a plausible number of people', () => {
+    const implied = (V('basin_lawns') * V('people_per_home')) / (V('share_in_basin') * V('share_with_lawn'));
+    expect(implied).toBeGreaterThan(2.5e6);
+    expect(implied).toBeLessThan(6e6);
+  });
+
+  it('has depletion by user summing to the basin total', () => {
+    const sum = CONSUMERS.reduce((s, c) => s + c.kaf, 0);
+    expect(sum).toBeCloseTo(V('basin_depletion'), 0);
+  });
+
+  it('has the charge base equal to the sectors it falls on', () => {
+    expect(V('ag_depletion') + V('mi_depletion')).toBeCloseTo(V('charge_base'), 6);
+  });
+
+  it('never charges a residential category', () => {
+    const chargedKaf = CONSUMERS.filter((c) => c.charged).reduce((s, c) => s + c.kaf, 0);
+    expect(chargedKaf).toBeCloseTo(V('charge_base'), 0);
+    expect(CONSUMERS.filter((c) => c.id.startsWith('residential')).every((c) => !c.charged)).toBe(true);
+  });
+});
+
+describe('the scarcity charge', () => {
+  it('cuts more water through behaviour than its own revenue could buy', () => {
+    // The point of the charge: treating it as a revenue instrument captures the smaller half.
+    const c = chargeModel(40);
+    const boughtWithRevenue = (c.revenueM * 1e6) / V('lease_base_rate') / 1000;
+    expect(c.behaviouralKaf).toBeGreaterThan(boughtWithRevenue);
+  });
+
+  it('erodes its own base as users respond', () => {
+    expect(chargeModel(200).baseAfterResponse).toBeLessThan(chargeModel(0).baseAfterResponse);
+  });
+
+  it('raises nothing at a rate of nothing', () => {
+    expect(chargeModel(0).revenueM).toBe(0);
+    expect(chargeModel(0).behaviouralKaf).toBe(0);
+  });
+
+  it('never cuts more than its cap', () => {
+    const c = chargeModel(100_000);
+    expect(c.agCutKaf).toBeLessThanOrEqual(V('ag_depletion') * V('ag_charge_cap') + 1e-9);
+    expect(c.miCutKaf).toBeLessThanOrEqual(V('mi_depletion') * V('mi_charge_cap') + 1e-9);
+  });
+});
+
+describe('the crop levy', () => {
+  it('catches the heaviest users first', () => {
+    const low = levyModel(200, 2);
+    const high = levyModel(200, 3.5);
+    expect(low.acresInScope).toBeGreaterThan(high.acresInScope);
+    expect(low.waterKaf).toBeGreaterThan(high.waterKaf);
+  });
+
+  it('matches the expected excess of a lognormal', () => {
+    // With a threshold of zero, the expected excess is just the mean.
+    expect(expectedExcess(2.64, 0.3, 0)).toBeCloseTo(2.64, 6);
+    // And it falls as the threshold rises.
+    expect(expectedExcess(2.64, 0.3, 2)).toBeGreaterThan(expectedExcess(2.64, 0.3, 3));
+  });
+
+  it('raises nothing and moves nothing at a rate of nothing', () => {
+    const l = levyModel(0, 2);
+    expect(l.waterKaf).toBe(0);
+    expect(l.revenueM).toBe(0);
+  });
+});
+
+describe('residential lawns', () => {
+  it('finds enforcement intensity matters far more than the fine', () => {
+    const d = { ...DEFAULT_DIALS, lawnCutAsked: 0.2, citationsPerThousandJuly: 0.4, finePerViolation: 250 };
+    const quadrupleFine = lawnModel({ ...d, finePerViolation: 1000 });
+    const fiftyTimesCitations = lawnModel({ ...d, citationsPerThousandJuly: 20 });
+    const baseLawn = lawnModel(d);
+    const fineGain = quadrupleFine.compliance - baseLawn.compliance;
+    const citationGain = fiftyTimesCitations.compliance - baseLawn.compliance;
+    expect(citationGain).toBeGreaterThan(fineGain * 5);
+  });
+
+  it('starts at the habit floor with no enforcement at all', () => {
+    const l = lawnModel({ ...DEFAULT_DIALS, lawnCutAsked: 0.2, citationsPerThousandJuly: 0, finePerViolation: 0 });
+    expect(l.compliance).toBeCloseTo(V('compliance_floor'), 6);
+  });
+
+  it('asks for nothing when the limit is off', () => {
+    const l = lawnModel({ ...DEFAULT_DIALS, lawnCutAsked: 0 });
+    expect(l.waterNotApplied).toBe(0);
+    expect(l.toLake).toBe(0);
+    expect(l.fineRevenue).toBe(0);
+  });
+
+  it('sends only a quarter of a city saving to the lake', () => {
+    const l = lawnModel({ ...DEFAULT_DIALS, lawnCutAsked: 0.3, citationsPerThousandJuly: 20 });
+    expect(l.toLake).toBeCloseTo(l.waterNotApplied * V('urban_to_lake'), 6);
+  });
+
+  it('covers the whole season when the whole season is enforced', () => {
+    expect(seasonCoverage('season')).toBeCloseTo(1, 6);
+    expect(seasonCoverage('july')).toBeLessThan(seasonCoverage('peak'));
+  });
+});
+
+describe('the mandate', () => {
+  it('only takes what the voluntary levers did not find', () => {
+    const low = pkgModel({ mandateFloorKaf: 0 });
+    const high = pkgModel({ mandateFloorKaf: 1000 });
+    expect(low.final.forcedKaf).toBe(0);
+    expect(high.final.forcedKaf).toBeGreaterThan(0);
+  });
+
+  it('pricing non-compliance converts coercion into transactions', () => {
+    const without = pkgModel({ mandateFloorKaf: 800, mandatePenaltyPerAf: 0 });
+    const withPenalty = pkgModel({ mandateFloorKaf: 800, mandatePenaltyPerAf: V('lake_value_per_af') });
+    expect(withPenalty.final.rightsHeldKaf).toBeGreaterThan(without.final.rightsHeldKaf);
+    expect(withPenalty.final.forcedKaf).toBeLessThan(without.final.forcedKaf);
+    expect(withPenalty.boughtShare).toBeGreaterThan(without.boughtShare);
+  });
+});
+
+describe('what binds', () => {
+  // Which constraint binds depends on the price of a lease, and a charge or a penalty pushes
+  // that price down. These tests pin both regimes, because the difference between them is the
+  // whole argument.
+  const mandateOff = { mandateFloorKaf: 0 };
+  const chargeOn = { mandateFloorKaf: 0, scarcityRatePerAf: 300 };
+
+  it('stops buying anything at all past a few hundred million', () => {
+    const sweep = budgetSweep([200, 400, 800], mandateOff);
+    expect(sweep[2].netKaf).toBeCloseTo(sweep[1].netKaf, 6);
+    expect(sweep[1].ceilingBinds).toBe(true);
+    expect(sweep[2].ceilingBinds).toBe(true);
+  });
+
+  it('buys a few per cent more water for eight times the money, once the ceiling binds', () => {
+    const lo = pkgModel({ ...chargeOn, budgetM: 100, leaseToOwnM: 40 });
+    const hi = pkgModel({ ...chargeOn, budgetM: 800, leaseToOwnM: 320 });
+    expect(lo.ceilingBinds).toBe(true);
+    expect(hi.final.netToLakeKaf / lo.final.netToLakeKaf - 1).toBeLessThan(0.15);
+  });
+
+  it('moves by exactly nothing when the lease elasticity changes sixfold', () => {
+    // When a quantity ceiling binds, the price the last acre-foot would have fetched is
+    // irrelevant: the rate swings by a factor of six and the lake does not notice.
+    const lo = withCoefs({ lease_elasticity: 0.3 }, () => pkgModel(chargeOn));
+    const hi = withCoefs({ lease_elasticity: 3 }, () => pkgModel(chargeOn));
+    expect(hi.final.netToLakeKaf).toBeCloseTo(lo.final.netToLakeKaf, 6);
+    expect(hi.final.leaseRatePerAf).toBeLessThan(lo.final.leaseRatePerAf / 3);
+  });
+
+  it('moves a great deal when willing-seller capacity changes', () => {
+    const lo = withCoefs({ lease_capacity: 100, retire_capacity: 75 }, () => pkgModel(chargeOn));
+    const hi = withCoefs({ lease_capacity: 1600, retire_capacity: 600 }, () => pkgModel(chargeOn));
+    expect(hi.final.netToLakeKaf).toBeGreaterThan(lo.final.netToLakeKaf * 1.4);
+  });
+
+  it('is more leveraged by capacity than by money, by a wide margin', () => {
+    const moneyLow = pkgModel({ ...chargeOn, budgetM: 100, leaseToOwnM: 40 });
+    const moneyHigh = pkgModel({ ...chargeOn, budgetM: 800, leaseToOwnM: 320 });
+    const capLow = withCoefs({ lease_capacity: 200, retire_capacity: 150 }, () => pkgModel(chargeOn));
+    const capHigh = withCoefs({ lease_capacity: 1600, retire_capacity: 1200 }, () => pkgModel(chargeOn));
+    const moneyGain = moneyHigh.final.netToLakeKaf / moneyLow.final.netToLakeKaf - 1;
+    const capGain = capHigh.final.netToLakeKaf / capLow.final.netToLakeKaf - 1;
+    expect(capGain).toBeGreaterThan(moneyGain * 5);
+  });
+
+  it('is the budget, not the ceiling, that binds at a low budget with no charge', () => {
+    // Worth stating plainly: the "money is not the constraint" finding needs the lease price
+    // held down by a charge or a penalty. Without one, a small budget binds on money.
+    const small = pkgModel({ ...mandateOff, budgetM: 50, leaseToOwnM: 20 });
+    expect(small.ceilingBinds).toBe(false);
+  });
+});
+
+describe('the lake and the goal', () => {
+  it('computes the goal from the chosen baseline rather than hard-coding it', () => {
+    const dry = pkgModel({ baselineId: 'warming' });
+    const wet = pkgModel({ baselineId: 'long' });
+    expect(dry.goalElevationFt).toBeLessThan(wet.goalElevationFt);
+  });
+
+  it('never reports a level below the lake standing still', () => {
+    for (const row of base.years) expect(row.elevationFt).toBeGreaterThan(V('serious_low') - 5);
+  });
+
+  it('gives one row per year asked for', () => {
+    const r = pkgModel({ startYear: 2027, horizon: 2040 });
+    expect(r.years.length).toBe(14);
+    expect(r.years[0].year).toBe(2027);
+    expect(r.final.year).toBe(2040);
+  });
+});
+
+describe('determinism', () => {
+  it('gives the same answer twice', () => {
+    expect(JSON.stringify(pkgModel())).toBe(JSON.stringify(pkgModel()));
+  });
+
+  it('gives the same simulation band twice', () => {
+    const a = simulate(base, { runs: 60, seed: 7 });
+    const b = simulate(base, { runs: 60, seed: 7 });
+    expect(a.p10).toEqual(b.p10);
+    expect(a.p90).toEqual(b.p90);
+  });
+
+  it('has a generator that stays inside the unit interval', () => {
+    const rand = mulberry32(1);
+    for (let i = 0; i < 1000; i++) {
+      const x = rand();
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThan(1);
+    }
+  });
+});
+
+describe('the simulation band', () => {
+  const sim = simulate(base, { runs: 120, seed: 3 });
+  it('brackets the median', () => {
+    for (let i = 0; i < sim.p50.length; i++) {
+      expect(sim.p10[i]).toBeLessThanOrEqual(sim.p50[i]);
+      expect(sim.p50[i]).toBeLessThanOrEqual(sim.p90[i]);
+    }
+  });
+  it('reports shares between nothing and everything', () => {
+    expect(sim.shareHealthy).toBeGreaterThanOrEqual(0);
+    expect(sim.shareHealthy).toBeLessThanOrEqual(1);
+    expect(sim.shareBelowCritical).toBeGreaterThanOrEqual(0);
+    expect(sim.shareBelowCritical).toBeLessThanOrEqual(1);
+  });
+  it('widens under a long drought', () => {
+    const dry = simulate(base, { runs: 120, seed: 3, longDrought: true });
+    expect(dry.p10[dry.p10.length - 1]).toBeLessThanOrEqual(sim.p10[sim.p10.length - 1]);
+  });
+});
+
+describe('the optimiser', () => {
+  it('never returns a package worse than the defaults', () => {
+    const r = optimise(0.6, { tries: 150, seed: 11 });
+    const baseScore = scorePackage(base, 0.6).score;
+    expect(r.score).toBeGreaterThanOrEqual(baseScore - 1e-9);
+  });
+
+  it('is deterministic for a seed', () => {
+    const a = optimise(0.6, { tries: 80, seed: 5 });
+    const b = optimise(0.6, { tries: 80, seed: 5 });
+    expect(a.score).toBe(b.score);
+    expect(a.dials).toEqual(b.dials);
+  });
+
+  it('favours water when told to and support when told to', () => {
+    const water = optimise(1, { tries: 200, seed: 9 });
+    const support = optimise(0, { tries: 200, seed: 9 });
+    expect(water.result.final.netToLakeKaf).toBeGreaterThanOrEqual(support.result.final.netToLakeKaf - 1e-6);
+    expect(support.result.support.weakest.score).toBeGreaterThanOrEqual(water.result.support.weakest.score - 1e-6);
+  });
+
+  it('keeps spending inside the budget', () => {
+    const r = optimise(0.6, { tries: 200, seed: 13 });
+    const d = r.dials;
+    expect(d.monitoringM + d.cloudM + d.phragM + d.cropSwitchM + d.leaseToOwnM).toBeLessThanOrEqual(d.budgetM + 1e-6);
+  });
+
+  it('searches every dial that the controls expose', () => {
+    // Drift between the search space and the dials is silent, so it is a test.
+    const skip = new Set(['startYear', 'horizon', 'baselineId', 'budgetM', 'repossessInterest', 'enforcementWindowId', 'longDrought']);
+    const searched = new Set(SEARCH_SPACE.map((s) => s.key as string));
+    for (const key of Object.keys(DEFAULT_DIALS)) {
+      if (skip.has(key)) continue;
+      expect(searched.has(key), `dial "${key}" is not in the optimiser's search space`).toBe(true);
+    }
+    for (const entry of SEARCH_SPACE) {
+      expect(Object.keys(DEFAULT_DIALS)).toContain(entry.key as string);
+    }
+  });
+});
+
+describe('sensitivity', () => {
+  it('ranks assumptions by how far they move the lake', () => {
+    const rows = sensitivity({}, 8);
+    expect(rows.length).toBeGreaterThan(0);
+    for (let i = 1; i < rows.length; i++) {
+      expect(rows[i - 1].swingFt).toBeGreaterThanOrEqual(rows[i].swingFt);
+    }
+  });
+
+  it('restores every coefficient it borrowed', () => {
+    const before = COEFS.map((c) => c.value);
+    sensitivity({}, 5);
+    expect(COEFS.map((c) => c.value)).toEqual(before);
+  });
+});
+
+describe('every assumption is declared', () => {
+  it('gives each coefficient a basis', () => {
+    for (const c of COEFS) {
+      expect(c.basis.length, `${c.id} has no basis`).toBeGreaterThan(10);
+    }
+  });
+
+  it('says why, for anything with no source behind it', () => {
+    for (const c of COEFS) {
+      if (c.sourceIds.length === 0 && c.status !== 'assumption' && c.id !== 'budget') {
+        throw new Error(`${c.id} is marked ${c.status} but cites no source`);
+      }
+    }
+  });
+
+  it('gives every derived figure its formula', () => {
+    const missing = COEFS.filter((c) => c.status === 'derived' && !c.formula).map((c) => c.id);
+    expect(missing).toEqual([]);
+  });
+
+  it('keeps every default inside its own stated range', () => {
+    for (const c of COEFS) {
+      if (c.low !== undefined) expect(c.value, `${c.id} below its own low`).toBeGreaterThanOrEqual(c.low);
+      if (c.high !== undefined) expect(c.value, `${c.id} above its own high`).toBeLessThanOrEqual(c.high);
+    }
+  });
+});
+
+describe('the normal approximation', () => {
+  it('matches known values closely enough', () => {
+    expect(normalCdf(0)).toBeCloseTo(0.5, 6);
+    expect(normalCdf(1.96)).toBeCloseTo(0.975, 3);
+    expect(normalCdf(-1.96)).toBeCloseTo(0.025, 3);
+    expect(normalCdf(-5)).toBeLessThan(1e-5);
+  });
+});
