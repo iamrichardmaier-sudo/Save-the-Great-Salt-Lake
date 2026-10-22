@@ -773,6 +773,8 @@ const riskTab: Tab = {
       </tr>`)
       .join('');
 
+    const physicsInTop = tornado.slice(0, 3).filter((t) => coef(t.id).group === 'Lake physics').length;
+
     return `
       <section class="prose">
         <h3>Which assumptions actually move the answer</h3>
@@ -790,6 +792,24 @@ const riskTab: Tab = {
         <ol class="ranked">
           ${tornado.slice(0, 3).map((t) => `<li><strong>${escapeHtml(t.label)}</strong> — moves the lake ${fig(feet(t.swingFt, 2), { formula: 'elevation at the top of the range − elevation at the bottom', assumed: true })} across its range, and ${fig(kafYr(t.swingKaf), { formula: 'net water at the top of the range − net water at the bottom', assumed: true })} of water. ${escapeHtml(coef(t.id).basis)}</li>`).join('')}
         </ol>
+        ${
+          physicsInTop >= 2
+            ? `<p class="callout">
+                ${fig(num(physicsInTop, 0), { note: 'How many of the three largest movers describe the lake’s own water balance rather than a policy choice.' })}
+                of those three describe the lake's own water balance — how much evaporates, how much
+                rain falls on it, how much the rivers bring — rather than anything a legislature
+                decides. That is the honest headline of this chart: the physical uncertainty is
+                larger than the policy uncertainty, so a package should be judged on whether it
+                still works across that range, not on a single projected level. The policy dials
+                below it are the ones worth arguing about, because they are the ones anyone can
+                actually set.
+              </p>`
+            : `<p class="callout">
+                The largest movers here are policy choices rather than the lake's own water balance,
+                which is unusual for this model and worth checking: at most dial settings the
+                physical coefficients dominate.
+              </p>`
+        }
       </section>
 
       <table class="data">
