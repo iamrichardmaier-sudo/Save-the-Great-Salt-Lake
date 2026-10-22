@@ -52,11 +52,12 @@ export const SOURCES: Source[] = [
   },
   {
     id: 'dwr_regional_goals',
-    title: 'Regional Water Conservation Goals — lot and landscape area by region',
+    title: 'Utah’s Regional M&I Water Conservation Goals',
     publisher: 'Utah Division of Water Resources',
-    year: 2024,
-    url: 'https://water.utah.gov/conservation-goals/',
-    use: 'Lot size, landscaped area and gallons per capita by water-conservancy region; the basis for the bottom-up lawn model.',
+    year: 2019,
+    url: 'https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf',
+    use: 'Lot size and landscaped area per lot by county, and regional conservation goals; the basis for the bottom-up lawn model.',
+    locator: 'Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)',
   },
   {
     id: 'gardner_proj',
@@ -95,7 +96,7 @@ export const SOURCES: Source[] = [
     title: 'Utah employment by industry and county',
     publisher: 'Utah Department of Workforce Services',
     year: 2025,
-    url: 'https://jobs.utah.gov/wi/data/library/industry/index.html',
+    url: 'https://jobs.utah.gov/wi/update/index.html',
     use: 'Employment base for farm, dairy and beef, and lake-economy job counts.',
   },
   {

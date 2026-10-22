@@ -11,7 +11,19 @@ import {
   seasonCoverage,
   type Dials,
 } from './model';
-import { COEFS, CONSUMERS, V, withCoefs } from './data';
+import {
+  AREA_ANCHOR_SOURCE,
+  BASELINES,
+  COEFS,
+  CONSUMERS,
+  STAKEHOLDERS,
+  VALUE_PER_AF,
+  V,
+  WATERING_MONTHS_SOURCE,
+  coefSources,
+  withCoefs,
+} from './data';
+import { SOURCES } from './sources';
 import { budgetSweep, mulberry32, optimise, scorePackage, SEARCH_SPACE, sensitivity, simulate } from './simulate';
 
 const base = pkgModel();
@@ -377,5 +389,39 @@ describe('the normal approximation', () => {
     expect(normalCdf(1.96)).toBeCloseTo(0.975, 3);
     expect(normalCdf(-1.96)).toBeCloseTo(0.025, 3);
     expect(normalCdf(-5)).toBeLessThan(1e-5);
+  });
+});
+
+describe('sources', () => {
+  it('resolves every source a coefficient cites', () => {
+    // A typo in a source id is otherwise only caught by the network link check.
+    for (const c of COEFS) {
+      for (const id of c.sourceIds) {
+        expect(() => coefSources(c.id), `${c.id} cites unknown source "${id}"`).not.toThrow();
+      }
+    }
+  });
+
+  it('gives every source a title, a publisher and a URL', () => {
+    for (const s of SOURCES) {
+      expect(s.title.length, `${s.id} has no title`).toBeGreaterThan(5);
+      expect(s.publisher.length, `${s.id} has no publisher`).toBeGreaterThan(2);
+      expect(s.url.startsWith('https://'), `${s.id} has no https URL`).toBe(true);
+      expect(s.use.length, `${s.id} does not say what it is used for`).toBeGreaterThan(10);
+    }
+  });
+
+  it('cites every source from somewhere', () => {
+    const referenced = new Set([
+      ...COEFS.flatMap((c) => c.sourceIds),
+      ...STAKEHOLDERS.flatMap((s) => s.sourceIds),
+      ...VALUE_PER_AF.flatMap((v) => v.sourceIds),
+      ...BASELINES.flatMap((b) => b.sourceIds),
+      AREA_ANCHOR_SOURCE,
+      WATERING_MONTHS_SOURCE,
+    ]);
+    for (const s of SOURCES) {
+      expect(referenced.has(s.id), `source "${s.id}" is cited by nothing`).toBe(true);
+    }
   });
 });

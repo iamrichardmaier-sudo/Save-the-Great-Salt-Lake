@@ -669,9 +669,10 @@ const C: Coef[] = [
     basis: 'Regional survey figures weighted by basin population: 5,154 sq ft in Salt Lake, 8,868 in Bear River.',
     formula: 'sum of each region’s landscaped area weighted by its share of basin population',
     sourceIds: ['dwr_regional_goals'],
-    low: 5000,
+    low: 4200,
     high: 9000,
-    confidence: 'Medium',
+    confidence: 'Low',
+    note: 'Checked against the source and it does not match. Table 4-9 of the 2019 Regional Goals report gives 4,239 sq ft landscaped on an 8,463 sq ft lot in Salt Lake County and 8,759 on 15,264 in Box Elder, for 2015. Both sets take landscaping as half the lot, so the method agrees, but these figures are about a fifth lower. The population-weighted basin figure from the published table is nearer 5,100 sq ft. Using that instead would imply about 56 inches of water a year on the basin’s lawns, which is implausibly deep for turf, so one of the lawn count, the landscaped area or the reported lawn water is inconsistent with the other two. The sensitivity range covers both.',
   },
   {
     id: 'lawn_water',
