@@ -514,13 +514,19 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     const rightsHeld = tranches.reduce((s, x) => s + x.kaf, 0) + ownedKaf;
 
     // ── Repossession, once willing sellers are exhausted.
+    //
+    // Bounded by what is actually left to take: the state cannot repossess agricultural water
+    // it already holds, or water the charge and the levy have already taken out of use. Without
+    // this bound the stock compounds every year and runs past the whole basin's farm depletion.
     let repossessed = 0;
     if (d.repossessOn && room < 1e-6) {
+      const alreadyTaken = rightsHeld + cumulativeRepossessed + charge.agCutKaf + levy.waterKaf + prevForced;
+      const poolLeft = Math.max(0, V('ag_depletion') - alreadyTaken);
       const leftoverM = Math.max(0, availableM - (boughtThisYear * 1000 * leaseRate) / 1e6);
       const discountedPrice = priceY * (1 - V('repossession_discount'));
       const annual = discountedPrice * r;
-      if (annual > 0) {
-        repossessed = Math.min(d.repossessCapKaf, (leftoverM * 1e6) / annual / 1000);
+      if (annual > 0 && poolLeft > 0) {
+        repossessed = Math.min(d.repossessCapKaf, (leftoverM * 1e6) / annual / 1000, poolLeft);
         cumulativeRepossessed += repossessed;
       }
     }
