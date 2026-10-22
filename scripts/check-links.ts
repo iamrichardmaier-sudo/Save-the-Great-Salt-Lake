@@ -17,16 +17,18 @@ interface Result {
   note?: string;
 }
 
-async function head(url: string): Promise<Result['status'] | { status: number; finalUrl: string }> {
+type Fetched = { ok: true; status: number; finalUrl: string } | { ok: false; error: string };
+
+async function head(url: string): Promise<Fetched> {
   try {
     const res = await fetch(url, {
       redirect: 'follow',
       headers: { 'user-agent': 'Mozilla/5.0 (link check; Utah Water Allocation Model)' },
       signal: AbortSignal.timeout(45_000),
     });
-    return { status: res.status, finalUrl: res.url };
+    return { ok: true, status: res.status, finalUrl: res.url };
   } catch (e) {
-    return `error: ${(e as Error).message.slice(0, 80)}`;
+    return { ok: false, error: `error: ${(e as Error).message.slice(0, 80)}` };
   }
 }
 
@@ -39,8 +41,8 @@ async function main(): Promise<void> {
       continue;
     }
     const r = await head(s.url);
-    if (typeof r === 'string') {
-      results.push({ id: s.id, url: s.url, status: r, ok: false });
+    if (!r.ok) {
+      results.push({ id: s.id, url: s.url, status: r.error, ok: false });
     } else {
       results.push({
         id: s.id,
