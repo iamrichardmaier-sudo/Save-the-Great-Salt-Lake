@@ -14,6 +14,8 @@ interface Result {
   status: number | string;
   finalUrl?: string;
   ok: boolean;
+  /** The site answered, but refused an automated request. The page itself is not dead. */
+  blocked?: boolean;
   note?: string;
 }
 
@@ -23,7 +25,13 @@ async function head(url: string): Promise<Fetched> {
   try {
     const res = await fetch(url, {
       redirect: 'follow',
-      headers: { 'user-agent': 'Mozilla/5.0 (link check; Utah Water Allocation Model)' },
+      // Several of these sites refuse an obviously automated agent, so this asks the way a
+      // browser would. A refusal is still reported, just not as a dead link.
+      headers: {
+        'user-agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+        accept: 'text/html,application/xhtml+xml,application/pdf,*/*',
+      },
       signal: AbortSignal.timeout(45_000),
     });
     return { ok: true, status: res.status, finalUrl: res.url };
@@ -50,6 +58,7 @@ async function main(): Promise<void> {
         status: r.status,
         finalUrl: r.finalUrl !== s.url ? r.finalUrl : undefined,
         ok: r.status >= 200 && r.status < 400,
+        blocked: r.status === 403 || r.status === 429,
       });
     }
   }
@@ -67,17 +76,22 @@ async function main(): Promise<void> {
   const orphanRefs = [...referenced].filter((id) => !known.has(id));
   const unusedSources = SOURCES.filter((s) => !referenced.has(s.id)).map((s) => s.id);
 
-  const bad = results.filter((r) => !r.ok);
+  const blocked = results.filter((r) => r.blocked);
+  const bad = results.filter((r) => !r.ok && !r.blocked);
   const redirected = results.filter((r) => r.ok && r.finalUrl);
 
   console.log(`Checked ${results.length} sources.`);
   for (const r of results) {
-    const mark = r.ok ? '  ok ' : 'FAIL ';
+    const mark = r.blocked ? 'BLOK ' : r.ok ? '  ok ' : 'FAIL ';
     console.log(`${mark} ${String(r.status).padEnd(22)} ${r.id.padEnd(20)} ${r.url}`);
     if (r.finalUrl) console.log(`       → redirects to ${r.finalUrl}`);
   }
 
   if (redirected.length) console.log(`\n${redirected.length} source(s) redirect; the link still works but the URL has moved.`);
+  if (blocked.length)
+    console.log(
+      `\n${blocked.length} source(s) refused an automated request (403 or 429). The page is not dead; open it in a browser to confirm: ${blocked.map((b) => b.id).join(', ')}`,
+    );
   if (unusedSources.length) console.log(`\nSources cited by nothing: ${unusedSources.join(', ')}`);
   if (orphanRefs.length) {
     console.error(`\nCoefficients cite unknown source ids: ${orphanRefs.join(', ')}`);
