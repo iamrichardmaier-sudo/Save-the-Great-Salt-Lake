@@ -1,0 +1,180 @@
+{
+ "phrag_cost": {
+  "action": "accept",
+  "value": 610,
+  "low": 200,
+  "high": 4050,
+  "reviewed": "2026-10-23",
+  "why": "Two official figures disagree by an order of magnitude. DWR GSL Basin Integrated Plan, M&I Water Conservation (Aug 2025), p.81-82: treatment $1,270-$2,540/acre, savings 17,000-57,000 ac-ft/yr, 'estimated cost between $610 and $4,050 per ac-ft' (documented analysis). 2026 legislative interim slide (le.utah.gov 00000790): '$500/acre, cost=$60 million' for 300 KAF/yr = $200/AF (summary figure). Value set to the low end of the documented estimate; range spans both."
+ },
+ "mi_reference_price": {
+  "action": "accept",
+  "value": 640,
+  "low": 450,
+  "high": 2200,
+  "reviewed": "2026-10-23",
+  "why": "Re-opened JVWCD 2026/2027 Adopted Water Rates Summary: 15 member wholesale rates $474.11-$811.41/AF, median $639.92 (re-sorted and checked). $380 is below every rate. High end is SLC retail at ~$2,173/AF (21 ccf average)."
+ },
+ "crop_cost": {
+  "action": "accept_range",
+  "low": 276,
+  "high": 493,
+  "reviewed": "2026-10-23",
+  "why": "Ag Water Optimization report Table B-10: crop substitution $276 (winter wheat), $424 (corn), $493 (spring wheat) per AF; value 318.4 lies inside."
+ },
+ "application_cv": {
+  "action": "accept_range",
+  "low": 0.25,
+  "high": 0.6,
+  "reviewed": "2026-10-23",
+  "why": "NASS IWMS 2023 Table 10 Utah: between-farm-class CV 0.29 is a lower bound on field CV."
+ },
+ "phrag_lag": {
+  "action": "accept_range",
+  "low": 2,
+  "high": 5,
+  "reviewed": "2026-10-23",
+  "why": "FFSL via UPR 2026-04-16: 'three to five years to remove any given patch'."
+ },
+ "phrag_cap": {
+  "action": "accept_range",
+  "low": 17,
+  "high": 57,
+  "reviewed": "2026-10-23",
+  "why": "DWR Aug 2025 M&I report p.81: 'between 17,000 and 57,000 additional ac-ft of water per year' (DWQ 2017)."
+ },
+ "goal_added": {
+  "action": "accept",
+  "value": 800,
+  "low": 471,
+  "high": 1055,
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026 summary p.29: 'Additional 800 KAF/year ... the additional inflow needed to fill Great Salt Lake to the minimum healthy lake level (4,198 feet) by 2055.' Same 1,665 KAF/yr baseline the model uses; 875 appears in no source."
+ },
+ "application_mean": {
+  "action": "accept",
+  "value": 2.4,
+  "low": 2.0,
+  "high": 2.7,
+  "reviewed": "2026-10-23",
+  "why": "NASS 2023 IWMS Table 39, Utah alfalfa: 523,658 irrigated acres, 2.4 average acre-feet applied (pressure 2.6, gravity 2.0); all other hay also 2.4."
+ },
+ "irrigation_net_value": {
+  "action": "accept",
+  "value": 236,
+  "low": 148,
+  "high": 345,
+  "reviewed": "2026-10-23",
+  "why": "GSL-BIP Ag Water Optimization report (2026) Table B-8: full-season alfalfa, 1.50 AF/acre depletion savings, WTA $236 per AF; Table B-7 $355/acre. The charge is levied on depletion, so the per-AF-depleted figure applies; 133 = $355/2.64 per AF applied."
+ },
+ "ramp_years": {
+  "action": "accept_range",
+  "high": 10,
+  "reviewed": "2026-10-23",
+  "why": "Ag Water Optimization report assumes irrigation upgrades roll out over 10 years."
+ },
+ "growth_draw_2055": {
+  "action": "relabel_assumption",
+  "reviewed": "2026-10-23",
+  "why": "No source projects 92 KAF/yr. Strike Team 2025 p.13: M&I depletion 'have not changed substantially since 1989', 325 KAF in 2023. Keep value, mark as assumption."
+ },
+ "urban_to_lake": {
+  "action": "relabel_assumption",
+  "low": 0.1,
+  "high": 0.45,
+  "reviewed": "2026-10-23",
+  "why": "No source states a share; DWR turf figures bound it above at ~0.44 (depletion saved / water saved)."
+ },
+ "hay_net_return": {
+  "action": "accept",
+  "value": 305,
+  "low": 60,
+  "high": 445,
+  "reviewed": "2026-10-23",
+  "why": "Ag Water Optimization report Table B-7 WTA $355/acre includes 'A flat $50 per acre ... for additional leasing-related costs' (p.B-5), so forgone return = $305/acre; rebuilt from yield x $212/ton less operating cost, acreage-weighted = $304.5."
+ },
+ "landscape_sqft": {
+  "action": "accept",
+  "value": 5785,
+  "low": 4200,
+  "high": 9000,
+  "reviewed": "2026-10-23",
+  "why": "DWR Regional Water Conservation Goals (2019) Table 4-9, 2015 average landscaped area per lot, population-weighted over the 11 GSL-basin counties = 5,785 sq ft. The model's 5,154 / 8,868 appear nowhere in the report."
+ },
+ "turf_need": {
+  "action": "accept",
+  "value": 24,
+  "low": 20,
+  "high": 30,
+  "reviewed": "2026-10-23",
+  "why": "Jackson & Mohadjer (2003, Irrigation Association): Salt Lake City turf net ET 'near 24 inches of water per season'. Display-only coefficient."
+ },
+ "phrag_delivery": {
+  "action": "relabel_assumption",
+  "reviewed": "2026-10-23",
+  "why": "Neither cited source gives a delivery share; Strike Team Mar 2026 p.12: 'Additional research is needed to quantify water savings from phragmites treatment'."
+ },
+ "onfarm_cap": {
+  "action": "accept_range",
+  "low": 15,
+  "high": 110,
+  "reviewed": "2026-10-23",
+  "why": "Ag Water Optimization report Table ES-1/5-2: Utah sprinkler upgrades 16 KAF under $210/AF, 37 KAF under $510/AF; whole-basin irrigation-only strategy 132.6 KAF at $563/AF."
+ },
+ "retire_capacity": {
+  "action": "accept_range",
+  "low": 20,
+  "reviewed": "2026-10-23",
+  "why": "GSL Watershed Enhancement Trust 2025 Impact Report: permanent transactions ~21 KAF/yr (diversion basis), 2023-25."
+ },
+ "compliance_floor": {
+  "action": "accept_range",
+  "low": 0.05,
+  "high": 0.55,
+  "reviewed": "2026-10-23",
+  "why": "Finley & Basu (2020, WRR) via Univ. of Waterloo release: restrictions 'had surprisingly little effect on average summer water use'."
+ },
+ "response_k": {
+  "action": "accept",
+  "value": 0.17,
+  "low": 0.12,
+  "high": 0.22,
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026 p.29: '+800 KAF/year results in a 2034 mean elevation of 4,196.9 feet'. Re-run in the model's own lake balance from 4,191.0 ft (1 Oct 2025): k=0.17 gives 4,196.87 ft in 2034; k=0.12 gives 4,195.93 (1 ft slow)."
+ },
+ "lease_capacity": {
+  "action": "accept",
+  "value": 130,
+  "low": 70,
+  "high": 300,
+  "reviewed": "2026-10-23",
+  "why": "GSL Watershed Enhancement Trust 2025 Impact Report: 'voluntary water transactions in 2025 were nearly 72,500 acre-feet' (64,000/69,190/72,485 AF 2023-25), objective 100,000 AF/yr; Ag Water Optimization report's 10% leasing scenario (132 KAF basin-wide) described as 'herculean'. High of 1,600 had no support."
+ },
+ "lake_value_per_af": {
+  "action": "relabel_derived",
+  "low": 600,
+  "high": 3600,
+  "reviewed": "2026-10-23",
+  "why": "No cited source states $2,440/AF. It reproduces as ECONorthwest (2019) cost of decline $1.69-2.17B/yr (midpoint $1.93B) / ~790-800 KAF/yr needed added inflow = ~$2,440/AF. Numerator is largely gross output (mineral extraction), not net welfare, in 2019 dollars. Only published per-AF figure: NBER w35270 (2026) $600-1,800/AF for dust-health benefits alone. Keep value, label derived with formula, widen low to 600. ECONorthwest PDF and NBER paper were bot-blocked; quoted via Audubon summary and Utah Business press release."
+ },
+ "streamflow_decline_2055": {
+  "action": "relabel_assumption",
+  "reviewed": "2026-10-23",
+  "why": "Strike reports give no quantitative future streamflow decline; a 2013 study of Salt Lake City watersheds (1.8-6.5% less flow per degree F, via UCAR) makes 100 KAF/yr plausible but does not state it."
+ },
+ "baseline_inflow": {
+  "action": "relabel_sourced",
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026: '2000-2025 ... inflows averaged 1,665 KAF/year'."
+ },
+ "evap_gross": {
+  "action": "confirm_with_caveat",
+  "reviewed": "2026-10-23",
+  "why": "USGS OFR 78-912 p.12: '2.9 million acre-ft ... equivalent to about 45 in. per year'; Mohammed & Tarboton 2012 1.14 m. Caveat: evap_gross, precip_lake and inflow_efficiency are collinear (only (evap-precip)/efficiency is pinned by the USU calibration), so sweeping evap_gross alone overstates its tornado swing. DWR 2,733 KAF/yr evaporation implies ~35 in/yr at today's smaller area."
+ },
+ "shepherd_start": {
+  "action": "confirm_with_caveat",
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026 Fig 2: 149,277 AF (2024), 163,468 AF (2025 prelim) dedicated and delivered. Caveat: much is in-lake mineral-extraction water; river-delivered dedications are ~70-135 KAF."
+ }
+}

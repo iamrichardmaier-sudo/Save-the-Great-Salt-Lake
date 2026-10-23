@@ -1,0 +1,460 @@
+[
+ {
+  "id": "evap_gross",
+  "label": "Gross evaporation from the lake surface",
+  "value": 3.77,
+  "unit": "ft/yr",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "About 45 inches a year, set so the evaporation balance reproduces the published equilibrium elevations.",
+  "formula": "45 in/yr \u00f7 12",
+  "low": 3.4,
+  "high": 4.1,
+  "sourceIds": [
+   "usu_sims",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 7.580909325103676,
+  "nevSwingM": 0,
+  "lakeRank": 1,
+  "nevRank": 47
+ },
+ {
+  "id": "lake_value_per_af",
+  "label": "What an acre-foot is worth in the lake",
+  "value": 2440,
+  "unit": "$/AF",
+  "group": "Value",
+  "status": "derived",
+  "basis": "Avoided damage from dust, health and lost lake economy, spread over the water needed to avoid it.",
+  "formula": "annual avoided damage \u00f7 added inflow that avoids it",
+  "low": 1200,
+  "high": 3600,
+  "sourceIds": [
+   "dws_jobs",
+   "bea_gdp",
+   "gsl_industry_recreation",
+   "gsl_dust_mitigation_2026",
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "bea_gdp",
+    "title": "GDP by industry, Utah",
+    "url": "https://www.bea.gov/data/gdp/gdp-state"
+   },
+   {
+    "id": "gsl_industry_recreation",
+    "title": "Industry and Recreation",
+    "url": "https://greatsaltlake.utah.gov/industry-recreation/"
+   },
+   {
+    "id": "gsl_dust_mitigation_2026",
+    "title": "Study: Dust Mitigation Options and Costs for Great Salt Lake",
+    "url": "https://wilkescenter.utah.edu/great-salt-lake/study-dust-mitigation-options-and-costs/"
+   },
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 60140.78110612056,
+  "lakeRank": 66,
+  "nevRank": 1
+ },
+ {
+  "id": "shepherd_growth",
+  "label": "How fast shepherding capacity grows",
+  "value": 25,
+  "unit": "KAF/yr each year",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Only three saved-water change applications had been filed as of October 2025.",
+  "low": 0,
+  "high": 80,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 6.375753247617467,
+  "nevSwingM": 33079.74724772115,
+  "lakeRank": 2,
+  "nevRank": 2
+ },
+ {
+  "id": "precip_lake",
+  "label": "Rain and snow falling on the lake",
+  "value": 1.25,
+  "unit": "ft/yr",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "About 15 inches a year, the water-year precipitation at Salt Lake City airport.",
+  "formula": "15 in/yr \u00f7 12",
+  "low": 1,
+  "high": 1.5,
+  "sourceIds": [
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 5.097426069151879,
+  "nevSwingM": 0,
+  "lakeRank": 3,
+  "nevRank": 48
+ },
+ {
+  "id": "delivery_base",
+  "label": "Share of dedicated water that survives the trip",
+  "value": 0.85,
+  "unit": "share",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Conveyance, evaporation and water never formally dedicated.",
+  "low": 0.7,
+  "high": 0.95,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 2.1166785542527577,
+  "nevSwingM": 13434.389684090158,
+  "lakeRank": 6,
+  "nevRank": 3
+ },
+ {
+  "id": "baseline_inflow",
+  "label": "River inflow the lake receives now",
+  "value": 1665,
+  "unit": "KAF/yr",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "The inflow that holds the lake 15 KAF below its current level, from the evaporation balance.",
+  "formula": "inflow to hold today\u2019s elevation \u2212 15 KAF/yr of current deficit",
+  "low": 1500,
+  "high": 1850,
+  "sourceIds": [
+   "dwr_gsl",
+   "usu_sims"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   }
+  ],
+  "lakeSwingFt": 3.3539209620985275,
+  "nevSwingM": 0,
+  "lakeRank": 4,
+  "nevRank": 50
+ },
+ {
+  "id": "thermostat_speed",
+  "label": "How fast the charge moves toward its target rate",
+  "value": 0.25,
+  "unit": "share of the gap per year",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption, standing in for about a four-year review cycle. Water conservation plans and drought responses are implemented in scheduled stages rather than switching fully on and off in alternate years.",
+  "low": 0.1,
+  "high": 1,
+  "sourceIds": [
+   "epa_conservation_guidelines",
+   "epa_drought_response"
+  ],
+  "sources": [
+   {
+    "id": "epa_conservation_guidelines",
+    "title": "Water Conservation Plan Guidelines",
+    "url": "https://www.epa.gov/watersense/water-conservation-plan-guidelines"
+   },
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   }
+  ],
+  "lakeSwingFt": 0.5250662488879243,
+  "nevSwingM": 9310.093942579137,
+  "lakeRank": 13,
+  "nevRank": 4
+ },
+ {
+  "id": "response_k",
+  "label": "How fast the lake moves toward its equilibrium",
+  "value": 0.12,
+  "unit": "share of the remaining gap per year",
+  "group": "Lake physics",
+  "status": "assumption",
+  "basis": "Assumption. Set so a sustained addition closes most of the gap within about twenty years, in line with the published fill scenarios.",
+  "low": 0.05,
+  "high": 0.3,
+  "sourceIds": [
+   "usu_sims"
+  ],
+  "sources": [
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   }
+  ],
+  "lakeSwingFt": 2.228219695271946,
+  "nevSwingM": 0,
+  "lakeRank": 5,
+  "nevRank": 51
+ },
+ {
+  "id": "streamflow_decline_2055",
+  "label": "Water a warming climate takes from the rivers by 2055",
+  "value": 100,
+  "unit": "KAF/yr",
+  "group": "Drivers",
+  "status": "sourced",
+  "basis": "Projected decline in natural streamflow over the period.",
+  "low": 0,
+  "high": 300,
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 1.7003787110288613,
+  "nevSwingM": 8596.586628782476,
+  "lakeRank": 8,
+  "nevRank": 5
+ },
+ {
+  "id": "shepherd_monitor_max",
+  "label": "Extra shepherding capacity monitoring can add",
+  "value": 50,
+  "unit": "KAF/yr",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Measurement lets more water be tracked and legally protected on its way down.",
+  "low": 0,
+  "high": 120,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 0.38282773658102087,
+  "nevSwingM": 7563.681845830921,
+  "lakeRank": 19,
+  "nevRank": 6
+ },
+ {
+  "id": "inflow_efficiency",
+  "label": "Inflow efficiency factor in the balance",
+  "value": 1.03,
+  "unit": "ratio",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "Closes the balance against the published equilibrium elevations; absorbs groundwater and ungauged inflow.",
+  "formula": "area(E) x net evaporation = river inflow x this factor",
+  "low": 1,
+  "high": 1.08,
+  "sourceIds": [
+   "usu_sims"
+  ],
+  "sources": [
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   }
+  ],
+  "lakeSwingFt": 1.8587322851053614,
+  "nevSwingM": 0,
+  "lakeRank": 7,
+  "nevRank": 49
+ },
+ {
+  "id": "crop_cap",
+  "label": "Crop switching, most it can yield",
+  "value": 100,
+  "unit": "KAF/yr",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption, stated as such in the option table. How many farms will switch, not how much money is offered.",
+  "low": 40,
+  "high": 250,
+  "sourceIds": [
+   "nass_utah",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.30928571864387777,
+  "nevSwingM": 7454.461031861436,
+  "lakeRank": 21,
+  "nevRank": 7
+ },
+ {
+  "id": "lease_capacity",
+  "label": "Water willing sellers will lease",
+  "value": 200,
+  "unit": "KAF/yr",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. The sharpest weakness in the model: it should be replaced with actual enrolment in the state preservation programme.",
+  "low": 100,
+  "high": 1600,
+  "sourceIds": [
+   "scpp_aspen"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 6816.298720990737,
+  "lakeRank": 54,
+  "nevRank": 8
+ },
+ {
+  "id": "levy_cut_cap",
+  "label": "Most the levy can cut on an acre",
+  "value": 0.5,
+  "unit": "share of application",
+  "group": "Crop levy",
+  "status": "assumption",
+  "basis": "Assumption. A levy on over-application cannot take a field to no water at all, and technical options are limited by crop, system and water-right feasibility.",
+  "low": 0.25,
+  "high": 0.75,
+  "sourceIds": [
+   "ag_optimization_2026",
+   "nass_iwms_2023"
+  ],
+  "sources": [
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   },
+   {
+    "id": "nass_iwms_2023",
+    "title": "2023 Irrigation and Water Management Survey",
+    "url": "https://data.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/index.php"
+   }
+  ],
+  "lakeSwingFt": 0.5022871163928357,
+  "nevSwingM": 6169.719443591479,
+  "lakeRank": 14,
+  "nevRank": 9
+ },
+ {
+  "id": "shepherd_start",
+  "label": "Water the system can shepherd to the lake at the start",
+  "value": 150,
+  "unit": "KAF/yr",
+  "group": "Delivery",
+  "status": "sourced",
+  "basis": "Anchored to dedicated deliveries of 149 to 163 KAF/yr in 2024 and 2025.",
+  "note": "The State Engineer\u2019s own October 2025 plan says it does not address moving saved or leased water through the system to the lake.",
+  "low": 100,
+  "high": 250,
+  "sourceIds": [
+   "strike_update",
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "strike_update",
+    "title": "Great Salt Lake Strike Team update",
+    "url": "https://science.utah.edu/wilkes-center/gsl-strike-team-update/"
+   },
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 0.830248738073351,
+  "nevSwingM": 5232.74996720341,
+  "lakeRank": 9,
+  "nevRank": 11
+ }
+]

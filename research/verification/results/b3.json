@@ -1,0 +1,370 @@
+[
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Pacific Northwest entities are very consistently within the 14-17 jobs per $1 million spent",
+  "locator": "p.1-2, 'Estimated Benefits' table (U of O 2009: 15; U of O 2010: 16; PSAR 2021: 17; WA Conservation Commission: 14)",
+  "url": "https://www.ezview.wa.gov/Portals/_1962/Documents/Restoration%20Economy%20Synthesis%20Memo.pdf",
+  "source_title": "Restoration Economy Memorandum (Chehalis Basin ASRP)",
+  "publisher": "Washington Office of Chehalis Basin / WDFW",
+  "year": 2021,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah Division of Water Resources / USU (IMPLAN MRIO)",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Total ... 822 (Strategy 3 Irrigation System Changes, transitory jobs); Strategy 3 total ... $74.7 [annual cost $million]",
+    "locator": "Table B-19 (p.B-22) and Table 5-2 (p.5-3)"
+   },
+   {
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds (KJZZ reprint of Aspen Journalism)",
+    "publisher": "Aspen Journalism / KJZZ",
+    "year": 2025,
+    "url": "https://kjzz.org/content/1881386/using-less-colorado-river-takes-willing-farmer-and-45-million-federal-funds",
+    "quote": "Some participants are using these payments to upgrade their irrigation systems",
+    "locator": "body text"
+   }
+  ],
+  "arithmetic": "IMPLAN (Utah GSL): 822 transitory jobs / $74.7M per yr = 11.0 jobs per $M for irrigation-system investment (if annual cost approximates annual spending). Restoration literature 14-17 jobs/$M in ~2005-2020 dollars; deflating to 2026$ (CPI factor ~1.3-1.6) gives ~9-13 jobs/$M. Crop-switching payments are largely income-replacement transfers, which the ag report shows generate net job LOSSES (Table B-18: Strategy 2 crop substitution -663 jobs), so a blended rate below the 11-16 construction/restoration figure is defensible.",
+  "notes": "No source for exactly 7.4. Published multipliers for restoration/irrigation-upgrade spending are ~11-16 jobs per $M (total incl. indirect/induced); payments to farmers to change crops create far fewer. 7.4 sits between; range 3-14 brackets the evidence. Consider high of ~16 if spending is mostly construction/monitoring. dws_jobs (cited) is a headline employment page with no multiplier.",
+  "confidence": "Low",
+  "id": "transition_jobs_per_m",
+  "value_model": 7.4,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": 276,
+  "high_new": 493,
+  "quote": "Alfalfa  Winter wheat 0.61 $276; Alfalfa  Spring wheat 0.50 $493; Alfalfa  Corn 0.53 $424",
+  "locator": "Table B-10 (Appendix B, p.B-? ~PDF p.56); also Table 5-1 (p.5-1/5-2) and ES-1",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources (GSL Basin Integrated Plan)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah DWR",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Alfalfa to winter wheat 278,155 215,856 22.9 132,620 10.0 $276 $36.6",
+    "locator": "Table 5-2, Strategy 2 Crop Substitution (p.5-3)"
+   }
+  ],
+  "arithmetic": "Model: $39.8M x 0.8 / 100,000 AF = $318.4/AF (circular: schedule.ts sets cropM = crop_cap x crop_cost / crop_delivery / 1000 = 100 x 318.4 / 0.8 / 1000 = 39.8). Published crop-substitution costs: $276 (winter wheat), $424 (corn), $493 (spring wheat) per AF of depletion savings. Report: winter-wheat substitution alone delivers 132,620 AF at $276 ($36.6M/yr).",
+  "notes": "$318.4 lies inside the published range, but '$416' (the model's high) does not appear in the report; the published crop-substitution range is $276-$493 (corn $424). The $39.8M saturation spend is not stated in any opened source; it is back-solved. Report costs are per AF of depletion savings at the field (already net of return flow), so they match crop_cost before the crop_delivery haircut.",
+  "confidence": "Medium",
+  "id": "crop_cost",
+  "value_model": 318.4,
+  "verdict": "range_revised"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "HAY, ALFALFA ... 4.3 TONS / ACRE ... 2,064,000 TONS",
+  "locator": "2025 State Agriculture Overview for Utah, crops table (Hay, Alfalfa - yield)",
+  "url": "https://www.nass.usda.gov/Quick_Stats/Ag_Overview/stateOverview.php?state=UTAH",
+  "source_title": "2025 State Agriculture Overview: Utah",
+  "publisher": "USDA NASS",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Utah Crop Production (January 10, 2025)",
+    "publisher": "USDA NASS Mountain Regional Field Office",
+    "year": 2025,
+    "url": "https://nass.usda.gov/Statistics_by_State/Utah/Publications/News_Releases/2025/UT-Crop-Production-01102025.pdf",
+    "quote": "Average yield for the 2024 crop is 4.00 tons per acre, unchanged from last year.",
+    "locator": "p.1, hay section"
+   }
+  ],
+  "arithmetic": "2025: 4.3 t/ac alfalfa (all hay 3.91; other hay 2.8). 2024 and 2023: 4.00 t/ac.",
+  "notes": "4.3 matches the latest (2025) statewide alfalfa yield; it is statewide, not basin-specific, and higher than 2023-24 (4.0). All-hay average is 3.91. Range 3-5.5 is fine.",
+  "confidence": "High",
+  "id": "hay_yield",
+  "value_model": 4.3,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Full Season Fallow 353,995 ... ; Alfalfa Full Season Fallow 1.504 [AF/acre]; ... 132,620 [AF] 10.0 [percent of basin depletion]",
+  "locator": "Table 5-2 (Strategy 5 row, p.5-3) and Table 5-1 (p.5-1)",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Irrigation water demand: A meta-analysis of price elasticities (Scheierling, Loomis & Young, WRR 42, doi:10.1029/2005WR004009) - abstract",
+    "publisher": "AGU / EarthRef record",
+    "year": 2006,
+    "url": "https://earthref.org/ERR/92882",
+    "quote": "The mean price elasticity is 0.48. Long-run elasticities, those that are most useful for policy purposes, are likely larger than the mean estimate.",
+    "locator": "abstract"
+   }
+  ],
+  "arithmetic": "Total on-farm depletion implied by report = 132,620 / 0.10 = 1,326,200 AF. Max if every acre the report deems treatable by full-season fallow were fallowed: 353,995 ac x 1.504 AF/ac = 532,400 AF = 40% of on-farm depletion.",
+  "notes": "No published 'cap' exists. The report's own treatable-acreage bound for fallowing implies ~40% of agricultural depletion is reachable by the deepest practical response; a charge could in principle reach further (other crops, deficit irrigation), so 0.6 is above that bound but within 0.3-0.8. Full text of the meta-analysis still blocked; abstract obtained via EarthRef. Suggest considering a central value nearer 0.4.",
+  "confidence": "Low",
+  "id": "ag_charge_cap",
+  "value_model": 0.6,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Administrative oversight and cost to monitor depletion reductions will need to be considered for the included 21 options",
+  "locator": "Section 3 (PDF p.24)",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "",
+  "notes": "Searched the Ag Optimization report (monitor, measurement, shepherd), the State Engineer page captured as state_engineer_dmp (a landing page with no plan text), and the web for cost-effectiveness curves of water-measurement/shepherding spending. Sources confirm monitoring/shepherding is a constraint ('herculean effort to ... shepherd leased water', p.~30) but give no dollars-to-capacity relationship. The rate parameter is a pure modelling choice.",
+  "confidence": "Low",
+  "id": "shepherd_monitor_rate",
+  "value_model": 2.4,
+  "verdict": "no_evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "previously non-consumed water 'losses' at a farm scale (for example runoff) are frequently recovered and reused at a basin scale",
+  "locator": "article body quoting Grafton et al. 2018, Science 361:748-750",
+  "url": "https://watersource.awa.asn.au/technology/research/research-shows-irrigation-efficiency-projects-actually-lead-to-more-water-use/",
+  "source_title": "Research shows irrigation efficiency projects actually lead to more water use (summary of Grafton et al. 2018)",
+  "publisher": "Australian Water Association (Water Source)",
+  "year": 2018,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah DWR",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "conversions from agriculture to M&I can result in increased depletion due to the spreading of reduced or eliminated return flows",
+    "locator": "Executive Summary p.ii-iii (PDF p.6)"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Literature supports a haircut but gives no number. Caveat: the report's on-farm costs ($148-$1,014/AF, used for onfarm_cost) are already per AF of DEPLETION (consumptive) savings, not diversion, so applying a further 0.55 for return-flow loss may double-count; a delivery share closer to crop_delivery (0.8) may be more consistent unless onfarm_cost is reinterpreted as per AF diverted.",
+  "confidence": "Low",
+  "id": "onfarm_delivery",
+  "value_model": 0.55,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "sample mean of -.41, a median of -.35, and a standard deviation of .86 ... providing substantial evidence for water demand being price inelastic",
+  "locator": "p.295 (section III, data), 314 price elasticity estimates from 64 studies",
+  "url": "https://research.vu.nl/ws/files/1902894/LE%20Dalhuisen.pdf",
+  "source_title": "Price and Income Elasticities of Residential Water Demand: A Meta-Analysis (Land Economics 79(2):292-308)",
+  "publisher": "Dalhuisen, Florax, de Groot & Nijkamp / Univ. of Wisconsin Press",
+  "year": 2003,
+  "extra_sources": [],
+  "arithmetic": "",
+  "notes": "Minus signs are lost in the PDF text layer ('2.41' renders as -.41). Residential meta-analysis mean -0.41, median -0.35; 0.3 is slightly below the median, consistent with an M&I mix including less-responsive industrial use. Industrial review (Gracia-de-Renteria & Barberan 2021, Water 13:1684) blocked by MDPI. Cited sources (EPA guidelines, DWR reporting page) contain no elasticity. Range 0.1-0.6 is reasonable.",
+  "confidence": "Medium",
+  "id": "mi_elasticity",
+  "value_model": 0.3,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": 200,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Phragmites removal could save 300 KAF/yr of water; At $500/acre, cost=$60 million",
+  "locator": "slide 'Aggressive removal water-sucking invasive species' (~slide 30)",
+  "url": "https://le.utah.gov/interim/2026/pdf/00000790.pdf",
+  "source_title": "2026 Appropriations Update (Great Salt Lake Commissioner presentation to the Legislature)",
+  "publisher": "Utah State Legislature",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Phragmites Control and Restoration Strategy",
+    "publisher": "Utah Division of Forestry, Fire and State Lands",
+    "year": 2024,
+    "url": "https://ffsl.utah.gov/wp-content/uploads/GSL-Phragmites-Strategy-Overview-and-Reduction-in-water-depletions.pdf",
+    "quote": "Phragmites consumed, though ET, approximately 3.62 acre-ft of water per acre of Phragmites compared to 1.55 acre-ft of water per acre of Inland Saltgrass",
+    "locator": "p.1, Evapotranspiration"
+   }
+  ],
+  "arithmetic": "$60M / 300,000 AF = $200 per AF of annual saving. Using FFSL net ET difference (3.62-1.55 = 2.07 AF/ac): $500/ac / 2.07 = $242/AF; using the slide's gross 4 AF/ac: $125/AF.",
+  "notes": "$186 not found in the cited sources (dwr_gsl page and Ag Optimization report contain no phragmites cost). Best official figure gives $200/AF ($125-$242 depending on ET assumption), so the existing 120-300 range holds. Caveat: $500/acre is a treatment cost that buys a multi-year saving, so per-AF-per-year cost could be lower if the model's spend is annual; but retreatment over 3-5 years is needed.",
+  "confidence": "Low",
+  "id": "phrag_cost",
+  "value_model": 186,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "The additional water produced by cloud seeding is estimated to cost $5 to $10 per acre-foot (Utah Division of Water Resources [DWR], 2024a).",
+  "locator": "section on Utah's program, paragraph citing DWR 2024a",
+  "url": "https://extension.usu.edu/climate/research/cloud-seeding-enhancing-winter-snowpack.php",
+  "source_title": "Cloud Seeding: Enhancing Winter Snowpack to Bolster Utah's Water Supply",
+  "publisher": "Utah State University Extension (Climate Adaptation & Resiliency)",
+  "year": 2025,
+  "extra_sources": [],
+  "arithmetic": "",
+  "notes": "$10 is the top of DWR's $5-$10/AF estimate. The cited dwr_gsl page only mentions DWR runs the cloud seeding programme; DWR's own cloud-seeding page (water.utah.gov/cloud-seeding) says 'cost-effective' with a 5-15% precipitation increase but no $/AF. Older peer-reviewed estimates (~$1-2/AF, early-2000s) are lower, so low could drop to ~2; high 40 is generous but allows for the expanded/drone programme.",
+  "confidence": "Medium",
+  "id": "cloud_cost",
+  "value_model": 10,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": 640,
+  "low_new": 450,
+  "high_new": 2200,
+  "quote": "City of West Jordan ... 614.12 639.92; Taylorsville-Bennion Impr. Dist. ... 474.11; Draper Irrigation (Water Pro) ... 811.41 (Rate per Acre Foot, 2026/2027)",
+  "locator": "2026/2027 Adopted Water Rates Summary, Wholesale Water Rates (Non-pumped), p.1",
+  "url": "https://jvwcd.gov/file/4c9e4734-97c0-4b46-9567-e5e5451bcff1/2026-2027-Adopted-Water-Rates.pdf",
+  "source_title": "2026/2027 Adopted Water Rates Summary",
+  "publisher": "Jordan Valley Water Conservancy District",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Rates | Public Utilities",
+    "publisher": "Salt Lake City Public Utilities",
+    "year": 2026,
+    "url": "https://www.slc.gov/utilities/pay-my-bill/current-rates/",
+    "quote": "Residential Low Use 8 ccf 3/4\" $47.15 ... Residential Medium Use 21 ccf 3/4\" $104.77",
+    "locator": "Water Rate Schedule, Salt Lake City Rates, 2026 Monthly Cost"
+   }
+  ],
+  "arithmetic": "1 AF = 435.6 ccf. SLC retail 2026: average at 21 ccf = $104.77/21 = $4.99/ccf = $2,173/AF; marginal 8->21 ccf = ($104.77-$47.15)/13 = $4.43/ccf = $1,931/AF. JVWCD wholesale 2026/27 member rates $474-$811/AF; median of 15 listed agencies = $639.92/AF (industrial member Hexcel $517.98).",
+  "notes": "$380/AF is below every Wasatch Front wholesale rate and ~1/5 of SLC retail; the cited slc_rates page does not support it. If the elasticity is applied to end-user prices (as the literature measures), the reference should be retail (~$1,900-$2,200/AF); the wholesale median ($640) is a conservative replacement that still covers industry buying from districts. Self-supplied industry (e.g. mineral extraction) pays far less, which argues for keeping the low end ~450.",
+  "confidence": "Medium",
+  "id": "mi_reference_price",
+  "value_model": 380,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "$239 is the amount that householders are willing to pay, on average, to move from a situation with continuous restrictions at Stage 3 or above every day all year every year, to a situation with virtually no chance of restrictions.",
+  "locator": "p.61-62, discussion of Table 2 results",
+  "url": "https://eml.berkeley.edu/~train/papers/HensherShoreTrain.pdf",
+  "source_title": "Water Supply Security and Willingness to Pay to Avoid Drought Restrictions (Economic Record 82(256):56-66)",
+  "publisher": "Hensher, Shore & Train",
+  "year": 2006,
+  "extra_sources": [
+   {
+    "title": "Rates | Public Utilities",
+    "publisher": "Salt Lake City Public Utilities",
+    "year": 2026,
+    "url": "https://www.slc.gov/utilities/pay-my-bill/current-rates/",
+    "quote": "Residential Low Use 8 ccf $47.15 ... Residential Medium Use 21 ccf $104.77",
+    "locator": "Water Rate Schedule, 2026 Monthly Cost"
+   }
+  ],
+  "arithmetic": "Hensher et al.: A$239/yr (c.2004 A$) ~ US$180 at ~0.75 USD/AUD, ~US$300 in 2026 dollars. SLC: summer outdoor use ~13 ccf/month extra costs $104.77-$47.15 = $57.62/month; x 5 months (May-Sep) = ~$288 per season spent on lawn water.",
+  "notes": "Both anchors put the value of a full watering season at ~$200-$300, above 140 but within the 60-300 range; 140 is plausible if the comparison is to partial restriction (Hensher finds little WTP to avoid low-level or non-daily restrictions). Weber WTP ($113-$144/household/yr) is WTP for the lake, not lawn value. Consider raising the high end to ~350.",
+  "confidence": "Low",
+  "id": "season_value",
+  "value_model": 140,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "an initial lowball offer from the UCRC of $150 per acre-foot was insulting ... Colorado, Utah and Wyoming paid agricultural water users about $500 an acre-foot",
+  "locator": "article body (2023 and 2024 SCPP rounds)",
+  "url": "https://kjzz.org/content/1881386/using-less-colorado-river-takes-willing-farmer-and-45-million-federal-funds",
+  "source_title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds (Aspen Journalism, reprinted by KJZZ)",
+  "publisher": "Aspen Journalism / KJZZ",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah DWR",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Full-season leasing Alfalfa Full Season Fallow 1.504 $236",
+    "locator": "Table 5-1 (p.5-1)"
+   }
+  ],
+  "arithmetic": "Floor in model = 0.3 x $380 = $114/AF. Observed: $150/AF offer drew low participation -> 150/380 = 0.39; report's minimum farmer WTA for leasing $235-$237/AF -> 0.62 of base.",
+  "notes": "Original Aspen URL still blocked; opened the KJZZ reprint. Evidence suggests rates below ~$150/AF fail to attract farmers, i.e. a floor nearer 0.4 than 0.3; but a scarcity charge lowers the farmer's opportunity cost, so a lower floor is conceivable. Range 0.1-0.8 covers it. irrigation_elasticity_meta full text still publisher-blocked (abstract via EarthRef).",
+  "confidence": "Low",
+  "id": "lease_rate_floor",
+  "value_model": 0.3,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": 0.25,
+  "high_new": 0.6,
+  "quote": "Utah ... 10,401 985,863 2,221,470 | 7,438 125,478 179,062 | 989 72,800 134,932 | 1,024 160,481 300,546 | 431 176,529 313,874 | 295 174,857 405,010 | 224 275,718 888,046",
+  "locator": "Table 10. Irrigation by Estimated Quantity of Water Applied: 2023, Utah row (acres in the open, by farm water-applied class)",
+  "url": "https://nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/iwms.txt",
+  "source_title": "2023 Irrigation and Water Management Survey",
+  "publisher": "USDA NASS",
+  "year": 2024,
+  "extra_sources": [],
+  "arithmetic": "AF/acre by class: <100 AF farms 1.43; 100-199 1.85; 200-499 1.87; 500-999 1.78; 1,000-1,999 2.32; 2,000+ 3.22; state mean 2,221,470/985,863 = 2.25 AF/ac. Acre-weighted CV across these six class means = 0.29. This is a LOWER bound on field-level CV because within-class variation is excluded.",
+  "notes": "The cited page is only the IWMS landing page; the full tables give a between-farm-class CV of ~0.29 for Utah, so the field-level CV is probably above 0.3. The 0.15 low end is implausible; high could extend to ~0.6. Caveat: all crops, statewide, not hay-only in the GSL basin.",
+  "confidence": "Medium",
+  "id": "application_cv",
+  "value_model": 0.3,
+  "verdict": "range_revised"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "2024 1,747,330 114,975,453,440 5,483 134,778",
+  "locator": "Table 19, State Total panel, 2024 row (Average Annual Employment, Total Wages, Average Monthly Wage, 1st Qtr Establishments)",
+  "url": "https://jobs.utah.gov/wi/pubs/em/currentreport/table19.pdf",
+  "source_title": "Table 19. Employment, Wages and Establishments in Utah by NAICS Sector, 2009-2024",
+  "publisher": "Utah Department of Workforce Services",
+  "year": 2025,
+  "extra_sources": [],
+  "arithmetic": "$114,975,453,440 / 1,747,330 = $65,801 per job-year; monthly $5,483 x 12 = $65,796.",
+  "notes": "Checked by the lead researcher against the downloaded Table 19 text; status can move from assumption to sourced. Range 55,000-75,000 fine.",
+  "confidence": "High",
+  "id": "wage_per_job",
+  "value_model": 65800,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": 2,
+  "high_new": 5,
+  "quote": "It typically takes us three to five years to remove any given patch of phragmites.",
+  "locator": "article body, quoting FFSL's Hambrecht",
+  "url": "https://www.upr.org/environment/2026-04-16/great-salt-lake-phragmites-invasive-reeds",
+  "source_title": "Utah takes aim at invasive reeds to help refill Great Salt Lake",
+  "publisher": "Utah Public Radio",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Phragmites Control and Restoration Strategy",
+    "publisher": "Utah Division of Forestry, Fire and State Lands",
+    "year": 2024,
+    "url": "https://ffsl.utah.gov/wp-content/uploads/GSL-Phragmites-Strategy-Overview-and-Reduction-in-water-depletions.pdf",
+    "quote": "a late season (August - September) herbicide spray on well-watered, healthy Phragmites is the most effective way to kill a Phragmites patch",
+    "locator": "p.2, Best Practices"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "The cited dwr_gsl page says nothing about phragmites lag. FFSL says removal takes 3-5 years per patch; some ET saving begins after the first successful kill, so a 2-yr low is allowed, but 1 yr looks too quick. 3 is the low end of the stated removal window; 4 would be the midpoint.",
+  "confidence": "Medium",
+  "id": "phrag_lag",
+  "value_model": 3,
+  "verdict": "range_revised"
+ }
+]

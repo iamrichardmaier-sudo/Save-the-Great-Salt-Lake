@@ -1,0 +1,453 @@
+[
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "The estimated annual evaporation from the lake for the period 1931-76 ranged from about 2.1 to 3.9 million acre-ft and averaged 2.9 million acre-ft. The latter is equivalent to about 45 in. per year for the average lake level during 1931-76.",
+  "locator": "p.12 (PDF page), section on evaporation",
+  "url": "https://pubs.usgs.gov/of/1978/0912/report.pdf",
+  "source_title": "Water budget and water-surface fluctuations, Great Salt Lake, Utah (Open-File Report 78-912)",
+  "publisher": "USGS (Arnow)",
+  "year": 1978,
+  "extra_sources": [
+   {
+    "title": "An examination of the sensitivity of the Great Salt Lake to changes in inputs",
+    "publisher": "Water Resources Research (Mohammed & Tarboton)",
+    "year": 2012,
+    "url": "https://hydrology.usu.edu/dtarb/Mohammed_Tarboton_2012WR011908.pdf",
+    "quote": "E (m) 1.14 ... Ef (m) 1.29 [mean saline and fresh evaporation depth, 1950-2010]",
+    "locator": "Table 2, p.10"
+   },
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Lake evaporation averaged 2,733 KAF per year between 1989-2024",
+    "locator": "Figure 17 insights, printed p.26 (PDF p.28); source DWR (2025) GSL Water Budget"
+   },
+   {
+    "title": "GSL Basin Integrated Plan Work Plan Appendix J",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2023,
+    "url": "https://water.utah.gov/wp-content/uploads/2023/11/GSLBIP-Work-Plan-Appendix-J-FINAL.pdf",
+    "quote": "Estimates of evaporation from GSL have ranged from 2,000,000 to 5,000,000 acre-feet per year.",
+    "locator": "p.4, Quantification of Evaporative Losses"
+   }
+  ],
+  "arithmetic": "45 in/12 = 3.75 ft (model 3.77). M&T 2012: 1.14 m x 3.281 = 3.74 ft (saline evaporation depth, 1950-2010 mean). DWR/Strike 2026: 2,733 KAF over a 1989-2024 mean area of roughly 1,450-1,500 sq mi (~930-960k acres by the model's own area anchors at ~4,197 ft) gives ~2.85-2.95 ft, i.e. lower.",
+  "notes": "Two independent long-period estimates (USGS 1978; Mohammed & Tarboton 2012) both give ~45 in/yr saline evaporation, so the central value is confirmed. Caveat: the DWR 2025 water budget quoted by the Strike Team (2,733 KAF/yr, 1989-2024) implies a lower depth (~35 in) if divided by the model's area curve; and DWR says GSL evaporation is very uncertain (2-5 MAF/yr). Within the model only (evap_gross - precip_lake)/inflow_efficiency is fixed by the USU calibration, so sweeping evap_gross alone (3.4-4.1) breaks calibration and exaggerates its 7.6 ft swing; consider sweeping it jointly with precip/efficiency or re-deriving baseline after each draw. If swept alone, a low of ~2.9-3.0 would reflect the DWR budget.",
+  "confidence": "High",
+  "id": "evap_gross",
+  "value_model": 3.77,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": 600,
+  "high_new": 3600,
+  "quote": "For every additional acre-foot of water that reaches Great Salt Lake, the authors estimate Utah receives about $600 to $1,800 worth of health benefits from reduced dust pollution alone.",
+  "locator": "Press release on NBER Working Paper w35270 (Harris, Edwards, Hernandez-Cortes), Sept 10 2026",
+  "url": "https://www.utahbusiness.com/press-releases/2026/09/10/study-health-benefits-great-salt-lake-restoration-could-outweigh-costs/",
+  "source_title": "Dust in the Wind: The Health Costs of Great Salt Lake Desiccation (press release)",
+  "publisher": "National Bureau of Economic Research via Utah Business",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Potential Costs of Declining Water Levels at Great Salt Lake Could be in the Billions (summary of ECONorthwest 2019 for GSL Advisory Council)",
+    "publisher": "Audubon / ECONorthwest",
+    "year": 2019,
+    "url": "https://www.audubon.org/news/potential-costs-declining-water-levels-great-salt-lake-could-be-billions",
+    "quote": "further declines, particularly those over a long period, could result in losses totaling $1.69 billion to $2.17 billion per year",
+    "locator": "article body"
+   },
+   {
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "publisher": "Salt Lake Tribune (Weber State survey)",
+    "year": 2026,
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "quote": "Utahns are collectively willing to pay up to $162 million per year across the state's 1.1 million households",
+    "locator": "article body"
+   },
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Additional 800 KAF/year inflow ... the additional inflow needed to fill Great Salt Lake to the minimum healthy lake level (4,198 feet) by 2055",
+    "locator": "printed p.29"
+   }
+  ],
+  "arithmetic": "ECONorthwest midpoint ($1.69+2.17)/2 = $1.93B/yr / 790-800 KAF = ~$2,410-2,440/AF (range $2,110-2,750/AF using 790 KAF). NBER health-only: $600-1,800/AF. Weber WTP: $162M/800 KAF = ~$200/AF (non-use only).",
+  "notes": "No source the model cites (DWS jobs, BEA GDP, GSL industry page, Wilkes dust study, Weber WTP) states $2,440/AF or gives the arithmetic. The figure can be reproduced as ECONorthwest's (2019) $1.69-2.17B/yr cost of decline divided by the ~800 KAF/yr added inflow the Strike Team says is needed. But that numerator is mostly gross output (mineral extraction $1.3B), not net welfare, and it is in 2019 dollars. The 2026 NBER estimate ($600-1,800/AF for health alone) is the only published per-AF value found, and it supports a value of the right order. Suggest citing ECONorthwest + NBER explicitly, labelling 2,440 as derived from them, and widening low to ~600. The ECONorthwest PDF (fogsl.org) returned HTML, so the figures are quoted from Audubon's summary of it. The NBER PDF was bot-blocked, so the figures come from the press release.",
+  "confidence": "Low",
+  "id": "lake_value_per_af",
+  "value_model": 2440,
+  "verdict": "unsupported"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Figure 2: Water Dedicated and Delivered to Great Salt Lake, in Acre-feet, 2021-2025 ... 18,386 / 21,313 / 45,385 / 149,277 / 163,468",
+  "locator": "Figure 2, printed p.10 (PDF p.12); source: GSL Distribution Accounting Tool, Utah Division of Water Rights (2025)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "GSL Strike Team",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "publisher": "GSL Strike Team",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "quote": "To date, no Saved Water Change Applications have been received by the State Engineer. ... To date, no Split Season Change Applications have been filed.",
+    "locator": "Getting More Water to GSL, PDF p.22"
+   },
+   {
+    "title": "GSLWET Impact Report 2025",
+    "publisher": "Great Salt Lake Watershed Enhancement Trust",
+    "year": 2026,
+    "url": "https://media.audubon.org/2026-04/GSLWET_Impact_Report_2025.pdf",
+    "quote": "~64,000 af [2023] ~69,190 af [2024] ~72,485 af [2025]",
+    "locator": "Water Transactions chart, PDF p.6"
+   }
+  ],
+  "arithmetic": "Dedicated/delivered increments: 2021-25 average (163,468-18,386)/4 = 36.3 KAF/yr; 2024-25 = +14.2 KAF; Trust transactions 2023-25 = +4.2 KAF/yr. Bracket ~5-35 KAF/yr; 25 sits within it.",
+  "notes": "Growth in dedicated deliveries is lumpy. The 2023-24 jump came mostly from in-lake mineral-extraction water rights converted to sovereign-land uses (Compass, FFSL, Morton; see the DMP Table 2), not from river shepherding. Growth in actual river-shepherded leases (the Trust) is only ~4 KAF/yr. 25 KAF/yr is plausible as a policy-driven upper-middle value. Range 0-80 is wide but defensible.",
+  "confidence": "Low",
+  "id": "shepherd_growth",
+  "value_model": 25,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Average precipitation inches ... 15.52 (394) [annual, Salt Lake City Intl Airport, 1991-2020 normals]",
+  "locator": "Climate data table (NOAA 1991-2020 normals)",
+  "url": "https://en.wikipedia.org/wiki/Climate_of_Salt_Lake_City",
+  "source_title": "Climate of Salt Lake City (NOAA NCEI 1991-2020 normals table)",
+  "publisher": "Wikipedia citing NOAA",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Water budget and water-surface fluctuations, Great Salt Lake, Utah (OFR 78-912)",
+    "publisher": "USGS (Arnow)",
+    "year": 1978,
+    "url": "https://pubs.usgs.gov/of/1978/0912/report.pdf",
+    "quote": "about 900,000 acre-feet from direct precipitation",
+    "locator": "p.4"
+   }
+  ],
+  "arithmetic": "15 in/12 = 1.25 ft; NOAA normal 15.52 in = 1.29 ft. Arnow: 2.9 MAF evap at 45 in implies a mean area of 2.9e6/3.75 = 773k acres; 900k AF / 773k ac = 1.16 ft (14 in).",
+  "notes": "Matches the SLC airport normal and the USGS water-budget-implied ~14 in on the lake. The west side of the lake is drier (a UGS budget table reportedly uses 10 in, but the page was bot-protected and not opened), so lake-wide precipitation may be a little below the airport value. Range 1.0-1.5 is acceptable; a low of ~0.85 would cover the 10-in estimate. Precipitation is sensitive for the same calibration reason as evap_gross.",
+  "confidence": "Medium",
+  "id": "precip_lake",
+  "value_model": 1.25,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Earlier qualitative interpretation of streamflow data downstream from the reservoir indicated that there could be a transit loss of nearly 10 percent.",
+  "locator": "Abstract",
+  "url": "https://pubs.usgs.gov/sir/2010/5198",
+  "source_title": "Gain-loss study of Elkhead Creek downstream from Elkhead Reservoir, Colorado (SIR 2010-5198)",
+  "publisher": "USGS",
+  "year": 2010,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Distribution Management Plan",
+    "publisher": "Utah Division of Water Rights",
+    "year": 2025,
+    "url": "https://waterrights.utah.gov/GSLDMP/final_GSL_distribution_management_plan_2025101.pdf",
+    "quote": "plus the corresponding volume of Dedicated Water remaining in the lake from the previous year after deductions for evaporative losses",
+    "locator": "Section on accounting, E. Dedicated Water"
+   },
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Water shepherding: A gap analysis identified measurement infrastructure, physical, and administrative barriers to moving dedicated water to Great Salt Lake.",
+    "locator": "Research, printed p.7"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "No GSL-specific transit-loss figure was found. Reach-scale transit losses on measured streams are ~0-13% (Elkhead ~10% suspected, later within the \u00b15% measurement error; Walker River ~13% reported in a USGS letter, which was not opened). That supports 0.85-0.95 for conveyance alone. The model's 0.85 also covers water never formally dedicated, which is unquantified. Keep 0.85 with range 0.7-0.95.",
+  "confidence": "Low",
+  "id": "delivery_base",
+  "value_model": 0.85,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Between 2000 and 2025, inflows averaged 1,665 KAF per year.",
+  "locator": "River Inflow to Great Salt Lake insights, printed p.22 (PDF p.24); repeated printed p.30 with Figure 21 'Average Inflow - 1,665 KAF/year'",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "GSL Strike Team",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "No additional inflows from conservation results in a long-term mean lake level of 4,191.1 feet",
+    "locator": "Figure 20 insights, printed p.30"
+   }
+  ],
+  "arithmetic": "Model check: 1665 x 1000 x 1.03 / 2.52 = 680.5k acres = 1,063 sq mi -> 4,191.0 ft on the area anchors, vs published 4,191.1.",
+  "notes": "The figure is stated directly (Bear+Weber+Jordan river inflow, 2000-2025 mean), so it can be marked sourced rather than derived. The Jan 2025 report's 'Average Inflow 2,471 KAF/Year' is a different quantity (it appears to include direct precipitation/other inflow) and should not be mixed in. Range 1500-1850 is fine.",
+  "confidence": "High",
+  "id": "baseline_inflow",
+  "value_model": 1665,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "update the water provider's water conservation plan no less frequently than every five years",
+  "locator": "Utah Code 73-10-32 (version effective 2026-07-01)",
+  "url": "https://le.utah.gov/xcode/Title73/Chapter10/C73-10-S32_2026050620260701.html",
+  "source_title": "Utah Code 73-10-32 Definitions -- Water conservation plan required",
+  "publisher": "Utah Legislature",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "A 5-year statutory plan cycle is ~0.2 of the gap per year; the model's 4-year cycle is 0.25.",
+  "notes": "The EPA drought guide text failed to download (40-byte file), and the EPA guidelines page text holds only navigation. The Utah statutory 5-year update cycle supports a value of 0.2-0.25. The range 0.1-1 is wide; 1.0 (instant adjustment) is not supported by any planning cycle found.",
+  "confidence": "Medium",
+  "id": "thermostat_speed",
+  "value_model": 0.25,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": 0.17,
+  "low_new": 0.12,
+  "high_new": 0.22,
+  "quote": "An additional 800 KAF/year of inflow results in a 2034 mean elevation of 4,196.9 feet and a long-term mean elevation of 4,198.0 feet.",
+  "locator": "Figure 19 insights, printed p.29 (PDF p.31); start level 4,191 ft on Oct 1 2025",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary (Tarboton/USU simulations)",
+  "publisher": "GSL Strike Team",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "An additional 250 KAF/year of inflow results in a 2034 mean elevation of 4,193.2 feet and a long-term mean elevation of 4,193.8 feet.",
+    "locator": "printed p.29"
+   }
+  ],
+  "arithmetic": "First-order fit, start 4,191.1, n = 8-9 years to 2034: 800 KAF: remaining gap (4198.0-4196.9)/6.9 = 0.159 -> k = 1-0.159^(1/n) = 0.185-0.205. 250 KAF: (4193.8-4193.2)/2.7 = 0.222 -> k = 0.154-0.171. Central ~0.17. With k = 0.12 the model reaches 4,195.8 (800) and 4,192.9 (250) by 2034, i.e. ~1.1 ft and ~0.3 ft too slow.",
+  "notes": "The published USU projections imply faster convergence than 0.12. A 90% fill takes ~13 yr at k = 0.17 versus 18 yr at 0.12. Caveat: the published values are means of 1,000 stochastic runs of a nonlinear model, and the 2034 timing is approximate, hence the range 0.12-0.22.",
+  "confidence": "Medium",
+  "id": "response_k",
+  "value_model": 0.12,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "the stream flow would decline by 1.8 to 6.5 percent for each degree of temperature rise, with an average reduction of 3.8 percent",
+  "locator": "article body (Bardsley et al. 2013, Salt Lake City watersheds)",
+  "url": "https://news.ucar.edu/10534/rising-temperatures-challenge-salt-lake-citys-water-supply",
+  "source_title": "Rising temperatures challenge Salt Lake City's water supply",
+  "publisher": "UCAR/NCAR",
+  "year": 2013,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "evaporation is expected to increase as temperatures rise and prior research suggests that increased evaporative loss could overwhelm any additional gains in precipitation",
+    "locator": "Figure 18 insights, printed p.27"
+   },
+   {
+    "title": "An examination of the sensitivity of the Great Salt Lake to changes in inputs",
+    "publisher": "Water Resources Research",
+    "year": 2012,
+    "url": "https://hydrology.usu.edu/dtarb/Mohammed_Tarboton_2012WR011908.pdf",
+    "quote": "a 25% decrease in streamflow would reduce lake level by about 66 cm",
+    "locator": "Abstract"
+   }
+  ],
+  "arithmetic": "Illustration: about 2 deg F of additional warming by 2055 x 1.8-6.5%/deg F = 3.6-13% of headwater supply. On roughly 1,665 KAF of lake inflow that is 60-215 KAF/yr; on gross supply it would be larger.",
+  "notes": "Neither Strike report (Figures 13-14 or 1-8, the depletion table, the projections pages) gives a KAF figure for future streamflow decline. They are qualitative only: precipitation is projected to rise slightly and evaporation and warming to offset it. The 100 KAF/yr value is plausible against the per-degree sensitivity literature, and the 0-300 range brackets it, but it is not sourced. Re-label it as an assumption or derived value, with the UCAR/Bardsley sensitivity as basis.",
+  "confidence": "Low",
+  "id": "streamflow_decline_2055",
+  "value_model": 100,
+  "verdict": "unsupported"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Utah Water Commissioners on 13 separate distribution systems within the basin actively monitor about 700 total measurement sites",
+  "locator": "report body",
+  "url": "https://www.usu.edu/ilwa/reports/2023/water/2a-water-shepherding-salt-lake",
+  "source_title": "2A: Water shepherding: delivering saved water to Great Salt Lake",
+  "publisher": "Utah State University ILWA",
+  "year": 2023,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Water shepherding: A gap analysis identified measurement infrastructure, physical, and administrative barriers to moving dedicated water",
+    "locator": "printed p.7"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Searched the Strike reports, the DMP, USU ILWA and the DWRi pages for any quantified link between measurement investment and shepherdable volume. All are qualitative. No published number was found. The shepherding gap analysis it mentions (Division of Water Rights/USU) was not located online.",
+  "confidence": "Low",
+  "id": "shepherd_monitor_max",
+  "value_model": 50,
+  "verdict": "no_evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Groundwater inflow to the GSL was estimated to be 0.093 km3 (75,000 acre-feet yr-1) [Waddell and Barton, 1980; Loving et al., 2000].",
+  "locator": "para [20], p.4",
+  "url": "https://hydrology.usu.edu/dtarb/Mohammed_Tarboton_2012WR011908.pdf",
+  "source_title": "An examination of the sensitivity of the Great Salt Lake to changes in inputs",
+  "publisher": "Water Resources Research (Mohammed & Tarboton)",
+  "year": 2012,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "No additional inflows ... 4,191.1 feet ... An additional 250 KAF/year results in ... 4,193.7 feet ... An additional 800 KAF/year results in ... 4,198.0",
+    "locator": "Figure 20 insights, printed p.30"
+   }
+  ],
+  "arithmetic": "Groundwater only: 1 + 75/1665 = 1.045. Calibration: (E-P)/eff must be about 1665/685.8k ac = 2.43 ft for 4,191.1 ft. Model 2.52/1.03 = 2.447, giving equilibria of 4,191.0 / 4,193.2 / 4,198.2 ft vs published 4,191.1 / 4,193.7-4,193.8 / 4,198.0.",
+  "notes": "The calibration reproduces the published long-term means to within 0.6 ft, and 1.03 sits in the physically plausible band (groundwater alone gives ~1.045; ungauged tributaries add more). The parameter is collinear with evap_gross and precip_lake.",
+  "confidence": "Medium",
+  "id": "inflow_efficiency",
+  "value_model": 1.03,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Crop substitution from alfalfa to winter small grains could reduce depletions by up to 10%.",
+  "locator": "Executive Summary p.ii (PDF p.3); 10% = 132,000 AF/yr whole basin, 83,000 AF/yr Utah portion",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources (USU, Jacobs, M3)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "same report",
+    "publisher": "Utah DWRe",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Substitution from alfalfa to corn could reduce depletion by up to 2% across the entire Basin.",
+    "locator": "Executive Summary p.ii"
+   }
+  ],
+  "arithmetic": "Technical ceiling 83-132 KAF/yr (10% of on-farm agricultural depletion); model 100 KAF sits within it.",
+  "notes": "The report frames 10% as a technical scenario that needs very wide adoption, not as an expected uptake. 100 KAF is therefore near the technical maximum. A low of 40 is reasonable, but the 250 high exceeds the report's whole-basin ceiling of ~132 KAF from winter-grain substitution (plus ~26 KAF from corn).",
+  "confidence": "Medium",
+  "id": "crop_cap",
+  "value_model": 100,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": 130,
+  "low_new": 70,
+  "high_new": 300,
+  "quote": "The Trust's voluntary water transactions in 2025 were nearly 72,500 acre-feet of water.",
+  "locator": "Letter from Executive Director p.2; Water Transactions chart p.6 (64,000 / 69,190 / 72,485 AF in 2023-25, diversion basis; objective 100,000 AF/yr)",
+  "url": "https://media.audubon.org/2026-04/GSLWET_Impact_Report_2025.pdf",
+  "source_title": "GSLWET Impact Report 2025",
+  "publisher": "Great Salt Lake Watershed Enhancement Trust",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the GSL Basin",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "58,000 to 168,000 acres of land (depending on the leasing scenario) would need to participate in water leasing to reach a 10% reduction. This would require a herculean effort to enroll and manage leases, and shepherd leased water on this land.",
+    "locator": "Section 4.3, PDF p.26; 10% = 132,000 AF basin / 83,000 AF Utah"
+   },
+   {
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "publisher": "GSL Strike Team",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "quote": "To date, no Split Season Change Applications have been filed.",
+    "locator": "PDF p.22"
+   }
+  ],
+  "arithmetic": "Current enrolment ~72.5 KAF/yr (diversion basis; the depletion basis is lower). Trust objective 100 KAF/yr. State leasing scenario ceiling 132 KAF/yr basin-wide, described as 'herculean'. Central 130 = state 10% scenario.",
+  "notes": "The model's 200 KAF/yr is ~2.8x current Trust enrolment and ~1.5x the leasing volume the state's own analysis calls a herculean stretch. The 1,600 high has no support. Suggested central 130, low 70 (today's actual), high 300 (allows for a paid-programme expansion). Note: Trust volumes are diversion basis, while the model presumably needs depletion/delivered water. The Aspen Journalism source (Colorado SCPP) remained unavailable and was not needed.",
+  "confidence": "Medium",
+  "id": "lease_capacity",
+  "value_model": 200,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Split-season leasing Alfalfa Scenario 1 (cease irrigation after June) 0.770 ... Full-season leasing Alfalfa Full Season Fallow 1.504 ... Crop substitution Alfalfa Winter Wheat 0.614",
+  "locator": "Table 5-1 (Savings Rate AF/acre), PDF p.29",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "Per-acre depletion cut as a share of full fallow: cease after June 0.770/1.504 = 0.51; cease after July 0.525/1.504 = 0.35; alfalfa to winter wheat 0.614/1.504 = 0.41; wheel line to SDI 0.394/1.504 = 0.26.",
+  "notes": "The deepest non-fallow per-acre options in the state report cut about 35-51% of full-season depletion, so 0.5 sits at the top of what is achievable without fallowing. The range 0.25-0.75 is OK, but 0.75 implies near-fallow.",
+  "confidence": "Medium",
+  "id": "levy_cut_cap",
+  "value_model": 0.5,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Figure 2: Water Dedicated and Delivered to Great Salt Lake, in Acre-feet, 2021-2025 ... 149,277 [2024] 163,468 [2025] ... Dedications/deliveries for 2025 are preliminary and are expected to increase upon final calculation.",
+  "locator": "Figure 2, printed p.10 (PDF p.12)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "GSL Strike Team",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Distribution Management Plan (Table 2, approved 73-3-30 applications)",
+    "publisher": "Utah Division of Water Rights",
+    "year": 2025,
+    "url": "https://waterrights.utah.gov/GSLDMP/final_GSL_distribution_management_plan_2025101.pdf",
+    "quote": "13-246 a52152 Great Salt Lake 156,000.0 ... 13-4130 a53322 Great Salt Lake 167.0 120,908.0 ... 15-414 a53468 Great Salt Lake 32,578.0",
+    "locator": "Table 2, pp.3-5"
+   }
+  ],
+  "arithmetic": "Approved dedications in DMP Table 2: in-lake (mineral-extraction rights converted in situ) ~369.7 KAF; river-delivered (mostly Jordan River) ~133.9 KAF, as maximum approved volumes.",
+  "notes": "The 149-163 KAF anchor is correct. Caveat: much of the dedicated volume is in-lake water that mineral extractors forgo (converted in situ), which needs no shepherding through rivers. The river-shepherded part (Jordan River dedications plus Trust leases, ~70 KAF transacted in 2025) is well below 150. If shepherd_start represents river-delivery capacity, a value of ~70-135 may fit better.",
+  "confidence": "Medium",
+  "id": "shepherd_start",
+  "value_model": 150,
+  "verdict": "confirmed"
+ }
+]

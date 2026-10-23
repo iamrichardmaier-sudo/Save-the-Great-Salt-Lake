@@ -1,0 +1,3085 @@
+[
+ {
+  "id": "evap_gross",
+  "label": "Gross evaporation from the lake surface",
+  "value": 3.77,
+  "unit": "ft/yr",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "About 45 inches a year, set so the evaporation balance reproduces the published equilibrium elevations.",
+  "formula": "45 in/yr ÷ 12",
+  "low": 3.4,
+  "high": 4.1,
+  "sourceIds": [
+   "usu_sims",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 7.580909325103676,
+  "nevSwingM": 0,
+  "lakeRank": 1,
+  "nevRank": 47
+ },
+ {
+  "id": "lake_value_per_af",
+  "label": "What an acre-foot is worth in the lake",
+  "value": 2440,
+  "unit": "$/AF",
+  "group": "Value",
+  "status": "derived",
+  "basis": "Avoided damage from dust, health and lost lake economy, spread over the water needed to avoid it.",
+  "formula": "annual avoided damage ÷ added inflow that avoids it",
+  "low": 1200,
+  "high": 3600,
+  "sourceIds": [
+   "dws_jobs",
+   "bea_gdp",
+   "gsl_industry_recreation",
+   "gsl_dust_mitigation_2026",
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "bea_gdp",
+    "title": "GDP by industry, Utah",
+    "url": "https://www.bea.gov/data/gdp/gdp-state"
+   },
+   {
+    "id": "gsl_industry_recreation",
+    "title": "Industry and Recreation",
+    "url": "https://greatsaltlake.utah.gov/industry-recreation/"
+   },
+   {
+    "id": "gsl_dust_mitigation_2026",
+    "title": "Study: Dust Mitigation Options and Costs for Great Salt Lake",
+    "url": "https://wilkescenter.utah.edu/great-salt-lake/study-dust-mitigation-options-and-costs/"
+   },
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 60140.78110612056,
+  "lakeRank": 66,
+  "nevRank": 1
+ },
+ {
+  "id": "shepherd_growth",
+  "label": "How fast shepherding capacity grows",
+  "value": 25,
+  "unit": "KAF/yr each year",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Only three saved-water change applications had been filed as of October 2025.",
+  "low": 0,
+  "high": 80,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 6.375753247617467,
+  "nevSwingM": 33079.74724772115,
+  "lakeRank": 2,
+  "nevRank": 2
+ },
+ {
+  "id": "precip_lake",
+  "label": "Rain and snow falling on the lake",
+  "value": 1.25,
+  "unit": "ft/yr",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "About 15 inches a year, the water-year precipitation at Salt Lake City airport.",
+  "formula": "15 in/yr ÷ 12",
+  "low": 1,
+  "high": 1.5,
+  "sourceIds": [
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 5.097426069151879,
+  "nevSwingM": 0,
+  "lakeRank": 3,
+  "nevRank": 48
+ },
+ {
+  "id": "delivery_base",
+  "label": "Share of dedicated water that survives the trip",
+  "value": 0.85,
+  "unit": "share",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Conveyance, evaporation and water never formally dedicated.",
+  "low": 0.7,
+  "high": 0.95,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 2.1166785542527577,
+  "nevSwingM": 13434.389684090158,
+  "lakeRank": 6,
+  "nevRank": 3
+ },
+ {
+  "id": "baseline_inflow",
+  "label": "River inflow the lake receives now",
+  "value": 1665,
+  "unit": "KAF/yr",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "The inflow that holds the lake 15 KAF below its current level, from the evaporation balance.",
+  "formula": "inflow to hold today’s elevation − 15 KAF/yr of current deficit",
+  "low": 1500,
+  "high": 1850,
+  "sourceIds": [
+   "dwr_gsl",
+   "usu_sims"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   }
+  ],
+  "lakeSwingFt": 3.3539209620985275,
+  "nevSwingM": 0,
+  "lakeRank": 4,
+  "nevRank": 50
+ },
+ {
+  "id": "thermostat_speed",
+  "label": "How fast the charge moves toward its target rate",
+  "value": 0.25,
+  "unit": "share of the gap per year",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption, standing in for about a four-year review cycle. Water conservation plans and drought responses are implemented in scheduled stages rather than switching fully on and off in alternate years.",
+  "low": 0.1,
+  "high": 1,
+  "sourceIds": [
+   "epa_conservation_guidelines",
+   "epa_drought_response"
+  ],
+  "sources": [
+   {
+    "id": "epa_conservation_guidelines",
+    "title": "Water Conservation Plan Guidelines",
+    "url": "https://www.epa.gov/watersense/water-conservation-plan-guidelines"
+   },
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   }
+  ],
+  "lakeSwingFt": 0.5250662488879243,
+  "nevSwingM": 9310.093942579137,
+  "lakeRank": 13,
+  "nevRank": 4
+ },
+ {
+  "id": "response_k",
+  "label": "How fast the lake moves toward its equilibrium",
+  "value": 0.12,
+  "unit": "share of the remaining gap per year",
+  "group": "Lake physics",
+  "status": "assumption",
+  "basis": "Assumption. Set so a sustained addition closes most of the gap within about twenty years, in line with the published fill scenarios.",
+  "low": 0.05,
+  "high": 0.3,
+  "sourceIds": [
+   "usu_sims"
+  ],
+  "sources": [
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   }
+  ],
+  "lakeSwingFt": 2.228219695271946,
+  "nevSwingM": 0,
+  "lakeRank": 5,
+  "nevRank": 51
+ },
+ {
+  "id": "streamflow_decline_2055",
+  "label": "Water a warming climate takes from the rivers by 2055",
+  "value": 100,
+  "unit": "KAF/yr",
+  "group": "Drivers",
+  "status": "sourced",
+  "basis": "Projected decline in natural streamflow over the period.",
+  "low": 0,
+  "high": 300,
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 1.7003787110288613,
+  "nevSwingM": 8596.586628782476,
+  "lakeRank": 8,
+  "nevRank": 5
+ },
+ {
+  "id": "shepherd_monitor_max",
+  "label": "Extra shepherding capacity monitoring can add",
+  "value": 50,
+  "unit": "KAF/yr",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Measurement lets more water be tracked and legally protected on its way down.",
+  "low": 0,
+  "high": 120,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 0.38282773658102087,
+  "nevSwingM": 7563.681845830921,
+  "lakeRank": 19,
+  "nevRank": 6
+ },
+ {
+  "id": "inflow_efficiency",
+  "label": "Inflow efficiency factor in the balance",
+  "value": 1.03,
+  "unit": "ratio",
+  "group": "Lake physics",
+  "status": "derived",
+  "basis": "Closes the balance against the published equilibrium elevations; absorbs groundwater and ungauged inflow.",
+  "formula": "area(E) x net evaporation = river inflow x this factor",
+  "low": 1,
+  "high": 1.08,
+  "sourceIds": [
+   "usu_sims"
+  ],
+  "sources": [
+   {
+    "id": "usu_sims",
+    "title": "Utah State University Great Salt Lake level simulations",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Conservation scenarios: fill to 4,198 ft in 5, 10 and 30 years"
+   }
+  ],
+  "lakeSwingFt": 1.8587322851053614,
+  "nevSwingM": 0,
+  "lakeRank": 7,
+  "nevRank": 49
+ },
+ {
+  "id": "crop_cap",
+  "label": "Crop switching, most it can yield",
+  "value": 100,
+  "unit": "KAF/yr",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption, stated as such in the option table. How many farms will switch, not how much money is offered.",
+  "low": 40,
+  "high": 250,
+  "sourceIds": [
+   "nass_utah",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.30928571864387777,
+  "nevSwingM": 7454.461031861436,
+  "lakeRank": 21,
+  "nevRank": 7
+ },
+ {
+  "id": "lease_capacity",
+  "label": "Water willing sellers will lease",
+  "value": 200,
+  "unit": "KAF/yr",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. The sharpest weakness in the model: it should be replaced with actual enrolment in the state preservation programme.",
+  "low": 100,
+  "high": 1600,
+  "sourceIds": [
+   "scpp_aspen"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 6816.298720990737,
+  "lakeRank": 54,
+  "nevRank": 8
+ },
+ {
+  "id": "levy_cut_cap",
+  "label": "Most the levy can cut on an acre",
+  "value": 0.5,
+  "unit": "share of application",
+  "group": "Crop levy",
+  "status": "assumption",
+  "basis": "Assumption. A levy on over-application cannot take a field to no water at all, and technical options are limited by crop, system and water-right feasibility.",
+  "low": 0.25,
+  "high": 0.75,
+  "sourceIds": [
+   "ag_optimization_2026",
+   "nass_iwms_2023"
+  ],
+  "sources": [
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   },
+   {
+    "id": "nass_iwms_2023",
+    "title": "2023 Irrigation and Water Management Survey",
+    "url": "https://data.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/index.php"
+   }
+  ],
+  "lakeSwingFt": 0.5022871163928357,
+  "nevSwingM": 6169.719443591479,
+  "lakeRank": 14,
+  "nevRank": 9
+ },
+ {
+  "id": "shepherd_start",
+  "label": "Water the system can shepherd to the lake at the start",
+  "value": 150,
+  "unit": "KAF/yr",
+  "group": "Delivery",
+  "status": "sourced",
+  "basis": "Anchored to dedicated deliveries of 149 to 163 KAF/yr in 2024 and 2025.",
+  "note": "The State Engineer’s own October 2025 plan says it does not address moving saved or leased water through the system to the lake.",
+  "low": 100,
+  "high": 250,
+  "sourceIds": [
+   "strike_update",
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "strike_update",
+    "title": "Great Salt Lake Strike Team update",
+    "url": "https://science.utah.edu/wilkes-center/gsl-strike-team-update/"
+   },
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 0.830248738073351,
+  "nevSwingM": 5232.74996720341,
+  "lakeRank": 9,
+  "nevRank": 11
+ },
+ {
+  "id": "ramp_years",
+  "label": "Years a programme takes to reach full output",
+  "value": 3,
+  "unit": "years",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Contracts, staff and equipment do not appear in the first year; the agricultural report is a planning exercise and does not promise instant implementation.",
+  "low": 1,
+  "high": 6,
+  "sourceIds": [
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.06571715649170073,
+  "nevSwingM": 5336.492912900845,
+  "lakeRank": 33,
+  "nevRank": 10
+ },
+ {
+  "id": "growth_draw_2055",
+  "label": "Water population growth takes by 2055",
+  "value": 92,
+  "unit": "KAF/yr",
+  "group": "Drivers",
+  "status": "sourced",
+  "basis": "Additional municipal and industrial depletion as the basin grows.",
+  "low": 40,
+  "high": 180,
+  "sourceIds": [
+   "gardner_proj",
+   "dwr_gsl",
+   "strike_2026"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   }
+  ],
+  "lakeSwingFt": 0.7934612523640681,
+  "nevSwingM": 4074.9590280290286,
+  "lakeRank": 10,
+  "nevRank": 15
+ },
+ {
+  "id": "measurement_gain_max",
+  "label": "Most measurement can add to the delivery share",
+  "value": 0.1,
+  "unit": "share points",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption, capped at ten points. The cap is a modelling judgement; the sources identify the need for tracking and change administration, not this exact gain.",
+  "low": 0,
+  "high": 0.15,
+  "sourceIds": [
+   "state_engineer_dmp",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.5643097003503499,
+  "nevSwingM": 3616.535413079204,
+  "lakeRank": 11,
+  "nevRank": 17
+ },
+ {
+  "id": "cloud_cap",
+  "label": "Cloud seeding, most it can yield",
+  "value": 50,
+  "unit": "KAF/yr",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption, stated as such in the option table. Capped by how many storms and target areas exist, not by money.",
+  "low": 20,
+  "high": 100,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.5261551902040082,
+  "nevSwingM": 3825.7937609445216,
+  "lakeRank": 12,
+  "nevRank": 16
+ },
+ {
+  "id": "forced_delivery_penalty",
+  "label": "Delivery share on water taken rather than bought",
+  "value": 0.71,
+  "unit": "share",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "Assumption. A cut ordered on a farm is harder to track to the lake than a right the state holds.",
+  "low": 0.5,
+  "high": 0.95,
+  "sourceIds": [
+   "state_engineer_dmp",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.15686639247815037,
+  "nevSwingM": 4699.076527630597,
+  "lakeRank": 26,
+  "nevRank": 12
+ },
+ {
+  "id": "ag_charge_response",
+  "label": "How strongly farms cut back when charged",
+  "value": 0.4,
+  "unit": "coefficient",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. Cut share is this coefficient times the charge as a fraction of the water’s net value; irrigation-demand elasticity studies supply only an analogue, not this exact coefficient.",
+  "formula": "cut share = 0.4 x rate / net value of irrigation water",
+  "low": 0.2,
+  "high": 0.7,
+  "sourceIds": [
+   "irrigation_elasticity_meta",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.1527495826694576,
+  "nevSwingM": 4442.832900553898,
+  "lakeRank": 28,
+  "nevRank": 13
+ },
+ {
+  "id": "goal_added",
+  "label": "Added inflow the plan aims for",
+  "value": 875,
+  "unit": "KAF/yr",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "Sustained additional inflow sought; the evaporation balance puts it near the bottom of the healthy range.",
+  "note": "The state range runs from 471 to 1,055 KAF/yr depending on the baseline climate assumed.",
+  "low": 471,
+  "high": 1055,
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 0.4837685050542859,
+  "nevSwingM": 4231.110237618843,
+  "lakeRank": 15,
+  "nevRank": 14
+ },
+ {
+  "id": "measurement_gain_scale",
+  "label": "Monitoring money that buys most of the delivery gain",
+  "value": 60,
+  "unit": "$M/yr",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Sets how fast measurement lifts the delivery share toward its cap; monitoring stands in for metering, accounting and change-application capacity.",
+  "formula": "gain = cap x (1 − e^(−monitoring ÷ this))",
+  "low": 20,
+  "high": 150,
+  "sourceIds": [
+   "state_engineer_dmp",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.44947708821655397,
+  "nevSwingM": 2856.7298570062558,
+  "lakeRank": 16,
+  "nevRank": 21
+ },
+ {
+  "id": "urban_to_lake",
+  "label": "Share of a city saving that reaches the lake",
+  "value": 0.25,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "The rest is re-used inside the city unless it is formally dedicated to the lake.",
+  "low": 0.1,
+  "high": 0.5,
+  "sourceIds": [
+   "dwr_gsl",
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 0.4422284984430007,
+  "nevSwingM": 3337.3418943969955,
+  "lakeRank": 17,
+  "nevRank": 20
+ },
+ {
+  "id": "levy_depletion_factor",
+  "label": "Depletion freed per acre-foot of application cut",
+  "value": 1.3,
+  "unit": "AF per AF/acre cut",
+  "group": "Crop levy",
+  "status": "assumption",
+  "basis": "Assumption. Converts a cut in water applied per acre into depletion freed across the acreage; depletion-reduction estimates are planning values with explicit uncertainty.",
+  "low": 1,
+  "high": 1.6,
+  "sourceIds": [
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.4003845389570415,
+  "nevSwingM": 3459.570280728265,
+  "lakeRank": 18,
+  "nevRank": 18
+ },
+ {
+  "id": "irrigation_net_value",
+  "label": "Net value of irrigation water to a farm",
+  "value": 133,
+  "unit": "$/AF",
+  "group": "Scarcity charge",
+  "status": "sourced",
+  "basis": "What an acre-foot earns a farm after costs; the point at which a charge stops being worth paying.",
+  "low": 80,
+  "high": 200,
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0.1184047405831734,
+  "nevSwingM": 3431.9249535428316,
+  "lakeRank": 29,
+  "nevRank": 19
+ },
+ {
+  "id": "onfarm_cost",
+  "label": "On-farm optimisation, cost per acre-foot",
+  "value": 581,
+  "unit": "$/AF",
+  "group": "Programmes",
+  "status": "sourced",
+  "basis": "Midpoint of the $148 to $1,014 range across pivots, lining and on-farm conversion.",
+  "formula": "midpoint of 148 and 1014",
+  "low": 148,
+  "high": 1014,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.34853221422690694,
+  "nevSwingM": 2794.616524125624,
+  "lakeRank": 20,
+  "nevRank": 22
+ },
+ {
+  "id": "application_mean",
+  "label": "Water applied per acre of hay, on average",
+  "value": 2.64,
+  "unit": "AF/acre",
+  "group": "Crop levy",
+  "status": "sourced",
+  "basis": "Basin average application on hay ground.",
+  "low": 2.2,
+  "high": 3.1,
+  "sourceIds": [
+   "dwr_gsl",
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0.28045501526867156,
+  "nevSwingM": 1949.4260273884283,
+  "lakeRank": 22,
+  "nevRank": 25
+ },
+ {
+  "id": "phrag_cap",
+  "label": "Phragmites removal, most it can yield",
+  "value": 50,
+  "unit": "KAF/yr",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption. Limited by the acreage of infested delta, not by money.",
+  "low": 25,
+  "high": 90,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.20378423217334785,
+  "nevSwingM": 2321.1362306791343,
+  "lakeRank": 24,
+  "nevRank": 23
+ },
+ {
+  "id": "crop_delivery",
+  "label": "Crop switching, share reaching the lake",
+  "value": 0.8,
+  "unit": "share",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption. Water left in the river still passes diversions on its way down.",
+  "low": 0.6,
+  "high": 0.95,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.20639932386711735,
+  "nevSwingM": 649.8626990576595,
+  "lakeRank": 23,
+  "nevRank": 29
+ },
+ {
+  "id": "transition_jobs_per_m",
+  "label": "Transition and monitoring jobs per $M spent",
+  "value": 7.4,
+  "unit": "jobs per $M/yr",
+  "group": "Jobs",
+  "status": "assumption",
+  "basis": "Assumption. Crop-transition work, measurement and verification employ people directly.",
+  "low": 3,
+  "high": 14,
+  "sourceIds": [
+   "dws_jobs"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 2183.429204050197,
+  "lakeRank": 70,
+  "nevRank": 24
+ },
+ {
+  "id": "crop_cost",
+  "label": "Crop switching, cost per acre-foot",
+  "value": 318.4,
+  "unit": "$/AF",
+  "group": "Programmes",
+  "status": "derived",
+  "basis": "The blended rate inside the published $276 to $416 range that fills the programme’s whole capacity at $39.8M a year.",
+  "formula": "saturation spend x delivery share ÷ capacity",
+  "low": 276,
+  "high": 416,
+  "sourceIds": [
+   "nass_utah",
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.1978339913775926,
+  "nevSwingM": 623.3170183739567,
+  "lakeRank": 25,
+  "nevRank": 32
+ },
+ {
+  "id": "hay_yield",
+  "label": "Hay yield per acre",
+  "value": 4.3,
+  "unit": "tons/acre",
+  "group": "Jobs",
+  "status": "sourced",
+  "basis": "Average irrigated hay yield in the basin.",
+  "low": 3,
+  "high": 5.5,
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 1704.244320247417,
+  "lakeRank": 72,
+  "nevRank": 26
+ },
+ {
+  "id": "ag_charge_cap",
+  "label": "Most a charge can make farms cut",
+  "value": 0.6,
+  "unit": "share of agricultural depletion",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. A charge alone cannot drive farm water use to zero; capped below full agricultural depletion because substitution and technical feasibility are limited.",
+  "low": 0.3,
+  "high": 0.8,
+  "sourceIds": [
+   "irrigation_elasticity_meta",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.018555998090050707,
+  "nevSwingM": 1170.764421800326,
+  "lakeRank": 37,
+  "nevRank": 27
+ },
+ {
+  "id": "shepherd_monitor_rate",
+  "label": "How quickly monitoring money buys that capacity",
+  "value": 2.4,
+  "unit": "rate in a saturating curve",
+  "group": "Delivery",
+  "status": "assumption",
+  "basis": "Assumption. Saturating, so the first dollars buy the most and the last buy little; tracking and legal protection are identified as implementation constraints rather than solved systems.",
+  "formula": "extra capacity = max x (1 − e^(−rate x monitoring ÷ max))",
+  "low": 0.5,
+  "high": 6,
+  "sourceIds": [
+   "state_engineer_dmp",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.15656589187256031,
+  "nevSwingM": 902.2544057224513,
+  "lakeRank": 27,
+  "nevRank": 28
+ },
+ {
+  "id": "onfarm_delivery",
+  "label": "On-farm optimisation, share reaching the lake",
+  "value": 0.55,
+  "unit": "share",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption, midpoint of 40 to 70 per cent. Efficiency cuts return flow as well as diversion, so part of the nominal saving was never new water.",
+  "note": "The irrigation-efficiency literature finds that basin-scale savings are routinely smaller than farm-scale savings, and can be negative.",
+  "low": 0.4,
+  "high": 0.7,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.10696191252100107,
+  "nevSwingM": 625.3252592301142,
+  "lakeRank": 30,
+  "nevRank": 31
+ },
+ {
+  "id": "mi_elasticity",
+  "label": "How strongly cities and industry respond to price",
+  "value": 0.3,
+  "unit": "price elasticity (absolute)",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption, at the low end of the published range for industrial and commercial water demand and checked against public-water conservation guidance.",
+  "low": 0.1,
+  "high": 0.6,
+  "sourceIds": [
+   "epa_conservation_guidelines",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "epa_conservation_guidelines",
+    "title": "Water Conservation Plan Guidelines",
+    "url": "https://www.epa.gov/watersense/water-conservation-plan-guidelines"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": 0.02063357837323565,
+  "nevSwingM": 629.898311576173,
+  "lakeRank": 36,
+  "nevRank": 30
+ },
+ {
+  "id": "phrag_cost",
+  "label": "Phragmites removal, cost per acre-foot",
+  "value": 186,
+  "unit": "$/AF",
+  "group": "Programmes",
+  "status": "sourced",
+  "basis": "Treatment cost per acre-foot of water freed by clearing invasive reed from the delta.",
+  "low": 120,
+  "high": 300,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.09016023029562348,
+  "nevSwingM": 404.1864842260402,
+  "lakeRank": 31,
+  "nevRank": 37
+ },
+ {
+  "id": "cloud_cost",
+  "label": "Cloud seeding, cost per acre-foot",
+  "value": 10,
+  "unit": "$/AF",
+  "group": "Programmes",
+  "status": "sourced",
+  "basis": "Programme cost per acre-foot of added runoff.",
+  "low": 5,
+  "high": 40,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.08969877922390879,
+  "nevSwingM": 233.28011351340683,
+  "lakeRank": 32,
+  "nevRank": 39
+ },
+ {
+  "id": "mi_reference_price",
+  "label": "What cities and industry pay for water now",
+  "value": 380,
+  "unit": "$/AF",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. The price a percentage charge is measured against when working out the response, anchored to published local utility rate schedules.",
+  "low": 200,
+  "high": 900,
+  "sourceIds": [
+   "slc_rates_2026"
+  ],
+  "sources": [
+   {
+    "id": "slc_rates_2026",
+    "title": "Current Rates",
+    "url": "https://www.slc.gov/utilities/pay-my-bill/current-rates/"
+   }
+  ],
+  "lakeSwingFt": 0.018342975589803245,
+  "nevSwingM": 559.0365087216778,
+  "lakeRank": 38,
+  "nevRank": 33
+ },
+ {
+  "id": "season_value",
+  "label": "What a season of lawn watering is worth to a household",
+  "value": 140,
+  "unit": "$/season",
+  "group": "Residential lawns",
+  "status": "assumption",
+  "basis": "Assumption. A fine is weighed against this, so it sets how much a citation changes behaviour; local water bills and willingness-to-pay estimates are the anchors, not a direct lawn-utility estimate.",
+  "low": 60,
+  "high": 300,
+  "sourceIds": [
+   "slc_rates_2026",
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "slc_rates_2026",
+    "title": "Current Rates",
+    "url": "https://www.slc.gov/utilities/pay-my-bill/current-rates/"
+   },
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": 0.054434746172773885,
+  "nevSwingM": 413.11495475233824,
+  "lakeRank": 34,
+  "nevRank": 36
+ },
+ {
+  "id": "lease_rate_floor",
+  "label": "Floor on the lease rate",
+  "value": 0.3,
+  "unit": "multiple of the base rate",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. Stops charges driving the modelled reservation price to nothing; bounded by observed programme participation and lease-price analogues.",
+  "low": 0.1,
+  "high": 0.8,
+  "sourceIds": [
+   "scpp_aspen",
+   "irrigation_elasticity_meta"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 430.38271103389707,
+  "lakeRank": 60,
+  "nevRank": 34
+ },
+ {
+  "id": "application_cv",
+  "label": "Spread of application between fields",
+  "value": 0.3,
+  "unit": "coefficient of variation",
+  "group": "Crop levy",
+  "status": "assumption",
+  "basis": "Assumption. Application is treated as lognormal around the mean, so a threshold catches the heaviest users first; national irrigation-survey tables show the application and method variation this stands in for.",
+  "low": 0.15,
+  "high": 0.5,
+  "sourceIds": [
+   "nass_iwms_2023"
+  ],
+  "sources": [
+   {
+    "id": "nass_iwms_2023",
+    "title": "2023 Irrigation and Water Management Survey",
+    "url": "https://data.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/index.php"
+   }
+  ],
+  "lakeSwingFt": 0.038655645705148345,
+  "nevSwingM": 33.382721188507276,
+  "lakeRank": 35,
+  "nevRank": 44
+ },
+ {
+  "id": "wage_per_job",
+  "label": "Average annual wage per Utah job",
+  "value": 65800,
+  "unit": "$ per job-year",
+  "group": "Jobs",
+  "status": "assumption",
+  "basis": "Statewide 2024 total covered wages divided by covered employment, as reported from the Department of Workforce Services annual table. Not opened from this session (the host was unreachable), so held as an assumption until checked.",
+  "low": 55000,
+  "high": 75000,
+  "sourceIds": [
+   "dws_wages"
+  ],
+  "sources": [
+   {
+    "id": "dws_wages",
+    "title": "Utah Employment and Wages, annual averages by industry (Table 19)",
+    "url": "https://jobs.utah.gov/wi/pubs/em/currentreport/table19.pdf"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 429.69205430947477,
+  "lakeRank": 71,
+  "nevRank": 35
+ },
+ {
+  "id": "phrag_lag",
+  "label": "Phragmites removal, years before the water shows up",
+  "value": 3,
+  "unit": "years",
+  "group": "Programmes",
+  "status": "sourced",
+  "basis": "Treated stands have to die back and be replaced before the water saving appears.",
+  "low": 1,
+  "high": 5,
+  "sourceIds": [
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 0.007698265614635602,
+  "nevSwingM": 291.3448913692846,
+  "lakeRank": 41,
+  "nevRank": 38
+ },
+ {
+  "id": "phrag_delivery",
+  "label": "Phragmites removal, share reaching the lake",
+  "value": 0.9,
+  "unit": "share",
+  "group": "Programmes",
+  "status": "sourced",
+  "basis": "Highest delivery of any programme: the water is freed at the lake edge, below every diversion.",
+  "low": 0.75,
+  "high": 0.98,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.013190182438847842,
+  "nevSwingM": 117.89755540856277,
+  "lakeRank": 39,
+  "nevRank": 41
+ },
+ {
+  "id": "compliance_floor",
+  "label": "Households who comply without any enforcement",
+  "value": 0.35,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "assumption",
+  "basis": "Assumption. Habit and neighbourhood norms, before a single citation is written; restriction studies show stringency and enforcement matter, but do not publish this floor for Utah.",
+  "low": 0.15,
+  "high": 0.55,
+  "sourceIds": [
+   "finley_2020",
+   "epa_drought_response"
+  ],
+  "sources": [
+   {
+    "id": "finley_2020",
+    "title": "Curbing the Summer Surge: Permanent Outdoor Water Use Restrictions in Humid and Semiarid Cities",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019WR026466"
+   },
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   }
+  ],
+  "lakeSwingFt": 0.008406690564697783,
+  "nevSwingM": 63.63582728495385,
+  "lakeRank": 40,
+  "nevRank": 43
+ },
+ {
+  "id": "retire_capacity",
+  "label": "Water willing sellers will sell outright",
+  "value": 150,
+  "unit": "KAF/yr",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption, as above.",
+  "low": 75,
+  "high": 600,
+  "sourceIds": [
+   "scpp_aspen"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 156.06184649108764,
+  "lakeRank": 55,
+  "nevRank": 40
+ },
+ {
+  "id": "cloud_delivery",
+  "label": "Cloud seeding, share reaching the lake",
+  "value": 0.35,
+  "unit": "share",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption. Added runoff is diverted and depleted upstream like any other water.",
+  "low": 0.2,
+  "high": 0.6,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 78.01780143393262,
+  "lakeRank": 47,
+  "nevRank": 42
+ },
+ {
+  "id": "onfarm_cap",
+  "label": "On-farm optimisation, most it can yield",
+  "value": 70,
+  "unit": "KAF/yr",
+  "group": "Programmes",
+  "status": "assumption",
+  "basis": "Assumption. Bounded by how much ground can be converted a year.",
+  "low": 30,
+  "high": 150,
+  "sourceIds": [
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0.002044580050096556,
+  "nevSwingM": 14.495202379388502,
+  "lakeRank": 42,
+  "nevRank": 45
+ },
+ {
+  "id": "mi_charge_cap",
+  "label": "Most a charge can make cities and industry cut",
+  "value": 0.4,
+  "unit": "share of their depletion",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. M&I demand management has practical upper limits because not every use is discretionary or consumptive.",
+  "low": 0.2,
+  "high": 0.6,
+  "sourceIds": [
+   "epa_conservation_guidelines",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "epa_conservation_guidelines",
+    "title": "Water Conservation Plan Guidelines",
+    "url": "https://www.epa.gov/watersense/water-conservation-plan-guidelines"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": 5.035744834458455e-7,
+  "nevSwingM": 0.42117014140239917,
+  "lakeRank": 43,
+  "nevRank": 46
+ },
+ {
+  "id": "budget",
+  "label": "Annual budget",
+  "value": 100,
+  "unit": "$M/yr",
+  "group": "Budget",
+  "status": "assumption",
+  "basis": "Policy constraint from the brief: allocate $100M a year.",
+  "low": 25,
+  "high": 800,
+  "sourceIds": [],
+  "sources": [],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 44,
+  "nevRank": 52
+ },
+ {
+  "id": "monitoring",
+  "label": "Monitoring and verification",
+  "value": 25,
+  "unit": "$M/yr",
+  "group": "Budget",
+  "status": "assumption",
+  "basis": "Assumption. Buys no water itself; it raises how much of the rest can be shepherded to the lake.",
+  "low": 0,
+  "high": 50,
+  "sourceIds": [
+   "state_engineer_dmp"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 45,
+  "nevRank": 53
+ },
+ {
+  "id": "lease_to_own_dollars",
+  "label": "Money set aside for lease-to-own rights",
+  "value": 30,
+  "unit": "$M/yr",
+  "group": "Budget",
+  "status": "assumption",
+  "basis": "Assumption. A dial: whatever this does not absorb flows to the conservation programmes.",
+  "low": 0,
+  "high": 100,
+  "sourceIds": [],
+  "sources": [],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 46,
+  "nevRank": 54
+ },
+ {
+  "id": "escalator_step",
+  "label": "How fast the charge escalates while the lake is short",
+  "value": 0.12,
+  "unit": "per year",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. An integral term that keeps raising the rate while the shortfall persists, echoing staged drought-response escalation.",
+  "low": 0.05,
+  "high": 0.3,
+  "sourceIds": [
+   "epa_drought_response",
+   "gsl_commissioner"
+  ],
+  "sources": [
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   },
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 48,
+  "nevRank": 55
+ },
+ {
+  "id": "escalator_cap",
+  "label": "Most the escalator can multiply the charge by",
+  "value": 4,
+  "unit": "multiple",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. Caps the staged response so the price signal cannot grow without bound.",
+  "low": 1,
+  "high": 8,
+  "sourceIds": [
+   "epa_drought_response"
+  ],
+  "sources": [
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 49,
+  "nevRank": 56
+ },
+ {
+  "id": "escalator_deadband",
+  "label": "Shortfall the escalator tolerates before climbing",
+  "value": 0.15,
+  "unit": "share of the goal",
+  "group": "Scarcity charge",
+  "status": "assumption",
+  "basis": "Assumption. Stops the rate climbing over a shortfall inside the noise of the model and the measurement uncertainty in basin accounting.",
+  "low": 0,
+  "high": 0.4,
+  "sourceIds": [
+   "strike_2026",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 50,
+  "nevRank": 57
+ },
+ {
+  "id": "hay_net_return",
+  "label": "Net return on an acre of hay",
+  "value": 175,
+  "unit": "$/acre",
+  "group": "Crop levy",
+  "status": "sourced",
+  "basis": "What an acre earns after costs; the levy is measured against it.",
+  "low": 90,
+  "high": 300,
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 51,
+  "nevRank": 58
+ },
+ {
+  "id": "landscape_sqft",
+  "label": "Landscaped area per home",
+  "value": 6938,
+  "unit": "sq ft",
+  "group": "Residential lawns",
+  "status": "derived",
+  "basis": "Regional survey figures weighted by basin population: 5,154 sq ft in Salt Lake, 8,868 in Bear River.",
+  "formula": "sum of each region’s landscaped area weighted by its share of basin population",
+  "note": "Checked against the source and it does not match. Table 4-9 of the 2019 Regional Goals report gives 4,239 sq ft landscaped on an 8,463 sq ft lot in Salt Lake County and 8,759 on 15,264 in Box Elder, for 2015. Both sets take landscaping as half the lot, so the method agrees, but these figures are about a fifth lower. The population-weighted basin figure from the published table is nearer 5,100 sq ft. Using that instead would imply about 56 inches of water a year on the basin’s lawns, which is implausibly deep for turf, so one of the lawn count, the landscaped area or the reported lawn water is inconsistent with the other two. The sensitivity range covers both.",
+  "low": 4200,
+  "high": 9000,
+  "sourceIds": [
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah’s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 52,
+  "nevRank": 59
+ },
+ {
+  "id": "turf_need",
+  "label": "What turf actually needs",
+  "value": 30,
+  "unit": "inches/yr",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "Agronomic requirement for cool-season turf in this climate, against about 41 inches applied.",
+  "low": 24,
+  "high": 36,
+  "sourceIds": [
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah’s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 53,
+  "nevRank": 60
+ },
+ {
+  "id": "mandate_pull",
+  "label": "How much a credible mandate widens the market",
+  "value": 0.7,
+  "unit": "extra share of capacity",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption on the cause. A measured participation jump of about 1.7x came from offering a fixed price with no haggling, not from a threat of curtailment.",
+  "low": 0,
+  "high": 1.2,
+  "sourceIds": [
+   "scpp_aspen",
+   "lower_basin_2023"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "lower_basin_2023",
+    "title": "Lower Colorado Basin states compromise on water conservation",
+    "url": "https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 56,
+  "nevRank": 61
+ },
+ {
+  "id": "lease_elasticity",
+  "label": "How the lease price rises as the state buys more",
+  "value": 1,
+  "unit": "elasticity",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. It moves the price paid, not the quantity available, so the result barely notices it; conservation-program participation and irrigation-price response are the closest analogues.",
+  "low": 0.3,
+  "high": 3,
+  "sourceIds": [
+   "scpp_aspen",
+   "irrigation_elasticity_meta"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 57,
+  "nevRank": 62
+ },
+ {
+  "id": "lease_base_rate",
+  "label": "Lease rate before any scarcity or relief",
+  "value": 380,
+  "unit": "$/AF/yr",
+  "group": "Acquisition",
+  "status": "sourced",
+  "basis": "Going annual rate for leased water in the basin.",
+  "low": 150,
+  "high": 700,
+  "sourceIds": [
+   "scpp_aspen",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 58,
+  "nevRank": 63
+ },
+ {
+  "id": "capital_price",
+  "label": "Price to buy a water right outright",
+  "value": 6000,
+  "unit": "$/AF",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Anchored to Colorado River buyouts, and contradicted by two Utah figures: a mineral-company settlement near $208/AF and state planning near $250/AF. Unresolved.",
+  "low": 250,
+  "high": 9000,
+  "sourceIds": [
+   "scpp_aspen",
+   "lower_basin_2023"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "lower_basin_2023",
+    "title": "Lower Colorado Basin states compromise on water conservation",
+    "url": "https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 59,
+  "nevRank": 64
+ },
+ {
+  "id": "lease_rate_ceiling",
+  "label": "Ceiling on the lease rate",
+  "value": 6,
+  "unit": "multiple of the base rate",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. Allows scarcity to raise lease rates but caps them before one instrument absorbs every dollar.",
+  "low": 2,
+  "high": 12,
+  "sourceIds": [
+   "scpp_aspen",
+   "irrigation_elasticity_meta"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 61,
+  "nevRank": 65
+ },
+ {
+  "id": "state_interest",
+  "label": "Interest the state pays on instalment purchases",
+  "value": 0.015,
+  "unit": "share per year",
+  "group": "Acquisition",
+  "status": "sourced",
+  "basis": "State borrowing cost, between 1 and 3 per cent.",
+  "low": 0.01,
+  "high": 0.03,
+  "sourceIds": [
+   "gsl_commissioner"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 62,
+  "nevRank": 66
+ },
+ {
+  "id": "repossession_discount",
+  "label": "How far below average the value of repossessed ground sits",
+  "value": 0.26,
+  "unit": "share below mean",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. Selection is weighted away from productive ground: a bottom-third draw averages this much below the mean.",
+  "low": 0,
+  "high": 0.45,
+  "sourceIds": [
+   "nass_iwms_2023",
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_iwms_2023",
+    "title": "2023 Irrigation and Water Management Survey",
+    "url": "https://data.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/index.php"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 63,
+  "nevRank": 67
+ },
+ {
+  "id": "mandate_floor",
+  "label": "Mandated cut, if the rest falls short",
+  "value": 1100,
+  "unit": "KAF/yr",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice, not a measurement. It only takes what the voluntary levers did not already find, sized against the state recovery target and updated basin water budget.",
+  "low": 0,
+  "high": 1200,
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2026"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 64,
+  "nevRank": 68
+ },
+ {
+  "id": "mandate_phase",
+  "label": "Years to phase the mandate in",
+  "value": 10,
+  "unit": "years",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice. The phase-in length is not measured; it is constrained by implementation and water-right administration capacity.",
+  "low": 1,
+  "high": 25,
+  "sourceIds": [
+   "state_engineer_dmp",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 65,
+  "nevRank": 69
+ },
+ {
+  "id": "hay_value_per_af",
+  "label": "What an acre-foot earns in hay",
+  "value": 245,
+  "unit": "$/AF",
+  "group": "Value",
+  "status": "derived",
+  "basis": "Hay receipts divided by the water depleted growing it.",
+  "formula": "yield x price ÷ consumptive use per acre",
+  "low": 150,
+  "high": 400,
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 67,
+  "nevRank": 70
+ },
+ {
+  "id": "farm_jobs_per_1000_acres",
+  "label": "Field jobs per thousand irrigated acres",
+  "value": 19.2,
+  "unit": "jobs per 1,000 acres",
+  "group": "Jobs",
+  "status": "derived",
+  "basis": "Farm employment divided by irrigated acres.",
+  "formula": "state farm employment ÷ state irrigated acres",
+  "note": "A farm-wide average applied to hay, which is less labour-intensive than most crops, so field losses here are likely overstated.",
+  "low": 10,
+  "high": 30,
+  "sourceIds": [
+   "dws_jobs",
+   "nass_utah",
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 68,
+  "nevRank": 71
+ },
+ {
+  "id": "lake_jobs_full",
+  "label": "Jobs in the lake economy once it is healthy",
+  "value": 8650,
+  "unit": "jobs",
+  "group": "Jobs",
+  "status": "derived",
+  "basis": "Brine shrimp, mineral extraction and recreation employment at a healthy lake, scaled by how far the lake recovers.",
+  "formula": "lake-economy employment observed at the package’s recovery ÷ the share of the way it recovers",
+  "low": 4000,
+  "high": 14000,
+  "sourceIds": [
+   "dws_jobs",
+   "bea_gdp",
+   "gsl_industry_recreation"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "bea_gdp",
+    "title": "GDP by industry, Utah",
+    "url": "https://www.bea.gov/data/gdp/gdp-state"
+   },
+   {
+    "id": "gsl_industry_recreation",
+    "title": "Industry and Recreation",
+    "url": "https://greatsaltlake.utah.gov/industry-recreation/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 69,
+  "nevRank": 72
+ },
+ {
+  "id": "livestock_jobs_at_risk",
+  "label": "Dairy and beef jobs if the cut reaches local feed",
+  "value": 1900,
+  "unit": "jobs",
+  "group": "Jobs",
+  "status": "derived",
+  "basis": "Dairy and beef employment exposed once a cut passes the basin’s forage surplus.",
+  "formula": "basin dairy and beef employment x the share of local feed a cut reaches",
+  "low": 800,
+  "high": 3500,
+  "sourceIds": [
+   "dws_jobs",
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 73,
+  "nevRank": 73
+ },
+ {
+  "id": "wtp_household",
+  "label": "What a household says it would pay",
+  "value": 128,
+  "unit": "$/household/yr",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "Contingent-valuation survey of Utah households; the reported range runs from $113 to $144.",
+  "low": 113,
+  "high": 144,
+  "sourceIds": [
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 74,
+  "nevRank": 74
+ },
+ {
+  "id": "mandate_penalty",
+  "label": "Penalty for not meeting a mandated cut",
+  "value": 0,
+  "unit": "$/AF",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice. Priced at what the water is worth in the lake, it converts coercion into transactions: a farm that will not sell pays the social cost instead.",
+  "low": 0,
+  "high": 2440,
+  "sourceIds": [
+   "lower_basin_2023"
+  ],
+  "sources": [
+   {
+    "id": "lower_basin_2023",
+    "title": "Lower Colorado Basin states compromise on water conservation",
+    "url": "https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 75,
+  "nevRank": 75
+ },
+ {
+  "id": "repossess_cap",
+  "label": "Most that can be repossessed in a year",
+  "value": 50,
+  "unit": "KAF/yr",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice, and a legal limit: compulsory acquisition at market value takes time to process.",
+  "low": 0,
+  "high": 150,
+  "sourceIds": [
+   "farm_bureau_2026"
+  ],
+  "sources": [
+   {
+    "id": "farm_bureau_2026",
+    "title": "Utah Farm Bureau 2026 Legislative Update",
+    "url": "https://www.utahfarmbureau.org/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 76,
+  "nevRank": 76
+ },
+ {
+  "id": "inflow_cv",
+  "label": "Year-to-year spread in river inflow",
+  "value": 0.35,
+  "unit": "coefficient of variation",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "Assumption, standing in for the gauged record. Inflow varies more than any lever on this page.",
+  "low": 0.2,
+  "high": 0.55,
+  "sourceIds": [
+   "strike_2025",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 77,
+  "nevRank": 77
+ },
+ {
+  "id": "inflow_ar1",
+  "label": "How much a dry year makes the next year dry",
+  "value": 0.35,
+  "unit": "lag-one autocorrelation",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "Assumption. Drought persistence: wet and dry spells cluster rather than alternating.",
+  "low": 0,
+  "high": 0.7,
+  "sourceIds": [
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 78,
+  "nevRank": 78
+ },
+ {
+  "id": "sim_runs",
+  "label": "Inflow sequences simulated",
+  "value": 120,
+  "unit": "runs",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "A modelling choice: enough for a stable tenth and ninetieth percentile without slowing the page.",
+  "low": 50,
+  "high": 500,
+  "sourceIds": [],
+  "sources": [],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 79,
+  "nevRank": 79
+ },
+ {
+  "id": "fat_tail_factor",
+  "label": "How much a multi-decade drought deepens the dry tail",
+  "value": 0.75,
+  "unit": "multiplier on inflow in a long drought",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "Assumption, used only when the long-drought toggle is on; it stress-tests the drought-risk tail described in Strike Team summaries rather than estimating a forecast.",
+  "low": 0.5,
+  "high": 0.95,
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 80,
+  "nevRank": 80
+ },
+ {
+  "id": "share_with_lawn",
+  "label": "Share of homes with an irrigated lawn",
+  "value": 0.72,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "assumption",
+  "basis": "Assumption. Flats and townhouses without private irrigated ground are excluded.",
+  "low": 0.55,
+  "high": 0.85,
+  "sourceIds": [
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah’s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 81,
+  "nevRank": 81
+ },
+ {
+  "id": "fine_collection",
+  "label": "Share of fines actually collected",
+  "value": 0.75,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "assumption",
+  "basis": "Assumption. Citations are appealed, waived or go unpaid; enforcement tools are documented, but collection rates are not published for this proposed statewide programme.",
+  "low": 0.4,
+  "high": 0.95,
+  "sourceIds": [
+   "epa_drought_response"
+  ],
+  "sources": [
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 82,
+  "nevRank": 82
+ },
+ {
+  "id": "lake_now",
+  "label": "Lake elevation today",
+  "value": 4191.1,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "South arm elevation at the end of water year 2025.",
+  "sourceIds": [
+   "strike_update",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_update",
+    "title": "Great Salt Lake Strike Team update",
+    "url": "https://science.utah.edu/wilkes-center/gsl-strike-team-update/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "healthy_min",
+  "label": "Bottom of the healthy range",
+  "value": 4198,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "The state target range for a healthy lake is 4,198 to 4,205 ft.",
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "healthy_max",
+  "label": "Top of the healthy range",
+  "value": 4205,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "The state target range for a healthy lake is 4,198 to 4,205 ft.",
+  "sourceIds": [
+   "gsl_commissioner"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "serious_low",
+  "label": "Level below which effects are serious",
+  "value": 4190,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "The state asks for a contingency plan to keep the south arm from dropping below this in any year.",
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "basin_depletion",
+  "label": "Total human depletion in the basin",
+  "value": 2387,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "Human consumptive use across the Great Salt Lake basin.",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "ag_depletion",
+  "label": "Agriculture’s share of that depletion",
+  "value": 1584,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "Agricultural depletion inside the scarcity-charge base.",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "mi_depletion",
+  "label": "Minerals, commerce, institutions and city-supplied industry",
+  "value": 328,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "The non-household part of municipal and industrial depletion, plus mineral extraction.",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_gsl",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "charge_base",
+  "label": "Water the scarcity charge falls on",
+  "value": 1912,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "derived",
+  "basis": "All basin depletion except every residential category and reservoir evaporation.",
+  "formula": "agriculture + minerals, commerce, institutions and city-supplied industry",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13–14; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1–8; depletion table p.13"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "hay_depletion",
+  "label": "Water depleted growing hay",
+  "value": 1055,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "Alfalfa and other hay, the single largest use in the basin.",
+  "sourceIds": [
+   "nass_utah",
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "hay_acres",
+  "label": "Hay ground the levy could fall on",
+  "value": 399500,
+  "unit": "acres",
+  "group": "Crop levy",
+  "status": "sourced",
+  "basis": "Irrigated hay acreage in the basin.",
+  "sourceIds": [
+   "nass_utah",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "basin_lawns",
+  "label": "Homes in the basin with a lawn",
+  "value": 743000,
+  "unit": "households",
+  "group": "Residential lawns",
+  "status": "derived",
+  "basis": "Basin households with an irrigated lawn, from the population projection.",
+  "formula": "population ÷ 2.83 people per home x 80% in basin x 72% with a lawn",
+  "sourceIds": [
+   "gardner_proj",
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   },
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah’s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "lawn_water",
+  "label": "Water the basin’s lawns use",
+  "value": 408.5,
+  "unit": "KAF/yr",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "Reported residential outdoor water use in the basin.",
+  "note": "Whether this is water delivered or water depleted is unresolved. If delivered, savings here are overstated before the dedication haircut.",
+  "sourceIds": [
+   "dwr_gsl",
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake — water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah’s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "lease_to_own_rotation_multiplier",
+  "label": "HB 410 multiplier applied to lease-to-own rights",
+  "value": 1,
+  "unit": "multiple",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Legal interpretation. HB 410 caps temporary full-season leasing off a field, not acquisition of water rights. The model therefore applies no two-in-five acreage multiplier and no repeal toggle to lease-to-own rights.",
+  "sourceIds": [
+   "hb410_2026",
+   "gsl_faq",
+   "utah_water_right_title"
+  ],
+  "sources": [
+   {
+    "id": "hb410_2026",
+    "title": "H.B. 410 Water Leasing Amendments",
+    "url": "https://le.utah.gov/Session/2026/bills/static/HB0410.html"
+   },
+   {
+    "id": "gsl_faq",
+    "title": "Frequently Asked Questions",
+    "url": "https://greatsaltlake.utah.gov/faq/"
+   },
+   {
+    "id": "utah_water_right_title",
+    "title": "Water Right Title Information",
+    "url": "https://www.waterrights.utah.gov/titleInfo/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "herd_feed_surplus",
+  "label": "Forage the basin grows beyond what its own herds eat",
+  "value": 596000,
+  "unit": "tons/yr",
+  "group": "Jobs",
+  "status": "sourced",
+  "basis": "The first cut in hay falls on exports, not on local feed.",
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "state_households",
+  "label": "Households in the state",
+  "value": 1265625,
+  "unit": "households",
+  "group": "Politics",
+  "status": "derived",
+  "basis": "Used only to turn the per-household figure into a statewide total.",
+  "formula": "statewide willingness to pay ÷ willingness to pay per household",
+  "sourceIds": [
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "pref_incentives",
+  "label": "Prefer incentives for water-efficient landscaping",
+  "value": 0.58,
+  "unit": "share of voters",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "Asked the best state approach, 58 per cent chose incentives.",
+  "sourceIds": [
+   "noble_2026"
+  ],
+  "sources": [
+   {
+    "id": "noble_2026",
+    "title": "Utah voters put water ahead of data-center growth (Utah Public Opinion Pulse)",
+    "url": "https://www.noblepredictiveinsights.com/post/utah-voters-put-water-ahead-of-data-center-growth",
+    "locator": "Field 8–12 September 2026; 602 registered voters; margin ±3.99"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "pref_penalties",
+  "label": "Prefer restrictions with penalties",
+  "value": 0.22,
+  "unit": "share of voters",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "The same question: 22 per cent chose restrictions with penalties. Penalties lose in every subgroup measured.",
+  "sourceIds": [
+   "noble_2026"
+  ],
+  "sources": [
+   {
+    "id": "noble_2026",
+    "title": "Utah voters put water ahead of data-center growth (Utah Public Opinion Pulse)",
+    "url": "https://www.noblepredictiveinsights.com/post/utah-voters-put-water-ahead-of-data-center-growth",
+    "locator": "Field 8–12 September 2026; 602 registered voters; margin ±3.99"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "farmer_compensation_low",
+  "label": "Lowest published estimate of compensating farmers",
+  "value": 98.6,
+  "unit": "$M/yr",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "What it would cost to pay farmers enough to stabilise and refill the lake.",
+  "sourceIds": [
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "farmer_compensation_high",
+  "label": "Highest published estimate of compensating farmers",
+  "value": 421.6,
+  "unit": "$M/yr",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "The upper end of the same estimate.",
+  "sourceIds": [
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "industrial_pipeline_water",
+  "label": "Water every announced industrial project needs",
+  "value": 19.078,
+  "unit": "KAF/yr",
+  "group": "Competing uses",
+  "status": "sourced",
+  "basis": "Data centres, the fuel-cycle campus and proposed reactors, added together.",
+  "sourceIds": [
+   "bea_gdp",
+   "macknick_2012"
+  ],
+  "sources": [
+   {
+    "id": "bea_gdp",
+    "title": "GDP by industry, Utah",
+    "url": "https://www.bea.gov/data/gdp/gdp-state"
+   },
+   {
+    "id": "macknick_2012",
+    "title": "Operational water consumption and withdrawal factors for electricity generating technologies",
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/7/4/045802"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "people_per_home",
+  "label": "People per home",
+  "value": 2.83,
+  "unit": "people",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "Average household size used in the population projection.",
+  "sourceIds": [
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "share_in_basin",
+  "label": "Share of the state’s people inside the basin",
+  "value": 0.8,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "The basin holds most of the state’s population.",
+  "sourceIds": [
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "industrial_pipeline_jobs",
+  "label": "Jobs those projects would add",
+  "value": 11900,
+  "unit": "jobs",
+  "group": "Competing uses",
+  "status": "sourced",
+  "basis": "Announced employment across the same projects.",
+  "sourceIds": [
+   "dws_jobs"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ }
+]

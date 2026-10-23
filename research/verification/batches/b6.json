@@ -1,0 +1,454 @@
+[
+ {
+  "id": "repossess_cap",
+  "label": "Most that can be repossessed in a year",
+  "value": 50,
+  "unit": "KAF/yr",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice, and a legal limit: compulsory acquisition at market value takes time to process.",
+  "low": 0,
+  "high": 150,
+  "sourceIds": [
+   "farm_bureau_2026"
+  ],
+  "sources": [
+   {
+    "id": "farm_bureau_2026",
+    "title": "Utah Farm Bureau 2026 Legislative Update",
+    "url": "https://www.utahfarmbureau.org/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 76,
+  "nevRank": 76
+ },
+ {
+  "id": "inflow_cv",
+  "label": "Year-to-year spread in river inflow",
+  "value": 0.35,
+  "unit": "coefficient of variation",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "Assumption, standing in for the gauged record. Inflow varies more than any lever on this page.",
+  "low": 0.2,
+  "high": 0.55,
+  "sourceIds": [
+   "strike_2025",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 77,
+  "nevRank": 77
+ },
+ {
+  "id": "inflow_ar1",
+  "label": "How much a dry year makes the next year dry",
+  "value": 0.35,
+  "unit": "lag-one autocorrelation",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "Assumption. Drought persistence: wet and dry spells cluster rather than alternating.",
+  "low": 0,
+  "high": 0.7,
+  "sourceIds": [
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 78,
+  "nevRank": 78
+ },
+ {
+  "id": "sim_runs",
+  "label": "Inflow sequences simulated",
+  "value": 120,
+  "unit": "runs",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "A modelling choice: enough for a stable tenth and ninetieth percentile without slowing the page.",
+  "low": 50,
+  "high": 500,
+  "sourceIds": [],
+  "sources": [],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 79,
+  "nevRank": 79
+ },
+ {
+  "id": "fat_tail_factor",
+  "label": "How much a multi-decade drought deepens the dry tail",
+  "value": 0.75,
+  "unit": "multiplier on inflow in a long drought",
+  "group": "Uncertainty",
+  "status": "assumption",
+  "basis": "Assumption, used only when the long-drought toggle is on; it stress-tests the drought-risk tail described in Strike Team summaries rather than estimating a forecast.",
+  "low": 0.5,
+  "high": 0.95,
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 80,
+  "nevRank": 80
+ },
+ {
+  "id": "share_with_lawn",
+  "label": "Share of homes with an irrigated lawn",
+  "value": 0.72,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "assumption",
+  "basis": "Assumption. Flats and townhouses without private irrigated ground are excluded.",
+  "low": 0.55,
+  "high": 0.85,
+  "sourceIds": [
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah\u2019s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 81,
+  "nevRank": 81
+ },
+ {
+  "id": "fine_collection",
+  "label": "Share of fines actually collected",
+  "value": 0.75,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "assumption",
+  "basis": "Assumption. Citations are appealed, waived or go unpaid; enforcement tools are documented, but collection rates are not published for this proposed statewide programme.",
+  "low": 0.4,
+  "high": 0.95,
+  "sourceIds": [
+   "epa_drought_response"
+  ],
+  "sources": [
+   {
+    "id": "epa_drought_response",
+    "title": "Drought Response and Recovery: A Basic Guide for Water Utilities",
+    "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P100T4ID.TXT"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 82,
+  "nevRank": 82
+ },
+ {
+  "id": "lake_now",
+  "label": "Lake elevation today",
+  "value": 4191.1,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "South arm elevation at the end of water year 2025.",
+  "sourceIds": [
+   "strike_update",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "strike_update",
+    "title": "Great Salt Lake Strike Team update",
+    "url": "https://science.utah.edu/wilkes-center/gsl-strike-team-update/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "healthy_min",
+  "label": "Bottom of the healthy range",
+  "value": 4198,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "The state target range for a healthy lake is 4,198 to 4,205 ft.",
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "healthy_max",
+  "label": "Top of the healthy range",
+  "value": 4205,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "The state target range for a healthy lake is 4,198 to 4,205 ft.",
+  "sourceIds": [
+   "gsl_commissioner"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "serious_low",
+  "label": "Level below which effects are serious",
+  "value": 4190,
+  "unit": "ft above sea level",
+  "group": "Lake physics",
+  "status": "sourced",
+  "basis": "The state asks for a contingency plan to keep the south arm from dropping below this in any year.",
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2025"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "basin_depletion",
+  "label": "Total human depletion in the basin",
+  "value": 2387,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "Human consumptive use across the Great Salt Lake basin.",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "ag_depletion",
+  "label": "Agriculture\u2019s share of that depletion",
+  "value": 1584,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "Agricultural depletion inside the scarcity-charge base.",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "mi_depletion",
+  "label": "Minerals, commerce, institutions and city-supplied industry",
+  "value": 328,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "The non-household part of municipal and industrial depletion, plus mineral extraction.",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_gsl",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "charge_base",
+  "label": "Water the scarcity charge falls on",
+  "value": 1912,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "derived",
+  "basis": "All basin depletion except every residential category and reservoir evaporation.",
+  "formula": "agriculture + minerals, commerce, institutions and city-supplied industry",
+  "sourceIds": [
+   "strike_2026",
+   "strike_2025",
+   "dwr_mi_reporting"
+  ],
+  "sources": [
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   },
+   {
+    "id": "strike_2025",
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "locator": "Figures 1\u20138; depletion table p.13"
+   },
+   {
+    "id": "dwr_mi_reporting",
+    "title": "Water Use Reporting",
+    "url": "https://water.utah.gov/water-data/water-use-reporting/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ }
+]

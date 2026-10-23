@@ -1,0 +1,437 @@
+[
+ {
+  "value_new": null,
+  "low_new": 1,
+  "high_new": 10,
+  "quote": "Irrigation upgrades are assumed to occur evenly over 10 years.",
+  "locator": "Section 5.3.3 Key Modeling Assumptions, p.5-5 (PDF p.32)",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources (GSL Basin Integrated Plan)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Water leasing, in particular, stands out as a near-term opportunity that can be paired with longer-term infrastructure and management investments",
+    "locator": "Agricultural optimization profile, PDF p.13"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "No source gives a ramp-up period for the programme mix. The state's own ag report assumes a 10-year rollout for irrigation-system upgrades, while leasing is described as near-term (could be at full scale within 1-2 seasons). 3 years is a reasonable blended central value, but the high end should extend to 10 years to cover infrastructure-heavy programmes.",
+  "confidence": "Medium",
+  "id": "ramp_years",
+  "value_model": 3,
+  "verdict": "range_revised"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Municipal and industrial depletions have not changed substantially since 1989. After peaking at 385 KAF in 2020, depletions declined ... to 325 KAF in 2023.",
+  "locator": "Figure 7 insights, p.13 (PDF p.15)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+  "source_title": "Great Salt Lake 2025: Data and Insights",
+  "publisher": "GSL Strike Team",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Since 2015, residential depletions grew by 26.7%, while the population increased by 16.3%.",
+    "locator": "Figure 14 insights, PDF p.27"
+   },
+   {
+    "title": "M&I Water Conservation Opportunities handout",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2025,
+    "url": "https://water.utah.gov/wp-content/uploads/2025/09/MI-Water-Conservation-Opportunies-Handout-GSLBIP.pdf",
+    "quote": "M&I diversion will increase but depletion needs to stay the same (or less).",
+    "locator": "Page 1, M&I Depletion"
+   }
+  ],
+  "arithmetic": "92 / 325 KAF (2023 M&I depletion) = 28% growth; this would match roughly a 28% basin population increase 2025-2055 at constant per-capita depletion, but no source states it.",
+  "notes": "Searched strike_2025, strike_2026, gardner_proj, dwr_gsl, DWR regional M&I goals (2019) and the 2025 DWR M&I Conservation Opportunities report for a projected 2055 M&I depletion increase; none states 92 KAF/yr or a comparable figure. Evidence is mixed: M&I depletion was flat 1989-2023 while population doubled (implies a low draw), but residential depletion has grown faster than population since 2015 (implies a high draw). Keep the 40-180 range; relabel as derived/assumption unless a projection is found (the Gardner Utah 2065 basin-population projection plus 2024 per-capita residential depletion would be the way to derive it).",
+  "confidence": "Low",
+  "id": "growth_draw_2055",
+  "value_model": 92,
+  "verdict": "unsupported"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "The State Engineer must accurately measure water to verify that the conserved water is safeguarded from intervening diverters and delivered to the lake.",
+  "locator": "Key issue profile 'Getting More Water to Great Salt Lake', PDF p.22",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+  "source_title": "Great Salt Lake 2025: Data and Insights",
+  "publisher": "GSL Strike Team",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "A gap analysis identified measurement infrastructure, physical, and administrative barriers to moving dedicated water to Great Salt Lake.",
+    "locator": "Research, PDF p.9"
+   },
+   {
+    "title": "Municipal and Industrial Water Conservation Opportunities (GSL Basin Integrated Plan)",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2025,
+    "url": "https://water.utah.gov/wp-content/uploads/2025/09/MI-Water-Conservation-Opportunities-Report-09_02_2025.pdf",
+    "quote": "about 25% of secondary connections in the state were metered in 2019-2020, increasing to about 35% metered in 2023. When the metered usage is normalized by the number of connections, the average metered usage per connection has not shifted meaningfully",
+    "locator": "Appendix K, p.100"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Searched Strike Team 2025/2026, the DWRi DMP page, the 2026 ag report, the 2025 DWR M&I report (Appendix K on metering) and web literature on metering effects on agricultural diversions. Sources say measurement is necessary for shepherding but give no delivery-share gain. The metering literature measures demand reduction (e.g. ~20% in older Utah planning only when paired with pricing; no clear effect from metering alone in the SEKID, BC study), not the share of saved water that reaches the lake. The 10-point cap remains a judgement.",
+  "confidence": "Low",
+  "id": "measurement_gain_max",
+  "value_model": 0.1,
+  "verdict": "no_evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Current estimates suggest that cloud seeding generated approximately 102,000 ac-ft of additional runoff between 2017 and 2022 at a cost of approximately $3.60 to $7.10 per ac-ft ... These values reflect only cloud seeding efforts conducted within the Great Salt Lake Basin to date, although there is potential to increase the cloud seeding application area.",
+  "locator": "Appendix H, Cloud Seeding, p.81; Table H-4 (lists 102,000 as ac-ft/year)",
+  "url": "https://water.utah.gov/wp-content/uploads/2025/09/MI-Water-Conservation-Opportunities-Report-09_02_2025.pdf",
+  "source_title": "Municipal and Industrial Water Conservation Opportunities (GSL Basin Integrated Plan)",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Utah Cloud Seeding Program: Increased Runoff and Cost Analyses",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2018,
+    "url": "https://water.utah.gov/wp-content/uploads/2019/CloudSeeding/Cloudseeding2015Final.pdf",
+    "quote": "The sum of estimated average annual increase in runoff for all of the projects is 186,663 acre-feet ... The increase in runoff for the Northern Utah Project is 50,698 acre-feet.",
+    "locator": "p.9 and Table 4, p.11"
+   },
+   {
+    "title": "Great Salt Lake FAQ",
+    "publisher": "State of Utah GSL site",
+    "year": 2026,
+    "url": "https://greatsaltlake.utah.gov/",
+    "quote": "Historic cloud seeding evaluations have shown increases in the 6-12% range. However, Utah has modernized and expanded its program ... The goal is to increase precipitation by 15-20%.",
+    "locator": "FAQ, 'Is Cloud Seeding effective?'"
+   }
+  ],
+  "arithmetic": "DWR 2018 Table 4 GSL-basin target areas: Cache 37,341 + West Box Elder 13,357 + Tooele 4,160 + Western Uintas 22,364 = 77,222 AF/yr of existing added runoff. DWR 2025 gives 102,000 (Table H-4 labels it ac-ft/year; the text says 2017-2022, which is ambiguous, and as a 6-year total it would be ~17 KAF/yr).",
+  "notes": "Existing seeding in the GSL basin is already credited with roughly 50-100 KAF/yr of added runoff. If cloud_cap means added runoff from new or expanded seeding, then 50 is plausible: the programme's stated goal is a 15-20% increase versus a historical 6-12%. If it means the whole programme, then 77-102 is the official estimate. Keep the 20-100 range. The DWR estimates are explicitly uncertain.",
+  "confidence": "Medium",
+  "id": "cloud_cap",
+  "value_model": 50,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Water conservation from various sectors (agricultural producers, municipalities, and industry) may not benefit the lake if the water is used and depleted by downstream users.",
+  "locator": "Key issue profile, PDF p.22",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+  "source_title": "Great Salt Lake 2025: Data and Insights",
+  "publisher": "GSL Strike Team",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "reductions in depletion throughout the Basin do not equate directly to additional flow to the GSL unless that water can be successfully shepherded to the lake.",
+    "locator": "Section 4, p.4-1 (PDF p.21)"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Searched Strike Team reports, the ag report, the DWRi DMP page and web sources on curtailment versus acquisition delivery efficiency. Sources support the qualitative point that water not covered by a change application can be re-diverted downstream. No quantitative ratio between mandated and acquired water reaching the lake was found.",
+  "confidence": "Low",
+  "id": "forced_delivery_penalty",
+  "value_model": 0.71,
+  "verdict": "no_evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Elasticity estimates are drawn from 24 studies reported in the United States since 1963 ... The mean price elasticity is 0.48. Long-run elasticities, those that are most useful for policy purposes, are likely larger than the mean estimate.",
+  "locator": "Abstract (via Crossref/EarthRef record)",
+  "url": "https://earthref.org/ERR/92882",
+  "source_title": "Irrigation water demand: A meta-analysis of price elasticities (Scheierling, Loomis & Young), Water Resources Research 42, W01411, doi:10.1029/2005WR004009",
+  "publisher": "AGU / Wiley",
+  "year": 2006,
+  "extra_sources": [
+   {
+    "title": "Irrigation Water Demand: A Meta Analysis of Price Elasticities (AAEA selected paper, earlier version)",
+    "publisher": "AgEcon Search",
+    "year": 2004,
+    "url": "https://ageconsearch.umn.edu/record/20300/files/sp04sc08.pdf",
+    "quote": "A total of 53 price elasticity estimates were obtained. The estimates for irrigation water demand elasticities range from -0.002 to -1.97, with a mean of -0.51 and a median of -0.22",
+    "locator": "Data section, p.~8"
+   },
+   {
+    "title": "Price elasticity reconsidered: Panel estimation of an agricultural water demand function (Schoengold, Sunding, Moreno), WRR 42 W09411",
+    "publisher": "AGU (UNL Digital Commons record)",
+    "year": 2006,
+    "url": "https://digitalcommons.unl.edu/natrespapers/27",
+    "quote": "Estimation results indicate that the price elasticity of agricultural water demand is -0.79",
+    "locator": "Abstract"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "The model coefficient is not a price elasticity: it scales the charge relative to the net value of the water. The literature analogue is 0.22 (median) to 0.48-0.51 (mean), with -0.79 in panel/long-run work. 0.4 sits inside and the 0.2-0.7 range is supported (could extend to 0.8). The original Wiley PDF was blocked; the abstract was read via Crossref/EarthRef and the full working-paper version via AgEcon Search.",
+  "confidence": "Medium",
+  "id": "ag_charge_response",
+  "value_model": 0.4,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": 800,
+  "low_new": 471,
+  "high_new": 1055,
+  "quote": "Additional 800 KAF/year inflow to the lake from water conservation or other sources. This scenario represents the additional inflow needed to fill Great Salt Lake to the minimum healthy lake level (4,198 feet) by 2055.",
+  "locator": "Long-term planning section, p.29 (PDF p.31); Figures 19-20",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "GSL Strike Team",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "The Great Salt Lake Strategic Plan",
+    "publisher": "Office of the Great Salt Lake Commissioner",
+    "year": 2025,
+    "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
+    "quote": "Filling the lake in 30 years to the low end of the healthy range ... (4,198 feet) – will require between 471,000 and 1,055,000 acre-feet per year of additional water delivered to the lake.",
+    "locator": "PDF p.4; Appendix Table 2, p.38 (471 = contemporary 1,643 kaf/yr inflow; 1,055 = drought 1,059 kaf/yr inflow)"
+   },
+   {
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "publisher": "GSL Strike Team",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "quote": "Additional 770 KAF/year inflow scenario shows the expected inflow needed each year to reach a mean lake elevation of 4,198 feet by 2054.",
+    "locator": "Figure 11, p.16 (PDF p.18)"
+   }
+  ],
+  "arithmetic": "Strike Team 2026: needed mean inflow ~2,465 KAF/yr minus the 2000-2025 average 1,665 KAF/yr = 800 KAF/yr. 1,665 equals the model's baseline_inflow, so 800 is the internally consistent target.",
+  "notes": "The 471-1,055 range is confirmed verbatim in the Strategic Plan (Tarboton 2023 appendix). 875 appears in no source. The most recent official figure on the same 2000-2025 baseline that the model uses is 800 KAF/yr (March 2026), up from 770 in the January 2025 report. Keep the range at 471-1,055.",
+  "confidence": "High",
+  "id": "goal_added",
+  "value_model": 875,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "The legislature has appropriated $1 million of one-time and $1 million of ongoing funds to install additional measurement infrastructure within the Great Salt Lake Basin ... The US Geological Survey and Bureau of Reclamation invested an additional $3 million in water measurement and analysis in the basin.",
+  "locator": "Key issue profile, Measurement Funding and Installation, p.21 (PDF p.23)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+  "source_title": "Great Salt Lake 2025: Data and Insights",
+  "publisher": "GSL Strike Team",
+  "year": 2025,
+  "extra_sources": [],
+  "arithmetic": "",
+  "notes": "No source links monitoring spending to a delivery-share gain. Actual measurement funding is about $1M/yr ongoing state money plus a one-time $1M and $3M federal. That is well below the $60M/yr scale, but it does not show diminishing returns at any level. Searched Strike Team reports, the DWRi DMP page, the ag and M&I reports, and the USU/DWRi measurement gap-analysis coverage.",
+  "confidence": "Low",
+  "id": "measurement_gain_scale",
+  "value_model": 60,
+  "verdict": "no_evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Water conservation from various sectors (agricultural producers, municipalities, and industry) may not benefit the lake if the water is used and depleted by downstream users.",
+  "locator": "Key issue profile, PDF p.22",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+  "source_title": "Great Salt Lake 2025: Data and Insights",
+  "publisher": "GSL Strike Team",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Municipal and Industrial Water Conservation Opportunities (GSL Basin Integrated Plan)",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2025,
+    "url": "https://water.utah.gov/wp-content/uploads/2025/09/MI-Water-Conservation-Opportunities-Report-09_02_2025.pdf",
+    "quote": "Depletion savings are less likely to be realized when full water right usage must be demonstrated to avoid water right forfeiture, and more likely to be realized when water rights are protected under a municipal future growth statute.",
+    "locator": "Appendix K, p.99"
+   },
+   {
+    "title": "M&I Water Conservation Opportunities handout",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2025,
+    "url": "https://water.utah.gov/wp-content/uploads/2025/09/MI-Water-Conservation-Opportunies-Handout-GSLBIP.pdf",
+    "quote": "Turf Replacement Programs ... Potential depletion savings: 183,000 – 219,000 ac-ft ... Potential water savings: 429,000 – 492,000 ac-ft",
+    "locator": "Page 2"
+   }
+  ],
+  "arithmetic": "Upper bound from the DWR turf figures: depletion savings / water savings = 183/429 = 0.43 to 219/492 = 0.45. At most ~0.44 of water not applied is freed depletion, before any reuse by growth or downstream diverters.",
+  "notes": "Neither dwr_gsl nor the DMP page states a share. Sources only say that conserved city water reaches the lake if it is dedicated by change application or effluent dedication. 0.25 is plausible: about 0.44 depletion fraction times roughly 0.5-0.6 not re-used. It should be relabelled as an assumption. A suggested range of 0.1-0.45 is bounded above by the depletion fraction.",
+  "confidence": "Low",
+  "id": "urban_to_lake",
+  "value_model": 0.25,
+  "verdict": "unsupported"
+ },
+ {
+  "value_new": null,
+  "low_new": 0.5,
+  "high_new": 1.6,
+  "quote": "Full season leasing yields the largest reduction in depletion per acre—1.5 AF/acre—followed by ceasing irrigation after June (Scenario 1)—0.77 AF/acre—and then ceasing it after July (Scenario 3)—0.52 AF/acre.",
+  "locator": "Appendix B.1.1.10 and Table B-8, p.B-8",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Full-season leasing  Alfalfa  Full Season Fallow  1.504",
+    "locator": "Table 5-1, p.5-2 (PDF p.29)"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "In the code, waterKaf = acres x cutShare x factor, so the factor works as AF of depletion freed per affected acre. The state report gives 1.50 AF/acre for full fallow of alfalfa, 0.52-0.77 for split-season cuts and 0.50-0.61 for crop substitution. 1.3 is near the full-fallow end. If levy responses are partial-season cuts, the central value would be nearer 0.6-0.8. The suggested low is lowered to 0.5.",
+  "confidence": "Medium",
+  "id": "levy_depletion_factor",
+  "value_model": 1.3,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": 236,
+  "low_new": 148,
+  "high_new": 345,
+  "quote": "Full-Season  Alfalfa  No irrigation during entire season  $355 [WTA cost per acre] ... Full Season  Alfalfa  No irrigation during entire season  1.50 [AF per acre]  $236 [cost per AF]",
+  "locator": "Tables B-7 (p.B-7) and B-8 (p.B-8)",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "2023 Irrigation and Water Management Survey",
+    "publisher": "USDA NASS",
+    "year": 2024,
+    "url": "https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/iwms.pdf",
+    "quote": "Utah ... Alfalfa ... 523,658 [acres] 2.4 [average acre-feet applied per acre]",
+    "locator": "Table 39, PDF p.161"
+   }
+  ],
+  "arithmetic": "Per AF depleted: $355/acre / 1.50 AF/acre = $236/AF (as stated). Per AF applied: $355 / 2.4 AF/acre (NASS 2023 Utah) = $148/AF; $355 / 2.64 = $134/AF, which reproduces the model's 133, so 133 appears to be a per-AF-applied figure.",
+  "notes": "The cited NASS Utah page does not publish a net value of water. In the code the charge applies to depletion (charge_base is depletion), so the comparable figure is the forgone net return per AF depleted: $236/AF from the state's 2026 WTA analysis. The 133 value matches per AF applied only. Range: $148 (per AF applied) to $340-345 (costlier lease scenarios). Related: Table B-9 gives alfalfa expected returns of $304-361/acre, versus the model's hay_net_return of 175 $/acre (not in this batch).",
+  "confidence": "Medium",
+  "id": "irrigation_net_value",
+  "value_model": 133,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Options with the lowest cost per AF included use of low-elevation on existing pivots ($148 per AF) ... conversions from surface irrigation to other systems ($1,014 - $22,094 per AF).",
+  "locator": "Executive summary p.iii (PDF p.4); Table 5-1 p.5-2",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "publisher": "Utah Division of Water Resources",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Strategy 3 total  370,543  39.4  132,620  10.0  $563  $74.7",
+    "locator": "Table 5-2 (Strategy 3: Irrigation System Changes), p.5-4 (PDF p.31)"
+   }
+  ],
+  "arithmetic": "(148 + 1014) / 2 = 581.",
+  "notes": "Both endpoints are verbatim in the report. A better-founded central value is the report's own volume-weighted cost for an irrigation-system-only programme reaching 10%: $563/AF ($74.7M/yr / 132,620 AF), within 3% of 581. Note that $1,014 is not the top of the range (flood conversions run to $22,094/AF) and canal 'lining' is not costed in this report.",
+  "confidence": "High",
+  "id": "onfarm_cost",
+  "value_model": 581,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": 2.4,
+  "low_new": 2.0,
+  "high_new": 2.7,
+  "quote": "Utah ... 6,699 [farms] 523,658 [irrigated acres harvested] 2.4 [average acre-feet applied per acre] ... pressure 2.6 ... gravity 2.0",
+  "locator": "Table 39 Field Water Distribution, Alfalfa and alfalfa mixtures, 2023, PDF p.161; All other hay, PDF p.162",
+  "url": "https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/iwms.pdf",
+  "source_title": "2023 Irrigation and Water Management Survey (2022 Census of Agriculture)",
+  "publisher": "USDA NASS",
+  "year": 2024,
+  "extra_sources": [
+   {
+    "title": "2023 Irrigation and Water Management Survey",
+    "publisher": "USDA NASS",
+    "year": 2024,
+    "url": "https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/iwms.pdf",
+    "quote": "Utah ... 1,807 84,304 2.4 [all other hay]; Region 16 Great Basin ... 757,720 2.7 [alfalfa]",
+    "locator": "Table 39, PDF pp.161-162"
+   }
+  ],
+  "arithmetic": "Acre-weighted Utah hay: (523,658 x 2.4 + 84,304 x 2.4) / 607,962 = 2.4 AF/acre.",
+  "notes": "The model's sources (dwr_gsl, nass_utah) do not state 2.64. The most recent federal survey gives 2.4 AF/acre statewide for both alfalfa and other hay, and 2.7 for the Great Basin water-resource region (which includes Nevada and others). Utah pressure systems average 2.6 and gravity 2.0. Suggested range 2.0-2.7. A GSL-basin-only figure was not found.",
+  "confidence": "Medium",
+  "id": "application_mean",
+  "value_model": 2.64,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": 17,
+  "high_new": 57,
+  "quote": "If Phragmites were successfully removed and replaced with native vegetation throughout its known distribution in the Great Salt Lake watershed, total water savings could range from 17,000 to 57,000 ac-ft per year at an estimated cost between $610 and $4,050 per ac-ft.",
+  "locator": "Appendix H, Phragmites, pp.81-82; Table H-4 p.86",
+  "url": "https://water.utah.gov/wp-content/uploads/2025/09/MI-Water-Conservation-Opportunities-Report-09_02_2025.pdf",
+  "source_title": "Municipal and Industrial Water Conservation Opportunities (GSL Basin Integrated Plan)",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2025,
+  "extra_sources": [],
+  "arithmetic": "",
+  "notes": "The state's estimate (citing DWQ 2017) caps total removal savings at 17-57 KAF/yr. 50 is within range but near the top, since it assumes basin-wide eradication. The model's high of 90 exceeds any official figure. The same table's $610-4,050/AF cost is far above the model's phrag_cost of 186 $/AF (not in this batch; worth checking).",
+  "confidence": "Medium",
+  "id": "phrag_cap",
+  "value_model": 50,
+  "verdict": "range_revised"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "reductions in depletion throughout the Basin do not equate directly to additional flow to the GSL unless that water can be successfully shepherded to the lake.",
+  "locator": "Section 4, p.4-1 (PDF p.21)",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "a water lease will likely decrease the total flow in a company's canal, but the company must maintain a minimum flow to ensure water reaches the end of their system.",
+    "locator": "Agricultural leasing profile, PDF p.13"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Searched the ag report, Strike Team 2025/2026, DWR pages and web coverage of the USU/DWRi shepherding and measurement gap analyses. All are qualitative: shepherding is required and change applications approved (288 KAF) are not the same as water delivered. No published delivered-to-lake fraction was found for crop switching or leasing.",
+  "confidence": "Low",
+  "id": "crop_delivery",
+  "value_model": 0.8,
+  "verdict": "no_evidence"
+ }
+]

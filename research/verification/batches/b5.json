@@ -1,0 +1,463 @@
+[
+ {
+  "id": "mandate_pull",
+  "label": "How much a credible mandate widens the market",
+  "value": 0.7,
+  "unit": "extra share of capacity",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption on the cause. A measured participation jump of about 1.7x came from offering a fixed price with no haggling, not from a threat of curtailment.",
+  "low": 0,
+  "high": 1.2,
+  "sourceIds": [
+   "scpp_aspen",
+   "lower_basin_2023"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "lower_basin_2023",
+    "title": "Lower Colorado Basin states compromise on water conservation",
+    "url": "https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 56,
+  "nevRank": 61
+ },
+ {
+  "id": "lease_elasticity",
+  "label": "How the lease price rises as the state buys more",
+  "value": 1,
+  "unit": "elasticity",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. It moves the price paid, not the quantity available, so the result barely notices it; conservation-program participation and irrigation-price response are the closest analogues.",
+  "low": 0.3,
+  "high": 3,
+  "sourceIds": [
+   "scpp_aspen",
+   "irrigation_elasticity_meta"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 57,
+  "nevRank": 62
+ },
+ {
+  "id": "lease_base_rate",
+  "label": "Lease rate before any scarcity or relief",
+  "value": 380,
+  "unit": "$/AF/yr",
+  "group": "Acquisition",
+  "status": "sourced",
+  "basis": "Going annual rate for leased water in the basin.",
+  "low": 150,
+  "high": 700,
+  "sourceIds": [
+   "scpp_aspen",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 58,
+  "nevRank": 63
+ },
+ {
+  "id": "capital_price",
+  "label": "Price to buy a water right outright",
+  "value": 6000,
+  "unit": "$/AF",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Anchored to Colorado River buyouts, and contradicted by two Utah figures: a mineral-company settlement near $208/AF and state planning near $250/AF. Unresolved.",
+  "low": 250,
+  "high": 9000,
+  "sourceIds": [
+   "scpp_aspen",
+   "lower_basin_2023"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "lower_basin_2023",
+    "title": "Lower Colorado Basin states compromise on water conservation",
+    "url": "https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 59,
+  "nevRank": 64
+ },
+ {
+  "id": "lease_rate_ceiling",
+  "label": "Ceiling on the lease rate",
+  "value": 6,
+  "unit": "multiple of the base rate",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. Allows scarcity to raise lease rates but caps them before one instrument absorbs every dollar.",
+  "low": 2,
+  "high": 12,
+  "sourceIds": [
+   "scpp_aspen",
+   "irrigation_elasticity_meta"
+  ],
+  "sources": [
+   {
+    "id": "scpp_aspen",
+    "title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+    "url": "https://aspenjournalism.org/using-less-of-the-colorado-river-takes-a-willing-farmer-and-45-million-in-federal-funds/"
+   },
+   {
+    "id": "irrigation_elasticity_meta",
+    "title": "Price responsiveness of irrigation water demand: A meta-analysis",
+    "url": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2005WR004009"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 61,
+  "nevRank": 65
+ },
+ {
+  "id": "state_interest",
+  "label": "Interest the state pays on instalment purchases",
+  "value": 0.015,
+  "unit": "share per year",
+  "group": "Acquisition",
+  "status": "sourced",
+  "basis": "State borrowing cost, between 1 and 3 per cent.",
+  "low": 0.01,
+  "high": 0.03,
+  "sourceIds": [
+   "gsl_commissioner"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 62,
+  "nevRank": 66
+ },
+ {
+  "id": "repossession_discount",
+  "label": "How far below average the value of repossessed ground sits",
+  "value": 0.26,
+  "unit": "share below mean",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Assumption. Selection is weighted away from productive ground: a bottom-third draw averages this much below the mean.",
+  "low": 0,
+  "high": 0.45,
+  "sourceIds": [
+   "nass_iwms_2023",
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_iwms_2023",
+    "title": "2023 Irrigation and Water Management Survey",
+    "url": "https://data.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Farm_and_Ranch_Irrigation_Survey/index.php"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 63,
+  "nevRank": 67
+ },
+ {
+  "id": "mandate_floor",
+  "label": "Mandated cut, if the rest falls short",
+  "value": 1100,
+  "unit": "KAF/yr",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice, not a measurement. It only takes what the voluntary levers did not already find, sized against the state recovery target and updated basin water budget.",
+  "low": 0,
+  "high": 1200,
+  "sourceIds": [
+   "gsl_commissioner",
+   "strike_2026"
+  ],
+  "sources": [
+   {
+    "id": "gsl_commissioner",
+    "title": "Great Salt Lake Strategic Plan",
+    "url": "https://greatsaltlake.utah.gov/"
+   },
+   {
+    "id": "strike_2026",
+    "title": "Great Salt Lake Data and Insights Summary",
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "locator": "Figures 13\u201314; water-budget update discussion"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 64,
+  "nevRank": 68
+ },
+ {
+  "id": "mandate_phase",
+  "label": "Years to phase the mandate in",
+  "value": 10,
+  "unit": "years",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice. The phase-in length is not measured; it is constrained by implementation and water-right administration capacity.",
+  "low": 1,
+  "high": 25,
+  "sourceIds": [
+   "state_engineer_dmp",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "state_engineer_dmp",
+    "title": "Distribution Management Plan",
+    "url": "https://waterrights.utah.gov/",
+    "locator": "October 2025 plan"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 65,
+  "nevRank": 69
+ },
+ {
+  "id": "hay_value_per_af",
+  "label": "What an acre-foot earns in hay",
+  "value": 245,
+  "unit": "$/AF",
+  "group": "Value",
+  "status": "derived",
+  "basis": "Hay receipts divided by the water depleted growing it.",
+  "formula": "yield x price \u00f7 consumptive use per acre",
+  "low": 150,
+  "high": 400,
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 67,
+  "nevRank": 70
+ },
+ {
+  "id": "farm_jobs_per_1000_acres",
+  "label": "Field jobs per thousand irrigated acres",
+  "value": 19.2,
+  "unit": "jobs per 1,000 acres",
+  "group": "Jobs",
+  "status": "derived",
+  "basis": "Farm employment divided by irrigated acres.",
+  "formula": "state farm employment \u00f7 state irrigated acres",
+  "note": "A farm-wide average applied to hay, which is less labour-intensive than most crops, so field losses here are likely overstated.",
+  "low": 10,
+  "high": 30,
+  "sourceIds": [
+   "dws_jobs",
+   "nass_utah",
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 68,
+  "nevRank": 71
+ },
+ {
+  "id": "lake_jobs_full",
+  "label": "Jobs in the lake economy once it is healthy",
+  "value": 8650,
+  "unit": "jobs",
+  "group": "Jobs",
+  "status": "derived",
+  "basis": "Brine shrimp, mineral extraction and recreation employment at a healthy lake, scaled by how far the lake recovers.",
+  "formula": "lake-economy employment observed at the package\u2019s recovery \u00f7 the share of the way it recovers",
+  "low": 4000,
+  "high": 14000,
+  "sourceIds": [
+   "dws_jobs",
+   "bea_gdp",
+   "gsl_industry_recreation"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "bea_gdp",
+    "title": "GDP by industry, Utah",
+    "url": "https://www.bea.gov/data/gdp/gdp-state"
+   },
+   {
+    "id": "gsl_industry_recreation",
+    "title": "Industry and Recreation",
+    "url": "https://greatsaltlake.utah.gov/industry-recreation/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 69,
+  "nevRank": 72
+ },
+ {
+  "id": "livestock_jobs_at_risk",
+  "label": "Dairy and beef jobs if the cut reaches local feed",
+  "value": 1900,
+  "unit": "jobs",
+  "group": "Jobs",
+  "status": "derived",
+  "basis": "Dairy and beef employment exposed once a cut passes the basin\u2019s forage surplus.",
+  "formula": "basin dairy and beef employment x the share of local feed a cut reaches",
+  "low": 800,
+  "high": 3500,
+  "sourceIds": [
+   "dws_jobs",
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   },
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 73,
+  "nevRank": 73
+ },
+ {
+  "id": "wtp_household",
+  "label": "What a household says it would pay",
+  "value": 128,
+  "unit": "$/household/yr",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "Contingent-valuation survey of Utah households; the reported range runs from $113 to $144.",
+  "low": 113,
+  "high": 144,
+  "sourceIds": [
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 74,
+  "nevRank": 74
+ },
+ {
+  "id": "mandate_penalty",
+  "label": "Penalty for not meeting a mandated cut",
+  "value": 0,
+  "unit": "$/AF",
+  "group": "Mandate",
+  "status": "assumption",
+  "basis": "A policy choice. Priced at what the water is worth in the lake, it converts coercion into transactions: a farm that will not sell pays the social cost instead.",
+  "low": 0,
+  "high": 2440,
+  "sourceIds": [
+   "lower_basin_2023"
+  ],
+  "sources": [
+   {
+    "id": "lower_basin_2023",
+    "title": "Lower Colorado Basin states compromise on water conservation",
+    "url": "https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation"
+   }
+  ],
+  "lakeSwingFt": 0,
+  "nevSwingM": 0,
+  "lakeRank": 75,
+  "nevRank": 75
+ }
+]

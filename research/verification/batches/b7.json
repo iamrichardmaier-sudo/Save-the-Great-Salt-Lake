@@ -1,0 +1,404 @@
+[
+ {
+  "id": "hay_depletion",
+  "label": "Water depleted growing hay",
+  "value": 1055,
+  "unit": "KAF/yr",
+  "group": "Who uses the water",
+  "status": "sourced",
+  "basis": "Alfalfa and other hay, the single largest use in the basin.",
+  "sourceIds": [
+   "nass_utah",
+   "dwr_gsl",
+   "ag_optimization_2026"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "ag_optimization_2026",
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "hay_acres",
+  "label": "Hay ground the levy could fall on",
+  "value": 399500,
+  "unit": "acres",
+  "group": "Crop levy",
+  "status": "sourced",
+  "basis": "Irrigated hay acreage in the basin.",
+  "sourceIds": [
+   "nass_utah",
+   "dwr_gsl"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   },
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "basin_lawns",
+  "label": "Homes in the basin with a lawn",
+  "value": 743000,
+  "unit": "households",
+  "group": "Residential lawns",
+  "status": "derived",
+  "basis": "Basin households with an irrigated lawn, from the population projection.",
+  "formula": "population \u00f7 2.83 people per home x 80% in basin x 72% with a lawn",
+  "sourceIds": [
+   "gardner_proj",
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   },
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah\u2019s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "lawn_water",
+  "label": "Water the basin\u2019s lawns use",
+  "value": 408.5,
+  "unit": "KAF/yr",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "Reported residential outdoor water use in the basin.",
+  "note": "Whether this is water delivered or water depleted is unresolved. If delivered, savings here are overstated before the dedication haircut.",
+  "sourceIds": [
+   "dwr_gsl",
+   "dwr_regional_goals"
+  ],
+  "sources": [
+   {
+    "id": "dwr_gsl",
+    "title": "Great Salt Lake \u2014 water budget, basin reports and planning data",
+    "url": "https://water.utah.gov/great-salt-lake/"
+   },
+   {
+    "id": "dwr_regional_goals",
+    "title": "Utah\u2019s Regional M&I Water Conservation Goals",
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "locator": "Table 4-9, Reduction in Average Lot Size by County: Salt Lake 8,463 sq ft lot and 4,239 sq ft landscaped, Box Elder 15,264 and 8,759, Cache 12,805 and 7,770 (2015)"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "lease_to_own_rotation_multiplier",
+  "label": "HB 410 multiplier applied to lease-to-own rights",
+  "value": 1,
+  "unit": "multiple",
+  "group": "Acquisition",
+  "status": "assumption",
+  "basis": "Legal interpretation. HB 410 caps temporary full-season leasing off a field, not acquisition of water rights. The model therefore applies no two-in-five acreage multiplier and no repeal toggle to lease-to-own rights.",
+  "sourceIds": [
+   "hb410_2026",
+   "gsl_faq",
+   "utah_water_right_title"
+  ],
+  "sources": [
+   {
+    "id": "hb410_2026",
+    "title": "H.B. 410 Water Leasing Amendments",
+    "url": "https://le.utah.gov/Session/2026/bills/static/HB0410.html"
+   },
+   {
+    "id": "gsl_faq",
+    "title": "Frequently Asked Questions",
+    "url": "https://greatsaltlake.utah.gov/faq/"
+   },
+   {
+    "id": "utah_water_right_title",
+    "title": "Water Right Title Information",
+    "url": "https://www.waterrights.utah.gov/titleInfo/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "herd_feed_surplus",
+  "label": "Forage the basin grows beyond what its own herds eat",
+  "value": 596000,
+  "unit": "tons/yr",
+  "group": "Jobs",
+  "status": "sourced",
+  "basis": "The first cut in hay falls on exports, not on local feed.",
+  "sourceIds": [
+   "nass_utah"
+  ],
+  "sources": [
+   {
+    "id": "nass_utah",
+    "title": "Utah Agricultural Statistics and Annual Profile",
+    "url": "https://www.nass.usda.gov/Statistics_by_State/Utah/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "state_households",
+  "label": "Households in the state",
+  "value": 1265625,
+  "unit": "households",
+  "group": "Politics",
+  "status": "derived",
+  "basis": "Used only to turn the per-household figure into a statewide total.",
+  "formula": "statewide willingness to pay \u00f7 willingness to pay per household",
+  "sourceIds": [
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "pref_incentives",
+  "label": "Prefer incentives for water-efficient landscaping",
+  "value": 0.58,
+  "unit": "share of voters",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "Asked the best state approach, 58 per cent chose incentives.",
+  "sourceIds": [
+   "noble_2026"
+  ],
+  "sources": [
+   {
+    "id": "noble_2026",
+    "title": "Utah voters put water ahead of data-center growth (Utah Public Opinion Pulse)",
+    "url": "https://www.noblepredictiveinsights.com/post/utah-voters-put-water-ahead-of-data-center-growth",
+    "locator": "Field 8\u201312 September 2026; 602 registered voters; margin \u00b13.99"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "pref_penalties",
+  "label": "Prefer restrictions with penalties",
+  "value": 0.22,
+  "unit": "share of voters",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "The same question: 22 per cent chose restrictions with penalties. Penalties lose in every subgroup measured.",
+  "sourceIds": [
+   "noble_2026"
+  ],
+  "sources": [
+   {
+    "id": "noble_2026",
+    "title": "Utah voters put water ahead of data-center growth (Utah Public Opinion Pulse)",
+    "url": "https://www.noblepredictiveinsights.com/post/utah-voters-put-water-ahead-of-data-center-growth",
+    "locator": "Field 8\u201312 September 2026; 602 registered voters; margin \u00b13.99"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "farmer_compensation_low",
+  "label": "Lowest published estimate of compensating farmers",
+  "value": 98.6,
+  "unit": "$M/yr",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "What it would cost to pay farmers enough to stabilise and refill the lake.",
+  "sourceIds": [
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "farmer_compensation_high",
+  "label": "Highest published estimate of compensating farmers",
+  "value": 421.6,
+  "unit": "$M/yr",
+  "group": "Politics",
+  "status": "sourced",
+  "basis": "The upper end of the same estimate.",
+  "sourceIds": [
+   "weber_wtp"
+  ],
+  "sources": [
+   {
+    "id": "weber_wtp",
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "locator": "Survey fielded August 2025; 1,050 weighted responses; under peer review"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "industrial_pipeline_water",
+  "label": "Water every announced industrial project needs",
+  "value": 19.078,
+  "unit": "KAF/yr",
+  "group": "Competing uses",
+  "status": "sourced",
+  "basis": "Data centres, the fuel-cycle campus and proposed reactors, added together.",
+  "sourceIds": [
+   "bea_gdp",
+   "macknick_2012"
+  ],
+  "sources": [
+   {
+    "id": "bea_gdp",
+    "title": "GDP by industry, Utah",
+    "url": "https://www.bea.gov/data/gdp/gdp-state"
+   },
+   {
+    "id": "macknick_2012",
+    "title": "Operational water consumption and withdrawal factors for electricity generating technologies",
+    "url": "https://iopscience.iop.org/article/10.1088/1748-9326/7/4/045802"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "people_per_home",
+  "label": "People per home",
+  "value": 2.83,
+  "unit": "people",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "Average household size used in the population projection.",
+  "sourceIds": [
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "share_in_basin",
+  "label": "Share of the state\u2019s people inside the basin",
+  "value": 0.8,
+  "unit": "share",
+  "group": "Residential lawns",
+  "status": "sourced",
+  "basis": "The basin holds most of the state\u2019s population.",
+  "sourceIds": [
+   "gardner_proj"
+  ],
+  "sources": [
+   {
+    "id": "gardner_proj",
+    "title": "Vintage 2025 state and county population and employment projections",
+    "url": "https://gardner.utah.edu/demographics/population-projections/"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ },
+ {
+  "id": "industrial_pipeline_jobs",
+  "label": "Jobs those projects would add",
+  "value": 11900,
+  "unit": "jobs",
+  "group": "Competing uses",
+  "status": "sourced",
+  "basis": "Announced employment across the same projects.",
+  "sourceIds": [
+   "dws_jobs"
+  ],
+  "sources": [
+   {
+    "id": "dws_jobs",
+    "title": "Utah employment by industry and county",
+    "url": "https://jobs.utah.gov/wi/update/index.html"
+   }
+  ],
+  "lakeSwingFt": null,
+  "nevSwingM": null,
+  "lakeRank": null,
+  "nevRank": null
+ }
+]
