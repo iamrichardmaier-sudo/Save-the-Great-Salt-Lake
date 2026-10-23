@@ -1,0 +1,945 @@
+# Chat log: Great Salt Lake model verification and appendix
+
+Session: 23 October 2026 (times are UTC). This log holds every message you sent and every message Claude wrote. Tool calls and their raw output are left out, apart from the questions Claude asked you and your answers. Screenshots you sent are described in words.
+
+### 12:32 — You
+
+You're picking up an in-progress task in the GitHub repo iamrichardmaier-sudo/Save-the-Great-Salt-Lake, branch `claude/clever-bardeen-unjgd2` (latest commit 297f6e3, "WIP: apply verified corrections…"). Work on that branch, commit as you go, and push when finished. Read HANDOFF.md and research/verification/decisions.json first.
+
+## Background
+This is a TypeScript/Vite model of how $100M/yr can restore the Great Salt Lake. Commands: `npm install`, `npm test` (vitest), `npx tsc --noEmit`, `npm run schedule`, `npm run trace`, `npm run verification`, `npm run check-links`, `npm run build`. The page is a pure function of the dials. Every on-page figure goes through `fig()` with provenance. No numeral is typed into prose. Only src/sources.ts and the generated src/research-sources.ts may contain URLs.
+
+The owner asked for every number and assumption to be re-verified at source and everything linked together. Their decisions: correct mismatches, rerun the optimiser and the year-by-year budget, report old → new values and their effect. Cover all ~105 coefficients plus the side tables. Deliver exact citations in the model, a research report doc, a "how it connects" map (already done: src/connections.ts and the "How it connects" tab), and published evidence for every assumption.
+
+## Already done
+- Research records for all 105 coefficients: research/verification/results/b1–b7.json.
+- Review decisions, each re-checked at source: research/verification/decisions.json.
+- Accepted values applied to src/data.ts, and 3 unused coefficients removed (hay_depletion, farmer_compensation_low/high).
+- `npm run verification` (scripts/build-verification.ts) generates src/verification.ts (one record per coefficient: verdict, sourceIds, locator, quote, arithmetic, notes) and src/research-sources.ts (78 new sources).
+- Major changes: goal_added 875→800; response_k 0.12→0.17; lease_capacity 200→130; lake_now 4191.1→4189.7 (USGS 10010000 on 2026-09-30); application_mean 2.64→2.4; irrigation_net_value 133→236; phrag_cost 186→610; hay_acres 399,500→228,000; lease_base_rate 380→250; inflow_cv 0.35→0.50; and others listed in HANDOFF.md.
+
+## Key result to report, not hide
+With the corrected numbers, `optimise(0.6, {tries:1000, seed:424242})` followed by `fullSpendSchedule(dials)` ends at **4,197.44 ft in 2055 and does NOT reach the 4,198.5 ft goal**. Before the corrections it was 4,198.96 ft, first reached in 2051, with NEV $59.05B. NEV is now ≈ $36.9B. Even optimise(1.0) only reaches about 4,197.7 ft. The baseline equilibrium is now 4,190.98 ft. Do NOT re-tune policies (charge, levy, mandate) or the budget without asking the owner. Report the shortfall and what it would take to close it.
+
+## Left to do
+1. **Side-tables research.** results/tables.json is missing, because the agent stopped. Verify every row of BASELINES, CONSUMERS, STAKEHOLDERS, VALUE_PER_AF, WATERING_MONTHS, AREA_ANCHORS, LEGAL_ASSUMPTIONS and SOURCES in src/data.ts / src/sources.ts. Follow research/verification/brief.md. Its scratchpad paths are stale: use research/verification/ and download sources fresh. CONSUMERS must sum to basin_depletion (2,387). mi_depletion (328, found in no source; ~354 proposed) and charge_base (~1,938) were deferred until this batch: restructure CONSUMERS, mi_depletion and charge_base together using the Strike Team 2020–24 depletion table (minerals 136, not 152). Re-open every source yourself before accepting any correction. Add decisions to decisions.json, then rerun `npm run verification`.
+2. **Fix the 6 failing tests.** The header-summary test also fails, but it failed before this work started, so leave it.
+   - src/lake.test.ts "today the lake is a little short of holding its own level": the lake is now below its baseline equilibrium. Update the test and any prose making that claim (grep the tabs).
+   - src/model.test.ts "the scarcity charge cuts more water through behaviour than its own revenue could buy": now false (behaviour 113 vs revenue 288), because irrigation_net_value rose. Update the test, the chargeModel comment and the README claim to match the corrected data.
+   - src/model.test.ts "cites every source from somewhere": also count sourceIds in VERIFICATION (src/verification.ts) as citations.
+   - src/connections.test.ts: UNUSED_ON_PURPOSE must now be [].
+   - src/schedule.test.ts "reaches the healthy floor": the goal is now missed. Change the test to assert what is true and labelled: the result reports meetsGoal=false with the shortfall. Do not fudge numbers to pass.
+   - src/render.test.ts extremes test times out at 5 s with budgetM 800. Give that describe a longer timeout, or use a coarser stepM in ctxFor.
+   - Then add tests: every COEFS id has a VERIFICATION record with verdict and checked; every confirmed/corrected record has a quote and locator.
+3. **Index tab** (src/ui/tabs.ts, indexTab): add Verdict, Locator and Quote columns, plus links to the verification sources (source(id)). Mark corrected values with their previous value.
+4. **Rewrite research/findings.md** from the records: verified at source, corrected (old → new), unsupported, no evidence. Also cover the caveats: evap_gross, precip_lake and inflow_efficiency are collinear, so the tornado overstates evap_gross; shepherd_start includes in-lake mineral water.
+5. **Rerun and record before/after:** `npm run schedule` (CSV), `npm run trace`, the 2055 elevation, the goal year, NEV and the yearly split. Update the README "What the model says" bullets that no longer hold.
+6. **Research report:** create a shareable doc (Claude Docs if available, otherwise a well-formatted markdown file in research/). Include: headline findings including the missed goal; a table of every number (value, units, source link, locator, quote, verdict, old→new); assumptions with their evidence; the effect on results; the connection map; and sources.
+7. **Ship:** `npx tsc --noEmit`, `npx vitest run`, `npm run check-links`. A Playwright screenshot of the Index and How-it-connects tabs at desktop and phone widths (Chromium is at /opt/pw-browsers). Commit and push. If an Artifact tool exists, rebuild (`npm run build`) and republish dist/index.html plus dist/assets/* to https://claude.ai/artifact/1hnVUrv3zc6ovYZ1s4yafE. Update HANDOFF.md to say what's finished.
+
+## Environment notes
+- WebFetch may not resolve hosts. Use curl, which goes through the proxy. For Node fetch, set NODE_USE_ENV_PROXY=1.
+- Wiley (agupubs) blocks bots.
+- A search snippet is never evidence. Only cite passages you opened and quoted.
+- Finally, report to the owner every corrected number with its effect, and say plainly that the goal is now missed and by how much.
+
+
+
+Ask the questions you have before starting
+
+### 12:32 — Claude
+
+I'll take a quick look at the repo state and handoff notes so my questions are informed.
+
+### 12:32 — Claude
+
+I've read the hand-off notes on the `clever-bardeen` branch. Four things to settle before I start:
+
+### 12:34 — Question and answer
+
+**Claude asked:**
+- This session is set up to push to `claude/awesome-noether-646upl`, but the work in progress (297f6e3) is on `claude/clever-bardeen-unjgd2`. Which branch should I work on and push to? Options: clever-bardeen (Recommended); awesome-noether.
+- Where should the shareable research report go? Claude Docs is available in this session. Options: New Claude Doc + md copy (Recommended); Update old appendix doc; Markdown file only.
+- For 'what it would take to close the shortfall', may I run what-if scenarios for the report only, without changing any defaults? Options: Report-only what-ifs (Recommended); Just state the gap.
+- Should I overwrite the hosted model (artifact 1hnVUrv3zc6ovYZ1s4yafE) with the corrected version, where the goal is now missed? Options: Yes, republish (Recommended); Hold until I review.
+**You answered:** "This session is set up to push to `claude/awesome-noether-646upl`, but the work in progress (297f6e3) is on `claude/clever-bardeen-unjgd2`. Which branch should I work on and push to?"="clever-bardeen (Recommended)", "Where should the shareable research report go? Claude Docs is available in this session."="New Claude Doc + md copy (Recommended)", "For 'what it would take to close the shortfall', may I run what-if scenarios for the report only, without changing any defaults?"="Report-only what-ifs (Recommended)", "Should I overwrite the hosted model (artifact 1hnVUrv3zc6ovYZ1s4yafE) with the corrected version, where the goal is now missed?"="when you are done with all of your research I want you to optimize year after year to find when the goal wont be misseed".
+
+### 12:36 — Question and answer
+
+**Claude asked:**
+- On 'optimize year after year to find when the goal won't be missed', which do you mean? Options: Find the year it's reached (Recommended); Find the budget for 2055; Both.
+- After that, should the republished hosted model show the corrected numbers? Options: Yes, republish (Recommended); Hold for review.
+**You answered:** "On 'optimize year after year to find when the goal won't be missed', which do you mean?"="Keep the 100m/y budget and do everything you can to reach our goal by 2055", "After that, should the republished hosted model show the corrected numbers?"="Yes, republish (Recommended)".
+
+### 12:40 — Question and answer
+
+**Claude asked:**
+- To reach 4,198.5 ft by 2055 on $100M/yr, how far may I go? Verified source numbers stay fixed either way. Options: Any dial, within ranges (Recommended); Also widen ranges; Report options only.
+**You answered:** "To reach 4,198.5 ft by 2055 on $100M/yr, how far may I go? Verified source numbers stay fixed either way."="Any dial, within ranges (Recommended)".
+
+*(Claude showed a plan for your approval.)*
+
+### 12:41 — Claude
+
+Starting with setup: switching to the work-in-progress branch and installing dependencies.
+
+### 12:41 — Claude
+
+I'm on the WIP branch now and starting the side-tables research, beginning with the Strike Team depletion table so I can rebuild CONSUMERS.
+
+### 12:41 — Claude
+
+I'll download the Strike Team 2026 report and check the depletion table myself.
+
+### 12:42 — Claude
+
+Residential is only published for 2024 (lawns 408.5 KAF, 96.9% of residential use), so residential = 421.6 and indoor = 13.1. Now I'll check how CONSUMERS and the lawn figures are defined in data.ts.
+
+### 12:42 — Claude
+
+The hay/other-crops split (1,055 / 529) has no stated source. I'll search the Strike Team reports for a split by crop.
+
+### 12:42 — Claude
+
+The DWR Ag Water Optimization report probably breaks agricultural depletion down by crop. I'll check it.
+
+### 12:42 — Claude
+
+Figure 2-5 (agricultural depletion by crop type) is an image, so I'll render the page and read it directly.
+
+### 12:43 — Claude
+
+The model's baseline inflow (1,665 KAF) is the 2000–2025 average, so I'll check the four inflow factors against USGS gauge records for the Bear, Weber and Jordan rivers.
+
+### 12:44 — Claude
+
+'Warming' (0.82) sits at the high end of the published sensitivity (Bardsley et al.: 1.8–6.5% less flow per °F). I'll open that article to quote it, then go through VALUE_PER_AF.
+
+### 12:44 — Claude
+
+I've quoted UCAR (1.8–6.5% per °F, average 3.8%). The warming factor 0.82 implies about 4.7 °F of warming at the average sensitivity, so it stays as a bounded assumption. Next, VALUE_PER_AF.
+
+### 12:45 — Claude
+
+DWR doesn't publish M&I depletion by sub-sector, so some VALUE_PER_AF denominators may have no source. Next I'll check the nuclear rows against Macknick et al. 2012.
+
+### 12:45 — Claude
+
+Earlier batches found no published annual water volumes for Meta, QTS or the Tooele campus. I'll run a few searches to confirm before marking those rows unsupported.
+
+### 12:47 — Claude
+
+The cited DWR report has no monthly breakdown. I'll look for a published monthly lawn-irrigation schedule for Utah.
+
+### 12:48 — Claude
+
+I'm still checking the side tables. Right now I'm looking for a published month-by-month lawn-watering profile for Utah.
+
+### 12:50 — Claude
+
+The USGS table has both datums. Lake levels like 4,188.5 ft are reported in NGVD29, so I'll look up rows by that column.
+
+### 12:53 — Claude
+
+I have what I need for the side tables. Writing `results/tables.json` now, one record per row.
+
+### 12:55 — Claude
+
+89 records written. Now I'll fix the source entries in `src/sources.ts` and add the new primary sources (USGS area table, USU consumptive use, USGS gauges, UCAR) as named entries.
+
+### 12:55 — Claude
+
+Now applying the source fixes and adding the new sources.
+
+### 12:56 — Claude
+
+Next I'll update the verification builder so side-table records go into their own `TABLE_VERIFICATION` export.
+
+### 12:56 — Claude
+
+Now the reviewer decisions for the side-table rows and the deferred coefficients.
+
+### 12:56 — Claude
+
+Now applying the accepted values to `src/data.ts`.
+
+### 12:57 — Claude
+
+Verification rebuilt (194 records, 89 of them table rows) and the typecheck is clean. Running the tests to see where things stand.
+
+### 12:57 — Claude
+
+Eight failures, all expected: the pre-existing header test, the five listed in the hand-off, and two lake tests the new USGS area curve breaks. Fixing them now, starting with the lake tests.
+
+### 12:58 — Claude
+
+The "Short of standing still" tile would now show a negative number. I'll make it adapt to whichever side of its equilibrium the lake is on, and fix `baseline_inflow`'s stale formula text.
+
+### 12:58 — Claude
+
+Now the lake tests.
+
+### 12:58 — Claude
+
+Lake tests pass. Next, the model, connections, schedule and render tests.
+
+### 12:59 — Claude
+
+Side tables are done. The schedule test depends on the goal search, so I'll come back to it. Next I'll read the optimiser and budget schedule.
+
+### 12:59 — Claude
+
+Even every policy dial at its maximum reaches only **4,198.05 ft** by 2055, with 840 KAF/yr net. I'll find what caps delivery in the model.
+
+### 13:01 — Claude
+
+I'll hold the water-right price at its sourced $6,000/AF and rerun the search.
+
+### 13:03 — Claude
+
+Rounding kept the goal but dropped political support from 80 to 46. I'll round more lightly and see which dial causes the drop.
+
+### 13:03 — Claude
+
+Support differs from what the search reported, so I'll check the exact refined package.
+
+### 13:04 — Claude
+
+Small roundings swing the flat result from 4,198.53 to 4,197.9 ft and support from 80 to 48, so something in the model is knife-edged. I'll round one dial at a time to find it.
+
+### 13:07 — Claude
+
+Both now clear the goal: flat 4,198.53 ft and year-by-year 4,198.55 ft, with support 78. I'll round the dials and recheck.
+
+### 13:07 — Claude
+
+Now the robustness check: each policy dial nudged ±10%, then each uncertain coefficient at its low and high end.
+
+### 13:08 — Claude
+
+The defaults now reproduce the goal-meeting package. Next I'll point the scripts and the schedule test at it, and check what the page's optimiser button rewards.
+
+### 13:08 — Claude
+
+The page's optimiser button can also set the water-right price, the same fudge I excluded from the goal search. I'll check the test that ties the search space to the dials.
+
+### 13:09 — Claude
+
+Now a committed, reproducible goal-search script (`npm run goal-search`) to replace my scratch versions.
+
+### 13:09 — Claude
+
+I'll run the committed goal search in the background while I point the schedule and trace scripts at the new defaults.
+
+### 13:10 — Claude
+
+It diverges in year 10 (2036). I'll lower the floor to eight matching years.
+
+### 13:11 — Claude
+
+Six of eight seeds meet the goal on the year-by-year budget, all within about 0.05 ft of the target. Stage 2 is still running. Meanwhile, the new verification coverage tests.
+
+### 13:11 — Claude
+
+The new defaults break four tests that assume the old default package. Reading them.
+
+### 13:11 — Claude
+
+Model tests pass. Running the full suite.
+
+### 13:12 — Claude
+
+Everything passes except the header-summary test, which was already failing before this work. Next I'll give the render extremes test a longer timeout, as the hand-off asked, then commit this stage.
+
+### 13:12 — Claude
+
+Pushed. The year-by-year budget now meets the goal: first in 2047, 4,198.55 ft in 2055, NEV $56.55B. Next, the Index tab columns.
+
+### 13:12 — Claude
+
+Writing the Index tab changes.
+
+### 13:13 — Claude
+
+Index tab done (only the old header test fails). Next, rewriting `research/findings.md` from the records. I'll dump the records grouped by verdict first.
+
+### 13:13 — Claude
+
+Before writing the findings I want each correction's own effect. I'll put each corrected coefficient back to its old value one at a time and measure the 2055 level and NEV, as a committed script.
+
+### 13:15 — Claude
+
+A few README claims need checking against the corrected data: the 760 KAF evaporation figure, the hay-vs-lake values, and the yearly budget description. Pulling the current figures.
+
+### 13:16 — Claude
+
+My acre sum was wrong: 2,560k acres, not 2,540k. That gives $889/acre and **$368/AF**. Fixing both records and applying the value.
+
+### 13:16 — Claude
+
+With hay at $368/AF the plan still meets the goal: 4,198.57 ft in 2055, first met in 2047, NEV now $55.0B. I'll rerun the effects, trace and goal search so the outputs match.
+
+### 13:16 — Claude
+
+While those run, I'll compute the what-ifs for the report: higher budgets, a weaker mandate, and the key uncertain coefficients at their range ends.
+
+### 13:17 — Claude
+
+Effects are recomputed. Next I'll dump the verification records to JSON and write `research/findings.md` from them.
+
+### 13:18 — Claude
+
+Findings written. Now the README: the headline about the goal, the evaporation figure (now about 850 KAF), the hay value, and the budget paragraph.
+
+### 13:19 — Claude
+
+Findings and README are committed and pushed. Next, the research report as a Claude Doc, so I'm loading the docs skill first.
+
+### 13:19 — Claude
+
+Outline is up. Now writing the headline findings.
+
+### 13:20 — Claude
+
+Headline is in. Next: the effect on results.
+
+### 13:20 — Claude
+
+Next, the corrected-numbers table. I'll generate it from the records so the doc and `research/report.md` share the same source.
+
+### 13:21 — Claude
+
+Fill s3 (corrected numbers).
+
+### 13:21 — Claude
+
+Corrected numbers are in. Now the table of all 102 numbers. I'll regenerate it in a more compact form first.
+
+### 13:22 — Claude
+
+Records fixed. Now pasting the all-numbers table into the doc.
+
+### 13:24 — Claude
+
+All-numbers table is in. Next, the side tables.
+
+### 13:24 — Claude
+
+Side tables are in. Next, assumptions and caveats.
+
+### 13:25 — Claude
+
+Assumptions are in. Next, the source list.
+
+### 13:25 — Claude
+
+Sources are in. Last section is the "How it connects" diagram, so I'll read the stage map from the code.
+
+### 13:26 — Claude
+
+The diagram renders cleanly. Next, the one comment asking you to confirm a choice.
+
+### 13:26 — Claude
+
+The doc is filled. I'll mirror it to `research/report.md` by exporting it as markdown.
+
+### 13:26 — Claude
+
+Report done. Now shipping: checks, link check and screenshots.
+
+### 13:31 — Claude
+
+The locator and quote columns are still crushed: the general `td` rule outranks their minimum widths. Raising those two rules' specificity.
+
+### 13:32 — Claude
+
+The page's verdict counts (25 corrected, 21 confirmed) include records for the three removed coefficients, so they don't match the report (24 and 19). I'll count only the coefficients the model has.
+
+### 13:32 — Claude
+
+The link check is clean apart from earthref.org. It fails only under Node's fetch and returns 200 through curl, so I'll note it as a checker quirk. Next, rewriting HANDOFF.md to say what's finished.
+
+### 13:33 — Claude
+
+I'll regenerate the findings so they pick up the two updated quotes, then commit and push.
+
+### 13:33 — Claude
+
+Pushed. Last step: republish the hosted model. I'll read the existing artifact first so the update builds on it.
+
+### 13:34 — Claude
+
+Every number in the model has been re-checked, and on $100M a year the lake now reaches the 4,198.5 ft goal by 2055 — but only barely. The goal is first met in 2047 and held, and the lake ends at 4,198.57 ft. That needs several policy dials at the top of their ranges, and the margin is under a tenth of a foot. Everything is committed and pushed to `claude/clever-bardeen-unjgd2`, apart from the hosted model (see the last section).
+
+## What the corrections did to the old plan
+
+| Run (all at $100M a year) | Lake in 2055 | Goal first met | Net economic value (NEV) |
+|---|---:|---|---:|
+| Old plan, old numbers | 4,198.96 ft | 2051 | $59.05B |
+| Old plan, corrected numbers | 4,198.25 ft | never | $50.04B |
+| Old optimiser re-run, corrected numbers | 4,197.46 ft | never | $36.94B |
+| **New default package** | **4,198.57 ft** | **2047** | **$55.00B** |
+
+24 numbers were corrected. Measured one at a time on the old plan, these mattered most:
+- **Utah-only hay ground:** 399,500 → 228,000 acres cost 0.36 ft and $3.8B NEV.
+- **Faster lake response,** fitted to the Strike Team's projection: 0.12 → 0.17, worth +0.31 ft.
+- **Measured lake-area curve:** I replaced the model's three-point straight line with the USGS area table. The straight line overstated the lake's area by 9–15% right where the goal sits. With its fitted constant re-derived (1.03 → 0.933), this cost 0.23 ft.
+- **Phragmites cost:** $186 → $610/AF cost $1.0B NEV.
+- **Goal:** 875 → 800 KAF/yr cost 0.08 ft.
+- **Hay value:** $245 → $368/AF, now dividing by irrigation water rather than total crop water use.
+
+Who-uses-what now sums to 2,387 KAF, with minerals at 136 KAF and a reservoir row it lacked. The two deferred figures are now 354.4 and 1,938.4 KAF.
+
+Across the 102 numbers, 19 are confirmed at source, 24 corrected, 9 had their ranges changed, 1 is derived, 33 assumptions have published evidence, 8 are unsupported and 8 have no evidence. The 89 side-table and source rows also each have their own record.
+
+## What it takes to hit the goal
+
+A search over every policy dial, within its existing range, found the new default package:
+- a mandate at its maximum: a 1,200 KAF floor phased in over one year;
+- the crop levy at its maximum, $400/AF above 1.5 AF an acre;
+- repossession switched on;
+- monitoring at $50M and phragmites removal at $25M.
+
+It's fragile. Any one of these misses the goal:
+- a mandate 10% weaker;
+- no levy, or no repossession;
+- the slow end of the lake's response;
+- a drier inflow baseline.
+
+More money barely helps: $200M a year only reaches 4,198.69 ft. The mandate, levy and repossession would all need new legislation.
+
+I held the price of a water right at its sourced $6,000/AF. Letting the search lower it to $250 would have bought water with an assumption.
+
+## Problems found along the way
+
+- **Lawn fines bug:** the lawn module charges full fines on any watering ask, however small, and that money buys water rights. A 0.02% ask moved the lake 0.6 ft. The optimiser now ignores asks under 5%, but the module itself still needs fixing.
+- **Pre-existing test:** the header-summary test still fails, as it did before. The other 204 tests pass.
+
+## Decision for you
+
+Should this edge-of-range package stay the default, or would you rather the page show a more cautious package and its gap? I left that question as a comment in the report.
+
+## Not done: the hosted model
+
+I couldn't republish the hosted model: the link returns "artifact not found" for this account, so it may have been deleted or not shared with me. The build is ready in `dist/`. I can publish it as a new page if you'd like.
+
+Files are in the repo:
+- `research/report.md` (the full report, mirroring the shared doc below)
+- `research/findings.md`
+- `HANDOFF.md`
+- `research/screenshots/` (Index and How-it-connects tabs, desktop and phone)
+
+[Research report (shared doc)](https://claude.ai/artifact/Nps2hg3JcK3B1Fop79PtkA)
+
+### 13:37 — You
+
+You're picking up an in-progress task in the GitHub repo iamrichardmaier-sudo/Save-the-Great-Salt-Lake, branch `claude/clever-bardeen-unjgd2` (latest commit 297f6e3, "WIP: apply verified corrections…"). Work on that branch, commit as you go, and push when finished. Read HANDOFF.md and research/verification/decisions.json first.
+
+## Background
+This is a TypeScript/Vite model of how $100M/yr can restore the Great Salt Lake. Commands: `npm install`, `npm test` (vitest), `npx tsc --noEmit`, `npm run schedule`, `npm run trace`, `npm run verification`, `npm run check-links`, `npm run build`. The page is a pure function of the dials. Every on-page figure goes through `fig()` with provenance. No numeral is typed into prose. Only src/sources.ts and the generated src/research-sources.ts may contain URLs.
+
+The owner asked for every number and assumption to be re-verified at source and everything linked together. Their decisions: correct mismatches, rerun the optimiser and the year-by-year budget, report old → new values and their effect. Cover all ~105 coefficients plus the side tables. Deliver exact citations in the model, a research report doc, a "how it connects" map (already done: src/connections.ts and the "How it connects" tab), and published evidence for every assumption.
+
+## Already done
+- Research records for all 105 coefficients: research/verification/results/b1–b7.json.
+- Review decisions, each re-checked at source: research/verification/decisions.json.
+- Accepted values applied to src/data.ts, and 3 unused coefficients removed (hay_depletion, farmer_compensation_low/high).
+- `npm run verification` (scripts/build-verification.ts) generates src/verification.ts (one record per coefficient: verdict, sourceIds, locator, quote, arithmetic, notes) and src/research-sources.ts (78 new sources).
+- Major changes: goal_added 875→800; response_k 0.12→0.17; lease_capacity 200→130; lake_now 4191.1→4189.7 (USGS 10010000 on 2026-09-30); application_mean 2.64→2.4; irrigation_net_value 133→236; phrag_cost 186→610; hay_acres 399,500→228,000; lease_base_rate 380→250; inflow_cv 0.35→0.50; and others listed in HANDOFF.md.
+
+## Key result to report, not hide
+With the corrected numbers, `optimise(0.6, {tries:1000, seed:424242})` followed by `fullSpendSchedule(dials)` ends at **4,197.44 ft in 2055 and does NOT reach the 4,198.5 ft goal**. Before the corrections it was 4,198.96 ft, first reached in 2051, with NEV $59.05B. NEV is now ≈ $36.9B. Even optimise(1.0) only reaches about 4,197.7 ft. The baseline equilibrium is now 4,190.98 ft. Do NOT re-tune policies (charge, levy, mandate) or the budget without asking the owner. Report the shortfall and what it would take to close it.
+
+## Left to do
+1. **Side-tables research.** results/tables.json is missing, because the agent stopped. Verify every row of BASELINES, CONSUMERS, STAKEHOLDERS, VALUE_PER_AF, WATERING_MONTHS, AREA_ANCHORS, LEGAL_ASSUMPTIONS and SOURCES in src/data.ts / src/sources.ts. Follow research/verification/brief.md. Its scratchpad paths are stale: use research/verification/ and download sources fresh. CONSUMERS must sum to basin_depletion (2,387). mi_depletion (328, found in no source; ~354 proposed) and charge_base (~1,938) were deferred until this batch: restructure CONSUMERS, mi_depletion and charge_base together using the Strike Team 2020–24 depletion table (minerals 136, not 152). Re-open every source yourself before accepting any correction. Add decisions to decisions.json, then rerun `npm run verification`.
+2. **Fix the 6 failing tests.** The header-summary test also fails, but it failed before this work started, so leave it.
+   - src/lake.test.ts "today the lake is a little short of holding its own level": the lake is now below its baseline equilibrium. Update the test and any prose making that claim (grep the tabs).
+   - src/model.test.ts "the scarcity charge cuts more water through behaviour than its own revenue could buy": now false (behaviour 113 vs revenue 288), because irrigation_net_value rose. Update the test, the chargeModel comment and the README claim to match the corrected data.
+   - src/model.test.ts "cites every source from somewhere": also count sourceIds in VERIFICATION (src/verification.ts) as citations.
+   - src/connections.test.ts: UNUSED_ON_PURPOSE must now be [].
+   - src/schedule.test.ts "reaches the healthy floor": the goal is now missed. Change the test to assert what is true and labelled: the result reports meetsGoal=false with the shortfall. Do not fudge numbers to pass.
+   - src/render.test.ts extremes test times out at 5 s with budgetM 800. Give that describe a longer timeout, or use a coarser stepM in ctxFor.
+   - Then add tests: every COEFS id has a VERIFICATION record with verdict and checked; every confirmed/corrected record has a quote and locator.
+3. **Index tab** (src/ui/tabs.ts, indexTab): add Verdict, Locator and Quote columns, plus links to the verification sources (source(id)). Mark corrected values with their previous value.
+4. **Rewrite research/findings.md** from the records: verified at source, corrected (old → new), unsupported, no evidence. Also cover the caveats: evap_gross, precip_lake and inflow_efficiency are collinear, so the tornado overstates evap_gross; shepherd_start includes in-lake mineral water.
+5. **Rerun and record before/after:** `npm run schedule` (CSV), `npm run trace`, the 2055 elevation, the goal year, NEV and the yearly split. Update the README "What the model says" bullets that no longer hold.
+6. **Research report:** create a shareable doc (Claude Docs if available, otherwise a well-formatted markdown file in research/). Include: headline findings including the missed goal; a table of every number (value, units, source link, locator, quote, verdict, old→new); assumptions with their evidence; the effect on results; the connection map; and sources.
+7. **Ship:** `npx tsc --noEmit`, `npx vitest run`, `npm run check-links`. A Playwright screenshot of the Index and How-it-connects tabs at desktop and phone widths (Chromium is at /opt/pw-browsers). Commit and push. If an Artifact tool exists, rebuild (`npm run build`) and republish dist/index.html plus dist/assets/* to https://claude.ai/artifact/1hnVUrv3zc6ovYZ1s4yafE. Update HANDOFF.md to say what's finished.
+
+## Environment notes
+- WebFetch may not resolve hosts. Use curl, which goes through the proxy. For Node fetch, set NODE_USE_ENV_PROXY=1.
+- Wiley (agupubs) blocks bots.
+- A search snippet is never evidence. Only cite passages you opened and quoted.
+- Finally, report to the owner every corrected number with its effect, and say plainly that the goal is now missed and by how much.
+
+Can you build this with the amount credits you have left
+
+### 13:37 — Claude
+
+Yes, and it's already built: this is the same task I just finished. Three commits on top of 297f6e3 are pushed to `claude/clever-bardeen-unjgd2`, and there's plenty of budget left for follow-ups.
+
+Where each of the seven steps stands:
+
+1. **Side tables:** done. `results/tables.json` has 89 rows, each correction is in `decisions.json`, and CONSUMERS now sums to 2,387. `mi_depletion` went 328 → 354.4 and `charge_base` 1,912 → 1,938.4. The lake-area table was replaced with the USGS 2023 survey and the evaporation balance was re-fitted to it.
+2. **Tests:** fixed. Only the header-summary test still fails, as it did before; 204 pass. The new tests check that every coefficient has a verdict, and a quote and locator where it was confirmed or corrected.
+3. **Index tab:** done. It has Verdict, Locator and Quote columns, source links, and the old value next to each correction.
+4. **`research/findings.md`:** rewritten from the records, with the evaporation and in-lake mineral water caveats.
+5. **Reruns:** the yearly budget CSV, the dependency trace, the before/after figures and the README are all updated.
+6. **Report:** written as a [shared doc](https://claude.ai/artifact/Nps2hg3JcK3B1Fop79PtkA) and as `research/report.md`.
+7. **Ship:** done, except republishing the hosted model. Type-check, tests and link check have run, the screenshots are in `research/screenshots/`, and `HANDOFF.md` is updated. The hosted model's link says "artifact not found" for this account, so I couldn't republish it. The new build is ready to publish.
+
+One thing differs from your note. It says not to re-tune the policies without asking, but when I asked earlier you told me to keep $100M a year and do everything possible within the dial ranges. So I did, and here is where it landed:
+- **The old plan misses.** On the corrected numbers it ends at 4,198.25 ft in 2055 and never reaches the goal. Re-running the old optimiser gives 4,197.46 ft, with net economic value of $36.94B.
+- **The new default meets the goal, barely.** It first reaches 4,198.5 ft in 2047 and ends at 4,198.57 ft. Net economic value is $55.00B.
+- **It sits at the edge of the dials.** It needs a 1,200 KAF mandate phased in over one year, the maximum $400 crop levy, and repossession switched on.
+- **It's fragile.** A mandate 10% weaker, dropping the levy or repossession, or a drier inflow assumption each misses the goal.
+
+The open decision is in a comment in the report: keep this edge-of-range package as the default, or show a more cautious package and its gap to the goal.
+
+Do you want me to change anything, or publish the build as a new hosted page?
+
+### 13:38 — You
+
+make sure it follows the format I gave you in this prompt
+
+### 13:38 — Question and answer
+
+**Claude asked:**
+- Your original prompt says not to re-tune the policies and to report the goal as missed. Later you told me to do everything possible to reach the goal by 2055, so I changed the default package and it now meets the goal, barely. Which should the delivered work follow? Options: Original prompt exactly; Keep goal package, fix layout; Both, side by side.
+**You answered:** "Your original prompt says not to re-tune the policies and to report the goal as missed. Later you told me to do everything possible to reach the goal by 2055, so I changed the default package and it now meets the goal, barely. Which should the delivered work follow?"="Keep goal package, fix layout".
+
+### 13:39 — Claude
+
+Restructuring the doc in place. First, the every-number table with separate columns.
+
+### 13:41 — Claude
+
+The every-number table now has separate columns. Next I'll move the effect sections after Assumptions, nest the corrections table under Effect, and state the shortfall in the headline.
+
+### 13:41 — Claude
+
+The doc sections now run in the order you specified. I'll mirror it to `research/report.md`, align HANDOFF.md with your seven numbered items, and push.
+
+### 13:41 — Claude
+
+Now HANDOFF.md, restructured around your seven numbered items.
+
+### 13:42 — Claude
+
+The work and the report now follow your brief's format. Changes are pushed to `claude/clever-bardeen-unjgd2`, and the goal-meeting package stays as the default, as you chose.
+
+**The goal is missed on the corrected numbers.** The plan as it stood ends at 4,198.25 ft in 2055, **0.25 ft short** of 4,198.5 ft. Before the corrections it reached 4,198.96 ft in 2051, with net economic value (NEV) of $59.05B; now NEV is $50.04B. Re-running the old optimiser does worse: 4,197.46 ft, **1.04 ft short**, NEV $36.94B.
+
+**What it would take to close the gap:** another dial search, which you approved, found a package that meets the goal on the same $100M a year. It first reaches 4,198.5 ft in 2047 and ends at 4,198.57 ft, with NEV $55.00B. To get there it needs:
+- the mandate at 1,200 KAF, phased in over one year;
+- the crop levy at $400/AF;
+- repossession switched on.
+
+More money doesn't close the gap: even $200M a year only reaches 4,198.69 ft.
+
+## The seven items
+1. **Side tables:** done. 89 rows checked. Who-uses-what now sums to 2,387 KAF, and the deferred figures changed (`mi_depletion` 328 → 354.4, `charge_base` 1,912 → 1,938.4).
+2. **Tests:** fixed, and the new verdict and quote tests are added. 204 pass; only the header-summary test still fails, as it did before.
+3. **Index tab:** Verdict, Locator and Quote columns added, with source links and the old value on each correction.
+4. **`research/findings.md`:** rewritten from the records, with the evaporation and in-lake mineral water caveats.
+5. **Reruns:** the yearly budget CSV and dependency map are regenerated. The effect of each correction is in `research/correction-effects.json`, and the README is updated.
+6. **Report:** the sections are now in your order: headline, every number, assumptions, effect on results, connection map, sources. The every-number table has separate columns for value, units, verdict, old → new, locator, quote and source. It's in the [shared doc](https://claude.ai/artifact/Nps2hg3JcK3B1Fop79PtkA) and `research/report.md`.
+7. **Ship:** done except the republish. The type check is clean, links are checked, screenshots are in `research/screenshots/`, and HANDOFF.md is organised by these seven items. I couldn't republish the hosted model because its link returns "artifact not found" for this account.
+
+## Every corrected number and its effect on the old plan
+Each effect is the 2055 lake level and NEV change from that correction alone.
+
+| Number | Old → new | Effect |
+|---|---|---|
+| Hay acres the levy can reach | 399,500 → 228,000 | −0.36 ft, −$3.84B |
+| Lake response speed | 0.12 → 0.17 | +0.31 ft |
+| Lake area curve + inflow fit | 3 anchors, 1.03 → USGS table, 0.933 | −0.23 ft |
+| Goal (added inflow) | 875 → 800 KAF/yr | −0.08 ft, −$0.92B |
+| Phragmites cost | $186 → $610/AF | −0.07 ft, −$1.02B |
+| Water applied per acre of hay | 2.64 → 2.4 AF/acre | −0.05 ft, −$0.74B |
+| Irrigation water's net value | $133 → $236/AF | −0.03 ft, −$2.08B |
+| Hay net return | $175 → $305/acre | −0.02 ft, −$0.23B |
+| Lawn water use | 408.5 → 371 KAF/yr | −0.02 ft, −$0.19B |
+| Lake level today | 4,191.1 → 4,189.7 ft | −0.01 ft |
+| City and industry water price | $380 → $640/AF | −$0.22B |
+| Minerals and commercial depletion (`mi_depletion`) | 328 → 354.4 KAF/yr | +$0.02B |
+
+These had no measurable effect on the old plan:
+- water the charge falls on (`charge_base`): 1,912 → 1,938.4 KAF/yr
+- lawn area per home: 6,938 → 5,785 sq ft
+- what turf needs: 30 → 24 in
+- water willing sellers will lease: 200 → 130 KAF/yr
+- base lease rate: $380 → $250
+- state interest rate: 1.5% → 3%
+- hay value per acre-foot: $245 → $368
+- lake-economy jobs: 8,650 → 7,706
+- state households: 1,265,625 → 1,200,000
+- inflow variability (`inflow_cv`): 0.35 → 0.5
+- people per home: 2.83 → 2.96
+- share of people in the basin: 0.8 → 0.86
+
+The hay value and lease rate do matter on the new package: hay value costs it $1.56B of NEV.
+
+### 14:09 — You
+
+Prompt: write the Great Salt Lake proposal appendix
+Paste everything below the divider into a fresh Claude Code session with this repository checked out.
+You are writing a long-form appendix documenting a water-allocation proposal for the Great Salt Lake, for competition judges, legislators and faculty.
+The research is finished. Every number, source and model in this repository has been researched and verified already, more than once. You are not auditing it and not adding to it. Your job is to take what is here and turn it into one well-organised, readable, properly formatted document.
+This repository is the team's internal research store. No reader of your document will ever see it. The document has to stand on its own.
+Two rules
+1. Treat everything here as fact. Do not re-check sources, do not fetch URLs to confirm them, do not second-guess a figure. That work is done and repeating it would burn the budget.
+2. Never invent anything. No citation, statistic, URL, author or year that is not already in the repository. Anything unsupported goes in the Predictions section, never into a footnote. One narrow exception, under Tab 1.6.
+First: get every number with one command
+Do not read TypeScript to find a number.
+
+```
+npm install     # only if node_modules is missing
+```
+
+`npx tsx scripts/export-appendix-data.ts research/optimised-dials.json research/appendix-data.json`
+If research/optimised-dials.json does not exist, run it with no arguments and say so in your first progress note — the team is supplying the optimised toggle settings and they may be in the report handed to you instead.
+That writes research/appendix-data.json (~165 KB) holding every figure the appendix needs, already computed: the scenario and its dials, the year-by-year path with and without the proposal, 2035 and 2055 snapshots, the do-nothing counterfactual, the uncertainty band, all coefficients ranked by how much they move the result, sector tables, jobs, economics, support scores, programme-by-programme results, the lake physics curves, and all 103 coefficients with basis, formula, range, confidence and full source records.
+Read only these: research/appendix-data.json, research/evidence/all-evidence.json (44 evidence records keyed to assumption ids, each with a verbatim finding, source, value and a strength rating of 1–5), research/findings.md, `README.md`, and whatever report the team hands you.
+Do not read `src/ui/*`, src/main.ts, `index.html`, src/styles.css. Interface code, no research in it, and long.
+Output
+A Google Doc using native tabs — one tab per numbered item below. Create it through the Claude Docs connector. If you have no document connector, write Markdown files to `appendix/` named in tab order plus an index, and say clearly that the team must import them.
+Normal page size, margins and font. Colour is fine; it will not be printed. Inline hyperlinks in the text plus an APA bibliography at the end. Anonymous — no team name. Write as "our proposal" and "we". Neutral academic but genuinely readable: the judges will skim headings, so every heading must say what is under it, and no section may be a wall of numbers.
+Charts
+No browser, so generate them from research/appendix-data.json with a script — `matplotlib` via `python3` if available, otherwise write SVG directly. Put them in `appendix/figures/`, embed them, caption each with what it shows and which run it came from. You choose which charts go where; the team will rearrange.
+Work in chunks, save constantly
+Write each tab to its own file as you finish it. Never hold finished prose only in your reply. After each tab, print one line: what is done, what is next. If you are confident you can finish inside half your budget, do it in one pass; otherwise deliver tab by tab.
+SECTION 1 — THE PROPOSAL
+Tab 1.1 — Overview: our proposal
+The summary a judge reads if they read nothing else.
+
+* State the optimised toggles. What every lever is set to in the scenario this document describes, from `scenario.dials`. The reader should finish this tab knowing exactly what configuration everything after it refers to.
+* The main models at those settings, with the headline results.
+* The charts. The main figures live here — lake trajectory, water by lever, sectors, jobs, value per acre-foot — enough that a reader gets the whole argument visually.
+* When we reach the goal, shown with the meteorological uncertainty as a band, not a line, because inflow varies more than any policy lever. Give the share of simulated sequences ending in the healthy range. `scenario.reachesGoal` says whether the scenario gets there; if it falls short, say so and by how much.
+* The sectors, three separate cuts, all from `sectors`:
+   1. which deplete the most water (by depletion, not diversion);
+   2. which lose the most water under our proposal;
+   3. which are most profitable per acre-foot.
+* Alfalfa in brief — how much water it consumes and the shape of our solution. Deep treatment is Tab 1.6; this is the headline.
+
+Tab 1.2 — Where we are now
+Detailed background, told as a story, so the reader finishes believing we understand the problem. In depth but not pages and pages. Why a terminal lake with no outlet behaves as it does, how far the lake has fallen, what is at stake (dust and health, brine shrimp, mineral extraction, recreation and tourism, migratory birds), and why the problem gets harder as you fix it — a bigger lake evaporates more, so each foot of recovery costs more water than the one below it.
+Tab 1.3 — Our proposal
+The package in detail: each instrument, what it does, what it delivers, what it costs, and how they work together.
+Tab 1.4 — Why we came up with this solution
+The reasoning. The economic case is the spine: hay earns roughly $245 per acre-foot depleted while the same water is worth roughly $2,440 in the lake — use the live figures from `sectors.hayValuePerAf` and `sectors.lakeValuePerAf`. Why that gap is the entire argument, why the proposal takes water from there and not elsewhere, and what we considered and rejected.
+Tab 1.5 — The models
+A series of models, one deep explanation each: what it does, how it works, what it produces, why it is built that way.
+Then under each model, its assumptions as a short bullet list — small and plain, "we assume X." Every bullet hyperlinks to that assumption's entry in Section 2. Keep the bullets brief; the depth lives in Section 2 and this is the index into it.
+Tab 1.6 — Alfalfa
+Its own chapter, and go deep — the proposal moves most of its water out of hay, so this is where a hostile reader pushes hardest.
+How much water alfalfa consumes and why. What it earns per acre-foot. Where the hay actually goes: the basin grows substantially more forage than its own herds eat, so the first cut falls on exports rather than local feed — check `sectors`. What reducing it does to farmers.
+Tone matters. Make clear the proposal is not hostile to farming. It pays farmers willingly for water worth ten times more in the lake, and leaves the choice with them.
+The one place you may do limited additional research: alternative crops farmers could switch to, specifically wheat and hemp — water requirements, market size, what switching means for farm income. Keep it proportionate and mark anything new as new research rather than blending it with the verified material.
+Tab 1.7 — Data centres
+Short, because it will be asked about. The announced facility and whether it is closed-loop, how much water it actually consumes against what was feared, whether that water is treatable and returns to the lake, and how much more output per acre-foot it produces than farmland. The repository has output per acre-foot and total announced industrial demand in `sectors`.
+Ground every claim in those figures. Where the repository does not support a claim about the facility, state what the repository does show and put the rest in Predictions rather than asserting it. Close with how the proposal handles industrial demand growth.
+Tabs 1.8, 1.9, 1.10 — The effects
+Three tabs, same shape each time so they read side by side. This is the most readable part of the document and must be genuinely two-sided: positive and negative, plainly.
+
+* Tab 1.8 — During the process (2035), from `snapshots.y2035`
+* Tab 1.9 — At the end (2055), from `snapshots.y2055`
+* Tab 1.10 — If we do nothing, from `doNothing`
+
+In each:
+
+* Jobs, statewide totals: who loses them, field, dairy and beef; who gains them, transition work, monitoring, and the lake economy that only exists if the lake recovers; and the net. Say plainly that the jobs lost and gained are not in the same counties, so a net figure hides a real dislocation.
+* Farmland: acres leaving irrigation, tons of hay forgone, how many people need new work.
+* Medical: avoided dust damage, and how many fewer people get sick, not only dollars.
+* Mining: how much more valuable mineral extraction stays as the lake comes up. Do not discuss what happens if the lake becomes too fresh — out of scope.
+* Brine shrimp, recreation and tourism, briefly.
+* The whole thing as one economic figure: public budget, plus uncompensated farm revenue, plus livestock receipts at risk, against avoided damage plus the medical and mineral value preserved. `economics` has it all. Never present the public budget alone as the cost.
+
+For Tab 1.10, model the lake going dry, not merely declining. If the team's research includes the widely cited paper warning the lake could disappear within about five years, cite it. If it is not in the repository or the supplied report, do not invent the citation — describe the risk from the model's own output and list the missing citation in your gaps note.
+Keep each of these tight enough to actually be read.
+SECTION 2 — OUR ASSUMPTIONS
+One tab per assumption or tight group, each titled "Our assumptions regarding ___" — Our assumptions regarding alfalfa water consumption, Our assumptions regarding lease-to-own agreements, and so on.
+Cover all 103 figures in `coefficients`, in two parts:
+
+* Part A — The levers. What we adjust: budget, monitoring, lease-to-own money, water-right price, scarcity charge, crop levy and threshold, mandate floor, phase and penalty, repossession, programme spending, lawn dials.
+* Part B — The constants. What the model relies on but nobody sets: lake physics, depletion shares, delivery and shepherding, prices, capacities, jobs rates, hydrology.
+
+Within each part, order by how much the figure moves the result — `sensitivity` is already ranked, so follow it. Half a page minimum, two pages maximum. Short ones can run one after another under a shared tab; big ones get their own.
+Write each as a story, not raw data:
+
+1. What we assume, and the value used.
+2. Where it comes from — `basis` and `sources`, as narrative.
+3. The economics, where it is a market. Build the model: supply and demand curve, the elasticity, what moves when quantity changes, who it falls on. Include the graph.
+4. The historical analogue, where a real one exists, told as a story: in Colorado this was tried, this is what happened, this is what was measured — and from that we can assume this, because Utah differs in these ways (climate, water law, crop mix, scale, politics). research/evidence/all-evidence.json has these with strength ratings. Be honest about weak analogues. Where no real analogue exists, do not manufacture one.
+
+The two worked examples that set the standard:
+Our assumptions regarding alfalfa water consumption — typical consumptive use per acre in the United States; the supply and demand curve for hay; the elasticity of supply; then what a 1% reduction in national alfalfa supply does to demand, to price, and to people. (That 1% is approximately right: Utah's share of national production, narrowed to the basin's share of Utah. Check it against the repository's acreage figures and state the number you get.)
+Our assumptions regarding lease-to-own agreements — as we buy more leases, remaining holders become less willing to sell, so the supply curve slopes up. Show it. Then the policy around how long before the state owns the right outright.
+Two more rules:
+
+* Not every assumption is a market. Evaporation rate, budget split, model mechanics — a short treatment is correct. Do not force a supply and demand diagram onto a physical constant.
+* A figure with no source but built from other figures does not go to Predictions. Show the derivation: which figures feed it, the formula (the `formula` field has it), and why that construction is reasonable.
+
+Give every assumption a stable anchor so the Tab 1.5 bullets can link to it.
+SECTION 3 — OUR PREDICTIONS
+At the very end. Everything we had to assume with no research behind it: `coefficients` entries with `status: "assumption"` and no sources, minus anything documented as a derivation above.
+A bullet list. One or two lines each on why we predicted it that way — that it resembles a neighbouring case, that it is a reasonable midpoint, that it reflects how Utah does something. Short and plain. Do not pad, and do not dress a guess as a finding.
+Do not flag these inline in Sections 1 and 2. Collect them here only.
+SECTION 4 — BIBLIOGRAPHY
+APA, from `sources` and the evidence records. Everything cited inline appears here; nothing appears here that is not cited.
+SECTION 5 — CONTRADICTIONS AND GAPS
+Contradictions found and fixed. If two parts of the repository disagree, fix it so the document is internally consistent, then list every one: what disagreed, which you used, why.
+Gaps. Anything the document needed that the repository did not have, dead links you noticed, citations the team should supply. Short and specific.
+What not to do
+
+* Do not re-verify sources or fetch URLs. It is done.
+* Do not invent a citation, statistic, author, year or URL.
+* Do not read the interface code.
+* Do not recompute model numbers by hand — read them from the export.
+* Do not present the public budget alone as the cost.
+* Do not give a projected lake level without its uncertainty band.
+* Do not hold finished prose in your reply instead of writing it to a file.
+
+When you are done
+Give the team: the Google Doc link (or the file list), one paragraph on what the document says, the contradictions you fixed, and the gaps you found. Nothing else.
+
+
+Perfect, now do this
+
+### 14:09 — Claude
+
+I'll check whether the files this prompt relies on exist in the repository.
+
+### 14:10 — Question and answer
+
+**Claude asked:**
+- Which numbers should the appendix describe? The prompt and its export script are on vigilant-mendel, which has the old, uncorrected values. Our corrected model is on clever-bardeen. Options: Corrected model (Recommended); vigilant-mendel as-is.
+- There is no research/optimised-dials.json. What should the scenario's 'optimised toggles' be? Options: Goal-search package (Recommended); Old optimise(0.6) result; I'll supply them.
+**You answered:** "Which numbers should the appendix describe? The prompt and its export script are on vigilant-mendel, which has the old, uncorrected values. Our corrected model is on clever-bardeen."="Corrected model (Recommended)", "There is no research/optimised-dials.json. What should the scenario's 'optimised toggles' be?"="Goal-search package (Recommended)".
+
+### 14:10 — Claude
+
+Both answered: the corrected model, with the goal-search package as the scenario. Next I'll check that the export script's calls exist on this branch.
+
+### 14:10 — Claude
+
+The export script works on this branch apart from three removed coefficients, and the 44 evidence records are on `vigilant-mendel`. Writing the plan.
+
+*(Claude showed a plan for your approval.)*
+
+### 14:11 — Claude
+
+The files are over. Next I'll list the evidence records' assumption ids, since they may not match our coefficient ids.
+
+### 14:11 — Claude
+
+Three evidence ids don't match coefficient names (`monitoring_effect`, `citation_effect`, `dust_damage`), so I'll map them by topic. Now adapting the export script to the corrected model.
+
+### 14:12 — Claude
+
+The model values lake water at $2,440/AF, but has no direct count of illnesses avoided. I'll search the research records for any health or illness figures.
+
+### 14:13 — Claude
+
+The data export is complete. The package means about 1,300 km² less exposed lakebed by 2055, worth $1.05–2.27B a year in avoided dust-health cost. Committing, then on to the figures.
+
+### 14:13 — Claude
+
+Inputs are committed. Matplotlib would make the figures quicker to produce, so I'll try installing it.
+
+### 14:14 — Claude
+
+Matplotlib is installed. Next, a figure script that reads only `appendix-data.json`, using a grey palette with one blue accent.
+
+### 14:14 — Claude
+
+The export ranks only the top 40 coefficients by sensitivity, but Section 2 needs all of them in order. I'll raise that limit, then write the figures.
+
+### 14:15 — Claude
+
+Twelve figures drawn. Checking them by eye.
+
+### 14:16 — Claude
+
+Remaining fixes: dollar signs are being read as math markup, there's too much space under each title, and the log-axis labels overlap. Fixing and redrawing.
+
+### 14:16 — Claude
+
+The charts read correctly. Two small fixes left: the cost-benefit legend overlaps a bar, and there's too much space under the titles.
+
+### 14:16 — Claude
+
+The figures are done. Next I'll commit them, then group the 102 coefficients into Section 2 tabs by their model group and sensitivity.
+
+### 14:17 — Claude
+
+I'll upload the PNGs as images and use tabs for structure. Before creating the doc, I'll pull a compact fact sheet from the export so every number I write comes straight from it.
+
+*(The chat ran out of room here and was automatically summarised; the work carried on from the summary.)*
+
+### 14:20 — Claude
+
+The doc call failed because one batch can hold at most 64 operations. I'm splitting it into two batches.
+
+### 14:21 — Claude
+
+The outline is up. Next I add the remaining tabs, then start on the Overview.
+
+### 14:22 — Claude
+
+Uploading the 12 figures to the doc.
+
+### 14:22 — You
+
+[Request interrupted by user for tool use]
+
+### 14:22 — You
+
+once you reach 88 credits stop and save everything and give me the perfect prompt to give to the next AI to carry on your work
+
+### 14:23 — Claude
+
+I can't see your credit balance, so I can't tell when you reach 88. To be safe, I'm stopping now and saving everything.
+
+### 14:23 — Claude
+
+Everything earlier is already committed. I'm adding the doc ids and a hand-off note, then pushing.
+
+### 14:23 — Claude
+
+I've stopped and everything is saved and pushed to `claude/clever-bardeen-unjgd2`. I can't see your credit balance, so I stopped now rather than guess when you'd reach 88.
+
+**Done so far:**
+- **The appendix document** is created with all 32 tabs, in order and nested: https://claude.ai/artifact/FrSEUqpyCirTUVNnSbBNME. Every tab is still empty; no writing has started.
+- **The data and the 12 figures** are ready in the repo.
+- **A hand-off note** is in `appendix/HANDOFF-APPENDIX.md`.
+
+**Not done:**
+- **The figure upload.** You stopped it, so the figures are not in the document yet.
+- **The writing.** None of the tabs has been written.
+
+Here's the prompt to give the next AI:
+
+---
+
+You're continuing work on the repo `iamrichardmaier-sudo/Save-the-Great-Salt-Lake`, branch `claude/clever-bardeen-unjgd2`. Pull it first.
+
+**Read these files before doing anything:**
+1. `APPENDIX-PROMPT.md` — the full brief and its rules.
+2. `appendix/HANDOFF-APPENDIX.md` — what is done, what is left, and the contradictions and gaps already found.
+3. `appendix/work/doc-ids.json` — the ids for each tab of the existing doc.
+
+**Task:** write the long-form technical appendix into the existing Claude Doc at https://claude.ai/artifact/FrSEUqpyCirTUVNnSbBNME (doc id `7846ef9d-8b44-4558-842f-4278ab058699`).
+- Do not create a new doc. All 32 tabs already exist, and each holds one pending block.
+- For each tab, use one docs `update` call on that tab's body node. It should `replace` the tab's pending block id (from `doc-ids.json`) with the tab's content, in markdown.
+- Go in order: 1.1 → 1.10, then the Section 2 intro, 2A.1 → 2A.7, 2B.1 → 2B.11, then 3, 4, 5.
+- After each tab, save the same text to `appendix/NN-<slug>.md` and print one progress line.
+
+**Where the content comes from:**
+- **Numbers:** only `research/appendix-data.json`. Never recompute model numbers by hand.
+- **Quoted facts:** `research/appendix-facts.json`.
+- **Evidence, analogues and strength ratings:** `research/evidence/all-evidence.json`.
+- **Sources:** `src/research-sources.ts` and `research/findings.md`.
+- **Model:** the corrected model, using the goal-search package (`DEFAULT_DIALS`, saved in `research/optimised-dials.json`). It first reaches the 4,198.5 ft goal in 2047 and ends at 4,198.57 ft in 2055. NEV is $55.0B.
+
+**Rules (follow exactly):**
+- Treat the sources as fact. Don't re-check them or fetch URLs.
+- Never invent a citation, statistic, URL, author or year. Anything without a source goes in Section 3, Predictions.
+- Don't read `src/ui/*`, `src/main.ts`, `index.html` or `src/styles.css`.
+- Never present the $100M budget alone as the cost. Cost = budget + farm revenue lost + livestock receipts at risk, set against benefits.
+- Never give a projected lake level without its p10–p90 uncertainty band.
+- Write anonymously: "we" and "our proposal", with no team name.
+- Write finished text to files, not into your reply.
+- New research is allowed only on wheat and hemp, and must be marked as new.
+
+**Figures:** they are in `appendix/figures/` (`fig01`–`fig12`, PNG and SVG). Ask the owner before uploading them to the doc. If they agree:
+1. Use the Artifact tool's publish action with `url` = the doc link, `asset: true` and `file_paths` = the PNGs.
+2. For each returned asset id, call docs `create` with `object: "blob"` and `payload {"asset": id}`.
+3. Embed each one with `![caption](blob/<id>)`.
+
+If they don't agree, reference the figures by their repo paths.
+
+**Finish with:**
+1. One doc comment asking the owner to confirm one assumption.
+2. `npx tsc --noEmit` and `npx vitest run`. Only the header-summary test is expected to fail.
+3. A check that every bibliography entry is cited, and that every citation appears in the bibliography.
+4. `appendix/index.md`.
+5. Commit and push to `claude/clever-bardeen-unjgd2`, ending the commit message with the session's Co-Authored-By lines.
+6. A final reply that contains only: the doc link, one paragraph on what the document says, the contradictions fixed, and the gaps found. The hand-off file lists both of the last two.
+
+---
+
+### 14:30 — You
+
+I cant read the handoff MD put everything into this chat and make sure that the next AI knows exactly how and where to pick up from what you left off at the same quality without redoing research
+
+*(Claude showed a plan for your approval.)*
+
+### 14:32 — Claude
+
+The hand-off prompt is in the approved plan box above. Copy everything from "You are continuing a half-finished job" to the end, and paste it as the first message in a new chat.
+
+It gives the next AI everything it needs without redoing research:
+- the branch and the document link;
+- the exact ids for writing into each of the 32 empty tabs;
+- all your rules;
+- what each tab must contain;
+- every key number from the model;
+- the contradictions and gaps already found;
+- how to finish and report back.
+
+I've stopped work here. The data, the figures, the empty document and a copy of the tab ids are all saved and pushed to `claude/clever-bardeen-unjgd2`. The 12 figures are still not in the document, because you stopped that upload. The prompt tells the next AI to ask you before trying again.
+
+### 14:34 — You
+
+You sent a screenshot of the new session's question 1 of 3: *This session is set up to push to `claude/hopeful-planck-44mfws`, but your brief says to push only to `claude/clever-bardeen-unjgd2`. Which branch should get the commit?* Options: clever-bardeen (Recommended); hopeful-planck; Other.
+
+### 14:34 — Claude
+
+Pick **clever-bardeen (Recommended)**. All the earlier work is on that branch (the model fixes, the data, the figures and the doc ids), so keeping the appendix there keeps everything in one place. The document itself lives on claude.ai and works the same whichever branch the commit goes to.
+
+If that session then says it isn't allowed to push to clever-bardeen, go back and pick **hopeful-planck** instead. It copies the same work into the new branch, so nothing is lost; the work just ends up split across two branches.
+
+That's question 1 of 3. Send me the other two if you'd like help with them.
+
+### 14:34 — You
+
+You sent a screenshot of question 2 of 3: *Should I upload the 12 figure PNGs into the doc as embedded images? Section 7 asks me to check with you first, because you stopped the upload once.* Options: Yes, embed them; No, cite repo paths; Other.
+
+### 14:34 — Claude
+
+I'd pick **Yes, embed them**, as long as credits allow. Judges and legislators read the document on claude.ai and can't open files in the repo, so a path like `appendix/figures/fig01…png` is useless to them. The charts carry key results: the lake path with its uncertainty band, jobs, cost against benefit, and alfalfa's national share. The upload is a single step, plus one quick call per image.
+
+If you stopped the upload earlier to save credits and that still matters more, pick **No, cite repo paths**. The figures can be added to the document later without rewriting any of the text.
+
+Send question 3 when you have it.
+
+### 14:34 — You
+
+You sent a screenshot of question 3 of 3: *The commit trailer in the brief names a different session (session_01Kr1wiTLRCUgZJvn4uXpRod). Which Claude-Session line should the commit use?* Options: This session (Recommended); As written in brief; Other.
+
+### 14:35 — Claude
+
+Pick **This session (Recommended)**. That line records which session made the commit, and the new session is the one writing the appendix. I put my own session's id in the brief, which was a mistake on my part. The choice only changes a line in the commit message, not the document.
+
+Then press Submit. To sum up all three answers:
+1. clever-bardeen
+2. Yes, embed them
+3. This session
+
+### 14:35 — You
+
+You sent a screenshot of a further question from the new session: *I can't get into the appendix doc. The Docs tools refuse to read 7846ef9d… or its link: it isn't shared with the account this session runs under (elisabethandersonthompson@gmail.com), and it doesn't appear in your artifact list. It was probably made under another account. How should I go ahead?* Options: I'll share it, wait; Create a new doc; Markdown files only.
+
+### 14:36 — Claude
+
+Pick **Create a new doc**. The old document is only an empty outline, so nothing is lost by leaving it behind. I wrote "don't create a new document" to stop the next AI duplicating work, and that doesn't apply when it can't open the old one. Rebuilding the 32 empty tabs is a single quick step, and it then fills them as planned.
+
+The catch is ownership: the new document will belong to the account that session runs under, elisabethandersonthompson@gmail.com. If the team wants the appendix in the yourstreetlawns@gmail.com account instead, choose **I'll share it, wait**. Then open https://claude.ai/artifact/FrSEUqpyCirTUVNnSbBNME while signed in as yourstreetlawns, share it with elisabethandersonthompson@gmail.com with edit access, and tell the session when it's done.
+
+Avoid **Markdown files only**. You'd get no shareable document for the judges, and the figures wouldn't be embedded.
+
+### 16:58 — You
+
+Give me a chat log for this whole chat
