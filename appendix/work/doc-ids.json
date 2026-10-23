@@ -1,34 +1,181 @@
-{"doc":"7846ef9d-8b44-4558-842f-4278ab058699","url":"https://claude.ai/artifact/FrSEUqpyCirTUVNnSbBNME",
-"tabs":{
-"s11":["88fd0136-b0c0","2261b02a-8a6f","m8ej28a9qak.29"],
-"s12":["89a087b3-8e0c","6c981329-e868","m8ej28a9qak.21"],
-"s13":["9c0d6caa-491f","32db8a13-167c","m8ej28a9qak.17"],
-"s14":["4afc6b1f-e3cd","0df3043a-56c9","m8ej28a9qak.38"],
-"s15":["bee1aae9-cb50","dec4e529-cfb6","m8ej28a9qak.15"],
-"s16":["66d97a5d-e2d6","3588b078-0620","m8ej28a9qak.12"],
-"s17":["b3ba92ff-4713","c77a7421-c0a5","m8ej28a9qak.17"],
-"s18":["9329fb14-2f28","4e892b53-510e","m8ej28a9qak.38"],
-"s19":["e468cbb4-8681","38758db4-b441","m8ej28a9qak.30"],
-"s110":["ca8b05ff-d8b6","55ea3f45-dac4","m8ej28a9qak.30"],
-"s2":["9bf0e9e5-1245","611dab4e-89c4","m8ej28a9qak.18"],
-"a1":["e8b0fd41-5ba8","08554cc9-8611","m8ej28a9qak.60"],
-"a2":["6bc8e0a1-7d75","a022703e-6d75","m8ej28a9qak.51"],
-"a3":["3849211a-e4de","f86184a4-e0ba","m8ej28a9qak.55"],
-"a4":["e881a572-4ca1","5391a233-10a4","m8ej28a9qak.55"],
-"a5":["19a8489a-14ec","408b4bdb-1ae5","m8ej28a9qak.45"],
-"a6":["fed3a570-ea55","e8a90734-26e2","m8ej28a9qak.56"],
-"a7":["f330ad6c-ffab","e2520561-463b","m8ej28a9qak.49"],
-"b1":["6ac5c857-867c","1d6c05b7-a611","m8ej28a9qak.72"],
-"b2":["2c4cb2b7-c171","3f4fd3a8-adc9","m8ej28a9qak.75"],
-"b3":["db1c805b-8d3d","747c8204-9b55","m8ej28a9qak.56"],
-"b4":["f1134c04-1b58","e5749fb0-70a6","m8ej28a9qak.50"],
-"b5":["7830817b-a431","1c15f779-f0f8","m8ej28a9qak.57"],
-"b6":["1fe80345-0c78","62c8a2cd-7548","m8ej28a9qak.50"],
-"b7":["6f26a96e-8ca9","c0658e2c-86f7","m8ej28a9qak.50"],
-"b8":["85f26238-da28","4b96a88f-6fcb","m8ej28a9qak.36"],
-"b9":["7ebf7eed-5d9d","7c3d9162-70b2","m8ej28a9qak.69"],
-"b10":["d9eabd72-4933","062c67ae-a2cb","m8ej28a9qak.50"],
-"b11":["f6728422-fffd","6aa2a487-5fb3","m8ej28a9qak.51"],
-"s3":["aa01b6f0-2b91","2c429187-874a","m8ej28a9qak.18"],
-"s4":["a49f6768-dffa","acba86de-f504","m8ej28a9qak.15"],
-"s5":["ee6cc2ef-14ce","1e9a6820-8f72","m8ej28a9qak.26"]}}
+{
+ "doc": "1a311e63-5efb-4c66-90dd-982873fa04be",
+ "url": "https://claude.ai/artifact/4Eb8aFdgegEy98VF4YkkfF",
+ "note": "Recreated 2026-10-23: the earlier doc (7846ef9d-...) was not shared with the writing account.",
+ "tabs": {
+  "s11": [
+   "976cc0e5-7bb4",
+   "b4cb874a-f73f",
+   "m6j3jy1k9qy.33"
+  ],
+  "s12": [
+   "5749cb04-69a1",
+   "8a57c5b8-9571",
+   "m6j3jy1k9qy.21"
+  ],
+  "s13": [
+   "91fcd704-5081",
+   "4b17c169-6a1b",
+   "m6j3jy1k9qy.17"
+  ],
+  "s14": [
+   "3898db71-34ef",
+   "945301f5-3784",
+   "m6j3jy1k9qy.38"
+  ],
+  "s15": [
+   "e6b88b24-0ddb",
+   "94315950-164f",
+   "m6j3jy1k9qy.15"
+  ],
+  "s16": [
+   "66cd96ab-3bc4",
+   "81bfb7d8-1bea",
+   "m6j3jy1k9qy.12"
+  ],
+  "s17": [
+   "2a257ee4-12d1",
+   "00eb3453-c025",
+   "m6j3jy1k9qy.17"
+  ],
+  "s18": [
+   "31cc5e7b-7da1",
+   "1a4973c7-5785",
+   "m6j3jy1k9qy.38"
+  ],
+  "s19": [
+   "027ad186-5491",
+   "5d26ac88-64e6",
+   "m6j3jy1k9qy.30"
+  ],
+  "s110": [
+   "754569db-c49d",
+   "02664812-abfc",
+   "m6j3jy1k9qy.30"
+  ],
+  "s2": [
+   "3c09ac6c-cb10",
+   "1790f2f5-7a24",
+   "m6j3jy1k9qy.18"
+  ],
+  "a1": [
+   "f6462a10-af35",
+   "bf960341-cbe4",
+   "m6j3jy1k9qy.60"
+  ],
+  "a2": [
+   "b26d2ce1-2755",
+   "d0a71f0d-7248",
+   "m6j3jy1k9qy.51"
+  ],
+  "a3": [
+   "8174cf9a-5d40",
+   "5ac3a275-4a9b",
+   "m6j3jy1k9qy.55"
+  ],
+  "a4": [
+   "1729c3c3-b5e2",
+   "66f50b87-0de3",
+   "m6j3jy1k9qy.55"
+  ],
+  "a5": [
+   "b1daec5e-1db6",
+   "3877cd81-c7f7",
+   "m6j3jy1k9qy.45"
+  ],
+  "a6": [
+   "76c9c072-9809",
+   "4cb43d26-0eb8",
+   "m6j3jy1k9qy.56"
+  ],
+  "a7": [
+   "25a82fa6-e079",
+   "732a9336-8c7c",
+   "m6j3jy1k9qy.49"
+  ],
+  "b1": [
+   "e5fc5f39-bc99",
+   "d78c050d-50ee",
+   "m6j3jy1k9qy.72"
+  ],
+  "b2": [
+   "10740793-82e5",
+   "300dd168-065b",
+   "m6j3jy1k9qy.75"
+  ],
+  "b3": [
+   "68c49cb9-9e05",
+   "25333ba9-39e8",
+   "m6j3jy1k9qy.56"
+  ],
+  "b4": [
+   "dd0aff10-69aa",
+   "dcc93bbc-2d6d",
+   "m6j3jy1k9qy.50"
+  ],
+  "b5": [
+   "d41665cc-c194",
+   "2c2e017a-8680",
+   "m6j3jy1k9qy.57"
+  ],
+  "b6": [
+   "a38f69ad-6a81",
+   "4e2f80af-4227",
+   "m6j3jy1k9qy.50"
+  ],
+  "b7": [
+   "76718eb0-6812",
+   "9d6e395b-a0e2",
+   "m6j3jy1k9qy.50"
+  ],
+  "b8": [
+   "d26f0a8b-6166",
+   "6d64cc4d-de61",
+   "m6j3jy1k9qy.36"
+  ],
+  "b9": [
+   "796996dd-9860",
+   "ee04e11d-9379",
+   "m6j3jy1k9qy.69"
+  ],
+  "b10": [
+   "014e3910-56dc",
+   "1d32fb53-db15",
+   "m6j3jy1k9qy.50"
+  ],
+  "b11": [
+   "4654134c-9876",
+   "0ee28050-a534",
+   "m6j3jy1k9qy.51"
+  ],
+  "s3": [
+   "2ab3ce2c-44f1",
+   "6746acd7-a0b8",
+   "m6j3jy1k9qy.18"
+  ],
+  "s4": [
+   "05959ccf-7f49",
+   "07a5f874-950f",
+   "m6j3jy1k9qy.15"
+  ],
+  "s5": [
+   "38c033d9-26c3",
+   "f9a30b6d-f87c",
+   "m6j3jy1k9qy.26"
+  ]
+ },
+ "figures": {
+  "fig01-lake-path": "blob/e2d04087-6b14",
+  "fig02-water-by-lever": "blob/697a311b-ccb4",
+  "fig03-sector-depletion": "blob/866fc739-25a5",
+  "fig04-value-per-af": "blob/4b284bdd-fa40",
+  "fig05-jobs": "blob/e9ad4bdb-f312",
+  "fig06-yearly-budget": "blob/a92a3cf7-c90f",
+  "fig07-lake-physics": "blob/fa92803c-83f0",
+  "fig08-sensitivity": "blob/718a0ad9-d6f2",
+  "fig09-do-nothing": "blob/f0d6c4bf-1167",
+  "fig10-lease-supply": "blob/c9e59785-8847",
+  "fig11-cost-benefit": "blob/7dcd60ff-ee50",
+  "fig12-alfalfa-national": "blob/9a31e5ee-2c8a"
+ }
+}
