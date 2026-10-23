@@ -6,9 +6,35 @@
  * values the data actually reaches.
  */
 
-import * as d3 from 'd3';
+import { extent, max, min } from 'd3-array';
+import { axisBottom, axisLeft, axisRight } from 'd3-axis';
+import { format } from 'd3-format';
+import { scaleBand, scaleLinear, scaleLog, type ScaleBand, type ScaleLinear } from 'd3-scale';
+import { pointer, select, type Selection } from 'd3-selection';
+import { area, curveMonotoneX, line, stack, symbol, symbolDiamond, type SeriesPoint } from 'd3-shape';
 import { V } from '../data';
 import { num } from './format';
+
+const d3 = {
+  area,
+  axisBottom,
+  axisLeft,
+  axisRight,
+  curveMonotoneX,
+  extent,
+  format,
+  line,
+  max,
+  min,
+  pointer,
+  scaleBand,
+  scaleLinear,
+  scaleLog,
+  select,
+  stack,
+  symbol,
+  symbolDiamond,
+};
 
 export interface Size {
   width: number;
@@ -30,7 +56,7 @@ function fitLabel(text: string, widthPx: number): string {
 
 /** Apply fitted labels to a category axis, keeping the full text available on hover. */
 function fitCategoryAxis(
-  g: d3.Selection<SVGGElement, unknown, null, undefined>,
+  g: Selection<SVGGElement, unknown, null, undefined>,
   widthPx: number,
 ): void {
   g.selectAll<SVGTextElement, unknown>('text').each(function () {
@@ -44,7 +70,7 @@ function fitCategoryAxis(
   });
 }
 
-function svgFor(el: HTMLElement, height: number): { svg: d3.Selection<SVGSVGElement, unknown, null, undefined>; size: Size } {
+function svgFor(el: HTMLElement, height: number): { svg: Selection<SVGSVGElement, unknown, null, undefined>; size: Size } {
   el.innerHTML = '';
   const width = Math.max(280, el.clientWidth || 640);
   const svg = d3
@@ -58,9 +84,9 @@ function svgFor(el: HTMLElement, height: number): { svg: d3.Selection<SVGSVGElem
 }
 
 function axes(
-  g: d3.Selection<SVGGElement, unknown, null, undefined>,
-  x: d3.ScaleLinear<number, number> | d3.ScaleBand<string>,
-  y: d3.ScaleLinear<number, number>,
+  g: Selection<SVGGElement, unknown, null, undefined>,
+  x: ScaleLinear<number, number> | ScaleBand<string>,
+  y: ScaleLinear<number, number>,
   inner: Size,
   opts: { xTicks?: number; yTicks?: number; yFormat?: (v: number) => string; xFormat?: (v: number) => string } = {},
 ) {
@@ -81,10 +107,10 @@ function axes(
     g.append('g')
       .attr('class', 'axis axis-x')
       .attr('transform', `translate(0,${inner.height})`)
-      .call(d3.axisBottom(x as d3.ScaleBand<string>))
+      .call(d3.axisBottom(x as ScaleBand<string>))
       .call((s) => s.select('.domain').remove());
   } else {
-    const xAxis = d3.axisBottom(x as d3.ScaleLinear<number, number>).ticks(opts.xTicks ?? 6);
+    const xAxis = d3.axisBottom(x as ScaleLinear<number, number>).ticks(opts.xTicks ?? 6);
     if (opts.xFormat) xAxis.tickFormat((d) => opts.xFormat!(d as number));
     else xAxis.tickFormat(d3.format('d'));
     g.append('g')
@@ -233,7 +259,7 @@ export function drawStack(el: HTMLElement, s: StackSeries, height = 300, unit = 
   axes(g, x, y, inner, { yFormat: (v) => num(v, 0) });
 
   const area = d3
-    .area<d3.SeriesPoint<Record<string, number>>>()
+    .area<SeriesPoint<Record<string, number>>>()
     .x((d) => x(d.data.year))
     .y0((d) => y(d[0]))
     .y1((d) => y(d[1]))
@@ -444,7 +470,7 @@ export function drawBars(
 
 /** Nudge the first and last axis labels so they do not hang off either end of the drawing. */
 function keepTicksInside(
-  g: d3.Selection<SVGGElement, unknown, null, undefined>,
+  g: Selection<SVGGElement, unknown, null, undefined>,
   width: number,
 ): void {
   const ticks = g.selectAll<SVGGElement, unknown>('.tick').nodes();

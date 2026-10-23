@@ -10,6 +10,7 @@ import {
   COEFS,
   CONSUMERS,
   ENFORCEMENT_WINDOWS,
+  LEGAL_ASSUMPTIONS,
   VALUE_PER_AF,
   V,
   WATERING_MONTHS,
@@ -17,7 +18,7 @@ import {
 } from '../data';
 import { SOURCES, source } from '../sources';
 import { areaSqMi, equilibriumFt, inflowToHoldKaf } from '../lake';
-import { chargeModel, levyModel, seasonCoverage, type Dials, type PkgResult } from '../model';
+import { levyModel, seasonCoverage, type Dials, type PkgResult } from '../model';
 import { budgetSweep, levelForAdded, type SimResult, type TornadoRow } from '../simulate';
 import { controlsByGroup } from './controls';
 import {
@@ -30,7 +31,6 @@ import {
   num,
   pct,
   perAf,
-  years as yearsFmt,
 } from './format';
 import {
   drawBars,
@@ -88,6 +88,15 @@ function chart(id: string, title?: string, caption?: string): string {
 
 const byId = (root: HTMLElement, id: string) => root.querySelector<HTMLElement>(`#${id}`);
 
+function sourceLinks(ids: readonly string[]): string {
+  return ids
+    .map((sid) => {
+      const s = source(sid);
+      return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.publisher)}</a>`;
+    })
+    .join(', ');
+}
+
 // ───────────────────────────── 1 · Where we are ─────────────────────────────
 
 const nowTab: Tab = {
@@ -133,7 +142,7 @@ const nowTab: Tab = {
       <section class="prose">
         <h3>What this plan proposes to move</h3>
         <p>
-          The package below takes ${fig(kafYr(r.final.netToLakeKaf), { formula: 'gross delivery x delivery share − growth − streamflow decline', assumed: true })}
+          The plan below takes ${fig(kafYr(r.final.netToLakeKaf), { formula: 'gross delivery x delivery share − growth − streamflow decline', assumed: true })}
           to the lake by ${fig(String(r.final.year), {})}, against a goal of
           ${fig(kafYr(r.goalKaf), { coef: 'goal_added' })}. It takes it almost entirely from hay, because
           that is where an acre-foot earns least and is worth most once moved.
@@ -364,82 +373,87 @@ const allocTab: Tab = {
   },
 };
 
-// ───────────────────────────── 5 · The package ─────────────────────────────
+// ───────────────────────────── 5 · Impacts ─────────────────────────────
 
 const pkgTab: Tab = {
   id: 'pkg',
-  label: 'The package',
+  label: 'Impacts',
   group: 'plan',
   render({ d, r }) {
-    const ch = chargeModel(r.final.chargeRate);
-    const elements: { name: string; setting: string; water: string; what: string }[] = [
+    const weakest = r.support.weakest;
+    const costPerAf = r.final.netToLakeKaf > 0 ? (r.final.totalCostM * 1e6) / (r.final.netToLakeKaf * 1000) : 0;
+    const durableFloor = r.final.shepherdedKaf * r.final.deliveryShare;
+    const erosion = r.final.growthDrawKaf + r.final.streamflowDeclineKaf;
+    const routeTotal = Math.max(1e-9, r.boughtKaf + r.chargedKaf + r.orderedKaf);
+    const proposedLaw = LEGAL_ASSUMPTIONS.filter((a) => a.status === 'Proposed legislation').length;
+
+    const impacts: { order: string; impact: string; measure: string; mechanism: string }[] = [
       {
-        name: 'Scarcity charge on industry',
-        setting: d.scarcityRatePerAf > 0
-          ? `${fig(perAf(r.final.chargeRate), { formula: 'the rate, sized to the gap still to close and moved a quarter of the way each year', assumed: true })} now, from a ${fig(perAf(d.scarcityRatePerAf), { coef: 'irrigation_net_value' })} setting`
-          : `${fig(perAf(0), { coef: 'irrigation_net_value' })} — off`,
-        water: fig(kafYr(ch.behaviouralKaf), { formula: 'agricultural and industrial cutbacks in response to the charge', assumed: true }),
-        what: `Falls on ${fig(kafYr(V('charge_base')), { coef: 'charge_base' })} of non-household use, never on households. It raises ${fig(millionsYr(ch.revenueM, 1), { formula: 'rate x the base left after users respond' })}, all of it spent on rights. The cutback is the larger half: users give up water rather than pay for it.`,
+        order: 'First',
+        impact: 'Water reaches the lake',
+        measure: fig(kafYr(r.final.netToLakeKaf), { formula: 'gross delivery x delivery share − growth − streamflow decline', assumed: true }),
+        mechanism: `Rights, programmes, charges, lawn savings and the backstop mandate deliver gross water; growth and streamflow decline subtract ${fig(kafYr(erosion), { formula: 'growth draw + streamflow decline' })} before the final lake result is counted.`,
       },
       {
-        name: 'Lease-to-own rights',
-        setting: `${fig(millionsYr(d.leaseToOwnM, 1), { coef: 'lease_to_own_dollars' })}, owned after ${fig(yearsFmt(r.final.payoffYears), { formula: 'amortisation at the state borrowing rate: −ln(1 − price x interest ÷ annual rate) ÷ ln(1 + interest)' })}`,
-        water: fig(kafYr(r.final.shepherdedKaf), { formula: 'min(rights held, shepherding capacity) x the share of that ground not already cutting back', assumed: true }),
-        what: `At ${fig(perAf(r.final.leaseRatePerAf), { formula: 'base rate x scarcity as the state buys − relief from charges the leased water escapes', assumed: true })} a year. Leasing exempts the water from the charge, so every charge lowers the price of a right rather than raising it. Capped at ${fig(kafYr((V('lease_capacity') + V('retire_capacity')) * (1 + Math.min(1, d.mandatePenaltyPerAf / V('irrigation_net_value')) * V('mandate_pull'))), { formula: 'willing-seller capacity x the widening a credible mandate brings', assumed: true })} of willing sellers.`,
+        order: 'First',
+        impact: 'The lake elevation responds',
+        measure: fig(feet(r.final.elevationFt), { formula: 'lake level after responding year by year to the inflow it is given', assumed: true }),
+        mechanism: `The long-run goal is ${fig(kafYr(r.goalKaf), { coef: 'goal_added' })}, leaving a shortfall of ${fig(kafYr(r.shortfallKaf), { formula: 'goal water − net water reaching the lake', assumed: true })} under this setting.`,
       },
       {
-        name: 'Crop levy above a threshold',
-        setting: d.cropLevyPerAf > 0
-          ? `${fig(perAf(d.cropLevyPerAf), { coef: 'hay_net_return' })} on water applied above ${fig(`${num(d.levyThresholdAfPerAcre, 1)} AF/acre`, { coef: 'application_mean' })}`
-          : `${fig(perAf(0), { coef: 'hay_net_return' })} — off`,
-        water: fig(kafYr(r.levy.waterKaf), { formula: 'acres x the share of application each one cuts x depletion freed per acre', assumed: true }),
-        what: `${fig(pct(r.levy.shareOfGroundInScope), { formula: 'share of hay ground applying more than the threshold, from a lognormal spread around the mean' })} of hay ground sits above the line, raising ${fig(millionsYr(r.levy.revenueM, 1), { formula: 'rate x water applied above the threshold, after farms respond' })}. Receipts fund crop-switching rebates, returned to the farms the levy was charged to.`,
+        order: 'First',
+        impact: 'A protected floor appears',
+        measure: fig(kafYr(durableFloor), { formula: 'state-held and shepherded water x delivery share', assumed: true }),
+        mechanism: `This is the part insulated by rights the state holds. Water above that floor can still be eroded by growth, re-diversion or measurement failure.`,
       },
       {
-        name: 'Residential lawn limit',
-        setting: d.lawnCutAsked > 0
-          ? `${fig(pct(d.lawnCutAsked), { coef: 'lawn_water' })} less lawn water, enforced at ${fig(`${num(d.finePerViolation, 0)} a citation`, { coef: 'season_value' })}`
-          : `no limit — off`,
-        water: fig(kafYr(r.lawn.toLake), { formula: 'water not applied x the share of a city saving that reaches the lake', assumed: true }),
-        what: `${fig(pct(r.lawn.compliance), { formula: 'habit floor plus the effect of being caught, solved as a fixed point', assumed: true })} of ${fig(`${num(r.lawn.lawns / 1000, 0)}k lawns`, { coef: 'basin_lawns' })} comply, but only ${fig(pct(V('urban_to_lake')), { coef: 'urban_to_lake' })} of a city saving reaches the lake. Fines raise ${fig(millionsYr(r.lawn.fineRevenue / 1e6, 1), { formula: 'citations x fine x the share collected' })}.`,
+        order: 'Second',
+        impact: 'Farm income is taken without payment',
+        measure: fig(millionsYr(r.final.farmRevenueLostM, 1), { formula: 'water taken without payment x what an acre-foot earns in hay', assumed: true }),
+        mechanism: `The package removes water from about ${fig(`${num(r.acresOutOfIrrigation, 0)} acres`, { formula: 'agricultural water removed ÷ water applied per acre' })}; only the uncompensated forced part is booked as lost farm revenue.`,
       },
       {
-        name: 'Conservation programmes',
-        setting: `${fig(millionsYr(d.cropSwitchM + d.phragM + d.cloudM, 1), { note: 'Crop switching, phragmites removal and cloud seeding together.' })}`,
-        water: fig(kafYr(r.final.programKaf), { formula: 'the four programmes, each capped by capacity rather than by money', assumed: true }),
-        what: `Cheapest delivered water first. Two of the three cheapest are capped by how much work exists rather than by money: cloud seeding and phragmites together top out near ${fig(kafYr(V('cloud_cap') + V('phrag_cap')), { formula: 'cloud seeding capacity + phragmites capacity' })}.`,
+        order: 'Second',
+        impact: 'Work shifts between sectors',
+        measure: fig(`${num(r.final.netJobs, 0)} net jobs`, { formula: 'transition + lake-economy jobs − field − livestock jobs', assumed: true }),
+        mechanism: `${fig(`${num(r.final.transitionJobs + r.final.lakeJobs, 0)} jobs`, { formula: 'transition jobs + lake-economy jobs', assumed: true })} are made or recovered while ${fig(`${num(r.final.fieldJobsLost + r.final.livestockJobsLost, 0)} jobs`, { formula: 'field jobs + livestock jobs exposed', assumed: true })} are forgone.`,
       },
       {
-        name: 'Mandated cut, as a backstop',
-        setting: d.mandateFloorKaf > 0
-          ? `${fig(kafYr(d.mandateFloorKaf), { coef: 'mandate_floor' })} floor, phased over ${fig(`${num(d.mandatePhaseYears, 0)} years`, { coef: 'mandate_phase' })}`
-          : 'none',
-        water: fig(kafYr(r.final.forcedKaf), { formula: 'the floor less whatever the voluntary levers already found', assumed: true }),
-        what: d.mandatePenaltyPerAf > 0
-          ? `Non-compliance priced at ${fig(perAf(d.mandatePenaltyPerAf), { coef: 'mandate_penalty' })}, which widens the willing-seller market rather than narrowing it: a farm that will not sell pays the social cost instead.`
-          : `Only bites where the voluntary levers fall short. Every forced acre-foot costs political support, and with no penalty priced on non-compliance there is nothing drawing farms into the market instead.`,
+        order: 'Second',
+        impact: 'Benefits are compared with full cost',
+        measure: `${fig(millionsYr(r.final.benefitM, 0), { formula: 'water reaching the lake x what an acre-foot is worth in the lake', assumed: true })} vs ${fig(millionsYr(r.final.totalCostM, 1), { formula: 'public budget + uncompensated farm revenue + livestock receipts at risk', assumed: true })}`,
+        mechanism: `The public budget is ${fig(millionsYr(d.budgetM, 0), { coef: 'budget' })}, but the impact ledger counts uncompensated farm revenue and livestock receipts too: ${fig(perAf(costPerAf), { formula: 'total annual cost ÷ water reaching the lake' })} delivered.`,
       },
       {
-        name: 'Monitoring and verification',
-        setting: fig(millionsYr(d.monitoringM, 1), { coef: 'monitoring' }),
-        water: '—',
-        what: `Buys no water. It carries shepherding capacity to ${fig(kafYr(r.final.shepherdCapKaf), { formula: 'starting capacity + annual growth + what monitoring adds on a saturating curve', assumed: true })} and lifts the delivery share to ${fig(pct(r.final.deliveryShare), { formula: 'base delivery share x (1 + what measurement adds)', assumed: true })}, which is what lets the rest arrive.`,
+        order: 'Third',
+        impact: 'Durability depends on ownership',
+        measure: fig(kafYr(r.durableRightsGapKaf), { formula: 'rights needed to hold healthy − rights owned outright', assumed: true }),
+        mechanism: `By ${r.final.year}, the state owns ${fig(kafYr(r.final.rightsOwnedKaf), { formula: 'lease-to-own tranches that have fully vested', assumed: true })}; the rest has to be held by continuing policy, charges or mandates.`,
+      },
+      {
+        order: 'Third',
+        impact: 'The coalition has a weak link',
+        measure: fig(`${num(weakest.score, 0)} / 100`, { formula: 'modelled from polled weights on bought versus charged versus ordered water', assumed: true }),
+        mechanism: `${escapeHtml(weakest.label)} is the lowest support score. Bought water is ${fig(pct(r.boughtKaf / routeTotal), { formula: 'bought water ÷ bought, charged and ordered water', assumed: true })} of the route mix; ordered water is ${fig(pct(r.orderedKaf / routeTotal), { formula: 'ordered water ÷ bought, charged and ordered water', assumed: true })}.`,
+      },
+      {
+        order: 'Third',
+        impact: 'Law has to carry the model',
+        measure: fig(num(proposedLaw, 0), { note: 'Rows tagged Proposed legislation in the legal-assumptions table.' }),
+        mechanism: `Those changes cover basin-wide curtailment authority, charges on consumed water, transit protection for saved water, growth insulation for state-held lake rights and statewide residential enforcement.`,
       },
     ];
 
-    const rows = elements
+    const rows = impacts
       .map(
         (e) => `<tr>
-          <td class="el-name">${escapeHtml(e.name)}</td>
-          <td>${e.setting}</td>
-          <td class="num">${e.water}</td>
-          <td class="el-what">${e.what}</td>
+          <td><span class="pill">${escapeHtml(e.order)} order</span></td>
+          <td class="el-name">${escapeHtml(e.impact)}</td>
+          <td class="num">${e.measure}</td>
+          <td class="el-what">${e.mechanism}</td>
         </tr>`,
       )
       .join('');
-
-    const weakest = r.support.weakest;
-    const costPerAf = r.final.netToLakeKaf > 0 ? (r.final.totalCostM * 1e6) / (r.final.netToLakeKaf * 1000) : 0;
 
     return `
       <div class="tiles tiles-head">
@@ -450,17 +464,12 @@ const pkgTab: Tab = {
       </div>
 
       <section class="prose">
-        <h3>Seven instruments, each doing the job it is best at</h3>
+        <h3>First, second and third order impacts</h3>
         <p>
-          A <strong>scarcity charge</strong> whose rate is set by how much depletion still has to be
-          cut, so it reaches zero only when the lake is genuinely in balance.
-          <strong>Lease-to-own rights</strong>, so payments build ownership instead of renting the same
-          water twice. A <strong>crop levy</strong> on water applied above a set depth per acre, so it
-          taxes over-watering rather than farming. A <strong>residential limit</strong> whose
-          compliance turns on enforcement, not on the size of the fine. The
-          <strong>cheapest conservation</strong> the toolkit offers. A <strong>mandate</strong> that
-          only takes what the rest missed. And <strong>monitoring</strong> that buys no water at all
-          but decides how much of everything else ever reaches the lake.
+          First-order impacts are the acre-feet, elevation and protected water floor. Second-order
+          impacts are the income, employment and cost changes caused by moving that water. Third-order
+          impacts are what decides whether the result survives: rights ownership, coalition support
+          and statutory authority.
         </p>
         <p class="callout">
           ${r.boughtShare >= 0.5
@@ -470,50 +479,63 @@ const pkgTab: Tab = {
       </section>
 
       <table class="data table-elements">
-        <caption>The elements</caption>
-        <thead><tr><th>Element</th><th>Setting</th><th>Water by ${r.final.year}</th><th>What it does</th></tr></thead>
+        <caption>Impact ledger</caption>
+        <thead><tr><th>Order</th><th>Impact</th><th>Measure</th><th>Mechanism</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
 
-      ${chart('chart-support', 'Who supports it', `Scores are modelled from weights taken from 2026 Utah polling, not themselves surveyed. The dashed line is the halfway mark.`)}
+      ${chart('chart-impact-stack', 'First-order water path', 'Stacked by where each acre-foot comes from. The top of the stack is gross supply; the final tile above is after delivery losses, growth and streamflow decline.')}
 
-      ${chart('chart-jobs', 'Jobs lost and jobs made as the package runs', `By ${r.final.year} the package costs ${fig(`${num(r.final.fieldJobsLost, 0)} field jobs`, { formula: 'acres out of irrigation ÷ 1,000 x jobs per thousand acres', assumed: true })} on ${fig(`${num(r.acresOutOfIrrigation, 0)} acres`, { formula: 'agricultural water removed ÷ water applied per acre' })} taken out of irrigation, and ${fig(`${num(r.final.livestockJobsLost, 0)}`, { formula: 'dairy and beef employment exposed once the cut passes the basin’s forage surplus', assumed: true })} in dairy and beef. Against that it supports ${fig(`${num(r.final.transitionJobs, 0)}`, { formula: 'crop transition and monitoring spending x jobs per million', assumed: true })} in transition work and ${fig(`${num(r.final.lakeJobs, 0)}`, { formula: 'lake-economy employment at a healthy lake x how far the lake recovers', assumed: true })} in the lake economy, which only exist if the lake comes back.`)}
+      ${chart('chart-impact-routes', 'How the water is obtained', 'Bought water is legally and politically different from charged or ordered water, so this route mix is a third-order impact as much as a hydrologic one.')}
 
-      <section class="prose">
-        <h3>The cost, stated whole</h3>
-        <p>
-          The public budget is ${fig(millionsYr(d.budgetM, 0), { coef: 'budget' })}, but that is not the
-          cost. Add ${fig(millionsYr(r.final.farmRevenueLostM, 1), { formula: 'water taken without payment x what an acre-foot earns in hay', assumed: true })}
-          of farm revenue taken without compensation and
-          ${fig(millionsYr(r.final.livestockReceiptsAtRiskM, 1), { formula: 'dairy and beef receipts exposed once the cut passes the forage surplus', assumed: true })}
-          of livestock receipts at risk, and the real annual cost is
-          ${fig(millionsYr(r.final.totalCostM, 1), { formula: 'public budget + uncompensated farm revenue + livestock receipts at risk', assumed: true })}
-          — about ${fig(perAf(costPerAf), { formula: 'total annual cost ÷ water reaching the lake' })} delivered.
-          Against that, the water is worth
-          ${fig(millionsYr(r.final.benefitM, 0), { formula: 'water reaching the lake x what an acre-foot is worth in the lake', assumed: true })} a year in avoided damage.
-        </p>
-        <p>
-          Utah households say they would pay about ${fig(`${dollarsShort(V('wtp_household'))} a year each`, { coef: 'wtp_household' })},
-          roughly ${fig(millionsYr((V('wtp_household') * V('state_households')) / 1e6, 0), { formula: 'willingness to pay per household x households in the state' })}
-          statewide. Money is not the binding constraint on this problem, and neither is consent.
-        </p>
-      </section>`;
+      ${chart('chart-impact-jobs', 'Second-order jobs', `By ${r.final.year}, the package costs ${fig(`${num(r.final.fieldJobsLost, 0)} field jobs`, { formula: 'acres out of irrigation ÷ 1,000 x jobs per thousand acres', assumed: true })} and ${fig(`${num(r.final.livestockJobsLost, 0)} livestock jobs`, { formula: 'dairy and beef employment exposed once the cut passes the basin’s forage surplus', assumed: true })}, while supporting transition and lake-economy work. The net line is the second-order labour impact.`)}
+
+      ${chart('chart-impact-support', 'Third-order support', `Scores are modelled from 2026 polling weights, not directly surveyed. The dashed line is the halfway mark.`)}`;
   },
   mount(root, { r }) {
-    const sup = byId(root, 'chart-support');
-    if (sup) {
+    const stack = byId(root, 'chart-impact-stack');
+    if (stack) {
+      drawStack(stack, {
+        years: r.years.map((y) => y.year),
+        keys: [
+          { id: 'rights', label: 'Rights the state holds', color: LEVER_COLORS.rights },
+          { id: 'crop', label: 'Crop switching', color: LEVER_COLORS.crop },
+          { id: 'phrag', label: 'Phragmites removal', color: LEVER_COLORS.phrag },
+          { id: 'cloud', label: 'Cloud seeding', color: LEVER_COLORS.cloud },
+          { id: 'onfarm', label: 'On-farm optimisation', color: LEVER_COLORS.onfarm },
+          { id: 'charge', label: 'Response to the charge', color: LEVER_COLORS.charge },
+          { id: 'levy', label: 'Response to the levy', color: LEVER_COLORS.levy },
+          { id: 'lawn', label: 'Residential lawns', color: LEVER_COLORS.lawn },
+          { id: 'forced', label: 'Mandated cut', color: LEVER_COLORS.forced },
+        ],
+        values: {
+          rights: r.years.map((y) => y.shepherdedKaf),
+          crop: r.years.map((y) => y.cropKaf),
+          phrag: r.years.map((y) => y.phragKaf),
+          cloud: r.years.map((y) => y.cloudKaf),
+          onfarm: r.years.map((y) => y.onfarmKaf),
+          charge: r.years.map((y) => y.chargeBehaviourKaf),
+          levy: r.years.map((y) => y.levyKaf),
+          lawn: r.years.map((y) => y.lawnKaf),
+          forced: r.years.map((y) => y.forcedKaf),
+        },
+      });
+    }
+
+    const routes = byId(root, 'chart-impact-routes');
+    if (routes) {
       drawBars(
-        sup,
-        r.support.scores.map((s) => ({
-          label: s.label,
-          value: s.score,
-          color: s.score < 50 ? 'var(--c-bad)' : s.score < 65 ? 'var(--c-warn)' : 'var(--c-ok)',
-          annotation: num(s.score, 0),
-        })),
-        { max: 100, marker: { value: 50, label: '' }, format: (v) => num(v, 0) },
+        routes,
+        [
+          { label: 'Bought or held', value: r.boughtKaf, color: LEVER_COLORS.rights, annotation: `${num(r.boughtKaf, 0)} KAF` },
+          { label: 'Charged', value: r.chargedKaf, color: LEVER_COLORS.charge, annotation: `${num(r.chargedKaf, 0)} KAF` },
+          { label: 'Ordered', value: r.orderedKaf, color: LEVER_COLORS.forced, annotation: `${num(r.orderedKaf, 0)} KAF` },
+        ],
+        { format: (v) => `${num(v, 0)} KAF` },
       );
     }
-    const jobs = byId(root, 'chart-jobs');
+
+    const jobs = byId(root, 'chart-impact-jobs');
     if (jobs) {
       drawJobs(jobs, {
         years: r.years.map((y) => y.year),
@@ -527,6 +549,20 @@ const pkgTab: Tab = {
         ],
         net: r.years.map((y) => y.netJobs),
       });
+    }
+
+    const support = byId(root, 'chart-impact-support');
+    if (support) {
+      drawBars(
+        support,
+        r.support.scores.map((s) => ({
+          label: s.label,
+          value: s.score,
+          color: s.score < 50 ? 'var(--c-bad)' : s.score < 65 ? 'var(--c-warn)' : 'var(--c-ok)',
+          annotation: num(s.score, 0),
+        })),
+        { max: 100, marker: { value: 50, label: '' }, format: (v) => num(v, 0) },
+      );
     }
   },
 };
@@ -751,6 +787,69 @@ const revenueTab: Tab = {
   },
 };
 
+const legalTab: Tab = {
+  id: 'law',
+  label: 'Legal assumptions',
+  group: 'detail',
+  render({ r }) {
+    const proposed = LEGAL_ASSUMPTIONS.filter((a) => a.status === 'Proposed legislation');
+    const legalRows = [
+      {
+        claim: 'HB 410 field leasing cap',
+        consequence: `The model applies ${fig(`${num(V('lease_to_own_rotation_multiplier'), 0)}x`, { coef: 'lease_to_own_rotation_multiplier' })} to acquired rights, because the instrument buys the water right rather than repeatedly leasing the same field.`,
+      },
+      {
+        claim: 'Saved water must be protected in transit',
+        consequence: `Monitoring lifts shepherding capacity to ${fig(kafYr(r.final.shepherdCapKaf), { formula: 'starting capacity + annual growth + what monitoring adds on a saturating curve', assumed: true })}; without legal transit protection, freed water can be re-diverted before it reaches the lake.`,
+      },
+      {
+        claim: 'A basin-wide mandate needs new authority',
+        consequence: `The backstop contributes ${fig(kafYr(r.final.forcedKaf), { formula: 'the mandate floor less voluntary water already found', assumed: true })} only where voluntary instruments fall short, and direct mandate fine revenue is ${fig(millionsYr(r.final.mandateFineRevenueM, 1), { formula: 'direct revenue from mandate penalties; currently no non-compliance payment stream is modelled', assumed: true })}.`,
+      },
+      {
+        claim: 'Durability needs owned rights',
+        consequence: `The state owns ${fig(kafYr(r.final.rightsOwnedKaf), { formula: 'lease-to-own tranches that have fully vested', assumed: true })} by ${r.final.year}, leaving ${fig(kafYr(r.durableRightsGapKaf), { formula: 'rights needed to hold healthy − rights owned outright', assumed: true })} still to own.`,
+      },
+    ];
+    const rows = legalRows
+      .map(
+        (row) => `<tr>
+          <td class="el-name">${escapeHtml(row.claim)}</td>
+          <td>${row.consequence}</td>
+        </tr>`,
+      )
+      .join('');
+
+    return `
+      <div class="tiles">
+        ${tile('HB 410 in this model', fig(`${num(V('lease_to_own_rotation_multiplier'), 0)}x`, { coef: 'lease_to_own_rotation_multiplier' }), 'no repeal toggle and no two-in-five multiplier on acquired rights')}
+        ${tile('Proposed legal changes', fig(num(proposed.length, 0), { note: 'Rows tagged Proposed legislation and Not current law.' }), 'each one is marked Not current law in the table')}
+        ${tile('Rights still to own', fig(kafYr(r.durableRightsGapKaf), { formula: 'rights needed to hold healthy − rights owned outright', assumed: true }), 'the durable-rights gap')}
+      </div>
+
+      <section class="prose">
+        <h3>The cap helps explain the instrument</h3>
+        <p>
+          HB 410 limits temporary leasing from the same field; this package avoids that fight by
+          acquiring water rights instead of leasing the field every year. That distinction is legal
+          work, not arithmetic decoration: if the instrument is actually treated as field leasing,
+          the model's lease-to-own capacity is overstated.
+        </p>
+        <p class="callout">
+          The biggest legal assumption is the basin-wide mandate. The lake is not administered like a
+          senior water right at these volumes, so forced cuts for lake inflow need new statutory
+          authority. The rows below say that plainly instead of hiding it inside the water number.
+        </p>
+      </section>
+
+      <table class="data">
+        <caption>Legal effects in the model</caption>
+        <thead><tr><th>Issue</th><th>Consequence</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  },
+};
+
 const riskTab: Tab = {
   id: 'risk',
   label: 'Risks and weaknesses',
@@ -939,6 +1038,43 @@ const indexTab: Tab = {
       })
       .join('');
 
+    const legalGroups = [...new Set(LEGAL_ASSUMPTIONS.map((a) => a.group))];
+    const legalTables = legalGroups
+      .map((group) => {
+        const rows = LEGAL_ASSUMPTIONS.filter((a) => a.group === group)
+          .map(
+            (a) => `<tr>
+              <td class="el-name">${escapeHtml(a.label)}</td>
+              <td><span class="pill pill-${a.status === 'Proposed legislation' ? 'assumption' : 'sourced'}">${escapeHtml(a.status)}</span></td>
+              <td>${escapeHtml(a.value)}${a.appliesWhen ? `<span class="detail">${escapeHtml(a.appliesWhen)}</span>` : ''}</td>
+              <td>${escapeHtml(a.basis)}</td>
+              <td>${sourceLinks(a.sourceIds) || '<span class="none">none</span>'}</td>
+            </tr>`,
+          )
+          .join('');
+        return `<table class="data data-index">
+          <caption>${escapeHtml(group)}</caption>
+          <thead><tr><th>Constraint</th><th>Status</th><th>Value</th><th>Basis</th><th>Source</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+      })
+      .join('');
+
+    const assumptions = COEFS.filter((c) => c.status === 'assumption');
+    const assumptionRows = assumptions
+      .map(
+        (c) => `<tr>
+          <td class="el-name">${escapeHtml(c.label)}</td>
+          <td>${escapeHtml(c.group)}</td>
+          <td class="num">${fig(`${num(c.value, Math.abs(c.value) < 10 ? 2 : 0)}`, { coef: c.id })} <span class="unit">${escapeHtml(c.unit)}</span></td>
+          <td>${c.low !== undefined ? `${num(c.low, c.low < 10 ? 2 : 0)}–${num(c.high!, c.high! < 10 ? 2 : 0)}` : '—'}</td>
+          <td>${escapeHtml(c.confidence ?? '—')}</td>
+          <td>${escapeHtml(c.basis)}</td>
+          <td>${sourceLinks(c.sourceIds) || '<span class="none">model choice</span>'}</td>
+        </tr>`,
+      )
+      .join('');
+
     const srcList = SOURCES.map(
       (s) => `<li>
         <a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.title)}</a>
@@ -952,77 +1088,49 @@ const indexTab: Tab = {
       sourced: COEFS.filter((c) => c.status === 'sourced').length,
       derived: COEFS.filter((c) => c.status === 'derived').length,
       assumption: COEFS.filter((c) => c.status === 'assumption').length,
+      linkedAssumption: COEFS.filter((c) => c.status === 'assumption' && c.sourceIds.length > 0).length,
+      unlinkedAssumption: COEFS.filter((c) => c.status === 'assumption' && c.sourceIds.length === 0).length,
+      legal: LEGAL_ASSUMPTIONS.length,
+      proposed: LEGAL_ASSUMPTIONS.filter((a) => a.status === 'Proposed legislation').length,
     };
 
     return `
       <section class="prose">
-        <h3>Every figure the model uses</h3>
+        <h3>The single ledger</h3>
         <p>
           ${fig(num(counts.sourced, 0), { note: 'Figures taken from a published source.' })} published figures,
           ${fig(num(counts.derived, 0), { note: 'Figures computed from other figures, each with its formula shown.' })} worked out from others, and
-          ${fig(num(counts.assumption, 0), { note: 'Figures with no source behind them. Each is a dial, and each is flagged wherever it appears.' })} assumptions
-          with nothing behind them. The assumptions are the interesting ones: every one is a dial, and
-          every one carries a warning mark wherever its number appears on this site.
+          ${fig(num(counts.assumption, 0), { note: 'Figures that remain model assumptions even when they have supporting analogues.' })} assumptions.
+          Of those assumptions, ${fig(num(counts.linkedAssumption, 0), { note: 'Assumptions with at least one supporting source or analogue attached.' })}
+          now have a source or empirical analogue attached and
+          ${fig(num(counts.unlinkedAssumption, 0), { note: 'Assumptions that are policy or modelling choices rather than outside facts.' })}
+          are left as explicit model or policy choices. The legal ledger carries
+          ${fig(num(counts.legal, 0), { note: 'Rows in the legal-assumptions table.' })} constraints, including
+          ${fig(num(counts.proposed, 0), { note: 'Constraints marked Proposed legislation.' })} proposed changes.
+        </p>
+        <p class="callout">
+          A linked assumption is still an assumption. The source column says what evidence or analogue
+          was used; the status column says whether the exact number is published, derived or model-made.
         </p>
       </section>
+
+      <h3 class="sec-head">Data and coefficients</h3>
       ${tables}
+
+      <h3 class="sec-head">Assumptions</h3>
+      <table class="data data-index">
+        <caption>Assumption audit</caption>
+        <thead><tr><th>Figure</th><th>Group</th><th>Value</th><th>Range</th><th>Confidence</th><th>Basis</th><th>Source or analogue</th></tr></thead>
+        <tbody>${assumptionRows}</tbody>
+      </table>
+
+      <h3 class="sec-head">Constraints</h3>
+      ${legalTables}
+
       <section class="prose">
         <h3>Sources</h3>
         <ul class="src-list">${srcList}</ul>
       </section>`;
-  },
-};
-
-const evidenceTab: Tab = {
-  id: 'evidence',
-  label: 'Assumptions and evidence',
-  group: 'detail',
-  render() {
-    const assumptions = COEFS.filter((c) => c.status === 'assumption');
-    const withSources = assumptions.filter((c) => c.sourceIds.length > 0);
-    const without = assumptions.filter((c) => c.sourceIds.length === 0);
-
-    const card = (c: (typeof COEFS)[number]) => `<article class="ev-card">
-      <header>
-        <h4>${escapeHtml(c.label)}</h4>
-        <span class="ev-value">${fig(`${num(c.value, Math.abs(c.value) < 10 ? 2 : 0)} ${c.unit}`, { coef: c.id })}</span>
-      </header>
-      <p class="ev-basis">${escapeHtml(c.basis)}</p>
-      ${c.low !== undefined ? `<p class="ev-range">Range used in the sweep: ${num(c.low, c.low < 10 ? 2 : 0)} to ${num(c.high!, c.high! < 10 ? 2 : 0)} ${escapeHtml(c.unit)}</p>` : ''}
-      ${
-        c.sourceIds.length
-          ? `<ul class="ev-src">${c.sourceIds
-              .map((id) => {
-                const s = source(id);
-                return `<li><a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.title)}</a> <span class="src-meta">${escapeHtml(s.publisher)} · ${s.year}</span></li>`;
-              })
-              .join('')}</ul>`
-          : '<p class="ev-none">No empirical analogue attached yet.</p>'
-      }
-    </article>`;
-
-    return `
-      <section class="prose">
-        <h3>Where the model is only guessing</h3>
-        <p>
-          ${fig(num(assumptions.length, 0), { note: 'Coefficients with no published figure behind them.' })}
-          of the model's coefficients have no source. ${fig(num(withSources.length, 0), { note: 'Assumptions with supporting material attached.' })}
-          have related evidence attached; ${fig(num(without.length, 0), { note: 'Assumptions with nothing attached at all.' })}
-          have nothing at all. Both groups are listed in full below, because an assumption nobody can
-          see is the thing that breaks a model in front of a reviewer.
-        </p>
-        <p class="callout">
-          A note on honesty: supporting material attached to an assumption is <em>related</em>
-          evidence, not proof of the value used. Where a figure rests on a case from another state or
-          another decade, the risks tab says how far it would have to be wrong to matter.
-        </p>
-      </section>
-
-      <h3 class="sec-head">Assumptions with supporting material</h3>
-      <div class="ev-grid">${withSources.map(card).join('')}</div>
-
-      <h3 class="sec-head">Assumptions with nothing behind them</h3>
-      <div class="ev-grid">${without.map(card).join('')}</div>`;
   },
 };
 
@@ -1070,10 +1178,10 @@ export const TABS: Tab[] = [
   lawnTab,
   driversTab,
   revenueTab,
+  legalTab,
   riskTab,
   simsTab,
   baselineTab,
-  evidenceTab,
   calibrationTab,
   indexTab,
 ];

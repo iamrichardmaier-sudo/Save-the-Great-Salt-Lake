@@ -9,7 +9,7 @@ range, whether it is a published number or an assumption, and a link to the sour
 ```bash
 npm install
 npm run dev          # the model, at http://localhost:5173
-npm test             # 171 tests
+npm test             # model and render regression suite
 npm run check-links  # re-fetch every cited URL
 npm run build        # production bundle in dist/
 ```
@@ -22,9 +22,9 @@ every affected party can live with. Scope is the Great Salt Lake basin — the B
 Jordan drainages.
 
 Fifteen tabs, in two groups. **The plan**: where we are, where we need to be, getting there year
-by year, levers and budget, and the package itself. **Detail**: crop transition, residential
-lawns, drivers and growth, value of water, risks and weaknesses, simulations, baselines,
-assumptions and evidence, calibration, and a full index of sources.
+by year, levers and budget, and the first-through-third-order impacts. **Detail**: crop transition,
+residential lawns, drivers and growth, value of water, legal assumptions, risks and weaknesses,
+simulations, baselines, calibration, and a full index of sources, assumptions and constraints.
 
 ## How it is built
 
@@ -80,7 +80,7 @@ takes far more water than the current shortfall suggests.
 
 ## Checking it
 
-`npm test` runs 171 tests:
+`npm test` runs the regression suite:
 
 - the evaporation balance against the published elevations, and the area–elevation inversion;
 - twelve arithmetic identities — levers sum to the total, the budget sums, gross less losses

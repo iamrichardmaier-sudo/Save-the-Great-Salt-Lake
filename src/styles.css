@@ -358,8 +358,8 @@ main { padding-block: 26px 70px; }
 .prov-row dd.mono { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); }
 
 .prov-src-head { margin: 16px 0 7px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
-.prov-src, .src-list, .ev-src { list-style: none; padding: 0; margin: 0; }
-.prov-src li, .src-list li, .ev-src li { padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
+.prov-src, .src-list { list-style: none; padding: 0; margin: 0; }
+.prov-src li, .src-list li { padding: 8px 0; border-top: 1px solid var(--line); font-size: 13.5px; }
 .src-meta, .src-loc, .src-use { display: block; color: var(--ink-3); font-size: 12px; }
 .src-loc { font-style: italic; }
 .prov-none { color: var(--c-warn); font-size: 13.5px; margin: 14px 0 0; }
@@ -626,23 +626,6 @@ main { padding-block: 26px 70px; }
 .recon-fail .mark { color: var(--c-bad); }
 .recon-item .detail { color: var(--ink-3); font-size: 11.5px; display: block; }
 
-/* ───────────────────────── Evidence cards ───────────────────────── */
-
-.ev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-block: 16px 30px; }
-.ev-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--c-warn);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-}
-.ev-card header { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin-bottom: 7px; }
-.ev-card h4 { margin: 0; font-size: 14.5px; font-family: var(--font-fig); font-weight: 600; }
-.ev-value { font-family: var(--font-fig); font-weight: 600; white-space: nowrap; }
-.ev-basis { margin: 0 0 8px; font-size: 13px; color: var(--ink-2); }
-.ev-range { margin: 0 0 8px; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
-.ev-none { margin: 0; font-size: 12.5px; color: var(--c-warn); }
-
 /* ───────────────────────── Help popover ───────────────────────── */
 
 .help-pop {
@@ -685,7 +668,7 @@ main { padding-block: 26px 70px; }
 }
 
 /* Long values and URLs must wrap rather than widen the page. */
-.ev-card, .ev-card *, .prov-row dd, .data td { overflow-wrap: anywhere; }
+.prov-row dd, .data td { overflow-wrap: anywhere; }
 .ctl-inert {
   margin: 5px 0 0;
   font-size: 11.5px;

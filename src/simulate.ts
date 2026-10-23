@@ -173,7 +173,7 @@ export const SEARCH_SPACE: SearchSpaceEntry[] = [
   { key: 'cropLevyPerAf', label: 'Crop levy rate', min: 0, max: 400 },
   { key: 'levyThresholdAfPerAcre', label: 'Crop levy threshold', min: 1.5, max: 4 },
   { key: 'levyToTransition', label: 'Levy money routed to transition', min: 0, max: 1 },
-  { key: 'mandateFloorKaf', label: 'Mandated cut floor', min: 0, max: 1000 },
+  { key: 'mandateFloorKaf', label: 'Mandated cut floor', min: 0, max: 1200 },
   { key: 'mandatePhaseYears', label: 'Years to phase the mandate in', min: 1, max: 25 },
   { key: 'mandatePenaltyPerAf', label: 'Penalty for not meeting the mandate', min: 0, max: 2440 },
   { key: 'repossessOn', label: 'Repossess once willing sellers run out', min: 0, max: 1, boolean: true },

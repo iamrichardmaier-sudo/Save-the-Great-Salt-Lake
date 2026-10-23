@@ -16,6 +16,7 @@ import {
   BASELINES,
   COEFS,
   CONSUMERS,
+  LEGAL_ASSUMPTIONS,
   STAKEHOLDERS,
   VALUE_PER_AF,
   V,
@@ -42,7 +43,7 @@ describe('the reconciliation checks pass wherever the dials are put', () => {
     { cropLevyPerAf: 200, levyThresholdAfPerAcre: 2 },
     { lawnCutAsked: 0.3, citationsPerThousandJuly: 8, finePerViolation: 500 },
     { mandateFloorKaf: 0 },
-    { mandateFloorKaf: 1000, mandatePenaltyPerAf: 2440 },
+    { mandateFloorKaf: 1200, mandatePenaltyPerAf: 2440 },
     { repossessOn: true, budgetM: 400 },
     { budgetM: 25, monitoringM: 0, leaseToOwnM: 0 },
     { baselineId: 'warming' },
@@ -169,7 +170,7 @@ describe('residential lawns', () => {
 describe('the mandate', () => {
   it('only takes what the voluntary levers did not find', () => {
     const low = pkgModel({ mandateFloorKaf: 0 });
-    const high = pkgModel({ mandateFloorKaf: 1000 });
+    const high = pkgModel({ mandateFloorKaf: 1200 });
     expect(low.final.forcedKaf).toBe(0);
     expect(high.final.forcedKaf).toBeGreaterThan(0);
   });
@@ -180,6 +181,42 @@ describe('the mandate', () => {
     expect(withPenalty.final.rightsHeldKaf).toBeGreaterThan(without.final.rightsHeldKaf);
     expect(withPenalty.final.forcedKaf).toBeLessThan(without.final.forcedKaf);
     expect(withPenalty.boughtShare).toBeGreaterThan(without.boughtShare);
+  });
+
+  it('switches off when voluntary levers alone can hold the healthy floor', () => {
+    const r = withCoefs(
+      {
+        lease_capacity: 1600,
+        retire_capacity: 1200,
+        shepherd_growth: 80,
+        shepherd_start: 250,
+        shepherd_monitor_max: 120,
+      },
+      () =>
+        pkgModel({
+          budgetM: 800,
+          leaseToOwnM: 100,
+          mandateFloorKaf: 1200,
+          mandatePenaltyPerAf: V('lake_value_per_af'),
+          scarcityRatePerAf: 400,
+          cropLevyPerAf: 400,
+          levyToTransition: 0,
+          monitoringM: 50,
+          cropSwitchM: 0,
+          phragM: 25,
+          cloudM: 10,
+        }),
+    );
+    const healthyHoldAdded = r.rightsNeededToHoldHealthyKaf * r.final.deliveryShare;
+    expect(r.final.voluntaryNetToLakeKaf).toBeGreaterThan(healthyHoldAdded);
+    expect(r.final.mandateLoadBearing).toBe(false);
+    expect(r.final.forcedKaf).toBe(0);
+  });
+
+  it('does not treat mandate penalties as rights-fund revenue', () => {
+    const r = pkgModel({ mandateFloorKaf: 1200, mandatePenaltyPerAf: V('lake_value_per_af') });
+    expect(r.final.forcedKaf).toBeGreaterThan(0);
+    expect(r.years.every((y) => y.mandateFineRevenueM === 0)).toBe(true);
   });
 });
 
@@ -383,6 +420,30 @@ describe('every assumption is declared', () => {
   });
 });
 
+describe('legal assumptions', () => {
+  it('keeps the HB 410 field-leasing cap out of lease-to-own capacity', () => {
+    const cap = LEGAL_ASSUMPTIONS.find((a) => a.id === 'hb410_field_rotation');
+    expect(cap?.value).toBe('Not applied to lease-to-own');
+    expect(cap?.basis).toContain('2.5-acre');
+    expect(V('lease_to_own_rotation_multiplier')).toBe(1);
+  });
+
+  it('marks the proposed statutory changes as not current law', () => {
+    const proposed = LEGAL_ASSUMPTIONS.filter((a) => a.status === 'Proposed legislation');
+    expect(proposed).toHaveLength(7);
+    for (const row of proposed) expect(row.value).toBe('Not current law');
+  });
+
+  it('resolves every source a legal assumption cites', () => {
+    const sourceIds = new Set(SOURCES.map((s) => s.id));
+    for (const row of LEGAL_ASSUMPTIONS) {
+      for (const id of row.sourceIds) {
+        expect(sourceIds.has(id), `${row.id} cites unknown source "${id}"`).toBe(true);
+      }
+    }
+  });
+});
+
 describe('the normal approximation', () => {
   it('matches known values closely enough', () => {
     expect(normalCdf(0)).toBeCloseTo(0.5, 6);
@@ -414,6 +475,7 @@ describe('sources', () => {
   it('cites every source from somewhere', () => {
     const referenced = new Set([
       ...COEFS.flatMap((c) => c.sourceIds),
+      ...LEGAL_ASSUMPTIONS.flatMap((a) => a.sourceIds),
       ...STAKEHOLDERS.flatMap((s) => s.sourceIds),
       ...VALUE_PER_AF.flatMap((v) => v.sourceIds),
       ...BASELINES.flatMap((b) => b.sourceIds),
