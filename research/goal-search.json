@@ -1,0 +1,106 @@
+{
+ "stage1": [
+  {
+   "seed": 1,
+   "flatFt": 4198.464011077558,
+   "robustFt": 4198.184091432836,
+   "scheduleFt": 4198.500398896681,
+   "meets": true
+  },
+  {
+   "seed": 2,
+   "flatFt": 4198.464591024542,
+   "robustFt": 4198.184621741666,
+   "scheduleFt": 4198.549198923931,
+   "meets": true
+  },
+  {
+   "seed": 3,
+   "flatFt": 4198.464482110431,
+   "robustFt": 4198.184644787182,
+   "scheduleFt": 4198.5004040963995,
+   "meets": true
+  },
+  {
+   "seed": 4,
+   "flatFt": 4198.469264018173,
+   "robustFt": 4198.185105632754,
+   "scheduleFt": 4198.492032815961,
+   "meets": false
+  },
+  {
+   "seed": 5,
+   "flatFt": 4198.464743971874,
+   "robustFt": 4198.184429358766,
+   "scheduleFt": 4198.500603704628,
+   "meets": true
+  },
+  {
+   "seed": 6,
+   "flatFt": 4198.463385714036,
+   "robustFt": 4198.18474237933,
+   "scheduleFt": 4198.500395202026,
+   "meets": true
+  },
+  {
+   "seed": 7,
+   "flatFt": 4198.473066009308,
+   "robustFt": 4198.175983647016,
+   "scheduleFt": 4198.549449797692,
+   "meets": true
+  },
+  {
+   "seed": 8,
+   "flatFt": 4198.445514224712,
+   "robustFt": 4198.160195457861,
+   "scheduleFt": 4198.497781341428,
+   "meets": false
+  }
+ ],
+ "found": {
+  "label": "search result",
+  "flatFt": 4198.523,
+  "scheduleFt": 4198.543,
+  "meetsGoal": true,
+  "firstYearAtTarget": 2048,
+  "nevB": 55.13,
+  "weakestSupport": "State office of commerce 78",
+  "dials": {
+   "startYear": 2027,
+   "horizon": 2055,
+   "baselineId": "thirty",
+   "budgetM": 100,
+   "monitoringM": 50,
+   "leaseToOwnM": 0,
+   "capitalPricePerAf": 6000,
+   "scarcityRatePerAf": 66.19955903850496,
+   "escalatorOn": true,
+   "cropLevyPerAf": 400,
+   "levyThresholdAfPerAcre": 1.5,
+   "levyToTransition": 0.8936926129274074,
+   "mandateFloorKaf": 1200,
+   "mandatePhaseYears": 3.1929677326232198,
+   "mandatePenaltyPerAf": 0,
+   "repossessOn": true,
+   "repossessInterest": 0.03,
+   "repossessCapKaf": 118.71115759480745,
+   "cloudM": 1.4782740820664912,
+   "phragM": 25,
+   "cropSwitchM": 4.387207108782604,
+   "lawnCutAsked": 0,
+   "enforcementWindowId": "season",
+   "citationsPerThousandJuly": 4.981539695058018,
+   "finePerViolation": 318.0789433303289,
+   "longDrought": false
+  }
+ },
+ "current": {
+  "label": "current defaults",
+  "flatFt": 4198.528,
+  "scheduleFt": 4198.547,
+  "meetsGoal": true,
+  "firstYearAtTarget": 2047,
+  "nevB": 56.55,
+  "weakestSupport": "State office of commerce 78"
+ }
+}

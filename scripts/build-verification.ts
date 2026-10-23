@@ -115,7 +115,7 @@ const out = records.map((r) => {
   const extra = (r.extra_sources ?? [])
     .map((e) => ({ id: sourceId(e.url, e, `Evidence for ${r.id}.`), locator: clean(e.locator, 200), quote: clean(e.quote, 400) }))
     .filter((e) => e.id);
-  const changed = d?.value !== undefined && typeof r.value_model === 'number' && d.value !== r.value_model;
+  const changed = d?.value !== undefined && (typeof r.value_model === 'number' || r.value_model === null) && d.value !== r.value_model;
   return {
     id: r.id,
     verdict: finalVerdict(r, d).replace('_', ' '),
@@ -127,7 +127,8 @@ const out = records.map((r) => {
     arithmetic: clean(r.arithmetic, 600),
     notes: clean(d?.why ?? r.notes, 900),
     confidence: r.confidence,
-    ...(changed ? { previous: { value: r.value_model as number } } : {}),
+    ...(changed ? { previous: typeof r.value_model === 'number' ? { value: r.value_model } : {} } : {}),
+    ...(d?.value !== undefined ? { value: d.value } : {}),
     extra,
   };
 });
@@ -142,7 +143,7 @@ writeFileSync(
 
 writeFileSync(
   new URL('src/verification.ts', root),
-  `${header('How every number in the model was checked: the verdict, the source and the passage behind it.')}export type Verdict =\n  | 'confirmed'\n  | 'corrected'\n  | 'range revised'\n  | 'derived'\n  | 'evidence'\n  | 'unsupported'\n  | 'no evidence'\n  | 'open';\n\nexport interface Verification {\n  id: string;\n  verdict: Verdict;\n  /** ISO date the passage was checked. */\n  checked: string;\n  /** True when a reviewer re-opened the source before accepting the change. */\n  reviewed: boolean;\n  sourceIds: string[];\n  locator: string;\n  quote: string;\n  arithmetic: string;\n  notes: string;\n  confidence: string;\n  previous?: { value?: number };\n  extra: { id: string | null; locator: string; quote: string }[];\n}\n\nexport const VERIFICATION: Record<string, Verification> = ${JSON.stringify(Object.fromEntries(out.map((o) => [o.id, o])), null, 2)};\n\nexport function verification(id: string): Verification | undefined {\n  return VERIFICATION[id];\n}\n`,
+  `${header('How every number in the model was checked: the verdict, the source and the passage behind it.')}export type Verdict =\n  | 'confirmed'\n  | 'corrected'\n  | 'range revised'\n  | 'derived'\n  | 'evidence'\n  | 'unsupported'\n  | 'no evidence'\n  | 'open';\n\nexport interface Verification {\n  id: string;\n  verdict: Verdict;\n  /** ISO date the passage was checked. */\n  checked: string;\n  /** True when a reviewer re-opened the source before accepting the change. */\n  reviewed: boolean;\n  sourceIds: string[];\n  locator: string;\n  quote: string;\n  arithmetic: string;\n  notes: string;\n  confidence: string;\n  previous?: { value?: number };\n  /** The value the reviewer accepted, when it was changed. */\n  value?: number;\n  extra: { id: string | null; locator: string; quote: string }[];\n}\n\nexport const VERIFICATION: Record<string, Verification> = ${JSON.stringify(Object.fromEntries(out.filter((o) => !o.id.includes('/')).map((o) => [o.id, o])), null, 2)};\n\n/** Rows of the side tables (BASELINES, CONSUMERS, VALUE_PER_AF, …) and the source list, keyed \`TABLE/row\`. */\nexport const TABLE_VERIFICATION: Record<string, Verification> = ${JSON.stringify(Object.fromEntries(out.filter((o) => o.id.includes('/')).map((o) => [o.id, o])), null, 2)};\n\nexport function verification(id: string): Verification | undefined {\n  return VERIFICATION[id] ?? TABLE_VERIFICATION[id];\n}\n`,
 );
 
-console.log(`${out.length} records, ${added.size} new sources.`);
+console.log(`${out.length} records (${out.filter((o) => o.id.includes('/')).length} table rows), ${added.size} new sources.`);

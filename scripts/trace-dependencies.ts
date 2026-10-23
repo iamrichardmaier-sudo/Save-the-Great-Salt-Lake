@@ -1,6 +1,6 @@
 /**
  * Write research/dependencies.json: every coefficient, what it feeds, and how much it moves the
- * answer on the optimised package. Run with `npm run trace`.
+ * answer on the default package (the one the goal search chose). Run with `npm run trace`.
  *
  * The page computes the same thing live; this file is the record a report can cite.
  */
@@ -9,11 +9,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { COEFS } from '../src/data';
 import { STAGES, impacts, traceDependencies } from '../src/connections';
 import { fullSpendSchedule } from '../src/schedule';
-import { optimise } from '../src/simulate';
+import { DEFAULT_DIALS } from '../src/model';
 
 const read = (f: string) => readFileSync(new URL(`../src/${f}`, import.meta.url), 'utf8');
 const feeds = traceDependencies(Object.fromEntries(['model.ts', 'lake.ts', 'schedule.ts', 'simulate.ts', 'ui/tabs.ts'].map((f) => [f, read(f)])));
-const base = optimise(0.6, { tries: 1000, seed: 424242 }).dials;
+const base = DEFAULT_DIALS;
 const plan = fullSpendSchedule(base);
 const impact = new Map(impacts(base, plan).map((x) => [x.id, x]));
 const stage = new Map(STAGES.map((s) => [s.id, s]));

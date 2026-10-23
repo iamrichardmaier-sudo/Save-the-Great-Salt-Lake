@@ -78,15 +78,16 @@ const C: Coef[] = [
   {
     id: 'inflow_efficiency',
     label: 'Inflow efficiency factor in the balance',
-    value: 1.03,
+    value: 0.933,
     unit: 'ratio',
     group: 'Lake physics',
     status: 'derived',
-    basis: 'Closes the balance against the published equilibrium elevations; absorbs groundwater and ungauged inflow.',
+    basis:
+      'Closes the balance against the published long-term mean elevations (USU, Strike Team Mar 2026 p.30: 4,191.1, 4,193.7 and 4,198.0 ft for 0, 250 and 800 KAF/yr added) on the USGS 2023 area table. Best fit 0.933, RMS error 0.23 ft; it was 1.03 on the old three-point area line.',
     formula: 'area(E) x net evaporation = river inflow x this factor',
-    sourceIds: ['usu_sims'],
-    low: 1.0,
-    high: 1.08,
+    sourceIds: ['usu_sims', 'usgs_fogsl_area'],
+    low: 0.88,
+    high: 0.98,
     confidence: 'Medium',
   },
   {
@@ -143,8 +144,7 @@ const C: Coef[] = [
     status: 'sourced',
     basis:
       'Strike Team Mar 2026: ’2000-2025 ... inflows averaged 1,665 KAF/year’.',
-    formula: 'inflow to hold today’s elevation − 15 KAF/yr of current deficit',
-    sourceIds: ['dwr_gsl', 'usu_sims'],
+    sourceIds: ['strike_2026', 'usu_sims'],
     low: 1500,
     high: 1850,
     confidence: 'Medium',
@@ -196,11 +196,11 @@ const C: Coef[] = [
   {
     id: 'monitoring',
     label: 'Monitoring and verification',
-    value: 25,
+    value: 50,
     unit: '$M/yr',
     group: 'Budget',
     status: 'assumption',
-    basis: 'Assumption. Buys no water itself; it raises how much of the rest can be shepherded to the lake.',
+    basis: 'Assumption. Buys no water itself; it raises how much of the rest can be shepherded to the lake. Default set by the goal search of 2026-10-23 (scripts/goal-search.ts): the package that reaches 4,198.5 ft by 2055 on $100M/yr.',
     sourceIds: ['state_engineer_dmp'],
     low: 0,
     high: 50,
@@ -209,11 +209,11 @@ const C: Coef[] = [
   {
     id: 'lease_to_own_dollars',
     label: 'Money set aside for lease-to-own rights',
-    value: 30,
+    value: 2,
     unit: '$M/yr',
     group: 'Budget',
     status: 'assumption',
-    basis: 'Assumption. A dial: whatever this does not absorb flows to the conservation programmes.',
+    basis: 'Assumption. A dial: whatever this does not absorb flows to the conservation programmes. Default set by the goal search of 2026-10-23 (scripts/goal-search.ts): the package that reaches 4,198.5 ft by 2055 on $100M/yr.',
     sourceIds: [],
     low: 0,
     high: 100,
@@ -422,24 +422,30 @@ const C: Coef[] = [
   {
     id: 'mi_depletion',
     label: 'Minerals, commerce, institutions and city-supplied industry',
-    value: 328,
+    value: 354.4,
     unit: 'KAF/yr',
     group: 'Who uses the water',
-    status: 'sourced',
-    basis: 'The non-household part of municipal and industrial depletion, plus mineral extraction.',
-    sourceIds: ['strike_2026', 'strike_2025', 'dwr_gsl', 'dwr_mi_reporting'],
+    status: 'derived',
+    basis:
+      'The non-household part of municipal and industrial depletion, plus mineral extraction. Strike Team Mar 2026: 2020-24 M&I 640 and minerals 136 KAF (p.25); 2024 residential 421.6 KAF (lawns 408.5 = 96.9%, p.27). 136 + 640 − 421.6.',
+    formula: 'minerals + (M&I − residential)',
+    sourceIds: ['strike_2026'],
+    low: 320,
+    high: 390,
     confidence: 'High',
   },
   {
     id: 'charge_base',
     label: 'Water the scarcity charge falls on',
-    value: 1912,
+    value: 1938.4,
     unit: 'KAF/yr',
     group: 'Who uses the water',
     status: 'derived',
-    basis: 'All basin depletion except every residential category and reservoir evaporation.',
+    basis: 'All basin depletion except every residential category and reservoir evaporation: 2,387 − 421.6 − 27.',
     formula: 'agriculture + minerals, commerce, institutions and city-supplied industry',
-    sourceIds: ['strike_2026', 'strike_2025', 'dwr_mi_reporting'],
+    sourceIds: ['strike_2026'],
+    low: 1900,
+    high: 1975,
     confidence: 'High',
   },
 
@@ -765,7 +771,7 @@ const C: Coef[] = [
     group: 'Acquisition',
     status: 'assumption',
     basis: 'Legal interpretation. HB 410 caps temporary full-season leasing off a field, not acquisition of water rights. The model therefore applies no two-in-five acreage multiplier and no repeal toggle to lease-to-own rights.',
-    sourceIds: ['hb410_2026', 'gsl_faq', 'utah_water_right_title'],
+    sourceIds: ['hb410_enrolled', 'hb410_2026', 'gsl_faq', 'utah_water_right_title'],
     confidence: 'Medium',
   },
   {
@@ -906,11 +912,11 @@ const C: Coef[] = [
   {
     id: 'mandate_floor',
     label: 'Mandated cut, if the rest falls short',
-    value: 1100,
+    value: 1200,
     unit: 'KAF/yr',
     group: 'Mandate',
     status: 'assumption',
-    basis: 'A policy choice, not a measurement. It only takes what the voluntary levers did not already find, sized against the state recovery target and updated basin water budget.',
+    basis: 'A policy choice, not a measurement. It only takes what the voluntary levers did not already find, sized against the state recovery target and updated basin water budget. Default set by the goal search of 2026-10-23 (scripts/goal-search.ts): the package that reaches 4,198.5 ft by 2055 on $100M/yr.',
     sourceIds: ['gsl_commissioner', 'strike_2026'],
     low: 0,
     high: 1200,
@@ -919,11 +925,11 @@ const C: Coef[] = [
   {
     id: 'mandate_phase',
     label: 'Years to phase the mandate in',
-    value: 10,
+    value: 1,
     unit: 'years',
     group: 'Mandate',
     status: 'assumption',
-    basis: 'A policy choice. The phase-in length is not measured; it is constrained by implementation and water-right administration capacity.',
+    basis: 'A policy choice. The phase-in length is not measured; it is constrained by implementation and water-right administration capacity. Default set by the goal search of 2026-10-23 (scripts/goal-search.ts): the package that reaches 4,198.5 ft by 2055 on $100M/yr.',
     sourceIds: ['state_engineer_dmp', 'ag_optimization_2026'],
     low: 1,
     high: 25,
@@ -1288,11 +1294,11 @@ const C: Coef[] = [
   {
     id: 'repossess_cap',
     label: 'Most that can be repossessed in a year',
-    value: 50,
+    value: 140,
     unit: 'KAF/yr',
     group: 'Mandate',
     status: 'assumption',
-    basis: 'A policy choice, and a legal limit: compulsory acquisition at market value takes time to process.',
+    basis: 'A policy choice, and a legal limit: compulsory acquisition at market value takes time to process. Default set by the goal search of 2026-10-23 (scripts/goal-search.ts): the package that reaches 4,198.5 ft by 2055 on $100M/yr.',
     sourceIds: ['farm_bureau_2026'],
     low: 0,
     high: 150,
@@ -1465,7 +1471,7 @@ export const LEGAL_ASSUMPTIONS: readonly LegalAssumption[] = [
     status: 'Proposed legislation',
     value: 'Not current law',
     basis: 'The model treats monitoring as increasing the amount of saved, leased, or acquired water that can be legally shepherded to the lake. The State Engineer materials identify that transit protection as a gap rather than a finished system.',
-    sourceIds: ['state_engineer_dmp'],
+    sourceIds: ['usu_shepherding', 'state_engineer_dmp'],
   },
   {
     id: 'state_held_water_insulated',
@@ -1555,9 +1561,40 @@ export function allGroups(): string[] {
 
 /** Surface area against elevation. The balance is piecewise linear between these anchors. */
 export const AREA_ANCHORS: ReadonlyArray<{ ft: number; sqmi: number }> = [
-  { ft: 4188.5, sqmi: 888 },
-  { ft: 4200, sqmi: 1700 },
-  { ft: 4211.6, sqmi: 2300 },
+  // USGS 2023 elevation-area-volume table (whole lake), elevations in NGVD29 feet, one-foot steps.
+  { ft: 4180, sqmi: 621.1 },
+  { ft: 4181, sqmi: 655.8 },
+  { ft: 4182, sqmi: 689.0 },
+  { ft: 4183, sqmi: 723.1 },
+  { ft: 4184, sqmi: 755.4 },
+  { ft: 4185, sqmi: 787.0 },
+  { ft: 4186, sqmi: 818.2 },
+  { ft: 4187, sqmi: 849.5 },
+  { ft: 4188, sqmi: 880.1 },
+  { ft: 4189, sqmi: 910.0 },
+  { ft: 4190, sqmi: 937.6 },
+  { ft: 4191, sqmi: 965.0 },
+  { ft: 4192, sqmi: 1014.4 },
+  { ft: 4193, sqmi: 1052.4 },
+  { ft: 4194, sqmi: 1104.2 },
+  { ft: 4195, sqmi: 1176.5 },
+  { ft: 4196, sqmi: 1248.0 },
+  { ft: 4197, sqmi: 1336.3 },
+  { ft: 4198, sqmi: 1422.5 },
+  { ft: 4199, sqmi: 1502.1 },
+  { ft: 4200, sqmi: 1602.3 },
+  { ft: 4201, sqmi: 1684.3 },
+  { ft: 4202, sqmi: 1779.7 },
+  { ft: 4203, sqmi: 1871.7 },
+  { ft: 4204, sqmi: 1940.3 },
+  { ft: 4205, sqmi: 2010.5 },
+  { ft: 4206, sqmi: 2073.0 },
+  { ft: 4207, sqmi: 2132.6 },
+  { ft: 4208, sqmi: 2179.0 },
+  { ft: 4209, sqmi: 2196.9 },
+  { ft: 4210, sqmi: 2211.5 },
+  { ft: 4211, sqmi: 2224.0 },
+  { ft: 4211.5, sqmi: 2229.1 },
 ];
 
 export const AREA_ANCHOR_SOURCE = 'usgs_fogsl_area';
@@ -1565,7 +1602,7 @@ export const AREA_ANCHOR_SOURCE = 'usgs_fogsl_area';
 /** Published equilibrium elevations the balance has to reproduce. */
 export const USU_VALIDATION: ReadonlyArray<{ addedKaf: number; elevationFt: number }> = [
   { addedKaf: 0, elevationFt: 4191.1 },
-  { addedKaf: 250, elevationFt: 4193.8 },
+  { addedKaf: 250, elevationFt: 4193.7 },
   { addedKaf: 800, elevationFt: 4198.0 },
 ];
 
@@ -1580,9 +1617,9 @@ export interface UseValue {
 }
 
 export const VALUE_PER_AF: readonly UseValue[] = [
-  { id: 'hay', label: 'Alfalfa and other hay', dollarsPerAf: 245, category: 'taken', basis: 'Hay receipts divided by water depleted.', sourceIds: ['nass_utah'] },
+  { id: 'hay', label: 'Alfalfa and other hay', dollarsPerAf: 345, category: 'taken', basis: 'Value of hay production per acre (2019–23) divided by water depleted per acre.', sourceIds: ['nass_bulletin_2024', 'ag_optimization_2026'] },
   { id: 'all_ag', label: 'All agriculture (crops and livestock)', dollarsPerAf: 1021, category: 'taken', basis: 'Sector receipts divided by sector depletion.', sourceIds: ['nass_utah', 'bea_gdp'] },
-  { id: 'minerals', label: 'Great Salt Lake mineral extraction', dollarsPerAf: 8140, category: 'taken', basis: 'Sector output divided by sector depletion.', sourceIds: ['bea_gdp'] },
+  { id: 'minerals', label: 'Great Salt Lake mineral extraction', dollarsPerAf: 8315, category: 'taken', basis: 'Sector output divided by sector depletion.', sourceIds: ['le_interim_2022', 'strike_2026'] },
   { id: 'nuclear_wet', label: 'Nuclear power, wet cooling (per 1,000 MW)', dollarsPerAf: 27000, category: 'proposed', basis: 'Generation value divided by cooling water consumed.', sourceIds: ['macknick_2012'] },
   { id: 'dc_evap', label: 'Data centre, evaporative cooling (per 100 MW)', dollarsPerAf: 46000, category: 'proposed', basis: 'Facility output divided by water consumed.', sourceIds: ['bea_gdp'] },
   { id: 'institutional', label: 'Institutional and government', dollarsPerAf: 354000, category: 'untouched', basis: 'Sector output divided by sector depletion.', sourceIds: ['bea_gdp'] },
@@ -1597,12 +1634,15 @@ export const VALUE_PER_AF: readonly UseValue[] = [
 
 /** Depletion by user group, for the who-uses-what view. */
 export const CONSUMERS: ReadonlyArray<{ id: string; label: string; kaf: number; charged: boolean }> = [
-  { id: 'hay', label: 'Alfalfa and other hay', kaf: 1055, charged: true },
-  { id: 'other_crops', label: 'Other crops and pasture', kaf: 529, charged: true },
-  { id: 'minerals', label: 'Mineral extraction', kaf: 152, charged: true },
-  { id: 'industry', label: 'Industry, commerce and institutions', kaf: 176, charged: true },
-  { id: 'residential_out', label: 'Residential outdoor (lawns)', kaf: 409, charged: false },
-  { id: 'residential_in', label: 'Residential indoor', kaf: 66, charged: false },
+  // Strike Team Mar 2026, 2020-24 averages (p.25) and 2024 residential split (p.27); hay share from
+  // the Ag Water Optimization report Figure 2-5. Sums to basin_depletion.
+  { id: 'hay', label: 'Alfalfa and other hay', kaf: 1025, charged: true },
+  { id: 'other_crops', label: 'Other crops, pasture and incidental losses', kaf: 559, charged: true },
+  { id: 'minerals', label: 'Mineral extraction', kaf: 136, charged: true },
+  { id: 'industry', label: 'Industry, commerce and institutions', kaf: 218.4, charged: true },
+  { id: 'residential_out', label: 'Residential outdoor (lawns)', kaf: 408.5, charged: false },
+  { id: 'residential_in', label: 'Residential indoor', kaf: 13.1, charged: false },
+  { id: 'reservoir', label: 'Reservoir evaporation', kaf: 27, charged: false },
 ];
 
 /** Stakeholder groups and what each one weighs, from the polling. */
@@ -1636,13 +1676,13 @@ export const STAKEHOLDERS: readonly Stakeholder[] = [
     label: 'Citizens in rural areas',
     wBought: 30, wLake: 26, wFarm: 20, wCost: -6, base: 22,
     basis: '88 per cent concerned about the lake, higher than urban; what distinguishes them is who decides.',
-    sourceIds: ['noble_2026'],
+    sourceIds: ['deseret_2026', 'noble_2026'],
   },
   {
     id: 'metro',
     label: 'Citizens in metropolitan areas',
     wBought: 24, wLake: 40, wFarm: 6, wCost: -8, base: 28,
-    basis: 'Will pay but will not be fined: $113 to $144 a household and a hard no on penalties.',
+    basis: 'Will pay but will not be fined: $113 to $144 a household among those fairly sure it helps, and 22 per cent for penalties.',
     sourceIds: ['noble_2026', 'weber_wtp', 'deseret_2026'],
   },
   {
@@ -1656,7 +1696,7 @@ export const STAKEHOLDERS: readonly Stakeholder[] = [
     id: 'rep',
     label: 'Republican legislators',
     wBought: 46, wLake: 18, wFarm: 20, wCost: -12, base: 20,
-    basis: '36 per cent very concerned but 81 per cent back a federal package: against being ordered, not against the lake.',
+    basis: '36 per cent very concerned, while 81 per cent of all voters back a federal package: against being ordered, not against the lake.',
     sourceIds: ['deseret_2026', 'noble_2026'],
   },
   {
@@ -1687,7 +1727,7 @@ export const WATERING_MONTHS: ReadonlyArray<{ month: string; share: number }> = 
   { month: 'Dec', share: 0 },
 ];
 
-export const WATERING_MONTHS_SOURCE = 'dwr_regional_goals';
+export const WATERING_MONTHS_SOURCE = 'usu_consumptive_use';
 
 /** Enforcement calendars the user can pick between. */
 export const ENFORCEMENT_WINDOWS: ReadonlyArray<{ id: string; label: string; months: string[] }> = [
@@ -1708,8 +1748,9 @@ export interface Baseline {
 }
 
 export const BASELINES: readonly Baseline[] = [
-  { id: 'recent', label: 'Recent drought period', inflowFactor: 0.88, description: 'The last two decades, drier than the long record.', sourceIds: ['strike_2025'] },
-  { id: 'thirty', label: 'Thirty-year average', inflowFactor: 1.0, description: 'The default: the period the depletion accounting covers.', sourceIds: ['strike_2025', 'dwr_gsl'] },
-  { id: 'long', label: 'Long-term average', inflowFactor: 1.09, description: 'The full gauged record, wetter than recent decades.', sourceIds: ['dwr_gsl'] },
-  { id: 'warming', label: 'Warming trend', inflowFactor: 0.82, description: 'Continued decline in natural streamflow through the period.', sourceIds: ['strike_2025'] },
+  // Ratios of water-year river inflow (Bear, Weber and Jordan gauges, 1950-2025) to the 2000-2025 mean.
+  { id: 'recent', label: 'Driest recent decade (2013–2022)', inflowFactor: 0.86, description: 'The driest ten years on the gauges, repeated.', sourceIds: ['usgs_gauges', 'strike_2026'] },
+  { id: 'thirty', label: '2000–2025 average', inflowFactor: 1.0, description: 'The default: the Strike Team’s 2000–2025 average inflow.', sourceIds: ['strike_2026'] },
+  { id: 'long', label: 'Full gauged record (1950–2025)', inflowFactor: 1.37, description: 'The whole common gauge record, much wetter than this century.', sourceIds: ['usgs_gauges', 'strike_2025'] },
+  { id: 'warming', label: 'Warming trend', inflowFactor: 0.82, description: 'About 4.7 °F of warming at 3.8% less streamflow per °F; the dry end of published sensitivity.', sourceIds: ['ucar_2013', 'strike_2026'] },
 ];

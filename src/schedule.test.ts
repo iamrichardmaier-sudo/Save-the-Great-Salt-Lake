@@ -1,8 +1,8 @@
 /**
  * The year-by-year budget.
  *
- * Built on the package the optimiser picks at the page's default weighting, which is the package
- * that reaches the healthy floor by the horizon. The flat dials stay the baseline these tests compare
+ * Built on the page's default package, which the goal search (scripts/goal-search.ts) chose
+ * because it reaches the healthy floor with its margin by the horizon on $100M a year. The flat dials stay the baseline these tests compare
  * against, so a change that quietly alters the flat model fails here too.
  */
 
@@ -10,13 +10,12 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { V } from './data';
 import { DEFAULT_DIALS, pkgModel, reconcile, type Dials, type YearSpend } from './model';
 import { LEVERS, fullSpendSchedule, nevParts, type ScheduleResult } from './schedule';
-import { optimise } from './simulate';
 
 let base: Dials;
 let s: ScheduleResult;
 
 beforeAll(() => {
-  base = optimise(0.6, { tries: 1000, seed: 424242 }).dials;
+  base = { ...DEFAULT_DIALS };
   s = fullSpendSchedule(base);
 }, 120_000);
 
@@ -36,9 +35,13 @@ describe('a schedule that copies the flat split', () => {
       onfarmM: y.onfarmSpendM,
     }));
     const copied = pkgModel({ ...base, schedule });
-    // Flat pays contracts out of the lease slice; a schedule pays them on top. With charge revenue
-    // covering every contract here, the two are the same water.
-    copied.years.forEach((y, i) => {
+    // Flat pays contracts out of the lease slice; a schedule pays them on top. While charge revenue
+    // covers every contract the two are the same water. Once the charge winds down as the lake
+    // recovers, the schedule pays contracts from the budget as well, and the two part company.
+    const covered = copied.years.findIndex((y, i) => Math.abs(y.leaseBudgetSpendM - flat.years[i].leaseBudgetSpendM) > 1e-9);
+    const sameUntil = covered < 0 ? copied.years.length : covered;
+    expect(sameUntil).toBeGreaterThanOrEqual(8);
+    copied.years.slice(0, sameUntil).forEach((y, i) => {
       expect(y.netToLakeKaf).toBeCloseTo(flat.years[i].netToLakeKaf, 6);
       expect(y.elevationFt).toBeCloseTo(flat.years[i].elevationFt, 9);
     });
@@ -60,9 +63,20 @@ describe('the full-spend budget', () => {
   });
 
   it('reaches the healthy floor with its margin by the horizon and holds it', () => {
+    // At the edge: the margin over 4,198.5 ft in 2055 is a few hundredths of a foot.
     expect(s.meetsGoal).toBe(true);
     expect(s.targetFt).toBeCloseTo(V('healthy_min') + 0.5, 9);
     expect(s.result.final.elevationFt).toBeGreaterThanOrEqual(s.targetFt);
+    expect(s.result.final.elevationFt - s.targetFt).toBeLessThan(0.2);
+  });
+
+  it('reports a missed goal, with the shortfall, when the package cannot reach it', () => {
+    // The package the optimiser picked before the numbers were re-verified no longer gets there:
+    // the result must say so rather than claim the goal.
+    const weak = fullSpendSchedule({ ...DEFAULT_DIALS, mandateFloorKaf: 600, cropLevyPerAf: 0, repossessOn: false });
+    expect(weak.meetsGoal).toBe(false);
+    expect(weak.firstYearAtTarget).toBeNull();
+    expect(weak.targetFt - weak.result.final.elevationFt).toBeGreaterThan(0);
   });
 
   it('funds no programme past its capacity', () => {

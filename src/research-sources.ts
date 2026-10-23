@@ -73,36 +73,12 @@ export const RESEARCH_SOURCES: Source[] = [
     "use": "Checked for delivery_base."
   },
   {
-    "id": "r_waterrights_utah_final_gsl_distribution_manage",
-    "title": "Great Salt Lake Distribution Management Plan",
-    "publisher": "Utah Division of Water Rights",
-    "year": 2025,
-    "url": "https://waterrights.utah.gov/GSLDMP/final_GSL_distribution_management_plan_2025101.pdf",
-    "use": "Evidence for delivery_base."
-  },
-  {
     "id": "r_le_utah_c73_10_s32_2026050620260701",
     "title": "Utah Code 73-10-32 Definitions -- Water conservation plan required",
     "publisher": "Utah Legislature",
     "year": 2026,
     "url": "https://le.utah.gov/xcode/Title73/Chapter10/C73-10-S32_2026050620260701.html",
     "use": "Checked for thermostat_speed."
-  },
-  {
-    "id": "r_news_ucar_rising_temperatures_challenge_salt_l",
-    "title": "Rising temperatures challenge Salt Lake City's water supply",
-    "publisher": "UCAR/NCAR",
-    "year": 2013,
-    "url": "https://news.ucar.edu/10534/rising-temperatures-challenge-salt-lake-citys-water-supply",
-    "use": "Checked for streamflow_decline_2055."
-  },
-  {
-    "id": "r_usu_2a_water_shepherding_salt_lake",
-    "title": "2A: Water shepherding: delivering saved water to Great Salt Lake",
-    "publisher": "Utah State University ILWA",
-    "year": 2023,
-    "url": "https://www.usu.edu/ilwa/reports/2023/water/2a-water-shepherding-salt-lake",
-    "use": "Checked for shepherd_monitor_max."
   },
   {
     "id": "r_water_utah_mi_water_conservation_opportunies_h",
@@ -129,6 +105,14 @@ export const RESEARCH_SOURCES: Source[] = [
     "use": "Evidence for cloud_cap."
   },
   {
+    "id": "r_greatsaltlake_utah",
+    "title": "Great Salt Lake FAQ",
+    "publisher": "State of Utah GSL site",
+    "year": 2026,
+    "url": "https://greatsaltlake.utah.gov/",
+    "use": "Evidence for cloud_cap."
+  },
+  {
     "id": "r_earthref_92882",
     "title": "Irrigation water demand: A meta-analysis of price elasticities (Scheierling, Loomis & Young), Water Resources Research 42, W01411, doi:10.1029/2005WR004009",
     "publisher": "AGU / Wiley",
@@ -151,14 +135,6 @@ export const RESEARCH_SOURCES: Source[] = [
     "year": 2006,
     "url": "https://digitalcommons.unl.edu/natrespapers/27",
     "use": "Evidence for ag_charge_response."
-  },
-  {
-    "id": "r_greatsaltlake_utah_great_salt_lake_strategic_p",
-    "title": "The Great Salt Lake Strategic Plan",
-    "publisher": "Office of the Great Salt Lake Commissioner",
-    "year": 2025,
-    "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
-    "use": "Evidence for goal_added."
   },
   {
     "id": "r_nass_usda_iwms",
@@ -473,14 +449,6 @@ export const RESEARCH_SOURCES: Source[] = [
     "use": "Evidence for farm_jobs_per_1000_acres."
   },
   {
-    "id": "r_le_utah_00004675",
-    "title": "Natural Resources, Agriculture, and Environment Interim Committee materials (DNR Great Salt Lake presentation)",
-    "publisher": "Utah Legislature / Utah DNR",
-    "year": 2022,
-    "url": "https://le.utah.gov/interim/2022/pdf/00004675.pdf",
-    "use": "Checked for lake_jobs_full."
-  },
-  {
     "id": "r_data_bls_49000",
     "title": "Quarterly Census of Employment and Wages, Utah 2024 annual",
     "publisher": "U.S. Bureau of Labor Statistics",
@@ -535,14 +503,6 @@ export const RESEARCH_SOURCES: Source[] = [
     "year": 2024,
     "url": "https://nass.usda.gov/Publications/AgCensus/2022/Full_Report/Volume_1,_Chapter_2_County_Level/Utah/st49_2_024_024.pdf",
     "use": "Checked for hay_acres."
-  },
-  {
-    "id": "r_data_nass_usda_2024_agricultural_statistics",
-    "title": "2024 Utah Agricultural Statistics (Annual Bulletin)",
-    "publisher": "USDA NASS",
-    "year": 2024,
-    "url": "https://data.nass.usda.gov/Statistics_by_State/Utah/Publications/Annual_Statistical_Bulletin/2024-Agricultural-Statistics.pdf",
-    "use": "Evidence for hay_acres."
   },
   {
     "id": "r_utahbusiness_utah_population_projected_reach_o",

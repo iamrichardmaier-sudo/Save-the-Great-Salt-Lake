@@ -167,7 +167,6 @@ export interface SearchSpaceEntry {
 export const SEARCH_SPACE: SearchSpaceEntry[] = [
   { key: 'monitoringM', label: 'Monitoring and verification', min: 0, max: 50 },
   { key: 'leaseToOwnM', label: 'Money for lease-to-own rights', min: 0, max: 100 },
-  { key: 'capitalPricePerAf', label: 'Price of a water right', min: 250, max: 9000 },
   { key: 'scarcityRatePerAf', label: 'Scarcity charge on industry', min: 0, max: 400 },
   { key: 'escalatorOn', label: 'Charge climbs while the lake is short', min: 0, max: 1, boolean: true },
   { key: 'cropLevyPerAf', label: 'Crop levy rate', min: 0, max: 400 },
@@ -195,9 +194,17 @@ export interface OptimiseResult {
   supportScore: number;
 }
 
-/** Score a package: how much water, and how well it survives a legislature. */
+/**
+ * Score a package: how much water, and how well it survives a legislature.
+ *
+ * Water counts half for the long-run addition against the goal and half for how far the lake
+ * actually gets toward the healthy floor plus its margin by the horizon, so a package that
+ * delivers the goal too late to fill the lake scores below one that fills it in time.
+ */
 export function scorePackage(r: PkgResult, waterWeight: number): { score: number; water: number; support: number } {
-  const water = Math.min(1, r.final.netToLakeKaf / Math.max(1, r.goalKaf));
+  const target = V('healthy_min') + 0.5;
+  const progress = (r.final.elevationFt - V('lake_now')) / Math.max(0.01, target - V('lake_now'));
+  const water = 0.5 * Math.min(1, r.final.netToLakeKaf / Math.max(1, r.goalKaf)) + 0.5 * Math.min(1, Math.max(0, progress));
   const support = r.support.weakest.score / 100;
   return { score: waterWeight * water + (1 - waterWeight) * support, water, support };
 }
@@ -232,6 +239,9 @@ export function optimise(
         : entry.min + rand() * (entry.max - entry.min);
       (candidate as unknown as Record<string, number | boolean>)[entry.key as string] = draw;
     }
+    // A token watering ask still raises full fine revenue in the lawn model, which the search
+    // would otherwise exploit as free money for rights. Only a real ask is considered.
+    if (candidate.lawnCutAsked < 0.05) candidate.lawnCutAsked = 0;
     // The budget is fixed by the brief; spending has to fit inside it.
     const spend = candidate.monitoringM + candidate.cloudM + candidate.phragM + candidate.cropSwitchM + candidate.leaseToOwnM;
     if (spend > candidate.budgetM) {

@@ -29,6 +29,8 @@ export interface Verification {
   notes: string;
   confidence: string;
   previous?: { value?: number };
+  /** The value the reviewer accepted, when it was changed. */
+  value?: number;
   extra: { id: string | null; locator: string; quote: string }[];
 }
 
@@ -41,7 +43,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "sourceIds": [
       "r_pubs_usgs_report",
       "r_hydrology_usu_mohammed_tarboton_2012wr011908",
-      "strike_2026",
+      "usu_sims",
       "r_water_utah_gslbip_work_plan_appendix_j_final"
     ],
     "locator": "p.12 (PDF page), section on evaporation",
@@ -56,7 +58,7 @@ export const VERIFICATION: Record<string, Verification> = {
         "quote": "E (m) 1.14 ... Ef (m) 1.29 [mean saline and fresh evaporation depth, 1950-2010]"
       },
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Figure 17 insights, printed p.26 (PDF p.28); source DWR (2025) GSL Water Budget",
         "quote": "Lake evaporation averaged 2,733 KAF per year between 1989-2024"
       },
@@ -76,7 +78,7 @@ export const VERIFICATION: Record<string, Verification> = {
       "r_utahbusiness_study_health_benefits_great_salt",
       "r_audubon_potential_costs_declining_water_levels",
       "weber_wtp",
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Press release on NBER Working Paper w35270 (Harris, Edwards, Hernandez-Cortes), Sept 10 2026",
     "quote": "For every additional acre-foot of water that reaches Great Salt Lake, the authors estimate Utah receives about $600 to $1,800 worth of health benefits from reduced dust pollution alone.",
@@ -95,7 +97,7 @@ export const VERIFICATION: Record<string, Verification> = {
         "quote": "Utahns are collectively willing to pay up to $162 million per year across the state's 1.1 million households"
       },
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "printed p.29",
         "quote": "Additional 800 KAF/year inflow ... the additional inflow needed to fill Great Salt Lake to the minimum healthy lake level (4,198 feet) by 2055"
       }
@@ -107,8 +109,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026",
       "usu_sims",
+      "strike_2025",
       "r_media_audubon_gslwet_impact_report_2025"
     ],
     "locator": "Figure 2, printed p.10 (PDF p.12); source: GSL Distribution Accounting Tool, Utah Division of Water Rights (2025)",
@@ -118,7 +120,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "usu_sims",
+        "id": "strike_2025",
         "locator": "Getting More Water to GSL, PDF p.22",
         "quote": "To date, no Saved Water Change Applications have been received by the State Engineer. ... To date, no Split Season Change Applications have been filed."
       },
@@ -158,8 +160,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "reviewed": false,
     "sourceIds": [
       "r_pubs_usgs_5198",
-      "r_waterrights_utah_final_gsl_distribution_manage",
-      "strike_2026"
+      "state_engineer_dmp",
+      "usu_sims"
     ],
     "locator": "Abstract",
     "quote": "Earlier qualitative interpretation of streamflow data downstream from the reservoir indicated that there could be a transit loss of nearly 10 percent.",
@@ -168,12 +170,12 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "r_waterrights_utah_final_gsl_distribution_manage",
+        "id": "state_engineer_dmp",
         "locator": "Section on accounting, E. Dedicated Water",
         "quote": "plus the corresponding volume of Dedicated Water remaining in the lake from the previous year after deductions for evaporative losses"
       },
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Research, printed p.7",
         "quote": "Water shepherding: A gap analysis identified measurement infrastructure, physical, and administrative barriers to moving dedicated water to Great Salt Lake."
       }
@@ -185,7 +187,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "River Inflow to Great Salt Lake insights, printed p.22 (PDF p.24); repeated printed p.30 with Figure 21 'Average Inflow - 1,665 KAF/year'",
     "quote": "Between 2000 and 2025, inflows averaged 1,665 KAF per year.",
@@ -194,7 +196,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "High",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Figure 20 insights, printed p.30",
         "quote": "No additional inflows from conservation results in a long-term mean lake level of 4,191.1 feet"
       }
@@ -221,7 +223,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Figure 19 insights, printed p.29 (PDF p.31); start level 4,191 ft on Oct 1 2025",
     "quote": "An additional 800 KAF/year of inflow results in a 2034 mean elevation of 4,196.9 feet and a long-term mean elevation of 4,198.0 feet.",
@@ -231,9 +233,10 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 0.12
     },
+    "value": 0.17,
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "printed p.29",
         "quote": "An additional 250 KAF/year of inflow results in a 2034 mean elevation of 4,193.2 feet and a long-term mean elevation of 4,193.8 feet."
       }
@@ -245,8 +248,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "r_news_ucar_rising_temperatures_challenge_salt_l",
-      "strike_2026",
+      "ucar_2013",
+      "usu_sims",
       "r_hydrology_usu_mohammed_tarboton_2012wr011908"
     ],
     "locator": "article body (Bardsley et al. 2013, Salt Lake City watersheds)",
@@ -256,7 +259,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Figure 18 insights, printed p.27",
         "quote": "evaporation is expected to increase as temperatures rise and prior research suggests that increased evaporative loss could overwhelm any additional gains in precipitation"
       },
@@ -273,8 +276,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "r_usu_2a_water_shepherding_salt_lake",
-      "strike_2026"
+      "usu_shepherding",
+      "usu_sims"
     ],
     "locator": "report body",
     "quote": "Utah Water Commissioners on 13 separate distribution systems within the basin actively monitor about 700 total measurement sites",
@@ -283,7 +286,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "printed p.7",
         "quote": "Water shepherding: A gap analysis identified measurement infrastructure, physical, and administrative barriers to moving dedicated water"
       }
@@ -291,21 +294,25 @@ export const VERIFICATION: Record<string, Verification> = {
   },
   "inflow_efficiency": {
     "id": "inflow_efficiency",
-    "verdict": "confirmed",
+    "verdict": "corrected",
     "checked": "2026-10-23",
-    "reviewed": false,
+    "reviewed": true,
     "sourceIds": [
       "r_hydrology_usu_mohammed_tarboton_2012wr011908",
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "para [20], p.4",
     "quote": "Groundwater inflow to the GSL was estimated to be 0.093 km3 (75,000 acre-feet yr-1) [Waddell and Barton, 1980; Loving et al., 2000].",
     "arithmetic": "Groundwater only: 1 + 75/1665 = 1.045. Calibration: (E-P)/eff must be about 1665/685.8k ac = 2.43 ft for 4,191.1 ft. Model 2.52/1.03 = 2.447, giving equilibria of 4,191.0 / 4,193.2 / 4,198.2 ft vs published 4,191.1 / 4,193.7-4,193.8 / 4,198.0.",
-    "notes": "The calibration reproduces the published long-term means to within 0.6 ft, and 1.03 sits in the physically plausible band (groundwater alone gives ~1.045; ungauged tributaries add more). The parameter is collinear with evap_gross and precip_lake.",
+    "notes": "Re-derived after replacing the three area anchors with the USGS 2023 elevation-area table (one-foot steps). The closure factor that best reproduces the Strike Team/USU long-term means (0 -> 4,191.1, +250 -> 4,193.7, +800 -> 4,198.0 ft; Mar 2026 p.30) is 0.933 (RMS error 0.23 ft, against 0.30 ft for the old anchors with 1.03). Below 1 it means some gauged inflow does not reach the open lake (e.g. bay wetlands), within the uncertainty of evaporation depth.",
     "confidence": "Medium",
+    "previous": {
+      "value": 1.03
+    },
+    "value": 0.933,
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Figure 20 insights, printed p.30",
         "quote": "No additional inflows ... 4,191.1 feet ... An additional 250 KAF/year results in ... 4,193.7 feet ... An additional 800 KAF/year results in ... 4,198.0"
       }
@@ -340,7 +347,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "sourceIds": [
       "r_media_audubon_gslwet_impact_report_2025",
       "ag_optimization_2026",
-      "usu_sims"
+      "strike_2025"
     ],
     "locator": "Letter from Executive Director p.2; Water Transactions chart p.6 (64,000 / 69,190 / 72,485 AF in 2023-25, diversion basis; objective 100,000 AF/yr)",
     "quote": "The Trust's voluntary water transactions in 2025 were nearly 72,500 acre-feet of water.",
@@ -350,6 +357,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 200
     },
+    "value": 130,
     "extra": [
       {
         "id": "ag_optimization_2026",
@@ -357,7 +365,7 @@ export const VERIFICATION: Record<string, Verification> = {
         "quote": "58,000 to 168,000 acres of land (depending on the leasing scenario) would need to participate in water leasing to reach a 10% reduction. This would require a herculean effort to enroll and manage leases, and shepherd leased water on this land."
       },
       {
-        "id": "usu_sims",
+        "id": "strike_2025",
         "locator": "PDF p.22",
         "quote": "To date, no Split Season Change Applications have been filed."
       }
@@ -384,8 +392,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026",
-      "r_waterrights_utah_final_gsl_distribution_manage"
+      "usu_sims",
+      "state_engineer_dmp"
     ],
     "locator": "Figure 2, printed p.10 (PDF p.12)",
     "quote": "Figure 2: Water Dedicated and Delivered to Great Salt Lake, in Acre-feet, 2021-2025 ... 149,277 [2024] 163,468 [2025] ... Dedications/deliveries for 2025 are preliminary and are expected to increase upon final calculation.",
@@ -394,7 +402,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Medium",
     "extra": [
       {
-        "id": "r_waterrights_utah_final_gsl_distribution_manage",
+        "id": "state_engineer_dmp",
         "locator": "Table 2, pp.3-5",
         "quote": "13-246 a52152 Great Salt Lake 156,000.0 ... 13-4130 a53322 Great Salt Lake 167.0 120,908.0 ... 15-414 a53468 Great Salt Lake 32,578.0"
       }
@@ -407,7 +415,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "reviewed": true,
     "sourceIds": [
       "ag_optimization_2026",
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Section 5.3.3 Key Modeling Assumptions, p.5-5 (PDF p.32)",
     "quote": "Irrigation upgrades are assumed to occur evenly over 10 years.",
@@ -416,7 +424,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Medium",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Agricultural optimization profile, PDF p.13",
         "quote": "Water leasing, in particular, stands out as a near-term opportunity that can be paired with longer-term infrastructure and management investments"
       }
@@ -428,8 +436,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
+      "strike_2025",
       "usu_sims",
-      "strike_2026",
       "r_water_utah_mi_water_conservation_opportunies_h"
     ],
     "locator": "Figure 7 insights, p.13 (PDF p.15)",
@@ -439,7 +447,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Figure 14 insights, PDF p.27",
         "quote": "Since 2015, residential depletions grew by 26.7%, while the population increased by 16.3%."
       },
@@ -456,8 +464,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
+      "strike_2025",
       "usu_sims",
-      "strike_2026",
       "r_water_utah_mi_water_conservation_opportunities"
     ],
     "locator": "Key issue profile 'Getting More Water to Great Salt Lake', PDF p.22",
@@ -467,7 +475,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Research, PDF p.9",
         "quote": "A gap analysis identified measurement infrastructure, physical, and administrative barriers to moving dedicated water to Great Salt Lake."
       },
@@ -486,7 +494,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "sourceIds": [
       "r_water_utah_mi_water_conservation_opportunities",
       "r_water_utah_cloudseeding2015final",
-      "gsl_commissioner"
+      "r_greatsaltlake_utah"
     ],
     "locator": "Appendix H, Cloud Seeding, p.81; Table H-4 (lists 102,000 as ac-ft/year)",
     "quote": "Current estimates suggest that cloud seeding generated approximately 102,000 ac-ft of additional runoff between 2017 and 2022 at a cost of approximately $3.60 to $7.10 per ac-ft ... These values reflect only cloud seeding efforts conducted within the Great Salt Lake Basin to date, although there is potential to increase the cloud seeding application area.",
@@ -500,7 +508,7 @@ export const VERIFICATION: Record<string, Verification> = {
         "quote": "The sum of estimated average annual increase in runoff for all of the projects is 186,663 acre-feet ... The increase in runoff for the Northern Utah Project is 50,698 acre-feet."
       },
       {
-        "id": "gsl_commissioner",
+        "id": "r_greatsaltlake_utah",
         "locator": "FAQ, 'Is Cloud Seeding effective?'",
         "quote": "Historic cloud seeding evaluations have shown increases in the 6-12% range. However, Utah has modernized and expanded its program ... The goal is to increase precipitation by 15-20%."
       }
@@ -512,7 +520,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "usu_sims",
+      "strike_2025",
       "ag_optimization_2026"
     ],
     "locator": "Key issue profile, PDF p.22",
@@ -562,9 +570,9 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026",
-      "r_greatsaltlake_utah_great_salt_lake_strategic_p",
-      "usu_sims"
+      "usu_sims",
+      "gsl_commissioner",
+      "strike_2025"
     ],
     "locator": "Long-term planning section, p.29 (PDF p.31); Figures 19-20",
     "quote": "Additional 800 KAF/year inflow to the lake from water conservation or other sources. This scenario represents the additional inflow needed to fill Great Salt Lake to the minimum healthy lake level (4,198 feet) by 2055.",
@@ -574,14 +582,15 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 875
     },
+    "value": 800,
     "extra": [
       {
-        "id": "r_greatsaltlake_utah_great_salt_lake_strategic_p",
+        "id": "gsl_commissioner",
         "locator": "PDF p.4; Appendix Table 2, p.38 (471 = contemporary 1,643 kaf/yr inflow; 1,055 = drought 1,059 kaf/yr inflow)",
         "quote": "Filling the lake in 30 years to the low end of the healthy range ... (4,198 feet) – will require between 471,000 and 1,055,000 acre-feet per year of additional water delivered to the lake."
       },
       {
-        "id": "usu_sims",
+        "id": "strike_2025",
         "locator": "Figure 11, p.16 (PDF p.18)",
         "quote": "Additional 770 KAF/year inflow scenario shows the expected inflow needed each year to reach a mean lake elevation of 4,198 feet by 2054."
       }
@@ -593,7 +602,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "usu_sims"
+      "strike_2025"
     ],
     "locator": "Key issue profile, Measurement Funding and Installation, p.21 (PDF p.23)",
     "quote": "The legislature has appropriated $1 million of one-time and $1 million of ongoing funds to install additional measurement infrastructure within the Great Salt Lake Basin ... The US Geological Survey and Bureau of Reclamation invested an additional $3 million in water measurement and analysis in the basin.",
@@ -608,7 +617,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "usu_sims",
+      "strike_2025",
       "r_water_utah_mi_water_conservation_opportunities",
       "r_water_utah_mi_water_conservation_opportunies_h"
     ],
@@ -668,6 +677,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 133
     },
+    "value": 236,
     "extra": [
       {
         "id": "r_nass_usda_iwms",
@@ -713,6 +723,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 2.64
     },
+    "value": 2.4,
     "extra": [
       {
         "id": "r_nass_usda_iwms",
@@ -743,7 +754,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "reviewed": false,
     "sourceIds": [
       "ag_optimization_2026",
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Section 4, p.4-1 (PDF p.21)",
     "quote": "reductions in depletion throughout the Basin do not equate directly to additional flow to the GSL unless that water can be successfully shepherded to the lake.",
@@ -752,7 +763,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Agricultural leasing profile, PDF p.13",
         "quote": "a water lease will likely decrease the total flow in a company's canal, but the company must maintain a minimum flow to ensure water reaches the end of their system."
       }
@@ -920,6 +931,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 186
     },
+    "value": 610,
     "extra": [
       {
         "id": "r_ffsl_utah_gsl_phragmites_strategy_overview_and",
@@ -960,6 +972,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 380
     },
+    "value": 640,
     "extra": [
       {
         "id": "slc_rates_2026",
@@ -1070,7 +1083,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Strike Team Data and Insights Summary Mar 2026, p.12 (Phragmites Management)",
     "quote": "Additional research is needed to quantify water savings from phragmites treatment and refine revegetation strategies.",
@@ -1079,7 +1092,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "p.11",
         "quote": "It is estimated to use twice as much water as native wetland plants."
       }
@@ -1147,7 +1160,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026",
+      "usu_sims",
       "r_water_utah_cloud_seeding_faq_2026",
       "r_digitalcommons_usu_875"
     ],
@@ -1202,7 +1215,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "reviewed": false,
     "sourceIds": [
       "dwr_regional_goals",
-      "strike_2026",
+      "usu_sims",
       "r_rff_conservation_and_distributional_consequenc"
     ],
     "locator": "Table 4-11, PDF p.~46 (report p.38)",
@@ -1212,7 +1225,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "p.25, Updated GSL Basin Water Budget",
         "quote": "New research shows that 91% of outdoor water use is depleted. Previously, it was assumed that 40% of outdoor water use was depleted."
       },
@@ -1338,7 +1351,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "p.25, Updated Great Salt Lake Basin Water Budget (sidebar 'Comparing updated and previous versions')",
     "quote": "When depletions by sector are averaged from 1989-2023, the updated model shows: Total depletions rise by 13.7%.",
@@ -1347,7 +1360,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Medium",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "p.25",
         "quote": "New research shows that 91% of outdoor water use is depleted. Previously, it was assumed that 40% of outdoor water use was depleted."
       }
@@ -1370,6 +1383,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 175
     },
+    "value": 305,
     "extra": [
       {
         "id": "r_extension_usu_alfalfa",
@@ -1395,6 +1409,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 6938
     },
+    "value": 5785,
     "extra": [
       {
         "id": "r_en_wikipedia_list_of_counties_in_utah",
@@ -1421,6 +1436,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 30
     },
+    "value": 24,
     "extra": [
       {
         "id": "dwr_regional_goals",
@@ -1495,6 +1511,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 380
     },
+    "value": 250,
     "extra": [
       {
         "id": "r_gardner_utah_gsl_options_banking",
@@ -1587,6 +1604,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 0.015
     },
+    "value": 0.03,
     "extra": [
       {
         "id": "r_treasurer_utah_20251231_ptif_stats_and_holding",
@@ -1621,7 +1639,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Figure 11 sidebar 'Inflows needed to reach healthy lake elevations', PDF p.24 (report p.4 of section)",
     "quote": "To reach the minimum healthy lake elevation (4,198 feet) by 2055, mean annual inflows would likely need to be ~2,465 KAF. Between 2000 and 2025, inflows averaged 1,665 KAF per year.",
@@ -1637,7 +1655,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "reviewed": false,
     "sourceIds": [
       "r_nybooks_putting_the_lake_to_work_great_salt_la",
-      "strike_2026",
+      "usu_sims",
       "lower_basin_2023"
     ],
     "locator": "article body",
@@ -1647,7 +1665,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "Figure 11 sidebar, PDF p.24",
         "quote": "To reach the minimum healthy lake elevation (4,198 feet) by 2055"
       },
@@ -1714,7 +1732,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "r_le_utah_00004675",
+      "le_interim_2022",
       "gsl_industry_recreation"
     ],
     "locator": "Slide 'Estimated Total Economic Impact' (columns Direct/Indirect/Induced/Total), PDF p.24; figures from Bioeconomics Inc. 2012 (2010 data)",
@@ -1725,6 +1743,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 8650
     },
+    "value": 7706,
     "extra": [
       {
         "id": "gsl_industry_recreation",
@@ -1798,8 +1817,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "r_greatsaltlake_utah_great_salt_lake_strategic_p",
-      "strike_2026"
+      "gsl_commissioner",
+      "usu_sims"
     ],
     "locator": "Strategic Plan p.32 (PDF), Objective 3 leasing actions",
     "quote": "It is estimated that additional funding will be needed to secure (i) 100,000 acre-feet of water (temporary or permanent)",
@@ -1808,7 +1827,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.13, Opportunities and Costs for Agricultural Water Optimization and Leasing",
         "quote": "capable of achieving up to a 10% reduction in agricultural depletions across the basin if widely adopted"
       }
@@ -1820,7 +1839,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Strike 2026 PDF p.24, River Inflow to Great Salt Lake / Figure 11",
     "quote": "Total streamflow from the Bear, Weber, and Jordan rivers dropped below 1,000 KAF in 2021 and 2022 ... Inflows rebounded above 2,000 KAF in 2023 and 2024 but declined to 1,281 KAF in 2025.",
@@ -1830,6 +1849,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 0.35
     },
+    "value": 0.5,
     "extra": []
   },
   "inflow_ar1": {
@@ -1838,7 +1858,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "USGS daily discharge, three gauges summed to water years",
     "quote": "Computed lag-1 autocorrelation of water-year inflow: 1989-2025 r=0.44 (log 0.45); 2000-2025 r=0.15 (log 0.27); 1950-2025 r=0.63 (log 0.60)",
@@ -1847,7 +1867,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Medium",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.31, Planning for an Uncertain Future modelling details",
         "quote": "Each simulation randomly selects annual inflow, precipitation, and evaporation values from the 2000-2025 observations."
       }
@@ -1859,7 +1879,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Strike 2026 PDF p.31; Strike 2025 PDF p.18 ('data to produce 1,000 simulations of potential lake levels for the next 30 years')",
     "quote": "Each scenario results from 1,000 simulations to show the uncertainty associated with each course of action.",
@@ -1874,7 +1894,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "USGS daily discharge summed to water years",
     "quote": "Computed from three-gauge water-year inflow 1950-2025 (mean 1,875 KAF): lowest 20-yr mean 1,374 KAF (WY2003-2022) = 0.73 of long-run mean; lowest 10-yr mean 1,181 (WY2013-2022) = 0.63; lowest 5-yr mean 810 (WY1988-1992) = 0.43",
@@ -1883,7 +1903,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "Low",
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.24, Figure 11 insights",
         "quote": "Between 2000 and 2025, inflows averaged 1,665 KAF per year."
       }
@@ -1932,7 +1952,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "reviewed": true,
     "sourceIds": [
       "r_waterservices_usgs_dv",
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "USGS 10010000 Great Salt Lake at Saltair Boat Harbor, daily mean elevation (62614, ft NGVD29)",
     "quote": "2026-09-30 4189.7 (P); 2026-10-21 4189.7 (P); 2025-09-30 4191.1",
@@ -1942,9 +1962,10 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 4191.1
     },
+    "value": 4189.7,
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.21, Figure 7 section",
         "quote": "Great Salt Lake's south arm finished the 2025 water year at 4,191.1 feet, the third-lowest recorded elevation since 1903."
       }
@@ -1956,8 +1977,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "r_greatsaltlake_utah_great_salt_lake_strategic_p",
-      "usu_sims"
+      "gsl_commissioner",
+      "strike_2025"
     ],
     "locator": "Strategic Plan PDF p.8; also p.24 ('target range for the lake between 4,198-4,205 feet')",
     "quote": "This analysis has determined that the healthy range of the lake for both human and ecological interests is between 4,198 and 4,205 feet above sea level.",
@@ -1966,7 +1987,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "High",
     "extra": [
       {
-        "id": "usu_sims",
+        "id": "strike_2025",
         "locator": "PDF p.10, Figure 1 elevation ranges",
         "quote": "Fill to 4,198 feet in 5 years"
       }
@@ -1978,7 +1999,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "r_greatsaltlake_utah_great_salt_lake_strategic_p"
+      "gsl_commissioner"
     ],
     "locator": "Strategic Plan PDF p.24, Objective 3",
     "quote": "The Commissioner is establishing a target range for the lake between 4,198-4,205 feet, based upon the healthy range for the long-term health of the entire Great Salt Lake using the Great Salt Lake Elevation Matrix.",
@@ -1993,8 +2014,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "r_greatsaltlake_utah_great_salt_lake_strategic_p",
-      "strike_2026"
+      "gsl_commissioner",
+      "usu_sims"
     ],
     "locator": "Strategic Plan PDF p.26, Objective 3 action",
     "quote": "develop a short-term contingency plan to keep the South Arm of the lake from falling below 4,190 feet or hitting a salinity trigger to avoid serious adverse effects",
@@ -2003,12 +2024,12 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "High",
     "extra": [
       {
-        "id": "r_greatsaltlake_utah_great_salt_lake_strategic_p",
+        "id": "gsl_commissioner",
         "locator": "PDF p.25",
         "quote": "to be experiencing serious adverse effects when below 4,192 feet"
       },
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.21",
         "quote": "ended the 2025 water year at 4,191.1 feet, within the “serious adverse effects” range"
       }
@@ -2020,8 +2041,8 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026",
-      "usu_sims"
+      "usu_sims",
+      "strike_2025"
     ],
     "locator": "Strike 2026 PDF p.25 (printed p.22-23), Average Depletion (KAF/year) table, column 2020-2024; source DWR (2025) Great Salt Lake Water Budget",
     "quote": "Total Depletion 2,271 2,155 2,483 2,341 2,270 2,306 2,387",
@@ -2030,7 +2051,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "confidence": "High",
     "extra": [
       {
-        "id": "usu_sims",
+        "id": "strike_2025",
         "locator": "PDF p.15 (printed p.12); old water-budget method, 1989-2023",
         "quote": "They range from a low of 1,800 KAF to a high of 2,600 KAF, averaging 2,217 KAF per year."
       }
@@ -2042,7 +2063,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": false,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Strike 2026 PDF p.25, Average Depletion table, 2020-2024 column (Agriculture 1,551; Agricultural Incidental Losses 33)",
     "quote": "Agriculture - Includes all agricultural water depletions. 1,607 1,425 1,647 1,465 1,395 1,426 1,551",
@@ -2053,25 +2074,29 @@ export const VERIFICATION: Record<string, Verification> = {
   },
   "mi_depletion": {
     "id": "mi_depletion",
-    "verdict": "open",
+    "verdict": "corrected",
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Strike 2026 PDF p.27, Figures 14-15 insights; M&I 640 and minerals 136 from PDF p.25 table (2020-2024)",
     "quote": "Residential lawn watering - In 2024, the watering of residential lawns depleted 408.5 KAF ... In 2024, outdoor depletions accounted for 96.9% of all residential depletions.",
     "arithmetic": "Model: 2,387 - 1,584 - 475 (residential: 409 outdoor + 66 indoor) = 328, which implicitly puts the 27 KAF reservoir evaporation into this category and uses an indoor figure (66) not found in any source. From the source: residential 2024 = 408.5/0.969 = 421.6 KAF (indoor ~13.1). Non-residential M&I = 640 - 421.6 = 218.4; + minerals 136 = 354.4 KAF/yr. Cross-check with the 61% share: 640 x 0.39 = 249.6 + 136 = 385.6.",
-    "notes": "Agent finds 328 appears in no source and proposes ~354 (2020-24 Strike table: 640 M&I - 421.6 residential + 136 minerals). Changing it means restructuring CONSUMERS (which must sum to 2,387) and charge_base together; do it with the tables batch. Minerals there is 152 vs 136 in the current table.",
+    "notes": "Re-opened Strike Team Mar 2026 PDF p.25 (2020-24 column: M&I 640, minerals 136) and p.27 (2024 lawns 408.5 KAF = 96.9% of residential, so residential 421.6). 136 + (640 - 421.6) = 354.4. Year-mixing (2024 residential vs 2020-24 M&I) is covered by the range.",
     "confidence": "Medium",
+    "previous": {
+      "value": 328
+    },
+    "value": 354.4,
     "extra": [
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.27, Figure 14 insights",
         "quote": "[Residential depletions] accounted for 61% of all M&I depletions in 2024."
       },
       {
-        "id": "strike_2026",
+        "id": "usu_sims",
         "locator": "PDF p.27",
         "quote": "depletions from the three mineral companies declined from 186 KAF in 2020 to 77 KAF in 2024."
       }
@@ -2079,17 +2104,21 @@ export const VERIFICATION: Record<string, Verification> = {
   },
   "charge_base": {
     "id": "charge_base",
-    "verdict": "open",
+    "verdict": "corrected",
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "strike_2026"
+      "usu_sims"
     ],
     "locator": "Strike 2026 PDF p.25 Average Depletion table (2020-2024 column), with residential from PDF p.27",
     "quote": "Reservoir - Represents evaporation from reservoirs (does not include Bear or Utah Lakes). 32 9 37 18 23 20 27",
     "arithmetic": "By the model's own definition (all depletion except residential and reservoir evaporation): 2,387 - 27 (reservoir) - 421.6 (residential 2024) = 1,938.4. Equivalently ag 1,584 + corrected mi 354.4 = 1,938.4. Model's 1,584 + 328 = 1,912 is arithmetically consistent with its inputs but its inputs subtract 475 residential and 0 reservoir.",
-    "notes": "Defined as ag_depletion + mi_depletion; follows mi_depletion (agent proposes ~1,938).",
+    "notes": "Follows from mi_depletion: 1,584 + 354.4 = 1,938.4 = 2,387 total - 27 reservoir - 421.6 residential, which matches the definition (everything except residential and reservoir evaporation).",
     "confidence": "Medium",
+    "previous": {
+      "value": 1912
+    },
+    "value": 1938.4,
     "extra": []
   },
   "hay_depletion": {
@@ -2108,6 +2137,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 1055
     },
+    "value": 857,
     "extra": [
       {
         "id": "ag_optimization_2026",
@@ -2124,7 +2154,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "sourceIds": [
       "r_nass_usda_st49_2_024_024",
       "ag_optimization_2026",
-      "r_data_nass_usda_2024_agricultural_statistics"
+      "nass_bulletin_2024"
     ],
     "locator": "2022 Census of Agriculture, Vol.1 Ch.2 County Level, Utah Table 24 'Selected Crops Harvested: 2022', forage rows by county",
     "quote": "Forage - land used for all hay and haylage, grass silage, and greenchop ... Irrigated ... acres",
@@ -2134,6 +2164,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 399500
     },
+    "value": 228000,
     "extra": [
       {
         "id": "ag_optimization_2026",
@@ -2141,7 +2172,7 @@ export const VERIFICATION: Record<string, Verification> = {
         "quote": "Table B-2. Distribution of Great Salt Lake Basin Irrigated Alfalfa and Corn Acreage ... Total ... 353,955"
       },
       {
-        "id": "r_data_nass_usda_2024_agricultural_statistics",
+        "id": "nass_bulletin_2024",
         "locator": "p.15, All Hay table (statewide)",
         "quote": "All Hay: Area Harvested ... 2023 ... 660 (1,000 acres)"
       }
@@ -2186,6 +2217,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 408.5
     },
+    "value": 371,
     "extra": [
       {
         "id": "r_water_utah_water_use_reporting",
@@ -2235,7 +2267,7 @@ export const VERIFICATION: Record<string, Verification> = {
       "r_farmanalysis_usu_factsheet",
       "r_sltrib_should_utah_be_exporting_its",
       "r_nass_usda_st49_2_024_024",
-      "r_data_nass_usda_2024_agricultural_statistics"
+      "nass_bulletin_2024"
     ],
     "locator": "USU hay pricing factsheet, exports paragraph",
     "quote": "The amount of hay exported for Utah has varied between 10% and 20% of production.",
@@ -2254,7 +2286,7 @@ export const VERIFICATION: Record<string, Verification> = {
         "quote": "Forage ... tons, dry equivalent"
       },
       {
-        "id": "r_data_nass_usda_2024_agricultural_statistics",
+        "id": "nass_bulletin_2024",
         "locator": "County estimates, cattle Jan 1 2024 (basin 12 counties = 340,600 head)",
         "quote": "All Cattle & Calves ... 750,000"
       }
@@ -2278,6 +2310,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 1265625
     },
+    "value": 1200000,
     "extra": [
       {
         "id": "weber_wtp",
@@ -2430,6 +2463,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 2.83
     },
+    "value": 2.96,
     "extra": [
       {
         "id": "r_d36oiwf74r1rap_cloudfront_upc_state_and_county",
@@ -2454,6 +2488,7 @@ export const VERIFICATION: Record<string, Verification> = {
     "previous": {
       "value": 0.8
     },
+    "value": 0.86,
     "extra": []
   },
   "industrial_pipeline_jobs": {
@@ -2473,6 +2508,1472 @@ export const VERIFICATION: Record<string, Verification> = {
   }
 };
 
+/** Rows of the side tables (BASELINES, CONSUMERS, VALUE_PER_AF, …) and the source list, keyed `TABLE/row`. */
+export const TABLE_VERIFICATION: Record<string, Verification> = {
+  "BASELINES/recent": {
+    "id": "BASELINES/recent",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usgs_gauges",
+      "usu_sims"
+    ],
+    "locator": "computed from USGS daily values; see arithmetic",
+    "quote": "USGS 10126000 BEAR RIVER NEAR CORINNE, UT ... 00060 00003 ... Discharge, cubic feet per second (Mean)",
+    "arithmetic": "Water-year sums of daily mean discharge x 1.98347 AF per cfs-day, three gauges, complete years 1950-2025 (69 common years). Means: 2000-2025 1,373 KAF; driest 10-yr window 2013-2022 1,181 KAF (0.86); last 20 yrs 2006-2025 1,469 (1.07); 1996-2025 1,573 (1.15); 1950-2025 1,879 (1.37). Ratios are taken against 2000-2025 because the model's baseline_inflow (1,665 KAF) is the Strike Team's 2000-2025 average; the three gauges miss ungauged and minor inflow, so only ratios are used.",
+    "notes": "Recomputed from USGS daily flows (Bear 10126000, Weber 10141000, Jordan 10170490), water years 1950-2025: driest decade 2013-2022 = 0.86 of the 2000-2025 mean. Relabelled; the last 20 years are wetter (1.07) than the base.",
+    "confidence": "Medium",
+    "previous": {
+      "value": 0.88
+    },
+    "value": 0.86,
+    "extra": [
+      {
+        "id": "usu_sims",
+        "locator": "PDF p.24, River Inflow insights",
+        "quote": "Total streamflow from the Bear, Weber, and Jordan rivers dropped below 1,000 KAF in 2021 and 2022—the lowest levels since 2004."
+      }
+    ]
+  },
+  "BASELINES/thirty": {
+    "id": "BASELINES/thirty",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.24 (printed p.22) River Inflow insights; repeated p.30",
+    "quote": "Between 2000 and 2025, inflows averaged 1,665 KAF per year.",
+    "arithmetic": "",
+    "notes": "Value unchanged; label corrected to the 2000-2025 average the Strike Team states (p.24, p.30).",
+    "confidence": "High",
+    "value": 1,
+    "extra": []
+  },
+  "BASELINES/long": {
+    "id": "BASELINES/long",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usgs_gauges",
+      "strike_2025"
+    ],
+    "locator": "computed from USGS daily values; see arithmetic",
+    "quote": "USGS 10126000 BEAR RIVER NEAR CORINNE, UT ... 00060 00003 ... Discharge, cubic feet per second (Mean)",
+    "arithmetic": "Water-year sums of daily mean discharge x 1.98347 AF per cfs-day, three gauges, complete years 1950-2025 (69 common years). Means: 2000-2025 1,373 KAF; driest 10-yr window 2013-2022 1,181 KAF (0.86); last 20 yrs 2006-2025 1,469 (1.07); 1996-2025 1,573 (1.15); 1950-2025 1,879 (1.37). Ratios are taken against 2000-2025 because the model's baseline_inflow (1,665 KAF) is the Strike Team's 2000-2025 average; the three gauges miss ungauged and minor inflow, so only ratios are used.",
+    "notes": "Recomputed from the same gauges: 1950-2025 mean = 1.37 of the 2000-2025 mean.",
+    "confidence": "Medium",
+    "previous": {
+      "value": 1.09
+    },
+    "value": 1.37,
+    "extra": [
+      {
+        "id": "strike_2025",
+        "locator": "PDF p.15 (printed p.12), River Inflow to Great Salt Lake",
+        "quote": "Inflows are highly variable, but have generally declined since 1900."
+      }
+    ]
+  },
+  "BASELINES/warming": {
+    "id": "BASELINES/warming",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "ucar_2013",
+      "usu_sims"
+    ],
+    "locator": "article body (Bardsley et al. 2013, Salt Lake City watersheds)",
+    "quote": "the stream flow would decline by 1.8 to 6.5 percent for each degree of temperature rise, with an average reduction of 3.8 percent",
+    "arithmetic": "An 18% cut (0.82) equals about 4.7 F of warming at the 3.8%/F average, or 2.8 F at the 6.5%/F high end.",
+    "notes": "An assumption with published bounds: 0.82 sits at the dry end of what the per-degree sensitivity gives for mid-century warming. Strike 2026 adds that headwater streamflow fell below average in 19 of 26 years since 2000. Note it overlaps streamflow_decline_2055; do not use both.",
+    "confidence": "Low",
+    "extra": [
+      {
+        "id": "usu_sims",
+        "locator": "PDF p.23 (printed p.21), Figure 10 insights",
+        "quote": "Since 2000, headwater streamflow fell below average in 19 out of 26 years."
+      }
+    ]
+  },
+  "CONSUMERS/hay": {
+    "id": "CONSUMERS/hay",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "ag_optimization_2026"
+    ],
+    "locator": "Section 2.5, Figure 2-5 (report p.2-6, PDF p.17); Table 2-3 total",
+    "quote": "Most agricultural irrigated lands (by area and depletion volume) in GSL Basin are in Hay/Turf crop group ... nearly all the depletions in this category are alfalfa and grass hay.",
+    "arithmetic": "Figure 2-5 bars read at about 665, 1,000, 1,015, 885 and 720 KAF for 2019-2023 (mean ~857); Table 2-3 total ag depletion mean 1,324 KAF. Share 857/1,324 = 0.647. Applied to the Strike Team's 1,584 KAF (agriculture 1,551 + incidental 33): 0.647 x 1,584 = 1,025.",
+    "notes": "Ag Water Optimization report Figure 2-5 (hay/turf ~857 of 1,324 KAF, 2019-23) re-read from the rendered page: share 0.647 x 1,584 = 1,025.",
+    "confidence": "Medium",
+    "previous": {
+      "value": 1055
+    },
+    "value": 1025,
+    "extra": []
+  },
+  "CONSUMERS/other_crops": {
+    "id": "CONSUMERS/other_crops",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.25 (printed p.23), Average Depletion (KAF/year) table, column 2020-2024: Agriculture 1,551; Reservoir 27; Agricultural incidental losses 33; M&I 640; GSL mineral extraction 136",
+    "quote": "Agriculture - Includes all agricultural water depletions. 1,607 1,425 1,647 1,465 1,395 1,426 1,551",
+    "arithmetic": "1,584 (agriculture 1,551 + incidental losses 33) - 1,025 hay = 559.",
+    "notes": "1,584 - 1,025.",
+    "confidence": "Medium",
+    "previous": {
+      "value": 529
+    },
+    "value": 559,
+    "extra": []
+  },
+  "CONSUMERS/minerals": {
+    "id": "CONSUMERS/minerals",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.25 (printed p.23), Average Depletion (KAF/year) table, column 2020-2024: Agriculture 1,551; Reservoir 27; Agricultural incidental losses 33; M&I 640; GSL mineral extraction 136",
+    "quote": "Total Depletion 2,271 2,155 2,483 2,341 2,270 2,306 2,387",
+    "arithmetic": "GSL mineral extraction, 2020-2024 average: 136 KAF.",
+    "notes": "Strike Team Mar 2026 p.25 table, 2020-24 column.",
+    "confidence": "High",
+    "previous": {
+      "value": 152
+    },
+    "value": 136,
+    "extra": [
+      {
+        "id": "usu_sims",
+        "locator": "PDF p.27, Figure 16 insights",
+        "quote": "Since 2020, depletions from the three mineral companies declined from 186 KAF in 2020 to 77 KAF in 2024."
+      }
+    ]
+  },
+  "CONSUMERS/industry": {
+    "id": "CONSUMERS/industry",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.27 (printed p.25), Figures 14-15 insights; M&I 640 from PDF p.25 table",
+    "quote": "In 2024, the watering of residential lawns depleted 408.5 KAF ... In 2024, outdoor depletions accounted for 96.9% of all residential depletions.",
+    "arithmetic": "Residential 2024 = 408.5 / 0.969 = 421.6 KAF. Non-residential M&I = 640 (2020-24 M&I) - 421.6 = 218.4 KAF.",
+    "notes": "640 M&I - 421.6 residential (Strike Team Mar 2026 p.25 and p.27).",
+    "confidence": "Medium",
+    "previous": {
+      "value": 176
+    },
+    "value": 218.4,
+    "extra": []
+  },
+  "CONSUMERS/residential_out": {
+    "id": "CONSUMERS/residential_out",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.27 (printed p.25), Figures 14-15 insights",
+    "quote": "In 2024, the watering of residential lawns depleted 408.5 KAF ... In 2024, outdoor depletions accounted for 96.9% of all residential depletions.",
+    "arithmetic": "408.5 KAF residential lawn watering, 2024.",
+    "notes": "Strike Team Mar 2026 p.27: 408.5 KAF in 2024 (model rounded to 409).",
+    "confidence": "High",
+    "previous": {
+      "value": 409
+    },
+    "value": 408.5,
+    "extra": []
+  },
+  "CONSUMERS/residential_in": {
+    "id": "CONSUMERS/residential_in",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.27 (printed p.25), Figures 14-15 insights",
+    "quote": "In 2024, the watering of residential lawns depleted 408.5 KAF ... In 2024, outdoor depletions accounted for 96.9% of all residential depletions.",
+    "arithmetic": "421.6 x (1 - 0.969) = 13.1 KAF.",
+    "notes": "421.6 x 3.1% (Strike Team Mar 2026 p.27: outdoor is 96.9% of residential).",
+    "confidence": "Medium",
+    "previous": {
+      "value": 66
+    },
+    "value": 13.1,
+    "extra": []
+  },
+  "CONSUMERS/reservoir": {
+    "id": "CONSUMERS/reservoir",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.25 (printed p.23), Average Depletion (KAF/year) table, column 2020-2024: Agriculture 1,551; Reservoir 27; Agricultural incidental losses 33; M&I 640; GSL mineral extraction 136",
+    "quote": "Reservoir - Represents evaporation from reservoirs (does not include Bear or Utah Lakes). 32 9 37 18 23 20 27",
+    "arithmetic": "",
+    "notes": "New row: reservoir evaporation 27 KAF, 2020-24 (Strike Team Mar 2026 p.25). CONSUMERS now sums to 2,387.0.",
+    "confidence": "High",
+    "previous": {},
+    "value": 27,
+    "extra": []
+  },
+  "STAKEHOLDERS/farmers": {
+    "id": "STAKEHOLDERS/farmers",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "farm_bureau_2026"
+    ],
+    "locator": "p.2-3, HB 410 summary",
+    "quote": "The board is directed to favor senior adjudicated rights and generally limits leased water to no more than two full irrigation seasons in any five-year period on the same field",
+    "arithmetic": "",
+    "notes": "The weights (wBought, wLake, wFarm, wCost, base) are the model's own judgement; no poll measures them. Only the facts in the basis line are checked. The Farm Bureau backs voluntary leasing with field limits, consistent with weighting bought water and farm income. Corrected citation: the homepage is replaced by the April 8, 2026 update.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "STAKEHOLDERS/rural": {
+    "id": "STAKEHOLDERS/rural",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "deseret_2026"
+    ],
+    "locator": "article body",
+    "quote": "Rural (88%) and suburban residents (89%) were more likely to be somewhat or very concerned about the issue than urban residents (81%).",
+    "arithmetic": "",
+    "notes": "The weights (wBought, wLake, wFarm, wCost, base) are the model's own judgement; no poll measures them. Only the facts in the basis line are checked. The 88% is from Deseret/Hinckley, not Noble: citation should include deseret_2026.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "STAKEHOLDERS/metro": {
+    "id": "STAKEHOLDERS/metro",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "weber_wtp"
+    ],
+    "locator": "article body",
+    "quote": "Those who were moderately sure their financial contributions would make a difference were willing to pay between $113 and $144 per household each year.",
+    "arithmetic": "",
+    "notes": "The weights (wBought, wLake, wFarm, wCost, base) are the model's own judgement; no poll measures them. Only the facts in the basis line are checked. $113-144 applies to respondents moderately sure their money would make a difference, not all households. 'Hard no on penalties': Deseret/Hinckley March 2026, 22% favoured restrictions with penalties.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "STAKEHOLDERS/commerce": {
+    "id": "STAKEHOLDERS/commerce",
+    "verdict": "no evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "The weights (wBought, wLake, wFarm, wCost, base) are the model's own judgement; no poll measures them. Only the facts in the basis line are checked. No published statement of the Office of Commerce's priorities was found; BEA GDP gives the industrial context only.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "STAKEHOLDERS/rep": {
+    "id": "STAKEHOLDERS/rep",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "deseret_2026",
+      "noble_2026"
+    ],
+    "locator": "article body",
+    "quote": "Democrats (78%) were significantly more likely to be very concerned about the lake's water levels than Republicans (36%).",
+    "arithmetic": "",
+    "notes": "The weights (wBought, wLake, wFarm, wCost, base) are the model's own judgement; no poll measures them. Only the facts in the basis line are checked. 36% confirmed. The 81% federal-package support is Noble's figure for all voters, not Republicans specifically; a party breakdown was not opened.",
+    "confidence": "Low",
+    "extra": [
+      {
+        "id": "noble_2026",
+        "locator": "press release body",
+        "quote": "81% support Congress approving the proposed $1 billion federal funding package to restore and protect the lake."
+      }
+    ]
+  },
+  "STAKEHOLDERS/dem": {
+    "id": "STAKEHOLDERS/dem",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "deseret_2026"
+    ],
+    "locator": "article body",
+    "quote": "Democrats (78%) were significantly more likely to be very concerned about the lake's water levels than Republicans (36%).",
+    "arithmetic": "",
+    "notes": "The weights (wBought, wLake, wFarm, wCost, base) are the model's own judgement; no poll measures them. Only the facts in the basis line are checked. 78% confirmed.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/hay": {
+    "id": "VALUE_PER_AF/hay",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "nass_bulletin_2024"
+    ],
+    "locator": "All Hay and Alfalfa Hay tables, Area Harvested, Yield, Production, Price & Value, p.15",
+    "quote": "2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120",
+    "arithmetic": "All hay 2019-2023: value $2,699.8M over 3,430k harvested acres = $787/acre. Depletion per acre 2.15-2.41 AF (Ag Optimization report hay/turf ~857 KAF over 355,000 alfalfa acres plus grass hay). $787 / 2.41 = $326; $787 / 2.15 = $366. Alfalfa alone ($895/acre) gives up to $415.",
+    "notes": "NASS Utah Annual Bulletin 2024 p.15 re-opened: all hay 2019-23 value $2,699.8M on 3,430k acres = $787/acre; / 2.15-2.41 AF depleted per acre = $326-366.",
+    "confidence": "Medium",
+    "previous": {
+      "value": 245
+    },
+    "value": 345,
+    "extra": []
+  },
+  "VALUE_PER_AF/all_ag": {
+    "id": "VALUE_PER_AF/all_ag",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "nass_bulletin_2024"
+    ],
+    "locator": "Farm Income: Cash Receipts by Commodity, Utah 2017-2022, p.9",
+    "quote": "All Commodities ... 1,756,881 1,787,409 1,994,804 2,719,151",
+    "arithmetic": "2019-2022 statewide receipts average $2,064.6M / 1,584 KAF basin ag depletion = $1,303/AF; 2017-18 receipts give about $1,100.",
+    "notes": "Not reproduced. The ratio divides statewide receipts by basin-only depletion, which overstates it; statewide agricultural depletion was not opened. Left unchanged and flagged.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/minerals": {
+    "id": "VALUE_PER_AF/minerals",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "le_interim_2022"
+    ],
+    "locator": "'Estimated Total Economic Impact' slide, Total Economic Output (millions of 2010 $)",
+    "quote": "Industrial Sector (Mineral) 685.2 217.7 227.9 1,130.8",
+    "arithmetic": "$1,130.8M total output (2010 $) / 136 KAF (2020-24 mineral depletion) = $8,315/AF. With 2024's 77 KAF it would be $14,700.",
+    "notes": "le.utah.gov interim 2022 slide re-opened: mineral sector total output $1,130.8M (2010 $) / 136 KAF.",
+    "confidence": "Medium",
+    "previous": {
+      "value": 8140
+    },
+    "value": 8315,
+    "extra": []
+  },
+  "VALUE_PER_AF/nuclear_wet": {
+    "id": "VALUE_PER_AF/nuclear_wet",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "macknick_2012"
+    ],
+    "locator": "Table 2, water consumption factors for non-renewable technologies (gal/MWh)",
+    "quote": "Nuclear Tower Generic 672 581 845",
+    "arithmetic": "672 gal/MWh / 325,851 gal/AF = 0.00206 AF/MWh. $27,000/AF x 0.00206 = $55.7/MWh implied generation value.",
+    "notes": "Water factor confirmed; the implied ~$56/MWh price is an assumption (no price source in the model).",
+    "confidence": "Medium",
+    "extra": []
+  },
+  "VALUE_PER_AF/nuclear_dry": {
+    "id": "VALUE_PER_AF/nuclear_dry",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "macknick_2012"
+    ],
+    "locator": "Table 2 (natural gas combined-cycle, dry cooling)",
+    "quote": "Dry Combined cycle 2 0 4",
+    "arithmetic": "$8.4M/AF at ~$52/MWh implies ~2 gal/MWh, the combined-cycle dry-cooling factor.",
+    "notes": "Macknick has no nuclear dry-cooling factor (no US nuclear plant is dry-cooled); the value borrows the gas figure. Treat as illustrative.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/dc_evap": {
+    "id": "VALUE_PER_AF/dc_evap",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "BEA publishes no per-facility output or water use. No published per-100 MW evaporative data-centre water figure was opened.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/dc_closed": {
+    "id": "VALUE_PER_AF/dc_closed",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "As dc_evap.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/meta": {
+    "id": "VALUE_PER_AF/meta",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "Meta states only that annual water use will be below a typical regional golf course; no acre-foot volume or output figure is published. Searched Meta, Eagle Mountain and news coverage.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/tooele": {
+    "id": "VALUE_PER_AF/tooele",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "No announced output or water volume opened for the Tooele fuel-cycle campus (DOE MOU stage).",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/qts": {
+    "id": "VALUE_PER_AF/qts",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "QTS describes closed-loop cooling with a one-time fill; no annual volume is published.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "VALUE_PER_AF/institutional": {
+    "id": "VALUE_PER_AF/institutional",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp",
+      "dwr_regional_goals"
+    ],
+    "locator": "BEA SAGDP2 (GDP in current dollars), Utah, 2025, downloaded from apps.bea.gov/regional/zip/SAGDP.zip, line 83",
+    "quote": "Government and government enterprises ... 33,076.6",
+    "arithmetic": "DWR 2019 Figure 4-1 statewide M&I use by type (2015): commercial 14%, institutional 13%, industrial 3% (30% non-residential). Applied to 218.4 KAF non-residential M&I depletion: commercial 101.9, institutional 94.6, industrial 21.8 KAF. $33,076.6M / 94.6 KAF = $350k/AF.",
+    "notes": "Reproduced within 1%. Statewide GDP over basin depletion (basin holds ~86% of residents); use shares stand in for depletion shares.",
+    "confidence": "Medium",
+    "extra": [
+      {
+        "id": "dwr_regional_goals",
+        "locator": "Figure 4-1, p.15",
+        "quote": "Commercial 34 gpcd (14%) ... Institutional 32 gpcd (13%) ... Industrial 6 gpcd (3%)"
+      }
+    ]
+  },
+  "VALUE_PER_AF/manufacturing": {
+    "id": "VALUE_PER_AF/manufacturing",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp",
+      "dwr_regional_goals"
+    ],
+    "locator": "BEA SAGDP2 (GDP in current dollars), Utah, 2025, downloaded from apps.bea.gov/regional/zip/SAGDP.zip, line 12",
+    "quote": "Manufacturing ... 29,650.4",
+    "arithmetic": "DWR 2019 Figure 4-1 statewide M&I use by type (2015): commercial 14%, institutional 13%, industrial 3% (30% non-residential). Applied to 218.4 KAF non-residential M&I depletion: commercial 101.9, institutional 94.6, industrial 21.8 KAF. $29,650.4M / 21.8 KAF = $1.36M/AF.",
+    "notes": "Reproduced within 5%. Same caveats as institutional.",
+    "confidence": "Medium",
+    "extra": [
+      {
+        "id": "dwr_regional_goals",
+        "locator": "Figure 4-1, p.15",
+        "quote": "Commercial 34 gpcd (14%) ... Institutional 32 gpcd (13%) ... Industrial 6 gpcd (3%)"
+      }
+    ]
+  },
+  "VALUE_PER_AF/commercial": {
+    "id": "VALUE_PER_AF/commercial",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp",
+      "dwr_regional_goals"
+    ],
+    "locator": "BEA SAGDP2 (GDP in current dollars), Utah, 2025, downloaded from apps.bea.gov/regional/zip/SAGDP.zip, line 92",
+    "quote": "Private services-providing industries ... 224,941.2",
+    "arithmetic": "DWR 2019 Figure 4-1 statewide M&I use by type (2015): commercial 14%, institutional 13%, industrial 3% (30% non-residential). Applied to 218.4 KAF non-residential M&I depletion: commercial 101.9, institutional 94.6, industrial 21.8 KAF. $224,941.2M / 101.9 KAF = $2.21M/AF.",
+    "notes": "Reproduced within 10% (2.2M vs 2.4M); same caveats.",
+    "confidence": "Medium",
+    "extra": [
+      {
+        "id": "dwr_regional_goals",
+        "locator": "Figure 4-1, p.15",
+        "quote": "Commercial 34 gpcd (14%) ... Institutional 32 gpcd (13%) ... Industrial 6 gpcd (3%)"
+      }
+    ]
+  },
+  "WATERING_MONTHS/Jan": {
+    "id": "WATERING_MONTHS/Jan",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0 in / 20.19 in = 0.000",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Feb": {
+    "id": "WATERING_MONTHS/Feb",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0 in / 20.19 in = 0.000",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Mar": {
+    "id": "WATERING_MONTHS/Mar",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0 in / 20.19 in = 0.000",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Apr": {
+    "id": "WATERING_MONTHS/Apr",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0.71 in / 20.19 in = 0.035",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/May": {
+    "id": "WATERING_MONTHS/May",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "2.4 in / 20.19 in = 0.119",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Jun": {
+    "id": "WATERING_MONTHS/Jun",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "4.31 in / 20.19 in = 0.213",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Jul": {
+    "id": "WATERING_MONTHS/Jul",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "5.12 in / 20.19 in = 0.254",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Aug": {
+    "id": "WATERING_MONTHS/Aug",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "4.52 in / 20.19 in = 0.224",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Sep": {
+    "id": "WATERING_MONTHS/Sep",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "2.4 in / 20.19 in = 0.119",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Oct": {
+    "id": "WATERING_MONTHS/Oct",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0.73 in / 20.19 in = 0.036",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Nov": {
+    "id": "WATERING_MONTHS/Nov",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0 in / 20.19 in = 0.000",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "WATERING_MONTHS/Dec": {
+    "id": "WATERING_MONTHS/Dec",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_consumptive_use"
+    ],
+    "locator": "Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254",
+    "quote": "Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73",
+    "arithmetic": "0 in / 20.19 in = 0.000",
+    "notes": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use.",
+    "confidence": "High",
+    "extra": []
+  },
+  "AREA_ANCHORS/4188.5": {
+    "id": "AREA_ANCHORS/4188.5",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usgs_fogsl_area"
+    ],
+    "locator": "Great_Salt_Lake_2023_ElevAreaVolume_total.csv, row elev_ft_NGVD29 = 4188.50",
+    "quote": "4188.5 (NGVD29) -> 894 sq mi",
+    "arithmetic": "",
+    "notes": "USGS table: 894 sq mi (model 888).",
+    "confidence": "High",
+    "previous": {
+      "value": 888
+    },
+    "value": 894,
+    "extra": []
+  },
+  "AREA_ANCHORS/4200": {
+    "id": "AREA_ANCHORS/4200",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usgs_fogsl_area"
+    ],
+    "locator": "same table, row 4200.00",
+    "quote": "4200.00 (NGVD29) -> 1,602.3 sq mi",
+    "arithmetic": "",
+    "notes": "USGS 2023 elevation-area-volume table (total), NGVD29 4200.00 -> 1,602.3 sq mi. All anchors replaced by the table at one-foot steps, 4,180-4,211.5 ft.",
+    "confidence": "High",
+    "previous": {
+      "value": 1700
+    },
+    "value": 1602.3,
+    "extra": []
+  },
+  "AREA_ANCHORS/4211.6": {
+    "id": "AREA_ANCHORS/4211.6",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usgs_fogsl_area"
+    ],
+    "locator": "same table, last row",
+    "quote": "4211.52 (NGVD29) -> 2,229.1 sq mi (table maximum, 4,215.00 NAVD88)",
+    "arithmetic": "",
+    "notes": "USGS table maximum (4,211.52 ft NGVD29) = 2,229.1 sq mi.",
+    "confidence": "High",
+    "previous": {
+      "value": 2300
+    },
+    "value": 2229.1,
+    "extra": []
+  },
+  "USU_VALIDATION/250": {
+    "id": "USU_VALIDATION/250",
+    "verdict": "corrected",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "PDF p.32 (printed p.30), Figure 20 insights",
+    "quote": "An additional 250 KAF/year results in a long-term mean lake level of 4,193.7 feet",
+    "arithmetic": "",
+    "notes": "Strike Team Mar 2026 p.30: \"An additional 250 KAF/year results in a long-term mean lake level of 4,193.7 feet\".",
+    "confidence": "High",
+    "previous": {
+      "value": 4193.8
+    },
+    "value": 4193.7,
+    "extra": []
+  },
+  "LEGAL/hb410_field_rotation": {
+    "id": "LEGAL/hb410_field_rotation",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "hb410_enrolled",
+      "gsl_faq"
+    ],
+    "locator": "Utah Code 73-34-302(1)(b), enrolled H.B. 410 lines 421-422",
+    "quote": "(b) if for a full irrigation season, no more than two years out of a five-year period on the same agricultural field.",
+    "arithmetic": "",
+    "notes": "Applies to leases by the new board; it does not cover purchased rights, as the model assumes.",
+    "confidence": "High",
+    "extra": [
+      {
+        "id": "gsl_faq",
+        "locator": "Water Rights & Leasing",
+        "quote": "Full-season leasing will be limited to no more than two of every five years."
+      }
+    ]
+  },
+  "LEGAL/water_right_severance": {
+    "id": "LEGAL/water_right_severance",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "utah_water_right_title"
+    ],
+    "locator": "'What are the methods of water right conveyance?'",
+    "quote": "In Utah, water rights can be owned and transferred separately from the land upon which they are used.",
+    "arithmetic": "",
+    "notes": "",
+    "confidence": "High",
+    "extra": [
+      {
+        "id": "utah_water_right_title",
+        "locator": "same page",
+        "quote": "a change application will need to be filed with and approved by the State Engineer to authorize such alterations."
+      }
+    ]
+  },
+  "LEGAL/basin_curtailment_authority": {
+    "id": "LEGAL/basin_curtailment_authority",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "state_engineer_dmp"
+    ],
+    "locator": "Priority schedule table (curtailment of in-lake rights by lake elevation)",
+    "quote": "All Great Salt Lake water rights curtailed",
+    "arithmetic": "",
+    "notes": "The plan curtails only rights that divert from the lake itself, by priority and lake level; it has no basin-wide authority over upstream diverters. Supports 'not current law'.",
+    "confidence": "Medium",
+    "extra": []
+  },
+  "LEGAL/consumed_water_charge": {
+    "id": "LEGAL/consumed_water_charge",
+    "verdict": "no evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "state_engineer_dmp"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "No Utah statute charging consumed water was found; absence cannot be quoted. Searched Utah Code Title 73 references in the opened sources.",
+    "confidence": "Medium",
+    "extra": []
+  },
+  "LEGAL/saved_water_shepherding": {
+    "id": "LEGAL/saved_water_shepherding",
+    "verdict": "evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "usu_shepherding"
+    ],
+    "locator": "Takeaway",
+    "quote": "Water conservation could benefit the Great Salt Lake if the water is carefully measured and tracked through rivers, canals, and other water pathways within the basin—a practice that will require adequate measurement and real-time information sharing.",
+    "arithmetic": "",
+    "notes": "Supports shepherding being a capacity still to build. Corrected citation: state_engineer_dmp homepage does not say this.",
+    "confidence": "Medium",
+    "extra": []
+  },
+  "LEGAL/state_held_water_insulated": {
+    "id": "LEGAL/state_held_water_insulated",
+    "verdict": "no evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "gsl_commissioner"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "No statute insulating state-held lake water from later M&I re-diversion was found in the opened sources.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "LEGAL/compulsory_acquisition": {
+    "id": "LEGAL/compulsory_acquisition",
+    "verdict": "no evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "farm_bureau_2026"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "No condemnation power for water rights for the lake was found; the 2026 session bills are voluntary.",
+    "confidence": "Medium",
+    "extra": []
+  },
+  "LEGAL/residential_penalties": {
+    "id": "LEGAL/residential_penalties",
+    "verdict": "no evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "dwr_regional_goals"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "Watering limits are local ordinances; no statewide civil-penalty statute was found.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "LEGAL/elevation_triggered_sunsets": {
+    "id": "LEGAL/elevation_triggered_sunsets",
+    "verdict": "no evidence",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "gsl_commissioner"
+    ],
+    "locator": "",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "The only elevation-triggered mechanism found is the State Engineer's curtailment of in-lake rights (DMP), not a charge.",
+    "confidence": "Low",
+    "extra": []
+  },
+  "SOURCES/dwr_gsl": {
+    "id": "SOURCES/dwr_gsl",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "dwr_gsl"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/strike_2025": {
+    "id": "SOURCES/strike_2025",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "strike_2025"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/strike_2026": {
+    "id": "SOURCES/strike_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/strike_update": {
+    "id": "SOURCES/strike_update",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "strike_update"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/usu_sims": {
+    "id": "SOURCES/usu_sims",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usu_sims"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/dwr_regional_goals": {
+    "id": "SOURCES/dwr_regional_goals",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "dwr_regional_goals"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/gardner_proj": {
+    "id": "SOURCES/gardner_proj",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "gardner_proj"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/nass_utah": {
+    "id": "SOURCES/nass_utah",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "nass_utah"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/nass_iwms_2023": {
+    "id": "SOURCES/nass_iwms_2023",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "nass_iwms_2023"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/usgs_fogsl_area": {
+    "id": "SOURCES/usgs_fogsl_area",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "usgs_fogsl_area"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/bea_gdp": {
+    "id": "SOURCES/bea_gdp",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "bea_gdp"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/dws_jobs": {
+    "id": "SOURCES/dws_jobs",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "dws_jobs"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/dws_wages": {
+    "id": "SOURCES/dws_wages",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "dws_wages"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/noble_2026": {
+    "id": "SOURCES/noble_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "noble_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/deseret_2026": {
+    "id": "SOURCES/deseret_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "deseret_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/weber_wtp": {
+    "id": "SOURCES/weber_wtp",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "weber_wtp"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/gsl_industry_recreation": {
+    "id": "SOURCES/gsl_industry_recreation",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "gsl_industry_recreation"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/gsl_dust_mitigation_2026": {
+    "id": "SOURCES/gsl_dust_mitigation_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "gsl_dust_mitigation_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/farm_bureau_2026": {
+    "id": "SOURCES/farm_bureau_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "farm_bureau_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/scpp_aspen": {
+    "id": "SOURCES/scpp_aspen",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "scpp_aspen"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "Rate-limited (HTTP 429); KJZZ reprint opened instead in batch b3.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/irrigation_elasticity_meta": {
+    "id": "SOURCES/irrigation_elasticity_meta",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "irrigation_elasticity_meta"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "Publisher blocks bots (HTTP 403); abstract read via EarthRef in batch b2.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/epa_conservation_guidelines": {
+    "id": "SOURCES/epa_conservation_guidelines",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "epa_conservation_guidelines"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/epa_drought_response": {
+    "id": "SOURCES/epa_drought_response",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "epa_drought_response"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/finley_2020": {
+    "id": "SOURCES/finley_2020",
+    "verdict": "unsupported",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "finley_2020"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "Publisher blocks bots (HTTP 403).",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/slc_rates_2026": {
+    "id": "SOURCES/slc_rates_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "slc_rates_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/dwr_mi_reporting": {
+    "id": "SOURCES/dwr_mi_reporting",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "dwr_mi_reporting"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/lower_basin_2023": {
+    "id": "SOURCES/lower_basin_2023",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "lower_basin_2023"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/ag_optimization_2026": {
+    "id": "SOURCES/ag_optimization_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "ag_optimization_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/macknick_2012": {
+    "id": "SOURCES/macknick_2012",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "macknick_2012"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/state_engineer_dmp": {
+    "id": "SOURCES/state_engineer_dmp",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "state_engineer_dmp"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/hb410_2026": {
+    "id": "SOURCES/hb410_2026",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "hb410_2026"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/gsl_faq": {
+    "id": "SOURCES/gsl_faq",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "gsl_faq"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/utah_water_right_title": {
+    "id": "SOURCES/utah_water_right_title",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": false,
+    "sourceIds": [
+      "utah_water_right_title"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL opened 2026-10-23 (HTTP 200); title and publisher match.",
+    "confidence": "High",
+    "extra": []
+  },
+  "SOURCES/gsl_commissioner": {
+    "id": "SOURCES/gsl_commissioner",
+    "verdict": "confirmed",
+    "checked": "2026-10-23",
+    "reviewed": true,
+    "sourceIds": [
+      "gsl_commissioner"
+    ],
+    "locator": "page opened",
+    "quote": "",
+    "arithmetic": "",
+    "notes": "URL or title corrected in src/sources.ts after opening the page.",
+    "confidence": "High",
+    "extra": []
+  }
+};
+
 export function verification(id: string): Verification | undefined {
-  return VERIFICATION[id];
+  return VERIFICATION[id] ?? TABLE_VERIFICATION[id];
 }

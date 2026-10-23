@@ -1,16 +1,16 @@
 /**
  * Write the year-by-year budget to research/budget-schedule.csv and print it as a table.
  *
- * Run with `npm run schedule`. Built on the package the optimiser picks at the page's default
- * weighting, the package that reaches the healthy floor by the horizon. Every year spends the
- * whole budget.
+ * Run with `npm run schedule`. Built on the page's default package, the one `npm run goal-search`
+ * found to reach the healthy floor with its margin by the horizon. Every year spends the whole
+ * budget.
  */
 
 import { writeFileSync } from 'node:fs';
 import { LEVERS, fullSpendSchedule, type ScheduleRow } from '../src/schedule';
-import { optimise } from '../src/simulate';
+import { DEFAULT_DIALS } from '../src/model';
 
-const base = optimise(0.6, { tries: 1000, seed: 424242 }).dials;
+const base = DEFAULT_DIALS;
 const s = fullSpendSchedule(base);
 
 const m = (v: number) => v.toFixed(2);

@@ -82,7 +82,8 @@ describe('the page holds together at the extremes', () => {
         host.innerHTML = html;
         expect(() => tab.mount?.(host, ctx), `${tab.label} threw`).not.toThrow();
       }
-    });
+      // The year-by-year budget at $800M takes a few seconds to build.
+    }, 60_000);
   }
 });
 

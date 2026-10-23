@@ -22,7 +22,7 @@ const feeds = traceDependencies(files);
 const ids = new Set(COEFS.map((c) => c.id));
 
 /** Coefficients kept in the index for context although no calculation or sentence uses them. */
-const UNUSED_ON_PURPOSE: string[] = ['hay_depletion', 'farmer_compensation_low', 'farmer_compensation_high'];
+const UNUSED_ON_PURPOSE: string[] = [];
 
 describe('how the numbers connect', () => {
   it('every coefficient the code reads exists', () => {

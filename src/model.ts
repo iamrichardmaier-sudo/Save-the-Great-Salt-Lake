@@ -86,24 +86,26 @@ export const DEFAULT_DIALS: Dials = {
   leaseToOwnM: V('lease_to_own_dollars'),
   capitalPricePerAf: V('capital_price'),
 
-  scarcityRatePerAf: 0,
-  escalatorOn: false,
+  // The package the goal search found (scripts/goal-search.ts): it reaches the healthy floor with
+  // its 0.5 ft margin by 2055 on $100M a year, at the edge of what the dials allow.
+  scarcityRatePerAf: 85,
+  escalatorOn: true,
 
-  cropLevyPerAf: 0,
-  levyThresholdAfPerAcre: 2.0,
-  levyToTransition: 1,
+  cropLevyPerAf: 400,
+  levyThresholdAfPerAcre: 1.5,
+  levyToTransition: 0.9,
 
   mandateFloorKaf: V('mandate_floor'),
   mandatePhaseYears: V('mandate_phase'),
   mandatePenaltyPerAf: V('mandate_penalty'),
 
-  repossessOn: false,
+  repossessOn: true,
   repossessInterest: V('state_interest'),
   repossessCapKaf: V('repossess_cap'),
 
   cloudM: 1.5,
-  phragM: 10.5,
-  cropSwitchM: 24,
+  phragM: 25,
+  cropSwitchM: 2.5,
 
   lawnCutAsked: 0,
   enforcementWindowId: 'season',
@@ -251,7 +253,11 @@ export interface ChargeResult {
   baseAfterResponse: number;
 }
 
-/** The scarcity charge: a behavioural effect and a revenue effect, and the first is larger. */
+/**
+ * The scarcity charge: a behavioural effect and a revenue effect. At the corrected net value of
+ * irrigation water ($236/AF depleted) the revenue is the larger of the two at lease prices, so
+ * the charge does most of its work through what its money buys.
+ */
 export function chargeModel(rate: number): ChargeResult {
   const agDepl = V('ag_depletion');
   const miDepl = V('mi_depletion');

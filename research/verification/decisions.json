@@ -192,14 +192,20 @@
   "why": "Research agent summed USGS daily flows for the Bear, Weber and Jordan gauges into water-year totals: CV 0.55 (1989-2025), 0.50 (2000-2025), 0.60 (1950-2025). Not independently recomputed by the reviewer; re-run before relying on it."
  },
  "mi_depletion": {
-  "action": "defer",
+  "action": "accept",
+  "value": 354.4,
   "reviewed": "2026-10-23",
-  "why": "Agent finds 328 appears in no source and proposes ~354 (2020-24 Strike table: 640 M&I - 421.6 residential + 136 minerals). Changing it means restructuring CONSUMERS (which must sum to 2,387) and charge_base together; do it with the tables batch. Minerals there is 152 vs 136 in the current table."
+  "why": "Re-opened Strike Team Mar 2026 PDF p.25 (2020-24 column: M&I 640, minerals 136) and p.27 (2024 lawns 408.5 KAF = 96.9% of residential, so residential 421.6). 136 + (640 - 421.6) = 354.4. Year-mixing (2024 residential vs 2020-24 M&I) is covered by the range.",
+  "low": 320,
+  "high": 390
  },
  "charge_base": {
-  "action": "defer",
+  "action": "accept",
+  "value": 1938.4,
   "reviewed": "2026-10-23",
-  "why": "Defined as ag_depletion + mi_depletion; follows mi_depletion (agent proposes ~1,938)."
+  "why": "Follows from mi_depletion: 1,584 + 354.4 = 1,938.4 = 2,387 total - 27 reservoir - 421.6 residential, which matches the definition (everything except residential and reservoir evaporation).",
+  "low": 1900,
+  "high": 1975
  },
  "serious_low": {
   "action": "confirm_with_caveat",
@@ -331,5 +337,206 @@
   "action": "relabel_assumption",
   "reviewed": "2026-10-23",
   "why": "Not in the cited DWS page; state nuclear campus booklet estimates 5,000-10,000 permanent jobs, contingent on federal selection. Display only."
+ },
+ "inflow_efficiency": {
+  "action": "accept",
+  "value": 0.933,
+  "reviewed": "2026-10-23",
+  "why": "Re-derived after replacing the three area anchors with the USGS 2023 elevation-area table (one-foot steps). The closure factor that best reproduces the Strike Team/USU long-term means (0 -> 4,191.1, +250 -> 4,193.7, +800 -> 4,198.0 ft; Mar 2026 p.30) is 0.933 (RMS error 0.23 ft, against 0.30 ft for the old anchors with 1.03). Below 1 it means some gauged inflow does not reach the open lake (e.g. bay wetlands), within the uncertainty of evaporation depth.",
+  "low": 0.88,
+  "high": 0.98
+ },
+ "BASELINES/recent": {
+  "action": "accept",
+  "value": 0.86,
+  "reviewed": "2026-10-23",
+  "why": "Recomputed from USGS daily flows (Bear 10126000, Weber 10141000, Jordan 10170490), water years 1950-2025: driest decade 2013-2022 = 0.86 of the 2000-2025 mean. Relabelled; the last 20 years are wetter (1.07) than the base."
+ },
+ "BASELINES/thirty": {
+  "action": "accept",
+  "value": 1.0,
+  "reviewed": "2026-10-23",
+  "why": "Value unchanged; label corrected to the 2000-2025 average the Strike Team states (p.24, p.30)."
+ },
+ "BASELINES/long": {
+  "action": "accept",
+  "value": 1.37,
+  "reviewed": "2026-10-23",
+  "why": "Recomputed from the same gauges: 1950-2025 mean = 1.37 of the 2000-2025 mean."
+ },
+ "CONSUMERS/hay": {
+  "action": "accept",
+  "value": 1025,
+  "reviewed": "2026-10-23",
+  "why": "Ag Water Optimization report Figure 2-5 (hay/turf ~857 of 1,324 KAF, 2019-23) re-read from the rendered page: share 0.647 x 1,584 = 1,025."
+ },
+ "CONSUMERS/other_crops": {
+  "action": "accept",
+  "value": 559,
+  "reviewed": "2026-10-23",
+  "why": "1,584 - 1,025."
+ },
+ "CONSUMERS/minerals": {
+  "action": "accept",
+  "value": 136,
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026 p.25 table, 2020-24 column."
+ },
+ "CONSUMERS/industry": {
+  "action": "accept",
+  "value": 218.4,
+  "reviewed": "2026-10-23",
+  "why": "640 M&I - 421.6 residential (Strike Team Mar 2026 p.25 and p.27)."
+ },
+ "CONSUMERS/residential_out": {
+  "action": "accept",
+  "value": 408.5,
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026 p.27: 408.5 KAF in 2024 (model rounded to 409)."
+ },
+ "CONSUMERS/residential_in": {
+  "action": "accept",
+  "value": 13.1,
+  "reviewed": "2026-10-23",
+  "why": "421.6 x 3.1% (Strike Team Mar 2026 p.27: outdoor is 96.9% of residential)."
+ },
+ "CONSUMERS/reservoir": {
+  "action": "accept",
+  "value": 27,
+  "reviewed": "2026-10-23",
+  "why": "New row: reservoir evaporation 27 KAF, 2020-24 (Strike Team Mar 2026 p.25). CONSUMERS now sums to 2,387.0."
+ },
+ "VALUE_PER_AF/hay": {
+  "action": "accept",
+  "value": 345,
+  "reviewed": "2026-10-23",
+  "why": "NASS Utah Annual Bulletin 2024 p.15 re-opened: all hay 2019-23 value $2,699.8M on 3,430k acres = $787/acre; / 2.15-2.41 AF depleted per acre = $326-366.",
+  "low": 325,
+  "high": 415
+ },
+ "VALUE_PER_AF/minerals": {
+  "action": "accept",
+  "value": 8315,
+  "reviewed": "2026-10-23",
+  "why": "le.utah.gov interim 2022 slide re-opened: mineral sector total output $1,130.8M (2010 $) / 136 KAF."
+ },
+ "AREA_ANCHORS/4200": {
+  "action": "accept",
+  "value": 1602.3,
+  "reviewed": "2026-10-23",
+  "why": "USGS 2023 elevation-area-volume table (total), NGVD29 4200.00 -> 1,602.3 sq mi. All anchors replaced by the table at one-foot steps, 4,180-4,211.5 ft."
+ },
+ "AREA_ANCHORS/4211.6": {
+  "action": "accept",
+  "value": 2229.1,
+  "reviewed": "2026-10-23",
+  "why": "USGS table maximum (4,211.52 ft NGVD29) = 2,229.1 sq mi."
+ },
+ "AREA_ANCHORS/4188.5": {
+  "action": "accept",
+  "value": 894,
+  "reviewed": "2026-10-23",
+  "why": "USGS table: 894 sq mi (model 888)."
+ },
+ "USU_VALIDATION/250": {
+  "action": "accept",
+  "value": 4193.7,
+  "reviewed": "2026-10-23",
+  "why": "Strike Team Mar 2026 p.30: \"An additional 250 KAF/year results in a long-term mean lake level of 4,193.7 feet\"."
+ },
+ "SOURCES/usu_sims": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "SOURCES/usgs_fogsl_area": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "SOURCES/state_engineer_dmp": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "SOURCES/gsl_commissioner": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "SOURCES/farm_bureau_2026": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "SOURCES/deseret_2026": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "SOURCES/weber_wtp": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "URL or title corrected in src/sources.ts after opening the page."
+ },
+ "WATERING_MONTHS/Jan": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Feb": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Mar": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Apr": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/May": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Jun": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Jul": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Aug": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Sep": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Oct": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Nov": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
+ },
+ "WATERING_MONTHS/Dec": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "USU Appendix I (2011), Salt Lake City airport turfgrass net irrigation, re-opened; shares agree within 0.01. Citation moved from dwr_regional_goals to usu_consumptive_use."
  }
 }

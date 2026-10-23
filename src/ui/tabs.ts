@@ -122,8 +122,11 @@ const nowTab: Tab = {
       <div class="tiles">
         ${tile('The lake today', fig(feet(V('lake_now')), { coef: 'lake_now' }),
           `against a healthy floor of ${fig(feet(V('healthy_min'), 0), { coef: 'healthy_min' })} and a serious-effects line at ${fig(feet(V('serious_low'), 0), { coef: 'serious_low' })}`)}
-        ${tile('Short of standing still', fig(kafYr(deficit), { formula: 'inflow needed to hold today’s level − inflow the lake receives', assumed: false }),
-          `even holding this level needs more water than the rivers now bring`)}
+        ${deficit > 0
+          ? tile('Short of standing still', fig(kafYr(deficit), { formula: 'inflow needed to hold today’s level − inflow the lake receives', assumed: false }),
+              `even holding this level needs more water than the rivers now bring`)
+          : tile('Where today’s rivers leave it', fig(feet(equilibriumFt(V('baseline_inflow'))), { formula: 'equilibrium elevation at the 2000–2025 average inflow', assumed: false }),
+              `after a dry year the lake sits ${fig(feet(equilibriumFt(V('baseline_inflow')) - V('lake_now')), { formula: 'equilibrium at average inflow − today’s level', assumed: false })} below where average inflow would settle it, still short of the healthy floor`)}
         ${tile('Human depletion in the basin', fig(kafYr(V('basin_depletion')), { coef: 'basin_depletion' }),
           `of which agriculture is ${fig(pct(agShare), { formula: 'agricultural depletion ÷ basin depletion' })}`)}
         ${tile('What the lake is worth', fig(`${perAf(V('lake_value_per_af'))}`, { coef: 'lake_value_per_af' }),

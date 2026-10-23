@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { TABLE_VERIFICATION, VERIFICATION } from './verification';
 import {
   chargeModel,
   DEFAULT_DIALS,
@@ -28,6 +29,27 @@ import { SOURCES } from './sources';
 import { budgetSweep, mulberry32, optimise, scorePackage, SEARCH_SPACE, sensitivity, simulate } from './simulate';
 
 const base = pkgModel();
+
+/**
+ * The package the defaults held before the goal search: no levy, no repossession, a slow mandate.
+ * The mechanism tests below (what binds, what a penalty does) are pinned to it, because the goal
+ * package sits at the edge of several dials at once and would test the edge rather than the mechanism.
+ */
+const REF: Partial<Dials> = {
+  monitoringM: 25,
+  leaseToOwnM: 30,
+  scarcityRatePerAf: 0,
+  escalatorOn: false,
+  cropLevyPerAf: 0,
+  levyThresholdAfPerAcre: 2,
+  levyToTransition: 1,
+  mandateFloorKaf: 1100,
+  mandatePhaseYears: 10,
+  repossessOn: false,
+  repossessCapKaf: 50,
+  phragM: 10.5,
+  cropSwitchM: 24,
+};
 
 describe('the reconciliation checks all pass at the defaults', () => {
   for (const check of reconcile(base)) {
@@ -88,11 +110,15 @@ describe('units and conversions', () => {
 });
 
 describe('the scarcity charge', () => {
-  it('cuts more water through behaviour than its own revenue could buy', () => {
-    // The point of the charge: treating it as a revenue instrument captures the smaller half.
+  it('buys more water with its revenue than it changes through behaviour', () => {
+    // With irrigation water worth $236/AF depleted to a farm (Ag Optimization report, Table B-8)
+    // and leases at $250/AF, a $40 charge changes behaviour on about 114 KAF but raises enough to
+    // lease about 290 KAF. The revenue is the larger half, so where the money goes matters.
     const c = chargeModel(40);
     const boughtWithRevenue = (c.revenueM * 1e6) / V('lease_base_rate') / 1000;
-    expect(c.behaviouralKaf).toBeGreaterThan(boughtWithRevenue);
+    expect(c.behaviouralKaf).toBeGreaterThan(0);
+    expect(boughtWithRevenue).toBeGreaterThan(c.behaviouralKaf);
+    expect(c.behaviouralKaf / boughtWithRevenue).toBeLessThan(0.6);
   });
 
   it('erodes its own base as users respond', () => {
@@ -176,8 +202,8 @@ describe('the mandate', () => {
   });
 
   it('pricing non-compliance converts coercion into transactions', () => {
-    const without = pkgModel({ mandateFloorKaf: 800, mandatePenaltyPerAf: 0 });
-    const withPenalty = pkgModel({ mandateFloorKaf: 800, mandatePenaltyPerAf: V('lake_value_per_af') });
+    const without = pkgModel({ ...REF, mandateFloorKaf: 800, mandatePenaltyPerAf: 0 });
+    const withPenalty = pkgModel({ ...REF, mandateFloorKaf: 800, mandatePenaltyPerAf: V('lake_value_per_af') });
     expect(withPenalty.final.rightsHeldKaf).toBeGreaterThan(without.final.rightsHeldKaf);
     expect(withPenalty.final.forcedKaf).toBeLessThan(without.final.forcedKaf);
     expect(withPenalty.boughtShare).toBeGreaterThan(without.boughtShare);
@@ -224,8 +250,8 @@ describe('what binds', () => {
   // Which constraint binds depends on the price of a lease, and a charge or a penalty pushes
   // that price down. These tests pin both regimes, because the difference between them is the
   // whole argument.
-  const mandateOff = { mandateFloorKaf: 0 };
-  const chargeOn = { mandateFloorKaf: 0, scarcityRatePerAf: 300 };
+  const mandateOff = { ...REF, mandateFloorKaf: 0 };
+  const chargeOn = { ...REF, mandateFloorKaf: 0, scarcityRatePerAf: 300 };
 
   it('stops buying anything at all past a few hundred million', () => {
     const sweep = budgetSweep([200, 400, 800], mandateOff);
@@ -364,7 +390,9 @@ describe('the optimiser', () => {
 
   it('searches every dial that the controls expose', () => {
     // Drift between the search space and the dials is silent, so it is a test.
-    const skip = new Set(['startYear', 'horizon', 'baselineId', 'budgetM', 'repossessInterest', 'enforcementWindowId', 'longDrought']);
+    // The price of a water right and the state's interest rate are market assumptions, not policy:
+    // letting the search pick a cheap price would buy water with an assumption.
+    const skip = new Set(['startYear', 'horizon', 'baselineId', 'budgetM', 'repossessInterest', 'capitalPricePerAf', 'enforcementWindowId', 'longDrought']);
     const searched = new Set(SEARCH_SPACE.map((s) => s.key as string));
     for (const key of Object.keys(DEFAULT_DIALS)) {
       if (skip.has(key)) continue;
@@ -481,9 +509,46 @@ describe('sources', () => {
       ...BASELINES.flatMap((b) => b.sourceIds),
       AREA_ANCHOR_SOURCE,
       WATERING_MONTHS_SOURCE,
+      // The verification records cite the passages each number was checked against.
+      ...Object.values(VERIFICATION).flatMap((v) => v.sourceIds),
+      ...Object.values(TABLE_VERIFICATION).flatMap((v) => v.sourceIds),
     ]);
     for (const s of SOURCES) {
       expect(referenced.has(s.id), `source "${s.id}" is cited by nothing`).toBe(true);
+    }
+  });
+});
+
+describe('verification', () => {
+  it('records how every coefficient was checked, and when', () => {
+    for (const c of COEFS) {
+      const v = VERIFICATION[c.id];
+      expect(v, `no verification record for ${c.id}`).toBeDefined();
+      expect(v.verdict, c.id).toBeTruthy();
+      expect(v.checked, c.id).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
+
+  it('quotes the passage and says where it sits for every confirmed or corrected number', () => {
+    for (const v of [...Object.values(VERIFICATION), ...Object.values(TABLE_VERIFICATION)]) {
+      if (v.verdict !== 'confirmed' && v.verdict !== 'corrected') continue;
+      if (v.id.startsWith('SOURCES/')) continue; // a source row is checked by opening the page, not by a passage
+      expect(v.quote.length, `${v.id} has no quote`).toBeGreaterThan(0);
+      expect(v.locator.length, `${v.id} has no locator`).toBeGreaterThan(0);
+    }
+  });
+
+  it('names only sources the model lists', () => {
+    const ids = new Set(SOURCES.map((s) => s.id));
+    for (const v of [...Object.values(VERIFICATION), ...Object.values(TABLE_VERIFICATION)]) {
+      for (const id of v.sourceIds) expect(ids.has(id), `${v.id} cites unknown source ${id}`).toBe(true);
+    }
+  });
+
+  it('carries the corrected value into the model', () => {
+    for (const c of COEFS) {
+      const v = VERIFICATION[c.id];
+      if (v.verdict === 'corrected' && v.value !== undefined) expect(c.value, c.id).toBeCloseTo(v.value, 6);
     }
   });
 });
