@@ -1,103 +1,102 @@
 # Hand-off: verifying every number in the model
 
-Written 2026-10-23 so another person or AI can pick this up. Branch: `claude/clever-bardeen-unjgd2`.
+Last updated 2026-10-23. Branch: `claude/clever-bardeen-unjgd2`. **The verification work is finished.** This file says what was done and what is still open.
 
 ## What the owner asked for
 
-Re-check every number and assumption in the model against real sources, then link it all together:
+The owner asked for every number and assumption in the model to be re-checked at source, and for the results to be linked together:
 
-1. **Exact citations in the model.** Each number carries a quote, a page or table, and the date it was checked.
-2. **A shareable research report.** One row per number, with its verdict.
-3. **A map of how the numbers connect.**
-4. **Published evidence for every assumption.**
+- exact citations in the model;
+- a shareable research report;
+- a map of how the numbers connect;
+- published evidence for every assumption.
 
-How mismatches are handled, as the owner chose:
+How mismatches were to be handled:
 
-- Fix the value.
-- Rerun the optimiser and the year-by-year budget.
-- Report old value → new value and the effect on the results.
-- Cover all of about 120 numbers, highest-impact first.
+- correct them;
+- rerun the optimiser and the year-by-year budget;
+- report old → new values and their effect.
 
-Earlier in the same session, also done and pushed:
+Later, the owner added: keep $100M a year and do everything possible, within the existing dial ranges, to reach the goal by 2055.
 
-- A year-by-year budget that spends the full $100M every year (`src/schedule.ts`, `fullSpendSchedule`).
-- The tab "5 · Budget, year by year".
+## Result in one paragraph
+
+With the corrected numbers, the plan as it stood fails:
+
+- the old optimised package ends at 4,198.25 ft in 2055 and never meets the 4,198.5 ft goal;
+- the old optimiser re-run on the new numbers gives 4,197.46 ft, with NEV $36.94B;
+- before the corrections the plan reached 4,198.96 ft, first met the goal in 2051, and had NEV $59.05B.
+
+A search over every policy dial (`npm run goal-search`) found a package that does meet the goal. It is now the default:
+
+- the goal is first met in 2047 and held;
+- the lake ends at 4,198.57 ft in 2055;
+- NEV is $55.00B.
+
+It needs several dials at the top of their ranges:
+
+- a 1,200 KAF mandate floor, phased in over one year;
+- a $400/AF crop levy above 1.5 AF an acre;
+- repossession switched on;
+- monitoring at $50M and phragmites removal at $25M.
+
+The margin is under 0.1 ft, so each of these alone misses the goal:
+
+- a 10% weaker mandate;
+- no levy;
+- no repossession;
+- the pessimistic end of any of 33 uncertain numbers.
 
 ## Done
 
-| Step | State |
+| Item | Where |
 |---|---|
-| Network | Open. Fetch with curl (it uses the proxy). The **WebFetch tool does not work** in this environment (no DNS). For Node `fetch`, set `NODE_USE_ENV_PROXY=1`; `npm run check-links` now does this. |
-| Sources downloaded | 30 of 34 cited sources open. `finley_2020` and `irrigation_elasticity_meta` (Wiley) block bots, and two sites rate-limit. URL list: `research/verification/source-urls.tsv`. Re-download with curl, then `pdftotext -layout` or `research/verification/tools/totext.py`. |
-| Priority ranking | `research/verification/rankings.json` ranks every coefficient by two measures: how far it moves the 2055 lake level, and how much it changes the budget's net economic value (NEV) across its range. Built on the optimised package `optimise(0.6, {seed: 424242})`. |
-| How it connects | Done. `src/connections.ts`, the "How it connects" tab, `src/connections.test.ts`, and `npm run trace` → `research/dependencies.json`. |
-| Wage per job | Checked at source: DWS Table 19, $65,801. Recorded in `src/data.ts` and `research/findings.md`. |
-| Research batches | **7 of 8 finished and reviewed**: b1–b7, covering all 105 coefficients. Results are in `research/verification/results/*.json`. Still to do: `tables` (side tables, legal assumptions, source list). |
-| Review decisions | `research/verification/decisions.json`. Every accepted change, with the quote I re-checked at source myself. **Nothing has been applied to `src/data.ts` yet**, except the wage. |
+| Research records, all 102 coefficients | `research/verification/results/b1–b7.json` |
+| Side tables and source list (89 rows) | `research/verification/results/tables.json`, written by `research/verification/tools/tables_records.py` |
+| Reviewer decisions, each re-opened at source | `research/verification/decisions.json`. A decision can override the quote and locator when the reviewer re-derived the value. |
+| Generated citations | `src/verification.ts` (`VERIFICATION` per coefficient, `TABLE_VERIFICATION` per table row) and `src/research-sources.ts`. Rebuild with `npm run verification`. |
+| Values applied | `src/data.ts`. Every correction is listed with its effect in `research/findings.md`. |
+| Lake area curve | Replaced with the USGS 2023 elevation-area table at one-foot steps. `inflow_efficiency` re-fitted from 1.03 to 0.933. |
+| CONSUMERS restructure | Rebuilt from the Strike Team 2020–24 table; sums to 2,387 KAF. `mi_depletion` 328 → 354.4, `charge_base` 1,912 → 1,938.4. |
+| Goal search and new default package | `scripts/goal-search.ts` → `research/goal-search.json`. Defaults are in `src/model.ts` (`DEFAULT_DIALS`) and the policy coefficients in `src/data.ts`. |
+| Optimiser changes | See the next table. |
+| Effect of each correction | `npm run effects` → `research/correction-effects.json`. The pre-correction package is kept in `research/pre-correction-package.json`. |
+| Year-by-year budget | `npm run schedule` → `research/budget-schedule.csv` |
+| Dependency map | `npm run trace` → `research/dependencies.json`; also the "How it connects" tab |
+| Index tab | Verdict, Locator and Quote columns, with source links and the old value for each correction; a section listing every side-table row |
+| Findings | `research/findings.md` |
+| Report | Claude Doc: https://claude.ai/artifact/Nps2hg3JcK3B1Fop79PtkA, mirrored in `research/report.md` |
+| Screenshots | `research/screenshots/`: Index and How-it-connects tabs, desktop (1280 px) and phone (390 px) |
+| Tests | `npx vitest run`: 204 pass. The one failure, "header summary adapts when a lever is switched off", failed before this work began. |
 
-### Accepted changes (from `decisions.json`), not yet applied
+Optimiser changes:
 
-| id | old → new | range | basis (short) |
-|---|---|---|---|
-| goal_added | 875 → **800** | 471–1,055 | Strike Team Mar 2026 p.29: "Additional 800 KAF/year … to fill … (4,198 feet) by 2055" |
-| response_k | 0.12 → **0.17** | 0.12–0.22 | Reproduces Strike Team 2034 projection (4,196.87 vs 4,196.9 ft) |
-| lease_capacity | 200 → **130** | 70–300 | Lake trust leased 72,500 AF in 2025; state calls 132 KAF "herculean" |
-| application_mean | 2.64 → **2.4** | 2.0–2.7 | NASS 2023 IWMS Table 39, Utah alfalfa |
-| irrigation_net_value | 133 → **236** | 148–345 | Ag Optimization report Table B-8, $/AF depleted |
-| hay_net_return | 175 → **305** | 60–445 | Table B-7 $355/acre less the $50 leasing cost |
-| phrag_cost | 186 → **610** | 200–4,050 | DWR Aug 2025 M&I report p.81–82, which conflicts with a 2026 legislative slide ($200) |
-| mi_reference_price | 380 → **640** | 450–2,200 | JVWCD 2026/27 wholesale median $639.92 |
-| landscape_sqft | 6,938 → **5,785** | 4,200–9,000 | DWR 2019 Table 4-9, population-weighted |
-| turf_need | 30 → **24** | 20–30 | Jackson & Mohadjer 2003 (display only) |
-| lake_now | 4,191.1 → **4,189.7** | | USGS 10010000 on 2026-09-30 (provisional); 4,191.1 was the 2025-09-30 reading. Now below serious_low. |
-| inflow_cv | 0.35 → **0.50** | 0.40–0.65 | Agent computed it from USGS Bear, Weber and Jordan daily flows; re-run before relying on it |
-| lease_base_rate | 380 → **250** | 150–700 | State 2026 study $236/AF; Gardner brief $150–300 |
-| state_interest | 0.015 → **0.03** (assumption) | 0.018–0.045 | Treasurer: 1.82% on old debt; PTIF ~4% now |
-| lake_jobs_full | 8,650 → **7,706** | 3,557–9,000 | Bioeconomics 2012 total (direct + indirect + induced) |
-| state_households / people_per_home / share_in_basin | → **1.2M / 2.96 / 0.86** | | Gardner 2025 |
-| check before applying | hay_acres → ~228,000; hay_depletion → ~857; lawn_water → ~371 | | Computed by agents; recompute first. Apply the lawn figures as one cluster and re-check the lawn reconciliation. |
-| ranges only (b5) | hay_value_per_af 150–500; capital_price 3,000–12,100; herd_feed_surplus 150k–600k | | |
-| citation fixes | pref_incentives, pref_penalties → Deseret/Hinckley Mar 2026; farmer_compensation_* → Oregon State 2025 | | |
-| more relabels to assumption | livestock_jobs_at_risk, industrial_pipeline_water, industrial_pipeline_jobs, herd_feed_surplus | | |
-| deferred | mi_depletion (328 is in no source; ~354 proposed), charge_base (~1,938) | | Restructure together with CONSUMERS in the tables batch |
-| ranges only | crop_cost 276–493; application_cv 0.25–0.6; phrag_lag 2–5; phrag_cap 17–57; ramp_years high 10; onfarm_cap 15–110; retire_capacity low 20; compliance_floor 0.05–0.55 | | see decisions.json |
-| relabel to assumption | growth_draw_2055, urban_to_lake (range 0.1–0.45), streamflow_decline_2055, phrag_delivery | | no source states them |
-| relabel | lake_value_per_af → **derived** (ECONorthwest $1.93B/yr ÷ ~790 KAF), low 600, high 3,600; baseline_inflow → **sourced** | | |
-| caveats to report | evap_gross: confirmed, but collinear with precip_lake and inflow_efficiency, so its sensitivity swing is overstated. shepherd_start: confirmed, but much of it is in-lake mineral water rather than water delivered down rivers. | | |
+| Change | Why |
+|---|---|
+| Scores progress toward 4,198.5 ft by the horizon, not only net water | A package that delivers the goal too late should score lower |
+| No longer moves the price of a water right | It is a market assumption, not a policy |
+| Ignores watering asks under 5% | They trigger the lawn-fine flaw below |
 
-## Left to do
+## Still open
 
-1. **Finish research.** Batch `tables` (the side tables, legal assumptions and source list) were still running when this was written. If their files aren't in `research/verification/results/`, re-run them:
-   - Brief: `research/verification/brief.md`. Its paths point at a scratchpad that no longer exists; replace them with `research/verification/...`.
-   - Inputs: `research/verification/batches/`.
-   - Review every "corrected" record yourself against the source before accepting it, and add it to `decisions.json`.
-2. **Apply the changes** (plan Step 3):
-   - Add a `src/verification.ts` record per coefficient: verdict, checked date, source ids, locator, quote, arithmetic, previous value.
-   - Update values, ranges and statuses in `src/data.ts`.
-   - Add new sources to `src/sources.ts`. Only that file may hold URLs. New sources so far include the le.utah.gov interim slide, the JVWCD rates PDF, the GSL trust 2025 impact report, the NASS IWMS PDF, the DWR Aug 2025 M&I report, USGS OFR 78-912, the Audubon/ECONorthwest summary, and the NBER press release (URLs are in the results JSON).
-   - Add verdict, locator and quote columns to the Index tab.
-   - Rewrite `research/findings.md`.
-   - Resolve the three coefficients nothing uses (`hay_depletion`, `farmer_compensation_low/high`): wire them in or delete them, then update `UNUSED_ON_PURPOSE` in `src/connections.test.ts`.
-   - Tests: every coefficient has a verdict and checked date; every confirmed or corrected one has a quote and locator.
-3. **Rerun** (Step 4):
-   - Run `optimise(0.6, seed 424242)`, `fullSpendSchedule`, and `npm run schedule` and `npm run trace`.
-   - Record before and after: 2055 lake level (currently 4,198.96 ft), first year the goal is met (2051), and NEV (currently $59.05B).
-   - If the optimised package no longer reaches 4,198.5 ft, say so. Do not re-tune the policies without asking the owner.
-   - Several corrections cut capacity (leasing) or raise costs (phragmites), so the goal may be missed.
-4. **Report** (Step 6): write a shareable doc with headline findings, every number with its verdict, assumptions with evidence, the effect on results, the connection map, and sources.
-5. **Ship:**
-   - `npx tsc --noEmit`, `npx vitest run`. The header-summary test already fails on the base branch and is unrelated.
-   - `npm run check-links`.
-   - Screenshots of the Index and How-it-connects tabs.
-   - Commit, push, and republish the hosted model.
+1. **Lawn module flaw.** `lawnModel` raises full fine revenue from any watering ask, however small, and that money buys rights. A 0.02% ask moved the 2055 lake by 0.6 ft. The optimiser and goal search now avoid it, but the module should scale fines with the ask.
+2. **Owner decision.** Should the edge-of-range package stay the default, or should the page show a more cautious package and its gap? A comment asking this is in the report doc.
+3. **VALUE_PER_AF rows still unsupported.** All agriculture, nuclear dry cooling, the data-centre rows, Meta, QTS and Tooele have no published water volume behind them.
+4. **Pre-existing test failure.** The header-summary test still fails.
+5. **Link check exceptions.**
+    - earthref.org fails under Node fetch but returns 200 through curl.
+    - Two Wiley sources block bots.
+    - wateronline.com was briefly returning a server error (500).
 
 ## Useful facts
 
-- The full plan is in the session's plan file. Its content is summarised above.
-- Hosted model (owner's private artifact): https://claude.ai/artifact/1hnVUrv3zc6ovYZ1s4yafE. Rebuild with `npm run build`, then publish `dist/index.html` plus `dist/assets/*`.
-- The appendix doc with the old budget tables (now out of date) is at https://claude.ai/artifact/DFaUFQ1pehjX5CtpSiz9ZD.
-- Commands:
-  - `npm test`
-  - `npm run schedule`: year-by-year budget CSV
-  - `npm run trace`: dependency map
-  - `npm run check-links`
+- **Network.** Use curl, which goes through the proxy. For Node `fetch`, set `NODE_USE_ENV_PROXY=1`; `npm run check-links` already does.
+- **Hosted model.** https://claude.ai/artifact/1hnVUrv3zc6ovYZ1s4yafE. To republish, run `npm run build`, then publish `dist/index.html` plus `dist/assets/*`.
+- **Commands:**
+    - `npm test`
+    - `npm run verification`
+    - `npm run goal-search`
+    - `npm run effects`
+    - `npm run schedule`
+    - `npm run trace`
+    - `npm run check-links`

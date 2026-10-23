@@ -1125,6 +1125,9 @@ const baselineTab: Tab = {
   },
 };
 
+/** Digits enough to show a ledger value as it is stored (4,189.7 stays 4,189.7, 0.933 stays 0.933), at most three. */
+const exactDigits = (v: number) => [0, 1, 2, 3].find((d) => Math.abs(Math.round(v * 10 ** d) / 10 ** d - v) < 1e-9) ?? 3;
+
 const VERDICT_CLASS: Record<string, string> = {
   confirmed: 'sourced',
   corrected: 'warn',
@@ -1140,7 +1143,7 @@ const VERDICT_CLASS: Record<string, string> = {
 function verdictCell(v: Verification | undefined, unit = ''): string {
   if (!v) return '<span class="none">not checked</span>';
   const was = v.previous?.value !== undefined
-    ? `<span class="detail">was ${fig(`${num(v.previous.value, Math.abs(v.previous.value) < 10 ? 2 : 0)}${unit ? ` ${unit}` : ''}`, { note: 'The value before it was checked at source.', sourceIds: v.sourceIds })}</span>`
+    ? `<span class="detail">was ${fig(`${num(v.previous.value, exactDigits(v.previous.value))}${unit ? ` ${unit}` : ''}`, { note: 'The value before it was checked at source.', sourceIds: v.sourceIds })}</span>`
     : '';
   return `<span class="pill pill-${VERDICT_CLASS[v.verdict] ?? 'derived'}">${escapeHtml(v.verdict)}</span>${was}<span class="detail">checked ${escapeHtml(v.checked)}${v.reviewed ? ', re-opened by reviewer' : ''}</span>`;
 }
@@ -1168,18 +1171,18 @@ const indexTab: Tab = {
           .map(
             (c) => `<tr>
             <td class="el-name">${escapeHtml(c.label)}</td>
-            <td class="num">${fig(`${num(c.value, Math.abs(c.value) < 10 ? 2 : 0)}`, { coef: c.id })} <span class="unit">${escapeHtml(c.unit)}</span></td>
-            <td>${c.low !== undefined ? `${num(c.low, c.low < 10 ? 2 : 0)}–${num(c.high!, c.high! < 10 ? 2 : 0)}` : '—'}</td>
+            <td class="num">${fig(`${num(c.value, exactDigits(c.value))}`, { coef: c.id })} <span class="unit">${escapeHtml(c.unit)}</span></td>
+            <td>${c.low !== undefined ? `${num(c.low, exactDigits(c.low))}–${num(c.high!, exactDigits(c.high!))}` : '—'}</td>
             <td><span class="pill pill-${c.status}">${c.status}</span></td>
-            <td>${escapeHtml(c.basis)}</td>
-            <td>${c.sourceIds.map((sid) => { const s = source(sid); return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.publisher)}</a>`; }).join(', ') || '<span class="none">none</span>'}</td>
-            <td>${verdictCell(VERIFICATION[c.id], c.unit)}</td>
+            <td class="v-basis">${escapeHtml(c.basis)}</td>
+            <td class="v-src">${c.sourceIds.map((sid) => { const s = source(sid); return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.publisher)}</a>`; }).join(', ') || '<span class="none">none</span>'}</td>
+            <td class="v-verdict">${verdictCell(VERIFICATION[c.id], c.unit)}</td>
             <td class="v-loc">${locatorCell(VERIFICATION[c.id])}</td>
             <td class="v-quote-cell">${quoteCell(VERIFICATION[c.id])}</td>
           </tr>`,
           )
           .join('');
-        return `<table class="data data-index"><caption>${escapeHtml(g)}</caption>
+        return `<table class="data data-index data-wide"><caption>${escapeHtml(g)}</caption>
           <thead><tr><th>Figure</th><th>Value</th><th>Range</th><th>Status</th><th>Basis</th><th>Source</th><th>Verdict</th><th>Locator</th><th>Quote</th></tr></thead>
           <tbody>${rows}</tbody></table>`;
       })
@@ -1213,8 +1216,8 @@ const indexTab: Tab = {
         (c) => `<tr>
           <td class="el-name">${escapeHtml(c.label)}</td>
           <td>${escapeHtml(c.group)}</td>
-          <td class="num">${fig(`${num(c.value, Math.abs(c.value) < 10 ? 2 : 0)}`, { coef: c.id })} <span class="unit">${escapeHtml(c.unit)}</span></td>
-          <td>${c.low !== undefined ? `${num(c.low, c.low < 10 ? 2 : 0)}–${num(c.high!, c.high! < 10 ? 2 : 0)}` : '—'}</td>
+          <td class="num">${fig(`${num(c.value, exactDigits(c.value))}`, { coef: c.id })} <span class="unit">${escapeHtml(c.unit)}</span></td>
+          <td>${c.low !== undefined ? `${num(c.low, exactDigits(c.low))}–${num(c.high!, exactDigits(c.high!))}` : '—'}</td>
           <td>${escapeHtml(c.confidence ?? '—')}</td>
           <td>${escapeHtml(c.basis)}</td>
           <td>${sourceLinks(c.sourceIds) || '<span class="none">model choice</span>'}</td>
@@ -1247,17 +1250,17 @@ const indexTab: Tab = {
       .map((name) => {
         const rows = tableRows.filter((v) => v.id.startsWith(`${name}/`));
         if (rows.length === 0) return '';
-        return `<table class="data data-index"><caption>${escapeHtml(tableNames[name])}</caption>
+        return `<table class="data data-index data-wide"><caption>${escapeHtml(tableNames[name])}</caption>
           <thead><tr><th>Row</th><th>Now</th><th>Verdict</th><th>Locator</th><th>Quote</th><th>Notes</th></tr></thead>
           <tbody>${rows
             .map(
               (v) => `<tr>
               <td class="el-name">${escapeHtml(v.id.slice(name.length + 1))}</td>
-              <td class="num">${v.value !== undefined ? fig(num(v.value, Math.abs(v.value) < 10 ? 2 : 1), { note: 'The value the model now uses, after checking at source.', sourceIds: v.sourceIds }) : '—'}</td>
-              <td>${verdictCell(v)}</td>
+              <td class="num">${v.value !== undefined ? fig(num(v.value, exactDigits(v.value)), { note: 'The value the model now uses, after checking at source.', sourceIds: v.sourceIds }) : '—'}</td>
+              <td class="v-verdict">${verdictCell(v)}</td>
               <td class="v-loc">${locatorCell(v)}</td>
               <td class="v-quote-cell">${quoteCell(v)}</td>
-              <td>${escapeHtml(v.notes)}</td>
+              <td class="v-basis">${escapeHtml(v.notes)}</td>
             </tr>`,
             )
             .join('')}</tbody></table>`;
@@ -1268,10 +1271,10 @@ const indexTab: Tab = {
       for (const v of records) c.set(v.verdict, (c.get(v.verdict) ?? 0) + 1);
       return [...c.entries()].sort((a, b) => b[1] - a[1]);
     };
-    const coefVerdicts = verdictCounts(Object.values(VERIFICATION))
+    const coefVerdicts = verdictCounts(COEFS.map((c) => VERIFICATION[c.id]).filter((v): v is Verification => Boolean(v)))
       .map(([verdict, n]) => `${fig(num(n, 0), { note: `Coefficients whose verdict is "${verdict}".` })} ${escapeHtml(verdict)}`)
       .join(', ');
-    const correctedCount = Object.values(VERIFICATION).filter((v) => v.previous?.value !== undefined).length;
+    const correctedCount = COEFS.filter((c) => VERIFICATION[c.id]?.previous?.value !== undefined).length;
 
     const counts = {
       sourced: COEFS.filter((c) => c.status === 'sourced').length,

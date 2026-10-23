@@ -247,7 +247,14 @@
   "low": 300,
   "high": 500,
   "reviewed": "2026-10-23",
-  "why": "Same quantity as the VALUE_PER_AF hay row. Divide by water depleted from irrigation (USU net irrigation requirement, 2.41 ft at Salt Lake City), not full evapotranspiration (~3 ft, which includes rain): NASS 2019-23 alfalfa $889/acre / 2.41 = $368/AF. 2025 prices give $310; the low end of the range covers that."
+  "why": "Same quantity as the VALUE_PER_AF hay row. Divide by water depleted from irrigation (USU net irrigation requirement, 2.41 ft at Salt Lake City), not full evapotranspiration (~3 ft, which includes rain): NASS 2019-23 alfalfa $889/acre / 2.41 = $368/AF. 2025 prices give $310; the low end of the range covers that.",
+  "quote": "2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120",
+  "locator": "Alfalfa Hay: Area Harvested, Yield, Production, Price & Value, Utah 2014-2023, p.15; with USU 2011 Appendix I, Salt Lake City Intl AP, Alfalfa (Beef) Net Irr",
+  "url": "https://data.nass.usda.gov/Statistics_by_State/Utah/Publications/Annual_Statistical_Bulletin/2024-Agricultural-Statistics.pdf",
+  "source_title": "Utah Annual Bulletin, 2024",
+  "publisher": "USDA National Agricultural Statistics Service",
+  "year": 2024,
+  "arithmetic": "Alfalfa 2019-23: $2,275.8M value / 2,560k acres = $889/acre. Net irrigation 1.01+4.59+6.09+6.64+6.49+3.86+0.29 = 28.97 in = 2.41 ft. $889 / 2.41 = $368/AF."
  },
  "capital_price": {
   "action": "accept_range",
@@ -345,7 +352,11 @@
   "reviewed": "2026-10-23",
   "why": "Re-derived after replacing the three area anchors with the USGS 2023 elevation-area table (one-foot steps). The closure factor that best reproduces the Strike Team/USU long-term means (0 -> 4,191.1, +250 -> 4,193.7, +800 -> 4,198.0 ft; Mar 2026 p.30) is 0.933 (RMS error 0.23 ft, against 0.30 ft for the old anchors with 1.03). Below 1 it means some gauged inflow does not reach the open lake (e.g. bay wetlands), within the uncertainty of evaporation depth.",
   "low": 0.88,
-  "high": 0.98
+  "high": 0.98,
+  "quote": "No additional inflows from conservation results in a long-term mean lake level of 4,191.1 feet ... An additional 250 KAF/year results in a long-term mean lake level of 4,193.7 feet ... An additional 800 KAF/year results in a long-term mean lake level of 4,198.0",
+  "locator": "Strike Team Mar 2026, Figure 20 insights, printed p.30 (Tarboton 2025); USGS 2023 elevation-area table (total)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "arithmetic": "On the USGS area table, area x 2.52 ft net evaporation = (1,665 + added) KAF x factor. Least squares over the three published means: factor 0.933, RMS error 0.23 ft (4,190.93 / 4,194.05 / 4,198.04 ft)."
  },
  "BASELINES/recent": {
   "action": "accept",

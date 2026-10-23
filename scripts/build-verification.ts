@@ -33,7 +33,7 @@ interface ResearchRecord {
   notes: string;
   confidence: string;
 }
-interface Decision { action: string; value?: number; low?: number; high?: number; why: string; reviewed: string }
+interface Decision { action: string; value?: number; low?: number; high?: number; why: string; reviewed: string; quote?: string; locator?: string; url?: string; source_title?: string; publisher?: string; year?: number; arithmetic?: string }
 
 const root = new URL('../', import.meta.url);
 const dir = new URL('research/verification/', root);
@@ -109,8 +109,12 @@ function finalVerdict(r: ResearchRecord, d: Decision | undefined): string {
 
 const clean = (s: string | null | undefined, n: number) => (s ?? '').replace(/\s+/g, ' ').trim().slice(0, n);
 
-const out = records.map((r) => {
-  const d = decisions[r.id];
+const out = records.map((rec) => {
+  const d = decisions[rec.id];
+  // A reviewer who re-derived a corrected value names the passage that now supports it.
+  const r: ResearchRecord = d?.quote
+    ? { ...rec, quote: d.quote, locator: d.locator ?? rec.locator, url: d.url ?? rec.url, source_title: d.source_title ?? rec.source_title, publisher: d.publisher ?? rec.publisher, year: d.year ?? rec.year, arithmetic: d.arithmetic ?? rec.arithmetic, extra_sources: [{ title: rec.source_title, publisher: rec.publisher, year: rec.year ?? undefined, url: rec.url, quote: rec.quote, locator: rec.locator }, ...(rec.extra_sources ?? [])] }
+    : rec;
   const primary = sourceId(r.url, { title: r.source_title, publisher: r.publisher, year: r.year }, `Checked for ${r.id}.`);
   const extra = (r.extra_sources ?? [])
     .map((e) => ({ id: sourceId(e.url, e, `Evidence for ${r.id}.`), locator: clean(e.locator, 200), quote: clean(e.quote, 400) }))

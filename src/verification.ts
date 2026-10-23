@@ -298,12 +298,12 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "r_hydrology_usu_mohammed_tarboton_2012wr011908",
-      "usu_sims"
+      "usu_sims",
+      "r_hydrology_usu_mohammed_tarboton_2012wr011908"
     ],
-    "locator": "para [20], p.4",
-    "quote": "Groundwater inflow to the GSL was estimated to be 0.093 km3 (75,000 acre-feet yr-1) [Waddell and Barton, 1980; Loving et al., 2000].",
-    "arithmetic": "Groundwater only: 1 + 75/1665 = 1.045. Calibration: (E-P)/eff must be about 1665/685.8k ac = 2.43 ft for 4,191.1 ft. Model 2.52/1.03 = 2.447, giving equilibria of 4,191.0 / 4,193.2 / 4,198.2 ft vs published 4,191.1 / 4,193.7-4,193.8 / 4,198.0.",
+    "locator": "Strike Team Mar 2026, Figure 20 insights, printed p.30 (Tarboton 2025); USGS 2023 elevation-area table (total)",
+    "quote": "No additional inflows from conservation results in a long-term mean lake level of 4,191.1 feet ... An additional 250 KAF/year results in a long-term mean lake level of 4,193.7 feet ... An additional 800 KAF/year results in a long-term mean lake level of 4,198.0",
+    "arithmetic": "On the USGS area table, area x 2.52 ft net evaporation = (1,665 + added) KAF x factor. Least squares over the three published means: factor 0.933, RMS error 0.23 ft (4,190.93 / 4,194.05 / 4,198.04 ft).",
     "notes": "Re-derived after replacing the three area anchors with the USGS 2023 elevation-area table (one-foot steps). The closure factor that best reproduces the Strike Team/USU long-term means (0 -> 4,191.1, +250 -> 4,193.7, +800 -> 4,198.0 ft; Mar 2026 p.30) is 0.933 (RMS error 0.23 ft, against 0.30 ft for the old anchors with 1.03). Below 1 it means some gauged inflow does not reach the open lake (e.g. bay wetlands), within the uncertainty of evaporation depth.",
     "confidence": "Medium",
     "previous": {
@@ -311,6 +311,11 @@ export const VERIFICATION: Record<string, Verification> = {
     },
     "value": 0.933,
     "extra": [
+      {
+        "id": "r_hydrology_usu_mohammed_tarboton_2012wr011908",
+        "locator": "para [20], p.4",
+        "quote": "Groundwater inflow to the GSL was estimated to be 0.093 km3 (75,000 acre-feet yr-1) [Waddell and Barton, 1980; Loving et al., 2000]."
+      },
       {
         "id": "usu_sims",
         "locator": "Figure 20 insights, printed p.30",
@@ -1682,12 +1687,13 @@ export const VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
+      "nass_bulletin_2024",
       "r_nass_usda_stateoverview",
       "ag_optimization_2026"
     ],
-    "locator": "2025 State Agriculture Overview, Utah, Crops table",
-    "quote": "HAY, ALFALFA 480,000 [acres harvested] 4.3 TONS / ACRE 2,064,000 TONS 176 $ / TON 359,136,000",
-    "arithmetic": "Revenue per acre (2025) = $359.136M / 480,000 ac = $748/ac (4.3 t x $174 effective). Divided by alfalfa ET of about 3.05 ft gives $245/AF (the model value). Divided by 2.64 AF/ac application gives $283. Divided by the 1.5 AF/ac depletion actually saved by fallowing (DWRe 2026) gives $499/AF. With the 25-yr average price ($212 x 4.0 t = $848/ac): $278/AF at 3.05 ft, $565/AF at 1.5 AF/ac.",
+    "locator": "Alfalfa Hay: Area Harvested, Yield, Production, Price & Value, Utah 2014-2023, p.15; with USU 2011 Appendix I, Salt Lake City Intl AP, Alfalfa (Beef) Net Irr",
+    "quote": "2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120",
+    "arithmetic": "Alfalfa 2019-23: $2,275.8M value / 2,560k acres = $889/acre. Net irrigation 1.01+4.59+6.09+6.64+6.49+3.86+0.29 = 28.97 in = 2.41 ft. $889 / 2.41 = $368/AF.",
     "notes": "Same quantity as the VALUE_PER_AF hay row. Divide by water depleted from irrigation (USU net irrigation requirement, 2.41 ft at Salt Lake City), not full evapotranspiration (~3 ft, which includes rain): NASS 2019-23 alfalfa $889/acre / 2.41 = $368/AF. 2025 prices give $310; the low end of the range covers that.",
     "confidence": "Medium",
     "previous": {
@@ -1695,6 +1701,11 @@ export const VERIFICATION: Record<string, Verification> = {
     },
     "value": 368,
     "extra": [
+      {
+        "id": "r_nass_usda_stateoverview",
+        "locator": "2025 State Agriculture Overview, Utah, Crops table",
+        "quote": "HAY, ALFALFA 480,000 [acres harvested] 4.3 TONS / ACRE 2,064,000 TONS 176 $ / TON 359,136,000"
+      },
       {
         "id": "ag_optimization_2026",
         "locator": "App. B.1.1.10, PDF p.55; benchmark price '$212 per ton' 25-yr avg, PDF p.50",

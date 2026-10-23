@@ -5,6 +5,7 @@
  * the page presents it as if a reader could go and check.
  */
 
+import { TABLE_VERIFICATION, VERIFICATION } from '../src/verification';
 import { SOURCES } from '../src/sources';
 import { AREA_ANCHOR_SOURCE, BASELINES, COEFS, STAKEHOLDERS, VALUE_PER_AF, WATERING_MONTHS_SOURCE } from '../src/data';
 
@@ -71,6 +72,8 @@ async function main(): Promise<void> {
     ...BASELINES.flatMap((b) => b.sourceIds),
     AREA_ANCHOR_SOURCE,
     WATERING_MONTHS_SOURCE,
+    ...Object.values(VERIFICATION).flatMap((v) => v.sourceIds),
+    ...Object.values(TABLE_VERIFICATION).flatMap((v) => v.sourceIds),
   ]);
   const known = new Set(SOURCES.map((s) => s.id));
   const orphanRefs = [...referenced].filter((id) => !known.has(id));

@@ -692,3 +692,12 @@ main { padding-block: 26px 70px; }
 .data .v-quote-cell { min-width: 220px; max-width: 360px; }
 .data .v-loc { min-width: 160px; max-width: 260px; font-size: 12.5px; }
 .data td .detail { display: block; color: var(--ink-3); font-size: 11.5px; margin-top: 3px; }
+/* The verified ledgers carry nine columns: scroll sideways rather than crush the text ones. */
+.data.data-wide { display: block; overflow-x: auto; }
+.data.data-wide td, .data.data-wide th { min-width: 90px; }
+.data.data-wide .el-name { min-width: 150px; }
+.data.data-wide .v-basis { min-width: 240px; max-width: 340px; }
+.data.data-wide .v-src { min-width: 150px; }
+.data.data-wide .v-verdict { min-width: 120px; }
+.data.data-wide .v-loc { min-width: 200px; max-width: 260px; }
+.data.data-wide .v-quote-cell { min-width: 280px; max-width: 380px; }
