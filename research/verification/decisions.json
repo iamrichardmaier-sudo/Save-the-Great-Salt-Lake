@@ -176,5 +176,34 @@
   "action": "confirm_with_caveat",
   "reviewed": "2026-10-23",
   "why": "Strike Team Mar 2026 Fig 2: 149,277 AF (2024), 163,468 AF (2025 prelim) dedicated and delivered. Caveat: much is in-lake mineral-extraction water; river-delivered dedications are ~70-135 KAF."
+ },
+ "lake_now": {
+  "action": "accept",
+  "value": 4189.7,
+  "reviewed": "2026-10-23",
+  "why": "Re-fetched USGS NWIS daily values, site 10010000 (Saltair), parameter 62614: 2025-09-30 4191.1 (approved) = the model's old value; 2026-09-30 4189.7 (provisional), 2026-10-18 4189.8. The plan starts in 2027, so the end of water year 2026 is the right starting level. Note: this is below serious_low (4,190)."
+ },
+ "inflow_cv": {
+  "action": "accept",
+  "value": 0.5,
+  "low": 0.4,
+  "high": 0.65,
+  "reviewed": "2026-10-23",
+  "why": "Research agent summed USGS daily flows for the Bear, Weber and Jordan gauges into water-year totals: CV 0.55 (1989-2025), 0.50 (2000-2025), 0.60 (1950-2025). Not independently recomputed by the reviewer; re-run before relying on it."
+ },
+ "mi_depletion": {
+  "action": "defer",
+  "reviewed": "2026-10-23",
+  "why": "Agent finds 328 appears in no source and proposes ~354 (2020-24 Strike table: 640 M&I - 421.6 residential + 136 minerals). Changing it means restructuring CONSUMERS (which must sum to 2,387) and charge_base together; do it with the tables batch. Minerals there is 152 vs 136 in the current table."
+ },
+ "charge_base": {
+  "action": "defer",
+  "reviewed": "2026-10-23",
+  "why": "Defined as ag_depletion + mi_depletion; follows mi_depletion (agent proposes ~1,938)."
+ },
+ "serious_low": {
+  "action": "confirm_with_caveat",
+  "reviewed": "2026-10-23",
+  "why": "4,190 is the Strategic Plan's contingency floor (p.26); the plan and Strike Team place 'serious adverse effects' below 4,192 ft. Relabel or switch to 4,192 depending on what the label should mean."
  }
 }

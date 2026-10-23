@@ -1,0 +1,378 @@
+[
+ {
+  "id": "repossess_cap",
+  "value_model": 50,
+  "verdict": "no_evidence",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "It is estimated that additional funding will be needed to secure (i) 100,000 acre-feet of water (temporary or permanent)",
+  "locator": "Strategic Plan p.32 (PDF), Objective 3 leasing actions",
+  "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
+  "source_title": "The Great Salt Lake Strategic Plan (Jan 15, 2024)",
+  "publisher": "Office of the Great Salt Lake Commissioner",
+  "year": 2024,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "capable of achieving up to a 10% reduction in agricultural depletions across the basin if widely adopted",
+    "locator": "PDF p.13, Opportunities and Costs for Agricultural Water Optimization and Leasing"
+   }
+  ],
+  "arithmetic": "10% of ag depletion 1,584 KAF = ~158 KAF/yr, close to the model's high of 150.",
+  "notes": "No published figure on how much water Utah could compulsorily acquire (eminent domain/condemnation) per year; searched Utah water-rights condemnation, GSL acquisition pace, Strike Team and Strategic Plan. Cited farm_bureau_2026 page is a generic homepage with no relevant content. Context only: the state's near-term voluntary acquisition goal is 100 KAF total (not per year), and basin-wide leasing is bounded at ~10% of ag depletion (~158 KAF/yr). The 0-150 range is consistent with those bounds but 50 is a pure policy choice.",
+  "confidence": "Low"
+ },
+ {
+  "id": "inflow_cv",
+  "value_model": 0.35,
+  "verdict": "corrected",
+  "value_new": 0.5,
+  "low_new": 0.4,
+  "high_new": 0.65,
+  "quote": "Total streamflow from the Bear, Weber, and Jordan rivers dropped below 1,000 KAF in 2021 and 2022 ... Inflows rebounded above 2,000 KAF in 2023 and 2024 but declined to 1,281 KAF in 2025.",
+  "locator": "Strike 2026 PDF p.24, River Inflow to Great Salt Lake / Figure 11",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team (USU / U of U / State of Utah)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "USGS NWIS daily discharge: Bear R nr Corinne 10126000, Weber R nr Plain City 10141000, Jordan R outflow 10170490",
+    "publisher": "U.S. Geological Survey",
+    "year": 2026,
+    "url": "https://waterservices.usgs.gov/nwis/dv/?format=json&sites={10126000|10141000|10170490}&parameterCd=00060 (daily discharge, summed to water-year KAF)",
+    "quote": "Computed: WY1989-2025 n=37 mean 1,476 KAF sd 807 CV 0.55; WY2000-2025 n=26 mean 1,373 sd 685 CV 0.50; all common years 1950-2025 n=70 CV 0.60",
+    "locator": "daily values summed to water years (cfs-day x 1.9835 AF), years with >=360 days at all three gauges"
+   }
+  ],
+  "arithmetic": "Annual KAF = sum(daily cfs) x 1.9835/1000. CV = sd/mean of three-gauge water-year totals. Strike Team quotes 2021-22 <1,000 KAF and 2023-24 >2,000 KAF: a 2x swing in consecutive years, inconsistent with CV 0.35.",
+  "notes": "Gauge sum is lower than Strike Team totals (e.g. 2025: 1,108 vs 1,281 KAF; ungauged/other inflow not included) but the CV is scale-free. Every period gives CV 0.50-0.60; 0.35 understates variability. Model draws normal anomalies floored at 0.2, so CV 0.5 is near the limit of the Gaussian form; a lognormal draw would fit better. Note Strike Team itself resamples 2000-2025 years rather than using a parametric CV.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "inflow_ar1",
+  "value_model": 0.35,
+  "verdict": "evidence",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Computed lag-1 autocorrelation of water-year inflow: 1989-2025 r=0.44 (log 0.45); 2000-2025 r=0.15 (log 0.27); 1950-2025 r=0.63 (log 0.60)",
+  "locator": "USGS daily discharge, three gauges summed to water years",
+  "url": "https://waterservices.usgs.gov/nwis/dv/?format=json&sites={10126000|10141000|10170490}&parameterCd=00060 (daily discharge, summed to water-year KAF)",
+  "source_title": "USGS NWIS daily discharge for Bear, Weber, Jordan inflow gauges",
+  "publisher": "U.S. Geological Survey",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Each simulation randomly selects annual inflow, precipitation, and evaporation values from the 2000-2025 observations.",
+    "locator": "PDF p.31, Planning for an Uncertain Future modelling details"
+   }
+  ],
+  "arithmetic": "r1 = sum((x_t-m)(x_t+1-m))/sum((x_t-m)^2) on annual totals.",
+  "notes": "0.35 sits inside the observed spread (0.15-0.63 depending on period); 1989-2025 contemporary period gives ~0.44, so 0.35 is slightly low but defensible. Model range 0-0.7 covers the evidence. Strike Team's own Monte Carlo uses iid resampling (AR1=0), the low end.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "sim_runs",
+  "value_model": 120,
+  "verdict": "evidence",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Each scenario results from 1,000 simulations to show the uncertainty associated with each course of action.",
+  "locator": "Strike 2026 PDF p.31; Strike 2025 PDF p.18 ('data to produce 1,000 simulations of potential lake levels for the next 30 years')",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team (USU / U of U / State of Utah)",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "Sampling error of an estimated 10th percentile, in probability terms, ~ sqrt(0.1x0.9/n): n=120 -> +/-2.7 percentile points; n=500 -> +/-1.3; n=1000 -> +/-0.95.",
+  "notes": "Modelling choice. The Strike Team's comparable GSL elevation Monte Carlo uses 1,000 runs. 120 gives p10/p90 bands accurate to about +/-3 percentile points (seed fixed, so stable but noisy); fine for an interactive page, but published/official comparisons use 1,000. Range 50-500 acceptable; consider 1,000 for any reported figure.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "fat_tail_factor",
+  "value_model": 0.75,
+  "verdict": "evidence",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Computed from three-gauge water-year inflow 1950-2025 (mean 1,875 KAF): lowest 20-yr mean 1,374 KAF (WY2003-2022) = 0.73 of long-run mean; lowest 10-yr mean 1,181 (WY2013-2022) = 0.63; lowest 5-yr mean 810 (WY1988-1992) = 0.43",
+  "locator": "USGS daily discharge summed to water years",
+  "url": "https://waterservices.usgs.gov/nwis/dv/?format=json&sites={10126000|10141000|10170490}&parameterCd=00060 (daily discharge, summed to water-year KAF)",
+  "source_title": "USGS NWIS daily discharge for Bear, Weber, Jordan inflow gauges",
+  "publisher": "U.S. Geological Survey",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Between 2000 and 2025, inflows averaged 1,665 KAF per year.",
+    "locator": "PDF p.24, Figure 11 insights"
+   }
+  ],
+  "arithmetic": "Factor applies to the whole 30-yr path (simulate.ts): compare multi-decade means. 1,374/1,875 = 0.73; 1,181/1,875 = 0.63. Relative to the 1989-2025 mean (1,476): 20-yr 0.93, 10-yr 0.80.",
+  "notes": "0.75 matches the worst observed 20-year mean relative to the 1950-2025 mean (0.73). Note the model's baseline inflow likely already reflects the drier contemporary period, in which case 0.75 is a harsher-than-observed stress (observed worst 10-yr vs 1989-2025 mean is 0.80). Range 0.5-0.95 is reasonable. No paleo/tree-ring reconstruction opened.",
+  "confidence": "Low"
+ },
+ {
+  "id": "share_with_lawn",
+  "value_model": 0.72,
+  "verdict": "evidence",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Utah ACS 2024 1-yr B25024: total housing units 1,283,206; 1-unit detached 833,766; 1-unit attached 108,873; mobile home 38,395",
+  "locator": "ACS 2024 1-year, table B25024 (Units in Structure), Utah (04000US49); also Salt Lake County (05000US49035)",
+  "url": "https://api.censusreporter.org/1.0/data/show/latest?table_ids=B25024,B25032&geo_ids=04000US49,05000US49035",
+  "source_title": "American Community Survey 2024 1-year, B25024 / B25032 (via Census Reporter API)",
+  "publisher": "U.S. Census Bureau",
+  "year": 2025,
+  "extra_sources": [],
+  "arithmetic": "Utah: detached 833,766/1,283,206 = 0.650; detached+attached 942,639/1,283,206 = 0.735. Occupied units (B25032): 1-unit det+att 883,735/1,184,428 = 0.746. Salt Lake Co.: (270,139+43,299)/467,260 = 0.671; detached only 0.578.",
+  "notes": "0.72 lies between detached-only (0.65 state, 0.58 SL County) and all single-family (0.735 state, 0.67 SL County). Basin is dominated by Salt Lake/Utah/Davis/Weber counties, so ~0.67-0.72 is plausible; many townhouses lack private irrigated ground. Suggested range 0.58-0.75 rather than 0.55-0.85. Census API itself now requires a key; data read via Census Reporter mirror of ACS 2024 1-yr.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "fine_collection",
+  "value_model": 0.75,
+  "verdict": "evidence",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "The City's parking violation collection rate is approximately 69 percent.",
+  "locator": "NY State Comptroller, City of Utica Parking Violation Enforcement and Collection (2017 audit), findings p.2-6",
+  "url": "https://www.osc.ny.gov/files/local-government/audits/2017-10/lgsa-audit-city-2015-utica.pdf",
+  "source_title": "City of Utica - Parking Violation Enforcement and Collection",
+  "publisher": "Office of the New York State Comptroller",
+  "year": 2017,
+  "extra_sources": [
+   {
+    "title": "same audit",
+    "publisher": "NYS Comptroller",
+    "year": 2017,
+    "url": "https://www.osc.ny.gov/files/local-government/audits/2017-10/lgsa-audit-city-2015-utica.pdf",
+    "quote": "raise the collection percentage to 85 percent",
+    "locator": "audit recommendation (benchmark the auditor considered achievable)"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "No published collection rate for water-restriction citations found (searched municipal water-violation fines collection, Denver/Tampa/LADWP enforcement pages, utility audits). Closest analogue is municipal civil citations (parking): 69% observed, 85% judged achievable by the auditor. Water fines added to a utility bill (with shutoff leverage) likely collect at the higher end. 0.75 is consistent; range 0.4-0.95 is wide but covers it. Cited EPA source (nepis) text was empty (40 bytes) and the EPA PDF URL tried returned XML, so it could not be checked.",
+  "confidence": "Low"
+ },
+ {
+  "id": "lake_now",
+  "value_model": 4191.1,
+  "verdict": "corrected",
+  "value_new": 4189.7,
+  "low_new": null,
+  "high_new": null,
+  "quote": "2026-09-30 4189.7 (P); 2026-10-21 4189.7 (P); 2025-09-30 4191.1",
+  "locator": "USGS 10010000 Great Salt Lake at Saltair Boat Harbor, daily mean elevation (62614, ft NGVD29)",
+  "url": "https://waterservices.usgs.gov/nwis/dv/?format=json&sites=10010000&parameterCd=62614&startDT=2025-09-01&endDT=2026-10-23",
+  "source_title": "USGS NWIS daily values, site 10010000",
+  "publisher": "U.S. Geological Survey",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "Great Salt Lake's south arm finished the 2025 water year at 4,191.1 feet, the third-lowest recorded elevation since 1903.",
+    "locator": "PDF p.21, Figure 7 section"
+   }
+  ],
+  "arithmetic": "Model value equals USGS daily mean on 2025-09-30 (end of WY2025) exactly.",
+  "notes": "The model's 4,191.1 is correct for end of WY2025 (Sept 30, 2025) and confirmed by both USGS and the Strike Team. It is now a year out of date: end of WY2026 (2026-09-30) was 4,189.7 ft and the latest value (2026-10-21) is 4,189.7 ft, provisional. 2026 peak was 4,192.6 (2026-04-02). The lake is now below the model's serious_low (4,190) and near the 2022 record low of 4,188.5. Use 4,189.7 (as of Oct 2026, provisional) if the model is meant to start today.",
+  "confidence": "High"
+ },
+ {
+  "id": "healthy_min",
+  "value_model": 4198,
+  "verdict": "confirmed",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "This analysis has determined that the healthy range of the lake for both human and ecological interests is between 4,198 and 4,205 feet above sea level.",
+  "locator": "Strategic Plan PDF p.8; also p.24 ('target range for the lake between 4,198-4,205 feet')",
+  "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
+  "source_title": "The Great Salt Lake Strategic Plan (Jan 15, 2024)",
+  "publisher": "Office of the Great Salt Lake Commissioner",
+  "year": 2024,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "publisher": "GSL Strike Team",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "quote": "Fill to 4,198 feet in 5 years",
+    "locator": "PDF p.10, Figure 1 elevation ranges"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Confirmed; 4,198 ft is also the threshold for mineral companies' full base water rights (Strike 2026).",
+  "confidence": "High"
+ },
+ {
+  "id": "healthy_max",
+  "value_model": 4205,
+  "verdict": "confirmed",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "The Commissioner is establishing a target range for the lake between 4,198-4,205 feet, based upon the healthy range for the long-term health of the entire Great Salt Lake using the Great Salt Lake Elevation Matrix.",
+  "locator": "Strategic Plan PDF p.24, Objective 3",
+  "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
+  "source_title": "The Great Salt Lake Strategic Plan (Jan 15, 2024)",
+  "publisher": "Office of the Great Salt Lake Commissioner",
+  "year": 2024,
+  "extra_sources": [],
+  "arithmetic": "",
+  "notes": "Confirmed.",
+  "confidence": "High"
+ },
+ {
+  "id": "serious_low",
+  "value_model": 4190,
+  "verdict": "confirmed",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "develop a short-term contingency plan to keep the South Arm of the lake from falling below 4,190 feet or hitting a salinity trigger to avoid serious adverse effects",
+  "locator": "Strategic Plan PDF p.26, Objective 3 action",
+  "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
+  "source_title": "The Great Salt Lake Strategic Plan (Jan 15, 2024)",
+  "publisher": "Office of the Great Salt Lake Commissioner",
+  "year": 2024,
+  "extra_sources": [
+   {
+    "title": "The Great Salt Lake Strategic Plan",
+    "publisher": "Office of the GSL Commissioner",
+    "year": 2024,
+    "url": "https://greatsaltlake.utah.gov/wp-content/uploads/Great-Salt-Lake-Strategic-Plan.pdf",
+    "quote": "to be experiencing serious adverse effects when below 4,192 feet",
+    "locator": "PDF p.25"
+   },
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "ended the 2025 water year at 4,191.1 feet, within the “serious adverse effects” range",
+    "locator": "PDF p.21"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "4,190 is confirmed as the contingency-plan floor (matches the model's basis). But the label 'level below which effects are serious' is inexact: the Elevation Matrix / Strategic Plan place 'serious adverse effects' below 4,192 ft, and the Strike Team classed 4,191.1 as already in that range. Mineral diversions also cease below 4,190 (Strike 2025 p.20). If the model's metric is meant to be 'serious adverse effects', 4,192 is the official threshold; if it is the contingency floor, keep 4,190.",
+  "confidence": "High"
+ },
+ {
+  "id": "basin_depletion",
+  "value_model": 2387,
+  "verdict": "confirmed",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Total Depletion 2,271 2,155 2,483 2,341 2,270 2,306 2,387",
+  "locator": "Strike 2026 PDF p.25 (printed p.22-23), Average Depletion (KAF/year) table, column 2020-2024; source DWR (2025) Great Salt Lake Water Budget",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team (USU / U of U / State of Utah)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake 2025: Data and Insights",
+    "publisher": "GSL Strike Team",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf",
+    "quote": "They range from a low of 1,800 KAF to a high of 2,600 KAF, averaging 2,217 KAF per year.",
+    "locator": "PDF p.15 (printed p.12); old water-budget method, 1989-2023"
+   }
+  ],
+  "arithmetic": "2020-24 components: ag 1,551 + incidental 33 + M&I 640 + minerals 136 + reservoir 27 = 2,387.",
+  "notes": "2,387 is the 2020-2024 five-year average under DWR's Dec-2025 updated water budget (91% outdoor-depletion assumption). The 2025 Strike report (old method) gave lower figures (2,217 avg 1989-2023); the 2025 report's table is superseded. Not a single-year value.",
+  "confidence": "High"
+ },
+ {
+  "id": "ag_depletion",
+  "value_model": 1584,
+  "verdict": "confirmed",
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Agriculture - Includes all agricultural water depletions. 1,607 1,425 1,647 1,465 1,395 1,426 1,551",
+  "locator": "Strike 2026 PDF p.25, Average Depletion table, 2020-2024 column (Agriculture 1,551; Agricultural Incidental Losses 33)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team (USU / U of U / State of Utah)",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "1,551 (agriculture) + 33 (agricultural incidental losses: riparian vegetation along canals/flood-irrigated fields) = 1,584 KAF/yr, 2020-2024 average.",
+  "notes": "Model's 1,584 includes incidental losses; ag alone is 1,551. Strike 2025 (old method) gave 1,491 for 2019-2023. Strike 2026 says agriculture was 65.0% of depletion 2020-24.",
+  "confidence": "High"
+ },
+ {
+  "id": "mi_depletion",
+  "value_model": 328,
+  "verdict": "corrected",
+  "value_new": 354,
+  "low_new": 320,
+  "high_new": 390,
+  "quote": "Residential lawn watering - In 2024, the watering of residential lawns depleted 408.5 KAF ... In 2024, outdoor depletions accounted for 96.9% of all residential depletions.",
+  "locator": "Strike 2026 PDF p.27, Figures 14-15 insights; M&I 640 and minerals 136 from PDF p.25 table (2020-2024)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team (USU / U of U / State of Utah)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "[Residential depletions] accounted for 61% of all M&I depletions in 2024.",
+    "locator": "PDF p.27, Figure 14 insights"
+   },
+   {
+    "title": "Great Salt Lake Data and Insights Summary",
+    "publisher": "GSL Strike Team",
+    "year": 2026,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+    "quote": "depletions from the three mineral companies declined from 186 KAF in 2020 to 77 KAF in 2024.",
+    "locator": "PDF p.27"
+   }
+  ],
+  "arithmetic": "Model: 2,387 - 1,584 - 475 (residential: 409 outdoor + 66 indoor) = 328, which implicitly puts the 27 KAF reservoir evaporation into this category and uses an indoor figure (66) not found in any source. From the source: residential 2024 = 408.5/0.969 = 421.6 KAF (indoor ~13.1). Non-residential M&I = 640 - 421.6 = 218.4; + minerals 136 = 354.4 KAF/yr. Cross-check with the 61% share: 640 x 0.39 = 249.6 + 136 = 385.6.",
+  "notes": "328 is not stated anywhere; it is a residual. Two problems: (1) reservoir evaporation (27 KAF, 2020-24) is folded in, contradicting charge_base's own definition; (2) residential indoor 66 KAF is ~5x the Strike Team's implied 2024 indoor (3.1% of residential, ~13 KAF). Corrected value ~354 mixes 2024 residential with 2020-24 averages (DWR's 2020-24 residential average not published in the text; the figure 14 series is not extractable). Range 320-390 covers the year-mixing. Also CONSUMERS in data.ts lists minerals 152 (2025-report value for 1999-2003) vs 136 in the current 2020-24 table. Minerals are falling fast (77 KAF from three companies in 2024).",
+  "confidence": "Medium"
+ },
+ {
+  "id": "charge_base",
+  "value_model": 1912,
+  "verdict": "corrected",
+  "value_new": 1938,
+  "low_new": 1900,
+  "high_new": 1975,
+  "quote": "Reservoir - Represents evaporation from reservoirs (does not include Bear or Utah Lakes). 32 9 37 18 23 20 27",
+  "locator": "Strike 2026 PDF p.25 Average Depletion table (2020-2024 column), with residential from PDF p.27",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team (USU / U of U / State of Utah)",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "By the model's own definition (all depletion except residential and reservoir evaporation): 2,387 - 27 (reservoir) - 421.6 (residential 2024) = 1,938.4. Equivalently ag 1,584 + corrected mi 354.4 = 1,938.4. Model's 1,584 + 328 = 1,912 is arithmetically consistent with its inputs but its inputs subtract 475 residential and 0 reservoir.",
+  "notes": "Derivation is right in form but the residual includes reservoir evaporation and over-counts residential indoor. Corrected ~1,938 KAF/yr; sensitive to the residential estimate (61%-share method gives 640x0.61=390 residential -> 2,387-27-390 = 1,970). Also update the CONSUMERS table (minerals 136 not 152; residential_in ~13 not 66) so the who-uses-what view sums to 2,387 including a 27 KAF reservoir line.",
+  "confidence": "Medium"
+ }
+]
