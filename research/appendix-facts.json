@@ -1,0 +1,25 @@
+{
+ "note": "Figures the appendix needs that sit in sources the model already cites but are not model coefficients. Each was read from the opened source; quote and locator given.",
+ "facts": [
+  {"id": "us_alfalfa_tons_2023", "value": 49916000, "unit": "tons", "sourceId": "nass_bulletin_2024", "locator": "Rank & Quantity Produced, Selected Commodities - Utah, Leading States, & United States 2023, p.4", "quote": "Hay, Alfalfa ...... (1,000 tons) 12 1,960 Idaho 4,500 49,916"},
+  {"id": "utah_alfalfa_tons_2023", "value": 1960000, "unit": "tons", "sourceId": "nass_bulletin_2024", "locator": "same table, p.4 (Utah ranks 12th)", "quote": "Hay, Alfalfa ...... (1,000 tons) 12 1,960 Idaho 4,500 49,916"},
+  {"id": "utah_alfalfa_acres_2023", "value": 490000, "unit": "acres harvested", "sourceId": "nass_bulletin_2024", "locator": "Alfalfa Hay: Area Harvested, Yield, Production, Price, & Value - Utah: 2014-2023, p.15", "quote": "2023 ... 490 4.00 1,960 222.00 435,120"},
+  {"id": "utah_alfalfa_price_2023", "value": 222, "unit": "$/ton", "sourceId": "nass_bulletin_2024", "locator": "same table, p.15", "quote": "2023 ... 490 4.00 1,960 222.00 435,120"},
+  {"id": "utah_alfalfa_price_2022", "value": 297, "unit": "$/ton", "sourceId": "nass_bulletin_2024", "locator": "same table, p.15", "quote": "2022 ... 490 4.10 2,009 297.00 596,673"},
+  {"id": "utah_alfalfa_price_2016", "value": 127, "unit": "$/ton", "sourceId": "nass_bulletin_2024", "locator": "same table, p.15", "quote": "2016 ... 530 4.20 2,226 127.00 282,702"},
+  {"id": "utah_all_hay_acres_2023", "value": 660000, "unit": "acres harvested", "sourceId": "nass_bulletin_2024", "locator": "All Hay table, p.15", "quote": "2023 ... 660 3.77 2,487 222.00 528,926"},
+  {"id": "us_all_hay_tons_2023", "value": 118769000, "unit": "tons", "sourceId": "nass_bulletin_2024", "locator": "Rank table, p.4", "quote": "Hay, All ...... (1,000 tons) 20 2,487 Texas 8,748 118,769"},
+  {"id": "utah_winter_wheat_bu_2023", "value": 4611000, "unit": "bushels", "sourceId": "nass_bulletin_2024", "locator": "Rank table, p.4", "quote": "Wheat, Winter ...... (1,000 bu) 32 4,611 Kansas 201,250 1,247,748"},
+  {"id": "utah_farm_cash_receipts_2022", "value": 2719151000, "unit": "$", "sourceId": "nass_bulletin_2024", "locator": "Farm Income: Cash Receipts by Commodity - Utah: 2017-2022, p.9", "quote": "All Commodities ... 2,719,151"},
+  {"id": "alfalfa_net_irrigation_slc_in", "value": 28.97, "unit": "inches/season", "sourceId": "usu_consumptive_use", "locator": "Salt Lake City Intl AP, Alfalfa (Beef) Net Irr, PDF p.253", "quote": "Net Irr 1.01 4.59 6.09 6.64 6.49 3.86 0.29"},
+  {"id": "alfalfa_et_slc_in", "value": 37.22, "unit": "inches/season", "sourceId": "usu_consumptive_use", "locator": "Salt Lake City Intl AP, Alfalfa (Beef) ET, PDF p.253", "quote": "Alfalfa (Beef) 0.01 2.65 6.10 6.76 7.17 7.08 4.88 1.51 0.06"},
+  {"id": "hay_turf_share_ag_depletion", "value": 0.647, "unit": "share", "sourceId": "ag_optimization_2026", "locator": "Figure 2-5 and Table 2-3", "quote": "Most agricultural irrigated lands (by area and depletion volume) in GSL Basin are in Hay/Turf crop group"},
+  {"id": "alfalfa_to_winter_wheat_savings", "value": 0.61, "unit": "AF/acre", "sourceId": "ag_optimization_2026", "locator": "Table B-10", "quote": "Alfalfa Winter wheat 0.61 $276; Alfalfa Spring wheat 0.50 $493; Alfalfa Corn 0.53 $424"},
+  {"id": "nber_health_marginal_low", "value": 81, "unit": "$M per 100 km2 exposed lakebed per year", "sourceId": "evidence:dust_damage", "locator": "NBER w35270 abstract", "quote": "Marginal annual costs range from $81 to $175 million per 100 km2 of exposed lakebed."},
+  {"id": "nber_health_marginal_high", "value": 175, "unit": "$M per 100 km2 exposed lakebed per year", "sourceId": "evidence:dust_damage", "locator": "NBER w35270 abstract", "quote": "Marginal annual costs range from $81 to $175 million per 100 km2 of exposed lakebed."},
+  {"id": "lake_economy_output_minerals_2010", "value": 1130.8, "unit": "$M (2010$)", "sourceId": "le_interim_2022", "locator": "Estimated Total Economic Impact slide", "quote": "Industrial Sector (Mineral) 685.2 217.7 227.9 1,130.8"},
+  {"id": "lake_economy_output_recreation_2010", "value": 135.8, "unit": "$M (2010$)", "sourceId": "le_interim_2022", "locator": "same slide", "quote": "Recreation Sector 74.6 27.8 33.5 135.8"},
+  {"id": "lake_economy_output_brine_shrimp_2010", "value": 56.7, "unit": "$M (2010$)", "sourceId": "le_interim_2022", "locator": "same slide", "quote": "Aquaculture (brine shrimp eggs) 33.9 8.0 14.8 56.7"},
+  {"id": "lake_economy_jobs", "value": {"recreation": 1764, "industrial": 5368, "brineShrimp": 574, "total": 7706}, "unit": "jobs", "sourceId": "le_interim_2022", "locator": "same slide", "quote": "Recreation Sector 1,217 236 310 1,764 / Industrial Sector 1,967 1,288 2,112 5,368 / Aquaculture (brine shrimp eggs) 373 63 138 574 / TOTAL ALL SECTORS 7,706"}
+ ]
+}
