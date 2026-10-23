@@ -182,7 +182,7 @@ const out = {
   },
 
   /** What one assumption being wrong does to the lake, ranked. */
-  sensitivity: sensitivity(dials, 40),
+  sensitivity: sensitivity(dials, 500),
 
   budgetSweep: budgetSweep([25, 50, 100, 200, 300, 400, 600, 800], { ...dials, mandateFloorKaf: 0 }),
 
