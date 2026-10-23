@@ -1148,13 +1148,14 @@ const C: Coef[] = [
     value: 65_800,
     unit: '$ per job-year',
     group: 'Jobs',
-    status: 'assumption',
+    status: 'derived',
     basis:
-      'Statewide 2024 total covered wages divided by covered employment, as reported from the Department of Workforce Services annual table. Not opened from this session (the host was unreachable), so held as an assumption until checked.',
+      'Statewide 2024 total covered wages ($114,975,453,440) divided by average covered employment (1,747,330) = $65,801; the table’s average monthly wage of $5,483 x 12 = $65,796 agrees.',
+    formula: 'total wages ÷ average employment, State Total, 2024',
     sourceIds: ['dws_wages'],
     low: 55_000,
     high: 75_000,
-    confidence: 'Medium',
+    confidence: 'High',
   },
   {
     id: 'herd_feed_surplus',

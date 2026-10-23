@@ -77,6 +77,12 @@ Two things the tests corrected along the way:
   budget binds on money, not on willing sellers. Both regimes are now pinned by tests, and the
   header text on the page says which one the current settings are in.
 
+## Wage per job checked at source
+
+The $65,800 a job-year used to value the jobs the budget creates matches Workforce Services
+Table 19 (State Total, 2024): $114,975,453,440 in total wages over 1,747,330 average jobs is
+$65,801, and the table's $5,483 average monthly wage times twelve is $65,796.
+
 ## Not verified
 
 Stated plainly, because an unchecked number presented as checked is worse than an admitted gap.
@@ -89,6 +95,3 @@ Stated plainly, because an unchecked number presented as checked is worse than a
   implying support that does not exist.
 - The 2026 polling figures and the willingness-to-pay study were not read at source; their links
   resolve and are cited as reported.
-- The average wage used to value jobs the budget creates ($65,800 a job-year) is statewide 2024
-  covered wages over covered employment as reported from the Workforce Services annual table. The
-  table could not be opened from this session, so the figure is held as an assumption.
