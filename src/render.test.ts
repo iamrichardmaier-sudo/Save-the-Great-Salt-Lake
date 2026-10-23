@@ -12,7 +12,7 @@ import { DEFAULT_DIALS, pkgModel, type Dials } from './model';
 import { sensitivity, simulate } from './simulate';
 import { TABS, headerSummary, type Ctx } from './ui/tabs';
 import { CONTROLS } from './ui/controls';
-import { resetProvenance } from './ui/format';
+import { pct, resetProvenance } from './ui/format';
 
 function ctxFor(over: Partial<Dials> = {}): Ctx {
   const d = { ...DEFAULT_DIALS, ...over };
@@ -93,11 +93,19 @@ describe('the header summary', () => {
     expect(pkg).toContain(net);
   });
 
-  it('adapts when a lever is switched off rather than printing a zero', () => {
+  it('describes the scenario it is actually given when levers are switched off', () => {
+    // With nothing charged and nothing ordered, every acre-foot moved was bought, and the page
+    // has to say so rather than carrying language from a scenario it is not showing. Asserted
+    // against the model's own figures rather than against particular wording, so rewriting the
+    // copy cannot break it but describing the wrong scenario still will.
     const off = ctxFor({ mandateFloorKaf: 0, scarcityRatePerAf: 0, cropLevyPerAf: 0, lawnCutAsked: 0 });
+    expect(off.r.chargedKaf).toBeCloseTo(0, 6);
+    expect(off.r.orderedKaf).toBeCloseTo(0, 6);
+    expect(off.r.boughtShare).toBeCloseTo(1, 6);
+
     const pkg = TABS.find((t) => t.id === 'pkg')!.render(off);
-    expect(pkg).toContain('off');
-    expect(pkg).toContain('no limit');
+    expect(pkg).toContain(pct(off.r.boughtShare));
+    expect(pkg).not.toContain('NaN');
   });
 });
 
