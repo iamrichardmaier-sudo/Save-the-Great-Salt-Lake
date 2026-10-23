@@ -1,7 +1,11 @@
 /**
  * Every source the model cites. Nothing in src/data.ts may carry a URL of its own:
  * it references a source id here, so the Index tab and the link checker have one list.
+ * Sources opened while verifying the numbers are generated into research-sources.ts and
+ * appended here.
  */
+
+import { RESEARCH_SOURCES } from './research-sources';
 
 export interface Source {
   id: string;
@@ -296,6 +300,7 @@ export const SOURCES: Source[] = [
     url: 'https://greatsaltlake.utah.gov/',
     use: 'The 4,198–4,205 ft target range and the additional inflow the state believes it needs.',
   },
+  ...RESEARCH_SOURCES,
 ];
 
 const BY_ID = new Map(SOURCES.map((s) => [s.id, s]));
