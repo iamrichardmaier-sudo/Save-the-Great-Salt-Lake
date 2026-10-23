@@ -1678,7 +1678,7 @@ export const VERIFICATION: Record<string, Verification> = {
   },
   "hay_value_per_af": {
     "id": "hay_value_per_af",
-    "verdict": "range revised",
+    "verdict": "corrected",
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
@@ -1688,8 +1688,12 @@ export const VERIFICATION: Record<string, Verification> = {
     "locator": "2025 State Agriculture Overview, Utah, Crops table",
     "quote": "HAY, ALFALFA 480,000 [acres harvested] 4.3 TONS / ACRE 2,064,000 TONS 176 $ / TON 359,136,000",
     "arithmetic": "Revenue per acre (2025) = $359.136M / 480,000 ac = $748/ac (4.3 t x $174 effective). Divided by alfalfa ET of about 3.05 ft gives $245/AF (the model value). Divided by 2.64 AF/ac application gives $283. Divided by the 1.5 AF/ac depletion actually saved by fallowing (DWRe 2026) gives $499/AF. With the 25-yr average price ($212 x 4.0 t = $848/ac): $278/AF at 3.05 ft, $565/AF at 1.5 AF/ac.",
-    "notes": "NASS 2025 Utah alfalfa ~$748/acre; / ~3 ft consumed = 245 (model); / 1.5 AF/acre fallowing saving (state 2026 study) = ~$500.",
+    "notes": "Same quantity as the VALUE_PER_AF hay row. Divide by water depleted from irrigation (USU net irrigation requirement, 2.41 ft at Salt Lake City), not full evapotranspiration (~3 ft, which includes rain): NASS 2019-23 alfalfa $889/acre / 2.41 = $368/AF. 2025 prices give $310; the low end of the range covers that.",
     "confidence": "Medium",
+    "previous": {
+      "value": 245
+    },
+    "value": 368,
     "extra": [
       {
         "id": "ag_optimization_2026",
@@ -2840,18 +2844,25 @@ export const TABLE_VERIFICATION: Record<string, Verification> = {
     "checked": "2026-10-23",
     "reviewed": true,
     "sourceIds": [
-      "nass_bulletin_2024"
+      "nass_bulletin_2024",
+      "usu_consumptive_use"
     ],
-    "locator": "All Hay and Alfalfa Hay tables, Area Harvested, Yield, Production, Price & Value, p.15",
+    "locator": "Alfalfa Hay: Area Harvested, Yield, Production, Price & Value, Utah 2014-2023, p.15",
     "quote": "2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120",
-    "arithmetic": "All hay 2019-2023: value $2,699.8M over 3,430k harvested acres = $787/acre. Depletion per acre 2.15-2.41 AF (Ag Optimization report hay/turf ~857 KAF over 355,000 alfalfa acres plus grass hay). $787 / 2.41 = $326; $787 / 2.15 = $366. Alfalfa alone ($895/acre) gives up to $415.",
-    "notes": "NASS Utah Annual Bulletin 2024 p.15 re-opened: all hay 2019-23 value $2,699.8M on 3,430k acres = $787/acre; / 2.15-2.41 AF depleted per acre = $326-366.",
+    "arithmetic": "Alfalfa 2019-2023: value $2,275.8M over 2,560k harvested acres = $889/acre. Water depleted per acre = net irrigation requirement at Salt Lake City airport, 1.01+4.59+6.09+6.64+6.49+3.86+0.29 = 28.97 in = 2.41 ft (USU 2011, Alfalfa (Beef) Net Irr). $889 / 2.41 = $368/AF. With the 2025 price ($748/acre, NASS 2025 overview) it is $310.",
+    "notes": "NASS Utah Annual Bulletin 2024 p.15 re-opened: alfalfa 2019-23 $2,275.8M on 2,560k acres = $889/acre. USU 2011 Appendix I, Salt Lake City airport, alfalfa net irrigation 28.97 in = 2.41 ft. $889 / 2.41 = $368/AF.",
     "confidence": "Medium",
     "previous": {
       "value": 245
     },
-    "value": 345,
-    "extra": []
+    "value": 368,
+    "extra": [
+      {
+        "id": "usu_consumptive_use",
+        "locator": "Salt Lake City Intl AP, PDF p.253",
+        "quote": "Alfalfa (Beef) ... Net Irr 1.01 4.59 6.09 6.64 6.49 3.86 0.29"
+      }
+    ]
   },
   "VALUE_PER_AF/all_ag": {
     "id": "VALUE_PER_AF/all_ag",

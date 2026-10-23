@@ -12,8 +12,8 @@
     "decides": [
       "lake"
     ],
-    "lakeSwingFt": 4.020714481386676,
-    "nevSwingM": 9705.993349416553
+    "lakeSwingFt": 4.07994526384573,
+    "nevSwingM": 7971.236632345681
   },
   {
     "id": "precip_lake",
@@ -28,8 +28,8 @@
     "decides": [
       "lake"
     ],
-    "lakeSwingFt": 2.7246368981805063,
-    "nevSwingM": 2910.3752162748424
+    "lakeSwingFt": 2.7329735065695786,
+    "nevSwingM": 2840.4598995839697
   },
   {
     "id": "baseline_inflow",
@@ -48,8 +48,8 @@
       "water",
       "lake"
     ],
-    "lakeSwingFt": 1.9051904260122683,
-    "nevSwingM": 1415.3741824247772
+    "lakeSwingFt": 1.8853789754448371,
+    "nevSwingM": 1469.899163086644
   },
   {
     "id": "shepherd_growth",
@@ -66,8 +66,8 @@
       "water",
       "budget"
     ],
-    "lakeSwingFt": 1.6069976150738512,
-    "nevSwingM": 16467.877069660186
+    "lakeSwingFt": 1.5741216238584457,
+    "nevSwingM": 18189.46568920966
   },
   {
     "id": "inflow_efficiency",
@@ -82,8 +82,8 @@
     "decides": [
       "lake"
     ],
-    "lakeSwingFt": 1.5545697591360295,
-    "nevSwingM": 616.3596386940335
+    "lakeSwingFt": 1.5434981636017255,
+    "nevSwingM": 586.5631802126736
   },
   {
     "id": "streamflow_decline_2055",
@@ -99,8 +99,8 @@
     "decides": [
       "water"
     ],
-    "lakeSwingFt": 1.4850490252338204,
-    "nevSwingM": 10121.893697275416
+    "lakeSwingFt": 1.462276486456176,
+    "nevSwingM": 10101.598007728688
   },
   {
     "id": "delivery_base",
@@ -115,8 +115,8 @@
     "decides": [
       "water"
     ],
-    "lakeSwingFt": 1.3827520461854874,
-    "nevSwingM": 11918.016522893602
+    "lakeSwingFt": 1.3704199652065654,
+    "nevSwingM": 12238.901424695105
   },
   {
     "id": "forced_delivery_penalty",
@@ -131,8 +131,8 @@
     "decides": [
       "water"
     ],
-    "lakeSwingFt": 0.8242142303270157,
-    "nevSwingM": 14080.997872231157
+    "lakeSwingFt": 0.7657555546848016,
+    "nevSwingM": 13320.063248514496
   },
   {
     "id": "growth_draw_2055",
@@ -148,8 +148,8 @@
     "decides": [
       "water"
     ],
-    "lakeSwingFt": 0.6910546392255128,
-    "nevSwingM": 4715.333666363236
+    "lakeSwingFt": 0.6505847195194292,
+    "nevSwingM": 4671.638143526419
   },
   {
     "id": "measurement_gain_max",
@@ -164,8 +164,8 @@
     "decides": [
       "water"
     ],
-    "lakeSwingFt": 0.6034187939785625,
-    "nevSwingM": 4327.811671595235
+    "lakeSwingFt": 0.597051794969957,
+    "nevSwingM": 4140.695125311708
   },
   {
     "id": "thermostat_speed",
@@ -181,8 +181,8 @@
       "water",
       "budget"
     ],
-    "lakeSwingFt": 0.4399106256332743,
-    "nevSwingM": 3077.8166690472062
+    "lakeSwingFt": 0.4665629271130456,
+    "nevSwingM": 4081.7411353167845
   },
   {
     "id": "measurement_gain_scale",
@@ -197,8 +197,8 @@
     "decides": [
       "water"
     ],
-    "lakeSwingFt": 0.32153662069958955,
-    "nevSwingM": 2445.060320276636
+    "lakeSwingFt": 0.3366775236381727,
+    "nevSwingM": 2580.442504134575
   },
   {
     "id": "lease_elasticity",
@@ -214,8 +214,8 @@
       "water",
       "budget"
     ],
-    "lakeSwingFt": 0.1910475402537486,
-    "nevSwingM": 835.1308714892875
+    "lakeSwingFt": 0.19469616057631356,
+    "nevSwingM": 994.7151087476886
   },
   {
     "id": "crop_cap",
@@ -234,8 +234,8 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.18995128258484328,
-    "nevSwingM": 1934.8306993200895
+    "lakeSwingFt": 0.18882133975148463,
+    "nevSwingM": 2216.0752850315766
   },
   {
     "id": "response_k",
@@ -250,26 +250,8 @@
     "decides": [
       "lake"
     ],
-    "lakeSwingFt": 0.17707542887819727,
+    "lakeSwingFt": 0.1836774876801428,
     "nevSwingM": 0
-  },
-  {
-    "id": "shepherd_monitor_max",
-    "label": "Extra shepherding capacity monitoring can add",
-    "group": "Delivery",
-    "status": "assumption",
-    "value": 50,
-    "unit": "KAF/yr",
-    "feeds": [
-      "Rights and shepherding",
-      "Explanation only"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.15214891328105296,
-    "nevSwingM": 1738.054563223588
   },
   {
     "id": "shepherd_start",
@@ -286,8 +268,8 @@
       "water",
       "budget"
     ],
-    "lakeSwingFt": 0.14566436000040994,
-    "nevSwingM": 2718.9955947380877
+    "lakeSwingFt": 0.14146826733485796,
+    "nevSwingM": 3217.237341454951
   },
   {
     "id": "application_mean",
@@ -307,48 +289,8 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.12021580908549367,
-    "nevSwingM": 2206.2212887399364
-  },
-  {
-    "id": "cloud_cost",
-    "label": "Cloud seeding, cost per acre-foot",
-    "group": "Programmes",
-    "status": "sourced",
-    "value": 10,
-    "unit": "$/AF",
-    "feeds": [
-      "Programmes",
-      "Summary figures",
-      "Year-by-year budget"
-    ],
-    "decides": [
-      "water",
-      "budget",
-      "people"
-    ],
-    "lakeSwingFt": 0.11318647105781565,
-    "nevSwingM": 1170.721907802108
-  },
-  {
-    "id": "crop_cost",
-    "label": "Crop switching, cost per acre-foot",
-    "group": "Programmes",
-    "status": "derived",
-    "value": 318.4,
-    "unit": "$/AF",
-    "feeds": [
-      "Programmes",
-      "Summary figures",
-      "Year-by-year budget"
-    ],
-    "decides": [
-      "water",
-      "budget",
-      "people"
-    ],
-    "lakeSwingFt": 0.10356900203714758,
-    "nevSwingM": 1063.7464892646603
+    "lakeSwingFt": 0.12239174965998245,
+    "nevSwingM": 2476.3763287037727
   },
   {
     "id": "lease_rate_floor",
@@ -364,65 +306,8 @@
       "water",
       "budget"
     ],
-    "lakeSwingFt": 0.10139305917346064,
-    "nevSwingM": 394.5104807477692
-  },
-  {
-    "id": "cloud_cap",
-    "label": "Cloud seeding, most it can yield",
-    "group": "Programmes",
-    "status": "assumption",
-    "value": 50,
-    "unit": "KAF/yr",
-    "feeds": [
-      "Programmes",
-      "Summary figures",
-      "Year-by-year budget"
-    ],
-    "decides": [
-      "water",
-      "budget",
-      "people"
-    ],
-    "lakeSwingFt": 0.0889828072176897,
-    "nevSwingM": 929.8055675349169
-  },
-  {
-    "id": "levy_depletion_factor",
-    "label": "Depletion freed per acre-foot of application cut",
-    "group": "Crop levy",
-    "status": "assumption",
-    "value": 1.3,
-    "unit": "AF per AF/acre cut",
-    "feeds": [
-      "Crop levy"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.07602683731693105,
-    "nevSwingM": 1084.8170235412108
-  },
-  {
-    "id": "crop_delivery",
-    "label": "Crop switching, share reaching the lake",
-    "group": "Programmes",
-    "status": "assumption",
-    "value": 0.8,
-    "unit": "share",
-    "feeds": [
-      "Programmes",
-      "Summary figures",
-      "Year-by-year budget"
-    ],
-    "decides": [
-      "water",
-      "budget",
-      "people"
-    ],
-    "lakeSwingFt": 0.07041154519902193,
-    "nevSwingM": 730.1263800988818
+    "lakeSwingFt": 0.11803652334492654,
+    "nevSwingM": 556.0595867019074
   },
   {
     "id": "phrag_cost",
@@ -441,8 +326,121 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.06369070844993985,
-    "nevSwingM": 899.8542571034632
+    "lakeSwingFt": 0.114403540506828,
+    "nevSwingM": 1313.6753724593145
+  },
+  {
+    "id": "cloud_cost",
+    "label": "Cloud seeding, cost per acre-foot",
+    "group": "Programmes",
+    "status": "sourced",
+    "value": 10,
+    "unit": "$/AF",
+    "feeds": [
+      "Programmes",
+      "Summary figures",
+      "Year-by-year budget"
+    ],
+    "decides": [
+      "water",
+      "budget",
+      "people"
+    ],
+    "lakeSwingFt": 0.11312751018704148,
+    "nevSwingM": 1354.9727067010826
+  },
+  {
+    "id": "crop_cost",
+    "label": "Crop switching, cost per acre-foot",
+    "group": "Programmes",
+    "status": "derived",
+    "value": 318.4,
+    "unit": "$/AF",
+    "feeds": [
+      "Programmes",
+      "Summary figures",
+      "Year-by-year budget"
+    ],
+    "decides": [
+      "water",
+      "budget",
+      "people"
+    ],
+    "lakeSwingFt": 0.10453392807175987,
+    "nevSwingM": 1254.4202862978273
+  },
+  {
+    "id": "cloud_cap",
+    "label": "Cloud seeding, most it can yield",
+    "group": "Programmes",
+    "status": "assumption",
+    "value": 50,
+    "unit": "KAF/yr",
+    "feeds": [
+      "Programmes",
+      "Summary figures",
+      "Year-by-year budget"
+    ],
+    "decides": [
+      "water",
+      "budget",
+      "people"
+    ],
+    "lakeSwingFt": 0.08900540385275235,
+    "nevSwingM": 1077.0466201281233
+  },
+  {
+    "id": "levy_depletion_factor",
+    "label": "Depletion freed per acre-foot of application cut",
+    "group": "Crop levy",
+    "status": "assumption",
+    "value": 1.3,
+    "unit": "AF per AF/acre cut",
+    "feeds": [
+      "Crop levy"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.07629142509358644,
+    "nevSwingM": 1284.1956834452358
+  },
+  {
+    "id": "ramp_years",
+    "label": "Years a programme takes to reach full output",
+    "group": "Delivery",
+    "status": "assumption",
+    "value": 3,
+    "unit": "years",
+    "feeds": [
+      "Delivery and losses"
+    ],
+    "decides": [
+      "water"
+    ],
+    "lakeSwingFt": 0.0709466802973111,
+    "nevSwingM": 4301.247285681478
+  },
+  {
+    "id": "crop_delivery",
+    "label": "Crop switching, share reaching the lake",
+    "group": "Programmes",
+    "status": "assumption",
+    "value": 0.8,
+    "unit": "share",
+    "feeds": [
+      "Programmes",
+      "Summary figures",
+      "Year-by-year budget"
+    ],
+    "decides": [
+      "water",
+      "budget",
+      "people"
+    ],
+    "lakeSwingFt": 0.07058591599161446,
+    "nevSwingM": 866.2616722099629
   },
   {
     "id": "cloud_delivery",
@@ -461,94 +459,8 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.06273263994808076,
-    "nevSwingM": 661.0024985612617
-  },
-  {
-    "id": "ramp_years",
-    "label": "Years a programme takes to reach full output",
-    "group": "Delivery",
-    "status": "assumption",
-    "value": 3,
-    "unit": "years",
-    "feeds": [
-      "Delivery and losses"
-    ],
-    "decides": [
-      "water"
-    ],
-    "lakeSwingFt": 0.05135084567700687,
-    "nevSwingM": 4072.080888403223
-  },
-  {
-    "id": "shepherd_monitor_rate",
-    "label": "How quickly monitoring money buys that capacity",
-    "group": "Delivery",
-    "status": "assumption",
-    "value": 2.4,
-    "unit": "rate in a saturating curve",
-    "feeds": [
-      "Rights and shepherding"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.03865720307385345,
-    "nevSwingM": 464.3215854184891
-  },
-  {
-    "id": "hay_net_return",
-    "label": "Net return on an acre of hay",
-    "group": "Crop levy",
-    "status": "sourced",
-    "value": 305,
-    "unit": "$/acre",
-    "feeds": [
-      "Crop levy"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.029599783111734723,
-    "nevSwingM": 328.0967986444448
-  },
-  {
-    "id": "retire_capacity",
-    "label": "Water willing sellers will sell outright",
-    "group": "Acquisition",
-    "status": "assumption",
-    "value": 150,
-    "unit": "KAF/yr",
-    "feeds": [
-      "Rights and shepherding",
-      "Summary figures"
-    ],
-    "decides": [
-      "water",
-      "budget",
-      "people"
-    ],
-    "lakeSwingFt": 0.02458636585288332,
-    "nevSwingM": 53.326090480994026
-  },
-  {
-    "id": "levy_cut_cap",
-    "label": "Most the levy can cut on an acre",
-    "group": "Crop levy",
-    "status": "assumption",
-    "value": 0.5,
-    "unit": "share of application",
-    "feeds": [
-      "Crop levy"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.023303280509935576,
-    "nevSwingM": 394.77394798913156
+    "lakeSwingFt": 0.061449963773156924,
+    "nevSwingM": 759.5064261035513
   },
   {
     "id": "phrag_cap",
@@ -567,26 +479,79 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.019095990670393803,
-    "nevSwingM": 237.75855480830796
+    "lakeSwingFt": 0.041868129931572184,
+    "nevSwingM": 622.7090610707164
   },
   {
-    "id": "goal_added",
-    "label": "Added inflow the plan aims for",
-    "group": "Lake physics",
-    "status": "sourced",
-    "value": 800,
+    "id": "shepherd_monitor_rate",
+    "label": "How quickly monitoring money buys that capacity",
+    "group": "Delivery",
+    "status": "assumption",
+    "value": 2.4,
+    "unit": "rate in a saturating curve",
+    "feeds": [
+      "Rights and shepherding"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.04126387766609696,
+    "nevSwingM": 588.7094493452023
+  },
+  {
+    "id": "retire_capacity",
+    "label": "Water willing sellers will sell outright",
+    "group": "Acquisition",
+    "status": "assumption",
+    "value": 150,
     "unit": "KAF/yr",
     "feeds": [
-      "Baseline and goal",
+      "Rights and shepherding",
+      "Summary figures"
+    ],
+    "decides": [
+      "water",
+      "budget",
+      "people"
+    ],
+    "lakeSwingFt": 0.0396897073405853,
+    "nevSwingM": 132.6074763670622
+  },
+  {
+    "id": "shepherd_monitor_max",
+    "label": "Extra shepherding capacity monitoring can add",
+    "group": "Delivery",
+    "status": "assumption",
+    "value": 50,
+    "unit": "KAF/yr",
+    "feeds": [
+      "Rights and shepherding",
       "Explanation only"
     ],
     "decides": [
       "water",
-      "lake"
+      "budget"
     ],
-    "lakeSwingFt": 0.011700891289365245,
-    "nevSwingM": 159.24837532092351
+    "lakeSwingFt": 0.03860654193886148,
+    "nevSwingM": 1731.8355874634872
+  },
+  {
+    "id": "hay_net_return",
+    "label": "Net return on an acre of hay",
+    "group": "Crop levy",
+    "status": "sourced",
+    "value": 305,
+    "unit": "$/acre",
+    "feeds": [
+      "Crop levy"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.029138850276467565,
+    "nevSwingM": 398.1441424470395
   },
   {
     "id": "lease_capacity",
@@ -604,8 +569,25 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.010578053573226498,
-    "nevSwingM": 35.349094541714294
+    "lakeSwingFt": 0.02223446047082689,
+    "nevSwingM": 91.95956254362682
+  },
+  {
+    "id": "levy_cut_cap",
+    "label": "Most the levy can cut on an acre",
+    "group": "Crop levy",
+    "status": "assumption",
+    "value": 0.5,
+    "unit": "share of application",
+    "feeds": [
+      "Crop levy"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.01906066039828147,
+    "nevSwingM": 552.7166339601827
   },
   {
     "id": "phrag_delivery",
@@ -624,25 +606,8 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.007416944185024477,
-    "nevSwingM": 129.58021725458093
-  },
-  {
-    "id": "repossession_discount",
-    "label": "How far below average the value of repossessed ground sits",
-    "group": "Acquisition",
-    "status": "assumption",
-    "value": 0.26,
-    "unit": "share below mean",
-    "feeds": [
-      "Rights and shepherding"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.004736270202556625,
-    "nevSwingM": 14.86989622964029
+    "lakeSwingFt": 0.015413189151331608,
+    "nevSwingM": 230.15030749699508
   },
   {
     "id": "phrag_lag",
@@ -658,28 +623,26 @@
       "water",
       "budget"
     ],
-    "lakeSwingFt": 0.003790471413594787,
-    "nevSwingM": 26.96666879433178
+    "lakeSwingFt": 0.014195863530403585,
+    "nevSwingM": 21.978395950689446
   },
   {
-    "id": "onfarm_cost",
-    "label": "On-farm optimisation, cost per acre-foot",
-    "group": "Programmes",
+    "id": "goal_added",
+    "label": "Added inflow the plan aims for",
+    "group": "Lake physics",
     "status": "sourced",
-    "value": 581,
-    "unit": "$/AF",
+    "value": 800,
+    "unit": "KAF/yr",
     "feeds": [
-      "Programmes",
-      "Summary figures",
-      "Year-by-year budget"
+      "Baseline and goal",
+      "Explanation only"
     ],
     "decides": [
       "water",
-      "budget",
-      "people"
+      "lake"
     ],
-    "lakeSwingFt": 0.0020221882841724437,
-    "nevSwingM": 87.37288800941315
+    "lakeSwingFt": 0.01174817620722024,
+    "nevSwingM": 278.9861627075661
   },
   {
     "id": "onfarm_cap",
@@ -698,97 +661,45 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.0018026086554527865,
-    "nevSwingM": 63.29043142456794
+    "lakeSwingFt": 0.008374612160878314,
+    "nevSwingM": 109.37324583932786
   },
   {
-    "id": "application_cv",
-    "label": "Spread of application between fields",
-    "group": "Crop levy",
-    "status": "assumption",
-    "value": 0.3,
-    "unit": "coefficient of variation",
-    "feeds": [
-      "Crop levy",
-      "Explanation only"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.0008629967896922608,
-    "nevSwingM": 64.60284537619009
-  },
-  {
-    "id": "mi_elasticity",
-    "label": "How strongly cities and industry respond to price",
-    "group": "Scarcity charge",
-    "status": "assumption",
-    "value": 0.3,
-    "unit": "price elasticity (absolute)",
-    "feeds": [
-      "Scarcity charge"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.0005430718774732668,
-    "nevSwingM": 5.969852164424083
-  },
-  {
-    "id": "ag_charge_response",
-    "label": "How strongly farms cut back when charged",
-    "group": "Scarcity charge",
-    "status": "assumption",
-    "value": 0.4,
-    "unit": "coefficient",
-    "feeds": [
-      "Scarcity charge"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.0004585091010085307,
-    "nevSwingM": 200.79282691560365
-  },
-  {
-    "id": "mi_reference_price",
-    "label": "What cities and industry pay for water now",
-    "group": "Scarcity charge",
-    "status": "assumption",
-    "value": 640,
-    "unit": "$/AF",
-    "feeds": [
-      "Scarcity charge"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.00042630704592738766,
-    "nevSwingM": 4.1833808325536666
-  },
-  {
-    "id": "irrigation_net_value",
-    "label": "Net value of irrigation water to a farm",
-    "group": "Scarcity charge",
+    "id": "onfarm_cost",
+    "label": "On-farm optimisation, cost per acre-foot",
+    "group": "Programmes",
     "status": "sourced",
-    "value": 236,
+    "value": 581,
     "unit": "$/AF",
     "feeds": [
-      "Scarcity charge",
-      "Rights and shepherding",
-      "Summary figures"
+      "Programmes",
+      "Summary figures",
+      "Year-by-year budget"
     ],
     "decides": [
       "water",
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.0003916292534995591,
-    "nevSwingM": 146.3189203515867
+    "lakeSwingFt": 0.008298841284158698,
+    "nevSwingM": 128.1650802453296
+  },
+  {
+    "id": "repossession_discount",
+    "label": "How far below average the value of repossessed ground sits",
+    "group": "Acquisition",
+    "status": "assumption",
+    "value": 0.26,
+    "unit": "share below mean",
+    "feeds": [
+      "Rights and shepherding"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.004805396119991201,
+    "nevSwingM": 18.16586618279689
   },
   {
     "id": "onfarm_delivery",
@@ -807,8 +718,148 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.0001430984384569456,
-    "nevSwingM": 39.160936398744525
+    "lakeSwingFt": 0.004731267347779067,
+    "nevSwingM": 65.89323735147627
+  },
+  {
+    "id": "application_cv",
+    "label": "Spread of application between fields",
+    "group": "Crop levy",
+    "status": "assumption",
+    "value": 0.3,
+    "unit": "coefficient of variation",
+    "feeds": [
+      "Crop levy",
+      "Explanation only"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.0013566786392402719,
+    "nevSwingM": 80.5228765242864
+  },
+  {
+    "id": "ag_charge_response",
+    "label": "How strongly farms cut back when charged",
+    "group": "Scarcity charge",
+    "status": "assumption",
+    "value": 0.4,
+    "unit": "coefficient",
+    "feeds": [
+      "Scarcity charge"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.0005447377434393275,
+    "nevSwingM": 42.4775936747028
+  },
+  {
+    "id": "mi_reference_price",
+    "label": "What cities and industry pay for water now",
+    "group": "Scarcity charge",
+    "status": "assumption",
+    "value": 640,
+    "unit": "$/AF",
+    "feeds": [
+      "Scarcity charge"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.0003548118847902515,
+    "nevSwingM": 14.402923047127842
+  },
+  {
+    "id": "irrigation_net_value",
+    "label": "Net value of irrigation water to a farm",
+    "group": "Scarcity charge",
+    "status": "sourced",
+    "value": 236,
+    "unit": "$/AF",
+    "feeds": [
+      "Scarcity charge",
+      "Rights and shepherding",
+      "Summary figures"
+    ],
+    "decides": [
+      "water",
+      "budget",
+      "people"
+    ],
+    "lakeSwingFt": 0.0003341546380397631,
+    "nevSwingM": 33.6997438876715
+  },
+  {
+    "id": "mi_elasticity",
+    "label": "How strongly cities and industry respond to price",
+    "group": "Scarcity charge",
+    "status": "assumption",
+    "value": 0.3,
+    "unit": "price elasticity (absolute)",
+    "feeds": [
+      "Scarcity charge"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.00030768581291340524,
+    "nevSwingM": 20.3550941119247
+  },
+  {
+    "id": "escalator_step",
+    "label": "How fast the charge escalates while the lake is short",
+    "group": "Scarcity charge",
+    "status": "assumption",
+    "value": 0.12,
+    "unit": "per year",
+    "feeds": [
+      "Scarcity charge"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.00006225439483387163,
+    "nevSwingM": 0.5276422901661135
+  },
+  {
+    "id": "escalator_cap",
+    "label": "Most the escalator can multiply the charge by",
+    "group": "Scarcity charge",
+    "status": "assumption",
+    "value": 4,
+    "unit": "multiple",
+    "feeds": [
+      "Scarcity charge"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.000030147251891321503,
+    "nevSwingM": 0.31939793675701367
+  },
+  {
+    "id": "escalator_deadband",
+    "label": "Shortfall the escalator tolerates before climbing",
+    "group": "Scarcity charge",
+    "status": "assumption",
+    "value": 0.15,
+    "unit": "share of the goal",
+    "feeds": [
+      "Scarcity charge"
+    ],
+    "decides": [
+      "water",
+      "budget"
+    ],
+    "lakeSwingFt": 0.000015060906662256457,
+    "nevSwingM": 0.23565716706070816
   },
   {
     "id": "mi_depletion",
@@ -826,59 +877,8 @@
       "budget",
       "people"
     ],
-    "lakeSwingFt": 0.00007453511261701351,
-    "nevSwingM": 0.7358523030925426
-  },
-  {
-    "id": "escalator_step",
-    "label": "How fast the charge escalates while the lake is short",
-    "group": "Scarcity charge",
-    "status": "assumption",
-    "value": 0.12,
-    "unit": "per year",
-    "feeds": [
-      "Scarcity charge"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.00003378138444531942,
-    "nevSwingM": 7.587187894161616
-  },
-  {
-    "id": "escalator_cap",
-    "label": "Most the escalator can multiply the charge by",
-    "group": "Scarcity charge",
-    "status": "assumption",
-    "value": 4,
-    "unit": "multiple",
-    "feeds": [
-      "Scarcity charge"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.000015724700460850727,
-    "nevSwingM": 3.676296567733516
-  },
-  {
-    "id": "escalator_deadband",
-    "label": "Shortfall the escalator tolerates before climbing",
-    "group": "Scarcity charge",
-    "status": "assumption",
-    "value": 0.15,
-    "unit": "share of the goal",
-    "feeds": [
-      "Scarcity charge"
-    ],
-    "decides": [
-      "water",
-      "budget"
-    ],
-    "lakeSwingFt": 0.000010110273251484614,
-    "nevSwingM": 1.5580152813490713
+    "lakeSwingFt": 0.0000011856791388709098,
+    "nevSwingM": 2.2333672449021833
   },
   {
     "id": "budget",
@@ -1207,14 +1207,14 @@
       "people"
     ],
     "lakeSwingFt": 0,
-    "nevSwingM": 76819.41324416548
+    "nevSwingM": 76862.86602381253
   },
   {
     "id": "hay_value_per_af",
     "label": "What an acre-foot earns in hay",
     "group": "Value",
     "status": "derived",
-    "value": 245,
+    "value": 368,
     "unit": "$/AF",
     "feeds": [
       "Value and cost",
@@ -1225,7 +1225,7 @@
       "people"
     ],
     "lakeSwingFt": 0,
-    "nevSwingM": 4731.446128197436
+    "nevSwingM": 2610.482697275729
   },
   {
     "id": "farm_jobs_per_1000_acres",
@@ -1276,7 +1276,7 @@
       "budget"
     ],
     "lakeSwingFt": 0,
-    "nevSwingM": 2338.450911324093
+    "nevSwingM": 2163.5144496157227
   },
   {
     "id": "wage_per_job",
@@ -1311,7 +1311,7 @@
       "budget"
     ],
     "lakeSwingFt": 0,
-    "nevSwingM": 1501.9480402779664
+    "nevSwingM": 1519.4310564871266
   },
   {
     "id": "hay_yield",
@@ -1329,7 +1329,7 @@
       "budget"
     ],
     "lakeSwingFt": 0,
-    "nevSwingM": 1296.0243897725013
+    "nevSwingM": 1311.1104079344077
   },
   {
     "id": "livestock_jobs_at_risk",

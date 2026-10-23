@@ -56,11 +56,30 @@ exists: `npm test` fails if it drifts more than 0.6 ft from them. That is what l
 extend past the published range instead of drawing a straight line through it.
 
 One consequence worth stating: the evaporation figure usually quoted describes today's shrunken
-lake. Restoring it raises its own evaporation by roughly 760 KAF a year, which is why refilling
+lake. Restoring it raises its own evaporation by roughly 850 KAF a year, which is why refilling
 takes far more water than the current shortfall suggests.
+
+The lake's area at each elevation comes from the USGS 2023 elevation-area table at one-foot steps
+(Root, 2023). An earlier three-point straight line overstated the area by 9–15% in the range where
+the goal sits.
 
 ## What the model says
 
+- **On $100M a year the goal is reachable, but only at the edge.** Every number was re-checked at
+  source in October 2026 (`research/findings.md`). With the corrected numbers the package the
+  optimiser used to pick ends at about 4,197.5 ft in 2055 and misses the 4,198.5 ft goal (the
+  healthy floor plus a half-foot margin); before the corrections it reached 4,199.0 ft by 2051. A
+  search across every policy dial (`npm run goal-search`) finds a package that does reach it: the
+  goal is first met in 2047 and held, ending at 4,198.6 ft. To get there it needs:
+  - the mandate at the top of its range (a 1,200 KAF floor phased in over one year, taking only
+    what voluntary levers miss);
+  - the crop levy at its maximum, $400 per acre-foot above 1.5 AF an acre;
+  - repossession switched on;
+  - monitoring and phragmites removal at their caps.
+
+  That package is now the default. It clears the goal by under a tenth of a foot, so a 10% weaker
+  mandate, no levy, no repossession, or the pessimistic end of any of 33 uncertain numbers each
+  miss it. More money barely helps: at $200M a year the lake reaches 4,198.7 ft.
 - **Money is not the binding constraint, but only once something holds the price of a water right
   down.** With a scarcity charge in place, eight times the budget buys a few per cent more water
   and past roughly $400M a year it buys nothing at all: willing sellers and shepherding capacity
@@ -75,10 +94,12 @@ takes far more water than the current shortfall suggests.
 - **A watering ordinance is an enforcement-budget question, not a penalty-schedule question.**
   Quadrupling the fine buys a few points of compliance; multiplying the citation rate buys dozens.
   Ordinances are almost always written the other way round.
-- **Hay earns about $245 per acre-foot depleted and the same water is worth about $2,440 in the
-  lake**, which is the entire economic case and why the package takes water from there.
-- **Data centres and the lake are not competing for the same water.** Every announced industrial
-  project together needs a small fraction of what this package moves.
+- **Hay earns about $368 per acre-foot of irrigation water depleted and the same water is worth
+  about $2,440 in the lake**, which is the entire economic case and why the package takes water
+  from there.
+- **Data centres and the lake are not competing for the same water, on what is known.** No
+  announced project publishes an annual water volume. The model's allowance for all of them (an
+  assumption) is a small fraction of what this package moves.
 
 ## The budget, year by year
 
@@ -93,10 +114,14 @@ healthy floor plus a half-foot margin by the horizon and stay there; if the most
 fell short, water would be weighted more heavily until it did. Charges, levy, mandate and lawn
 rules are not moved.
 
-Built on the package the optimiser picks at its default weighting, the most economic split meets
-the goal on its own, a few years before the horizon. The wage per job is held as an assumption
-(see `research/findings.md`), and it is what makes monitoring the largest line: its jobs count as
-value in their own right.
+Built on the default package (the one the goal search chose), the most economic split meets the
+goal on its own: first in 2047, ending at 4,198.6 ft in 2055. Monitoring is the largest line. Its
+jobs count as value in their own right, and it raises how much acquired water can be shepherded to
+the lake. Phragmites removal takes most of the rest in the early years, and water rights take it
+once the charge revenue that pays for them winds down. `npm run schedule` writes the year-by-year
+split to `research/budget-schedule.csv`.
+
+`npm run effects` measures what each correction did by putting its old value back.
 
 ## Checking it
 

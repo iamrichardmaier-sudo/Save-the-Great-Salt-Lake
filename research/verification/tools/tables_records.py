@@ -38,6 +38,7 @@ GAUGE_T=("USGS daily discharge, Bear River near Corinne (10126000), Weber River 
 GQ="USGS 10126000 BEAR RIVER NEAR CORINNE, UT ... 00060 00003 ... Discharge, cubic feet per second (Mean)"
 GAUGE_A="Water-year sums of daily mean discharge x 1.98347 AF per cfs-day, three gauges, complete years 1950-2025 (69 common years). Means: 2000-2025 1,373 KAF; driest 10-yr window 2013-2022 1,181 KAF (0.86); last 20 yrs 2006-2025 1,469 (1.07); 1996-2025 1,573 (1.15); 1950-2025 1,879 (1.37). Ratios are taken against 2000-2025 because the model's baseline_inflow (1,665 KAF) is the Strike Team's 2000-2025 average; the three gauges miss ungauged and minor inflow, so only ratios are used."
 
+WT=("Crop and Wetland Consumptive Use and Open Water Surface Evaporation for Utah, Appendix I (NWS stations)","Utah State University for the Utah Division of Water Resources (Hill, Barker and Lewis)",2011)
 recs=[]
 # ---------- BASELINES
 recs += [
@@ -99,9 +100,10 @@ GDPN="BEA SAGDP2 (GDP in current dollars), Utah, 2025, downloaded from apps.bea.
 SPLIT="DWR 2019 Figure 4-1 statewide M&I use by type (2015): commercial 14%, institutional 13%, industrial 3% (30% non-residential). Applied to 218.4 KAF non-residential M&I depletion: commercial 101.9, institutional 94.6, industrial 21.8 KAF."
 DWRF=X("Utah's Regional M&I Water Conservation Goals","Utah Division of Water Resources",2019,DWRG,"Commercial 34 gpcd (14%) ... Institutional 32 gpcd (13%) ... Industrial 6 gpcd (3%)","Figure 4-1, p.15")
 recs += [
- R("VALUE_PER_AF/hay",245,"corrected","2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120","All Hay and Alfalfa Hay tables, Area Harvested, Yield, Production, Price & Value, p.15",NASSB,"Utah Annual Bulletin, 2024","USDA National Agricultural Statistics Service",2024,
-   vn=345,lo=325,hi=415,arith="All hay 2019-2023: value $2,699.8M over 3,430k harvested acres = $787/acre. Depletion per acre 2.15-2.41 AF (Ag Optimization report hay/turf ~857 KAF over 355,000 alfalfa acres plus grass hay). $787 / 2.41 = $326; $787 / 2.15 = $366. Alfalfa alone ($895/acre) gives up to $415.",
-   notes="245 matches 2016-17 prices. Gross value of output, not net to the farm (the net figure is irrigation_net_value, $236).",conf="Medium"),
+ R("VALUE_PER_AF/hay",245,"corrected","2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120","Alfalfa Hay: Area Harvested, Yield, Production, Price & Value, Utah 2014-2023, p.15",NASSB,"Utah Annual Bulletin, 2024","USDA National Agricultural Statistics Service",2024,
+   vn=368,lo=300,hi=500,arith="Alfalfa 2019-2023: value $2,275.8M over 2,560k harvested acres = $889/acre. Water depleted per acre = net irrigation requirement at Salt Lake City airport, 1.01+4.59+6.09+6.64+6.49+3.86+0.29 = 28.97 in = 2.41 ft (USU 2011, Alfalfa (Beef) Net Irr). $889 / 2.41 = $368/AF. With the 2025 price ($748/acre, NASS 2025 overview) it is $310.",
+   notes="Same figure as the coefficient hay_value_per_af. The old $245 divided by full alfalfa evapotranspiration (~3 ft, back-solved), which counts rain the crop uses as well as irrigation water. Gross value of output, not net to the farm (that is irrigation_net_value, $236).",conf="Medium",
+   extra=[X(*WT,USUI,"Alfalfa (Beef) ... Net Irr 1.01 4.59 6.09 6.64 6.49 3.86 0.29","Salt Lake City Intl AP, PDF p.253")]),
  R("VALUE_PER_AF/all_ag",1021,"unsupported","All Commodities ... 1,756,881 1,787,409 1,994,804 2,719,151","Farm Income: Cash Receipts by Commodity, Utah 2017-2022, p.9",NASSB,"Utah Annual Bulletin, 2024","USDA National Agricultural Statistics Service",2024,
    arith="2019-2022 statewide receipts average $2,064.6M / 1,584 KAF basin ag depletion = $1,303/AF; 2017-18 receipts give about $1,100.",
    notes="Not reproduced. The ratio divides statewide receipts by basin-only depletion, which overstates it; statewide agricultural depletion was not opened. Left unchanged and flagged.",conf="Low"),
@@ -126,7 +128,6 @@ recs += [
 # ---------- WATERING_MONTHS
 WQ="Turfgrass ... Net Irr 0.71 2.40 4.31 5.12 4.52 2.40 0.73"
 WL="Estimated Consumptive Use for NWS Station: SALT LAKE CITY INTL AP, 1971-2008, Turfgrass Net Irr (Apr-Oct), PDF p.254"
-WT=("Crop and Wetland Consumptive Use and Open Water Surface Evaporation for Utah, Appendix I (NWS stations)","Utah State University for the Utah Division of Water Resources (Hill, Barker and Lewis)",2011)
 net={'Apr':0.71,'May':2.40,'Jun':4.31,'Jul':5.12,'Aug':4.52,'Sep':2.40,'Oct':0.73}; tot=sum(net.values())
 model={'Jan':0,'Feb':0,'Mar':0,'Apr':0.03,'May':0.12,'Jun':0.21,'Jul':0.25,'Aug':0.23,'Sep':0.13,'Oct':0.03,'Nov':0,'Dec':0}
 for m,v in model.items():

@@ -242,11 +242,12 @@
   "why": "No cited source has 1,900; BLS QCEW 2024: cattle and dairy wage jobs ~1,670 statewide, ~1,000 in basin counties (self-employed not counted)."
  },
  "hay_value_per_af": {
-  "action": "accept_range",
-  "low": 150,
+  "action": "accept",
+  "value": 368,
+  "low": 300,
   "high": 500,
   "reviewed": "2026-10-23",
-  "why": "NASS 2025 Utah alfalfa ~$748/acre; / ~3 ft consumed = 245 (model); / 1.5 AF/acre fallowing saving (state 2026 study) = ~$500."
+  "why": "Same quantity as the VALUE_PER_AF hay row. Divide by water depleted from irrigation (USU net irrigation requirement, 2.41 ft at Salt Lake City), not full evapotranspiration (~3 ft, which includes rain): NASS 2019-23 alfalfa $889/acre / 2.41 = $368/AF. 2025 prices give $310; the low end of the range covers that."
  },
  "capital_price": {
   "action": "accept_range",
@@ -408,11 +409,11 @@
  },
  "VALUE_PER_AF/hay": {
   "action": "accept",
-  "value": 345,
+  "value": 368,
+  "low": 300,
+  "high": 500,
   "reviewed": "2026-10-23",
-  "why": "NASS Utah Annual Bulletin 2024 p.15 re-opened: all hay 2019-23 value $2,699.8M on 3,430k acres = $787/acre; / 2.15-2.41 AF depleted per acre = $326-366.",
-  "low": 325,
-  "high": 415
+  "why": "NASS Utah Annual Bulletin 2024 p.15 re-opened: alfalfa 2019-23 $2,275.8M on 2,560k acres = $889/acre. USU 2011 Appendix I, Salt Lake City airport, alfalfa net irrigation 28.97 in = 2.41 ft. $889 / 2.41 = $368/AF."
  },
  "VALUE_PER_AF/minerals": {
   "action": "accept",

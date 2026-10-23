@@ -1,0 +1,408 @@
+{
+ "preCorrectionPackage": {
+  "now": {
+   "flatFt": 4197.88719999434,
+   "scheduleFt": 4198.24761079956,
+   "firstYear": null,
+   "nevB": 50.01325945638934,
+   "meets": false
+  },
+  "rows": [
+   {
+    "id": "hay_acres",
+    "old": 399500,
+    "now": 228000,
+    "effectFt": -0.361,
+    "effectNevB": -3.84,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "response_k",
+    "old": 0.12,
+    "now": 0.17,
+    "effectFt": 0.314,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "area curve + inflow_efficiency",
+    "old": "three anchors, 1.03",
+    "now": "USGS table, 0.933",
+    "effectFt": -0.226,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "goal_added",
+    "old": 875,
+    "now": 800,
+    "effectFt": -0.08,
+    "effectNevB": -0.92,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "phrag_cost",
+    "old": 186,
+    "now": 610,
+    "effectFt": -0.066,
+    "effectNevB": -1.02,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "application_mean",
+    "old": 2.64,
+    "now": 2.4,
+    "effectFt": -0.047,
+    "effectNevB": -0.74,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "irrigation_net_value",
+    "old": 133,
+    "now": 236,
+    "effectFt": -0.031,
+    "effectNevB": -2.08,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "hay_net_return",
+    "old": 175,
+    "now": 305,
+    "effectFt": -0.023,
+    "effectNevB": -0.23,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "lawn_water",
+    "old": 408.5,
+    "now": 371,
+    "effectFt": -0.022,
+    "effectNevB": -0.19,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "lake_now",
+    "old": 4191.1,
+    "now": 4189.7,
+    "effectFt": -0.006,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "mi_reference_price",
+    "old": 380,
+    "now": 640,
+    "effectFt": -0.004,
+    "effectNevB": -0.22,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "mi_depletion",
+    "old": 328,
+    "now": 354.4,
+    "effectFt": 0,
+    "effectNevB": 0.02,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "charge_base",
+    "old": 1912,
+    "now": 1938.4,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "landscape_sqft",
+    "old": 6938,
+    "now": 5785,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "turf_need",
+    "old": 30,
+    "now": 24,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "lease_capacity",
+    "old": 200,
+    "now": 130,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "lease_base_rate",
+    "old": 380,
+    "now": 250,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "state_interest",
+    "old": 0.015,
+    "now": 0.03,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "hay_value_per_af",
+    "old": 245,
+    "now": 368,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "lake_jobs_full",
+    "old": 8650,
+    "now": 7706,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "state_households",
+    "old": 1265625,
+    "now": 1200000,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "inflow_cv",
+    "old": 0.35,
+    "now": 0.5,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "people_per_home",
+    "old": 2.83,
+    "now": 2.96,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "share_in_basin",
+    "old": 0.8,
+    "now": 0.86,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": false
+   }
+  ]
+ },
+ "defaultPackage": {
+  "now": {
+   "flatFt": 4198.527921228503,
+   "scheduleFt": 4198.566219441862,
+   "firstYear": 2047,
+   "nevB": 54.99756719423097,
+   "meets": true
+  },
+  "rows": [
+   {
+    "id": "area curve + inflow_efficiency",
+    "old": "three anchors, 1.03",
+    "now": "USGS table, 0.933",
+    "effectFt": -0.311,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "response_k",
+    "old": 0.12,
+    "now": 0.17,
+    "effectFt": 0.181,
+    "effectNevB": 0.15,
+    "withOldValueMeetsGoal": false
+   },
+   {
+    "id": "phrag_cost",
+    "old": 186,
+    "now": 610,
+    "effectFt": -0.034,
+    "effectNevB": -0.82,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "lease_base_rate",
+    "old": 380,
+    "now": 250,
+    "effectFt": -0.032,
+    "effectNevB": 0.01,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "hay_acres",
+    "old": 399500,
+    "now": 228000,
+    "effectFt": -0.027,
+    "effectNevB": -2.38,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "lease_capacity",
+    "old": 200,
+    "now": 130,
+    "effectFt": 0.023,
+    "effectNevB": 0.18,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "hay_value_per_af",
+    "old": 245,
+    "now": 368,
+    "effectFt": 0.017,
+    "effectNevB": -1.56,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "application_mean",
+    "old": 2.64,
+    "now": 2.4,
+    "effectFt": -0.016,
+    "effectNevB": -0.46,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "lake_now",
+    "old": 4191.1,
+    "now": 4189.7,
+    "effectFt": -0.006,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "goal_added",
+    "old": 875,
+    "now": 800,
+    "effectFt": -0.002,
+    "effectNevB": -0.02,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "irrigation_net_value",
+    "old": 133,
+    "now": 236,
+    "effectFt": 0.001,
+    "effectNevB": 0.02,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "state_interest",
+    "old": 0.015,
+    "now": 0.03,
+    "effectFt": -0.001,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "mi_depletion",
+    "old": 328,
+    "now": 354.4,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "charge_base",
+    "old": 1912,
+    "now": 1938.4,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "mi_reference_price",
+    "old": 380,
+    "now": 640,
+    "effectFt": 0,
+    "effectNevB": -0.01,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "hay_net_return",
+    "old": 175,
+    "now": 305,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "landscape_sqft",
+    "old": 6938,
+    "now": 5785,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "lawn_water",
+    "old": 408.5,
+    "now": 371,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "turf_need",
+    "old": 30,
+    "now": 24,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "lake_jobs_full",
+    "old": 8650,
+    "now": 7706,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "state_households",
+    "old": 1265625,
+    "now": 1200000,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "inflow_cv",
+    "old": 0.35,
+    "now": 0.5,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "people_per_home",
+    "old": 2.83,
+    "now": 2.96,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   },
+   {
+    "id": "share_in_basin",
+    "old": 0.8,
+    "now": 0.86,
+    "effectFt": 0,
+    "effectNevB": 0,
+    "withOldValueMeetsGoal": true
+   }
+  ]
+ }
+}

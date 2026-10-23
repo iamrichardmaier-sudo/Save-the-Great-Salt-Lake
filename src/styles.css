@@ -686,3 +686,9 @@ main { padding-block: 26px 70px; }
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* Verification columns on the Index tab. */
+.data .v-quote { display: block; font-style: italic; color: var(--ink-2); quotes: '“' '”'; }
+.data .v-quote-cell { min-width: 220px; max-width: 360px; }
+.data .v-loc { min-width: 160px; max-width: 260px; font-size: 12.5px; }
+.data td .detail { display: block; color: var(--ink-3); font-size: 11.5px; margin-top: 3px; }

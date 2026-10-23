@@ -17,6 +17,7 @@ import {
   coef,
 } from '../data';
 import { SOURCES, source } from '../sources';
+import { TABLE_VERIFICATION, VERIFICATION, type Verification } from '../verification';
 import { areaSqMi, equilibriumFt, inflowToHoldKaf } from '../lake';
 import { levyModel, seasonCoverage, type Dials, type PkgResult } from '../model';
 import { budgetSweep, levelForAdded, type SimResult, type TornadoRow } from '../simulate';
@@ -1124,6 +1125,37 @@ const baselineTab: Tab = {
   },
 };
 
+const VERDICT_CLASS: Record<string, string> = {
+  confirmed: 'sourced',
+  corrected: 'warn',
+  'range revised': 'derived',
+  derived: 'derived',
+  evidence: 'derived',
+  unsupported: 'assumption',
+  'no evidence': 'assumption',
+  open: 'assumption',
+};
+
+/** The verdict cell: what checking the number found, the value it replaced, and when. */
+function verdictCell(v: Verification | undefined, unit = ''): string {
+  if (!v) return '<span class="none">not checked</span>';
+  const was = v.previous?.value !== undefined
+    ? `<span class="detail">was ${fig(`${num(v.previous.value, Math.abs(v.previous.value) < 10 ? 2 : 0)}${unit ? ` ${unit}` : ''}`, { note: 'The value before it was checked at source.', sourceIds: v.sourceIds })}</span>`
+    : '';
+  return `<span class="pill pill-${VERDICT_CLASS[v.verdict] ?? 'derived'}">${escapeHtml(v.verdict)}</span>${was}<span class="detail">checked ${escapeHtml(v.checked)}${v.reviewed ? ', re-opened by reviewer' : ''}</span>`;
+}
+
+function locatorCell(v: Verification | undefined): string {
+  if (!v) return '—';
+  const links = sourceLinks(v.sourceIds);
+  return `${v.locator ? escapeHtml(v.locator) : '—'}${links ? `<span class="detail">${links}</span>` : ''}`;
+}
+
+function quoteCell(v: Verification | undefined): string {
+  if (!v || (!v.quote && !v.arithmetic)) return '<span class="none">none found</span>';
+  return `${v.quote ? `<q class="v-quote">${escapeHtml(v.quote)}</q>` : ''}${v.arithmetic ? `<span class="detail">${escapeHtml(v.arithmetic)}</span>` : ''}`;
+}
+
 const indexTab: Tab = {
   id: 'index',
   label: 'Index and sources',
@@ -1141,11 +1173,14 @@ const indexTab: Tab = {
             <td><span class="pill pill-${c.status}">${c.status}</span></td>
             <td>${escapeHtml(c.basis)}</td>
             <td>${c.sourceIds.map((sid) => { const s = source(sid); return `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.publisher)}</a>`; }).join(', ') || '<span class="none">none</span>'}</td>
+            <td>${verdictCell(VERIFICATION[c.id], c.unit)}</td>
+            <td class="v-loc">${locatorCell(VERIFICATION[c.id])}</td>
+            <td class="v-quote-cell">${quoteCell(VERIFICATION[c.id])}</td>
           </tr>`,
           )
           .join('');
         return `<table class="data data-index"><caption>${escapeHtml(g)}</caption>
-          <thead><tr><th>Figure</th><th>Value</th><th>Range</th><th>Status</th><th>Basis</th><th>Source</th></tr></thead>
+          <thead><tr><th>Figure</th><th>Value</th><th>Range</th><th>Status</th><th>Basis</th><th>Source</th><th>Verdict</th><th>Locator</th><th>Quote</th></tr></thead>
           <tbody>${rows}</tbody></table>`;
       })
       .join('');
@@ -1196,6 +1231,48 @@ const indexTab: Tab = {
       </li>`,
     ).join('');
 
+    const tableNames: Record<string, string> = {
+      BASELINES: 'Inflow baselines',
+      CONSUMERS: 'Who depletes the water',
+      STAKEHOLDERS: 'Stakeholder groups',
+      VALUE_PER_AF: 'Output per acre-foot by use',
+      WATERING_MONTHS: 'Lawn watering by month',
+      AREA_ANCHORS: 'Lake area by elevation',
+      USU_VALIDATION: 'Published equilibrium elevations',
+      LEGAL: 'Legal assumptions',
+      SOURCES: 'Source list',
+    };
+    const tableRows = Object.values(TABLE_VERIFICATION);
+    const sideTables = Object.keys(tableNames)
+      .map((name) => {
+        const rows = tableRows.filter((v) => v.id.startsWith(`${name}/`));
+        if (rows.length === 0) return '';
+        return `<table class="data data-index"><caption>${escapeHtml(tableNames[name])}</caption>
+          <thead><tr><th>Row</th><th>Now</th><th>Verdict</th><th>Locator</th><th>Quote</th><th>Notes</th></tr></thead>
+          <tbody>${rows
+            .map(
+              (v) => `<tr>
+              <td class="el-name">${escapeHtml(v.id.slice(name.length + 1))}</td>
+              <td class="num">${v.value !== undefined ? fig(num(v.value, Math.abs(v.value) < 10 ? 2 : 1), { note: 'The value the model now uses, after checking at source.', sourceIds: v.sourceIds }) : '—'}</td>
+              <td>${verdictCell(v)}</td>
+              <td class="v-loc">${locatorCell(v)}</td>
+              <td class="v-quote-cell">${quoteCell(v)}</td>
+              <td>${escapeHtml(v.notes)}</td>
+            </tr>`,
+            )
+            .join('')}</tbody></table>`;
+      })
+      .join('');
+    const verdictCounts = (records: Verification[]) => {
+      const c = new Map<string, number>();
+      for (const v of records) c.set(v.verdict, (c.get(v.verdict) ?? 0) + 1);
+      return [...c.entries()].sort((a, b) => b[1] - a[1]);
+    };
+    const coefVerdicts = verdictCounts(Object.values(VERIFICATION))
+      .map(([verdict, n]) => `${fig(num(n, 0), { note: `Coefficients whose verdict is "${verdict}".` })} ${escapeHtml(verdict)}`)
+      .join(', ');
+    const correctedCount = Object.values(VERIFICATION).filter((v) => v.previous?.value !== undefined).length;
+
     const counts = {
       sourced: COEFS.filter((c) => c.status === 'sourced').length,
       derived: COEFS.filter((c) => c.status === 'derived').length,
@@ -1224,10 +1301,19 @@ const indexTab: Tab = {
           A linked assumption is still an assumption. The source column says what evidence or analogue
           was used; the status column says whether the exact number is published, derived or model-made.
         </p>
+        <p>
+          Every number was checked again at source in October 2026. The verdict column says what that
+          found: ${coefVerdicts}. ${fig(num(correctedCount, 0), { note: 'Coefficients whose value changed after checking at source.' })}
+          values changed, and each shows the value it replaced. The locator says where in the source the
+          figure sits, and the quote is the passage it was checked against.
+        </p>
       </section>
 
       <h3 class="sec-head">Data and coefficients</h3>
       ${tables}
+
+      <h3 class="sec-head">Side tables, checked row by row</h3>
+      ${sideTables}
 
       <h3 class="sec-head">Assumptions</h3>
       <table class="data data-index">

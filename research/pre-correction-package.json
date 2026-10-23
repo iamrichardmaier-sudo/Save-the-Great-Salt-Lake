@@ -1,0 +1,31 @@
+{
+ "note": "optimise(0.6, {tries:1000, seed:424242}) on commit 1df615a, before the re-verified values were applied. Reached 4,198.96 ft in 2055, goal first met 2051, NEV $59.05B.",
+ "dials": {
+  "startYear": 2027,
+  "horizon": 2055,
+  "baselineId": "thirty",
+  "budgetM": 100,
+  "monitoringM": 48.57984674163163,
+  "leaseToOwnM": 2.6904890779405832,
+  "capitalPricePerAf": 5461.065959010739,
+  "scarcityRatePerAf": 259.07092867419124,
+  "escalatorOn": false,
+  "cropLevyPerAf": 348.7131061963737,
+  "levyThresholdAfPerAcre": 1.5993964407825842,
+  "levyToTransition": 0.4807203779928386,
+  "mandateFloorKaf": 175.3068208694458,
+  "mandatePhaseYears": 12.287053477019072,
+  "mandatePenaltyPerAf": 1257.900539310649,
+  "repossessOn": true,
+  "repossessInterest": 0.015,
+  "repossessCapKaf": 107.28991411160678,
+  "cloudM": 4.109100310597569,
+  "phragM": 11.88982121529989,
+  "cropSwitchM": 0.7079485198482871,
+  "lawnCutAsked": 0.43327157257590443,
+  "enforcementWindowId": "season",
+  "citationsPerThousandJuly": 13.390409969724715,
+  "finePerViolation": 366.4068558719009,
+  "longDrought": false
+ }
+}

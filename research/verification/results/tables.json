@@ -354,18 +354,27 @@
   "id": "VALUE_PER_AF/hay",
   "value_model": 245,
   "verdict": "corrected",
-  "value_new": 345,
-  "low_new": 325,
-  "high_new": 415,
+  "value_new": 368,
+  "low_new": 300,
+  "high_new": 500,
   "quote": "2019 ... 510 4.30 2,193 182.00 399,126 ... 2023 ... 490 4.00 1,960 222.00 435,120",
-  "locator": "All Hay and Alfalfa Hay tables, Area Harvested, Yield, Production, Price & Value, p.15",
+  "locator": "Alfalfa Hay: Area Harvested, Yield, Production, Price & Value, Utah 2014-2023, p.15",
   "url": "https://data.nass.usda.gov/Statistics_by_State/Utah/Publications/Annual_Statistical_Bulletin/2024-Agricultural-Statistics.pdf",
   "source_title": "Utah Annual Bulletin, 2024",
   "publisher": "USDA National Agricultural Statistics Service",
   "year": 2024,
-  "extra_sources": [],
-  "arithmetic": "All hay 2019-2023: value $2,699.8M over 3,430k harvested acres = $787/acre. Depletion per acre 2.15-2.41 AF (Ag Optimization report hay/turf ~857 KAF over 355,000 alfalfa acres plus grass hay). $787 / 2.41 = $326; $787 / 2.15 = $366. Alfalfa alone ($895/acre) gives up to $415.",
-  "notes": "245 matches 2016-17 prices. Gross value of output, not net to the farm (the net figure is irrigation_net_value, $236).",
+  "extra_sources": [
+   {
+    "title": "Crop and Wetland Consumptive Use and Open Water Surface Evaporation for Utah, Appendix I (NWS stations)",
+    "publisher": "Utah State University for the Utah Division of Water Resources (Hill, Barker and Lewis)",
+    "year": 2011,
+    "url": "https://extension.usu.edu/irrigation/files/Appendix_I_ET_NWS_Stations.pdf",
+    "quote": "Alfalfa (Beef) ... Net Irr 1.01 4.59 6.09 6.64 6.49 3.86 0.29",
+    "locator": "Salt Lake City Intl AP, PDF p.253"
+   }
+  ],
+  "arithmetic": "Alfalfa 2019-2023: value $2,275.8M over 2,560k harvested acres = $889/acre. Water depleted per acre = net irrigation requirement at Salt Lake City airport, 1.01+4.59+6.09+6.64+6.49+3.86+0.29 = 28.97 in = 2.41 ft (USU 2011, Alfalfa (Beef) Net Irr). $889 / 2.41 = $368/AF. With the 2025 price ($748/acre, NASS 2025 overview) it is $310.",
+  "notes": "Same figure as the coefficient hay_value_per_af. The old $245 divided by full alfalfa evapotranspiration (~3 ft, back-solved), which counts rain the crop uses as well as irrigation water. Gross value of output, not net to the farm (that is irrigation_net_value, $236).",
   "confidence": "Medium"
  },
  {

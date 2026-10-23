@@ -953,14 +953,15 @@ const C: Coef[] = [
   {
     id: 'hay_value_per_af',
     label: 'What an acre-foot earns in hay',
-    value: 245,
+    value: 368,
     unit: '$/AF',
     group: 'Value',
     status: 'derived',
-    basis: 'Hay receipts divided by the water depleted growing it.',
-    formula: 'yield x price ÷ consumptive use per acre',
-    sourceIds: ['nass_utah'],
-    low: 150,
+    basis:
+      'Alfalfa value of production per acre, 2019-23 (NASS Utah bulletin 2024 p.15: $2,275.8M on 2,560k acres = $889), divided by the irrigation water it depletes (USU 2011, Salt Lake City airport, alfalfa net irrigation 28.97 in = 2.41 ft). The old 245 divided by full evapotranspiration, which counts rain as well.',
+    formula: 'value per acre ÷ net irrigation requirement per acre',
+    sourceIds: ['nass_bulletin_2024', 'usu_consumptive_use'],
+    low: 300,
     high: 500,
     confidence: 'Medium',
   },
@@ -1617,7 +1618,7 @@ export interface UseValue {
 }
 
 export const VALUE_PER_AF: readonly UseValue[] = [
-  { id: 'hay', label: 'Alfalfa and other hay', dollarsPerAf: 345, category: 'taken', basis: 'Value of hay production per acre (2019–23) divided by water depleted per acre.', sourceIds: ['nass_bulletin_2024', 'ag_optimization_2026'] },
+  { id: 'hay', label: 'Alfalfa and other hay', dollarsPerAf: 368, category: 'taken', basis: 'Alfalfa value of production per acre (2019–23) divided by the irrigation water it depletes.', sourceIds: ['nass_bulletin_2024', 'usu_consumptive_use'] },
   { id: 'all_ag', label: 'All agriculture (crops and livestock)', dollarsPerAf: 1021, category: 'taken', basis: 'Sector receipts divided by sector depletion.', sourceIds: ['nass_utah', 'bea_gdp'] },
   { id: 'minerals', label: 'Great Salt Lake mineral extraction', dollarsPerAf: 8315, category: 'taken', basis: 'Sector output divided by sector depletion.', sourceIds: ['le_interim_2022', 'strike_2026'] },
   { id: 'nuclear_wet', label: 'Nuclear power, wet cooling (per 1,000 MW)', dollarsPerAf: 27000, category: 'proposed', basis: 'Generation value divided by cooling water consumed.', sourceIds: ['macknick_2012'] },

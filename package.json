@@ -15,7 +15,8 @@
     "schedule": "tsx scripts/budget-schedule.ts",
     "trace": "tsx scripts/trace-dependencies.ts",
     "verification": "tsx scripts/build-verification.ts",
-    "goal-search": "tsx scripts/goal-search.ts"
+    "goal-search": "tsx scripts/goal-search.ts",
+    "effects": "tsx scripts/correction-effects.ts"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
