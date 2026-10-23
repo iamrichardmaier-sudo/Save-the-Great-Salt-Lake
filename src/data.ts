@@ -1143,6 +1143,20 @@ const C: Coef[] = [
     confidence: 'Low',
   },
   {
+    id: 'wage_per_job',
+    label: 'Average annual wage per Utah job',
+    value: 65_800,
+    unit: '$ per job-year',
+    group: 'Jobs',
+    status: 'assumption',
+    basis:
+      'Statewide 2024 total covered wages divided by covered employment, as reported from the Department of Workforce Services annual table. Not opened from this session (the host was unreachable), so held as an assumption until checked.',
+    sourceIds: ['dws_wages'],
+    low: 55_000,
+    high: 75_000,
+    confidence: 'Medium',
+  },
+  {
     id: 'herd_feed_surplus',
     label: 'Forage the basin grows beyond what its own herds eat',
     value: 596000,

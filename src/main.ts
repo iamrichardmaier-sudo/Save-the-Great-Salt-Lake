@@ -9,8 +9,8 @@
 import './styles.css';
 import { DEFAULT_DIALS, pkgModel, reconcile, type Dials, type PkgResult } from './model';
 import { optimise, sensitivity, simulate, type SimResult, type TornadoRow } from './simulate';
-import { leanestSchedule, optimiseSchedule, type ScheduleResult } from './schedule';
-import { TABS, headerSummary, type Ctx, type ScheduleMode } from './ui/tabs';
+import { fullSpendSchedule, type ScheduleResult } from './schedule';
+import { TABS, headerSummary, type Ctx } from './ui/tabs';
 import { CONTROLS, controlHelp } from './ui/controls';
 import { escapeHtml, lookupProvenance, num, pct, provenanceHtml, resetProvenance } from './ui/format';
 
@@ -19,7 +19,6 @@ interface State {
   tab: string;
   optWeight: number;
   reconOpen: boolean;
-  scheduleMode: ScheduleMode;
 }
 
 const VALID_TABS = new Set(TABS.map((t) => t.id));
@@ -29,16 +28,15 @@ const state: State = {
   tab: VALID_TABS.has(location.hash.slice(1)) ? location.hash.slice(1) : 'pkg',
   optWeight: 0.6,
   reconOpen: false,
-  scheduleMode: 'full',
 };
 
 let cache: { r: PkgResult; sim: SimResult; tornado: TornadoRow[] } | null = null;
 // The year-by-year budget runs the model thousands of times, so it is built only when a tab asks.
-let schedules: Partial<Record<ScheduleMode, ScheduleResult>> = {};
+let plan: ScheduleResult | null = null;
 
-function schedule(mode: ScheduleMode): ScheduleResult {
-  schedules[mode] ??= mode === 'lean' ? leanestSchedule(state.dials) : optimiseSchedule(state.dials);
-  return schedules[mode]!;
+function schedule(): ScheduleResult {
+  plan ??= fullSpendSchedule(state.dials);
+  return plan;
 }
 
 function compute(): Ctx {
@@ -50,12 +48,12 @@ function compute(): Ctx {
       tornado: sensitivity(state.dials, 12),
     };
   }
-  return { d: state.dials, ...cache, scheduleMode: state.scheduleMode, schedule };
+  return { d: state.dials, ...cache, schedule };
 }
 
 function invalidate(): void {
   cache = null;
-  schedules = {};
+  plan = null;
 }
 
 // ───────────────────────── Rendering ─────────────────────────
@@ -251,20 +249,6 @@ function wire(): void {
       render();
     }, 20);
   });
-
-  app.querySelectorAll<HTMLButtonElement>('[data-schedule]').forEach((b) =>
-    b.addEventListener('click', () => {
-      const mode = b.dataset.schedule as ScheduleMode;
-      if (mode === state.scheduleMode) return;
-      b.disabled = true;
-      b.textContent = 'Working…';
-      // Let the button repaint before the search blocks the thread.
-      setTimeout(() => {
-        state.scheduleMode = mode;
-        render();
-      }, 20);
-    }),
-  );
 
   app.querySelector<HTMLButtonElement>('#recon-toggle')?.addEventListener('click', () => {
     state.reconOpen = !state.reconOpen;

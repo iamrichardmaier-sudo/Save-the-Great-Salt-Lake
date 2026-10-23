@@ -82,18 +82,21 @@ takes far more water than the current shortfall suggests.
 
 ## The budget, year by year
 
-A flat split keeps paying a lever after it has stopped turning money into water. The budget tab
-builds each year separately: money goes out in small amounts, each to the line that buys the most
-water per dollar through the horizon, and stops when the next acre-foot would cost more than a
-cut-off. Two cut-offs are shown. **Everything worth its water** pays up to the lake value of an
-acre-foot. **Only what the goal needs** lowers the cut-off until any lower would miss the healthy
-floor (plus a half-foot margin) by the horizon. Charges, levy, mandate and lawn rules are not moved.
+Every year spends the whole budget; what the budget tab decides is where it goes. Each year's
+money goes out in small amounts, each to the line that adds the most net economic value per dollar
+through the horizon: water reaching the lake at its lake value, less the farm revenue and livestock
+receipts it takes, plus the wages of the jobs the money creates. Lake-economy and farm field jobs
+are left out of that sum because the lake value and lost farm revenue already count them. A
+programme is never funded past its capacity; when every line's next dollar is poor value the money
+still goes out, to the least poor, and the tab counts how much. The lake must still reach the
+healthy floor plus a half-foot margin by the horizon and stay there; if the most economic split
+fell short, water would be weighted more heavily until it did. Charges, levy, mandate and lawn
+rules are not moved.
 
-Built on the package the optimiser picks at its default weighting, the first spends almost all of
-the budget from the third year on. The second meets the same goal with roughly a fifth of it,
-because the charge, the levy and the rights the charge revenue buys do most of the work. Spending
-can also be partly self-defeating: the charge winds down as the lake recovers, so some of the water
-a dollar buys is given back in later years, and the search counts that.
+Built on the package the optimiser picks at its default weighting, the most economic split meets
+the goal on its own, a few years before the horizon. The wage per job is held as an assumption
+(see `research/findings.md`), and it is what makes monitoring the largest line: its jobs count as
+value in their own right.
 
 ## Checking it
 

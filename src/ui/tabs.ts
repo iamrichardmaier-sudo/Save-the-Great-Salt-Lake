@@ -50,14 +50,9 @@ export interface Ctx {
   r: PkgResult;
   sim: SimResult;
   tornado: TornadoRow[];
-  /** Which year-by-year budget the budget tab shows. */
-  scheduleMode: ScheduleMode;
   /** The year-by-year budget, built on demand: it runs the model thousands of times. */
-  schedule(mode: ScheduleMode): ScheduleResult;
+  schedule(): ScheduleResult;
 }
-
-/** 'full' funds everything worth its lake value; 'lean' only what the goal needs. */
-export type ScheduleMode = 'full' | 'lean';
 
 export interface Tab {
   id: string;
@@ -260,23 +255,21 @@ const budgetTab: Tab = {
   id: 'budget',
   label: '5 · Budget, year by year',
   group: 'plan',
-  render({ d, schedule, scheduleMode }) {
-    const s = schedule(scheduleMode);
-    const nYears = s.rows.length;
-    const ceilingM = d.budgetM * nYears;
-    const leanNote = 'only the money whose water the goal still needs, found by lowering the dearest acceptable acre-foot until any lower would miss the goal';
-    const fullNote = 'every dollar that buys water worth at least what it costs, at the lake value of an acre-foot';
+  render({ schedule }) {
+    const s = schedule();
+    const last = s.rows[s.rows.length - 1];
     const tableRows = s.rows
       .map((row) => {
         const cells = LEVERS.map(({ id, label }) => {
-          const extra = id === 'leaseM' && row.committedM > 1e-6 ? ' including contract payments' : '';
-          return `<td>${fig(millions(id === 'leaseM' ? row.spend.leaseM + row.committedM : row.spend[id], 1), { formula: `${label}${extra}, funded only while it still buys water`, assumed: true })}</td>`;
+          const value = id === 'leaseM' ? row.spend.leaseM + row.committedM : row.spend[id];
+          const extra = id === 'leaseM' ? ', including payments on rights already under contract' : '';
+          return `<td>${fig(millions(value, 1), { formula: `${label}${extra}, set by the year-by-year split`, assumed: true })}</td>`;
         }).join('');
         return `<tr>
           <td>${row.year}</td>
           ${cells}
           <td>${fig(millions(row.totalM, 1), { formula: 'sum of the lines in this row', assumed: true })}</td>
-          <td>${fig(millions(row.unspentM, 1), { formula: 'the annual budget − what this year spends', assumed: true })}</td>
+          <td>${fig(millions(row.nev.nevM, 0), { formula: 'lake value of water delivered − farm revenue lost − livestock receipts at risk + wages of jobs created', assumed: true })}</td>
           <td>${fig(feet(row.elevationFt, 2), { formula: 'the lake responding year by year to the inflow this budget delivers', assumed: true })}</td>
         </tr>`;
       })
@@ -284,56 +277,51 @@ const budgetTab: Tab = {
 
     return `
       <div class="tiles">
-        ${tile('Spent over the plan', fig(millions(s.totalSpentM, 0), { formula: 'sum of every year’s spending', assumed: true }), `against ${fig(millions(ceilingM, 0), { formula: 'annual budget x years in the plan', coef: 'budget' })} at the full budget every year`)}
-        ${tile('Not needed', fig(millions(s.totalSavedM, 0), { formula: 'annual budget x years − what the plan spends', assumed: true }), 'money that would have bought no water, or water the rule below does not pay for', s.totalSavedM > 0 ? 'tile-ok' : '')}
-        ${tile(`Lake in ${s.rows[nYears - 1].year}`, fig(feet(s.result.final.elevationFt, 2), { formula: 'the lake responding year by year to the inflow this budget delivers', assumed: true }), `the flat split reaches ${fig(feet(s.flat.final.elevationFt, 2), { formula: 'the same package with the same spending every year', assumed: true })}`, s.meetsGoal ? 'tile-ok' : 'tile-bad')}
+        ${tile('Net economic value', fig(millions(s.nevM, 0), { formula: 'sum over the plan of lake value − farm and livestock losses + wages created', assumed: true }), `against ${fig(millions(s.flatNevM, 0), { formula: 'the same measure for the same spending every year', assumed: true })} for the flat split`, s.nevM >= s.flatNevM ? 'tile-ok' : '')}
+        ${tile(`Lake in ${last.year}`, fig(feet(s.result.final.elevationFt, 2), { formula: 'the lake responding year by year to the inflow this budget delivers', assumed: true }), `the flat split reaches ${fig(feet(s.flat.final.elevationFt, 2), { formula: 'the same package with the same spending every year', assumed: true })}`, s.meetsGoal ? 'tile-ok' : 'tile-bad')}
         ${tile('Goal first met', s.firstYearAtTarget !== null ? fig(String(s.firstYearAtTarget), { formula: 'first year the lake stands at or above the target', assumed: true }) : 'not by the horizon', `target ${fig(feet(s.targetFt, 1), { formula: 'bottom of the healthy range + a safety margin', coef: 'healthy_min' })}${s.meetsGoal ? ', and held every year after' : ''}`, s.meetsGoal ? 'tile-ok' : 'tile-bad')}
+        ${tile('Spent past good value', fig(millions(s.pastValueM, 0), { formula: 'money placed where its water cost more than the lake value of an acre-foot', assumed: true }), `in ${fig(`${s.pastValueYears} years`, { formula: 'years with any such money', assumed: true })}, because the whole budget must be spent and nothing better was left`)}
       </div>
 
-      <div class="optimiser">
-        <div role="group" aria-label="Which budget">
-          <button type="button" class="${scheduleMode === 'full' ? 'btn-primary' : 'btn-ghost'}" data-schedule="full" aria-pressed="${scheduleMode === 'full'}">Everything worth its water</button>
-          <button type="button" class="${scheduleMode === 'lean' ? 'btn-primary' : 'btn-ghost'}" data-schedule="lean" aria-pressed="${scheduleMode === 'lean'}">Only what the goal needs</button>
-        </div>
-        <p class="opt-note">
-          This view funds ${scheduleMode === 'lean' ? leanNote : fullNote}. The dearest acre-foot it pays for is
-          ${fig(perAf(s.cutoffPerAf), scheduleMode === 'lean' ? { formula: 'lowest cut-off that still meets the goal', assumed: true } : { coef: 'lake_value_per_af' })}.
-          Charges, levy, mandate and lawn rules stay as set; only the money moves.
-          ${scheduleMode === 'full' ? 'The other view searches for its cut-off and takes several seconds.' : ''}
-        </p>
-      </div>
-
-      ${chart('chart-budget-stack', 'Where each year’s money goes', 'Stacked by spending line. The gap between the top of the stack and the annual budget is money no line could turn into water worth its cost that year.')}
+      ${chart('chart-budget-stack', 'Where each year’s money goes', 'Stacked by spending line. Every year spends the whole budget.')}
 
       <section class="prose">
-        <h3>How each year is decided</h3>
+        <h3>How each year is split</h3>
         <p>
-          Each year’s budget goes out in small amounts, each to whichever line buys the most water
-          per dollar, counting water and money through ${fig(String(s.rows[nYears - 1].year), { note: 'The horizon the model runs to.' })}.
-          A right bought now keeps delivering after it vests but commits payments in later years;
-          phragmites cleared now reaches the lake
-          ${fig(`${num(V('phrag_lag'), 0)} years`, { coef: 'phrag_lag' })} later, so clearing in the
-          last of those years buys nothing before the horizon. A line stops being funded once its next
-          dollar buys water dearer than the cut-off, or none at all because the programme is at
-          capacity, sellers are exhausted, or the early-year ramp limits what it can deliver.
+          Every year spends ${fig(millionsYr(s.result.dials.budgetM, 0), { coef: 'budget' })}. It goes
+          out in small amounts, each to whichever line adds the most net economic value per dollar,
+          counted through ${fig(String(last.year), { note: 'The horizon the model runs to.' })}: water
+          reaching the lake at ${fig(perAf(V('lake_value_per_af')), { coef: 'lake_value_per_af' })},
+          less the farm revenue and livestock receipts it takes, plus the wages of the transition and
+          monitoring jobs the money creates at ${fig(dollarsShort(V('wage_per_job')), { coef: 'wage_per_job' })}
+          a job-year.
         </p>
         <p>
-          A programme’s ramp is a calendar in this model, not a consequence of spending, so a year with
-          little money does not delay later years. Real programmes need early spending to build up; read
-          the light early years as the money the model says cannot yet be turned into water.
+          Lake-economy jobs and farm field jobs are left out of that sum on purpose: the lake value
+          already counts the lake economy, and lost farm revenue already counts farm wages. A programme
+          is never funded past its capacity. When every line’s next dollar buys water dearer than the
+          lake value, the money still goes out, to the least poor use; the tile above counts it.
+          ${s.lambda > 0
+            ? `The most economic split alone fell short of the goal, so water was weighted ${fig(num(s.lambda, 2), { formula: 'smallest extra weight on water that meets the goal', assumed: true })} times its lake value on top.`
+            : 'The most economic split meets the goal on its own, so no extra weight on water was needed.'}
+        </p>
+        <p>
+          A programme’s ramp is a calendar in this model, not a consequence of spending, and the
+          scarcity charge eases as the lake recovers, so part of the water a dollar buys is given back
+          in later years. The split counts both.
         </p>
       </section>
 
       <table class="data">
         <caption>The budget, year by year</caption>
-        <thead><tr><th>Year</th>${LEVERS.map((l) => `<th>${escapeHtml(l.label)}</th>`).join('')}<th>Spent</th><th>Not needed</th><th>Lake</th></tr></thead>
+        <thead><tr><th>Year</th>${LEVERS.map((l) => `<th>${escapeHtml(l.label)}</th>`).join('')}<th>Spent</th><th>Net economic value</th><th>Lake</th></tr></thead>
         <tbody>${tableRows}</tbody>
       </table>`;
   },
-  mount(root, { schedule, scheduleMode }) {
+  mount(root, { schedule }) {
     const el = byId(root, 'chart-budget-stack');
     if (!el) return;
-    const s = schedule(scheduleMode);
+    const s = schedule();
     drawStack(
       el,
       {

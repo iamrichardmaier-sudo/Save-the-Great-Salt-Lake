@@ -117,6 +117,14 @@ export const SOURCES: Source[] = [
     use: 'Employment base for farm, dairy and beef, and lake-economy job counts.',
   },
   {
+    id: 'dws_wages',
+    title: 'Utah Employment and Wages, annual averages by industry (Table 19)',
+    publisher: 'Utah Department of Workforce Services',
+    year: 2025,
+    url: 'https://jobs.utah.gov/wi/pubs/em/currentreport/table19.pdf',
+    use: 'Average annual wage, used to value jobs the budget creates.',
+  },
+  {
     id: 'noble_2026',
     title: 'Utah voters put water ahead of data-center growth (Utah Public Opinion Pulse)',
     publisher: 'Noble Predictive Insights',

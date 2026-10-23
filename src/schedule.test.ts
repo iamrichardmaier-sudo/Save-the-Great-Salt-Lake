@@ -9,20 +9,20 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import { V } from './data';
 import { DEFAULT_DIALS, pkgModel, reconcile, type Dials, type YearSpend } from './model';
-import { LEVERS, leanestSchedule, optimiseSchedule, type ScheduleResult } from './schedule';
+import { LEVERS, fullSpendSchedule, nevParts, type ScheduleResult } from './schedule';
 import { optimise } from './simulate';
 
 let base: Dials;
-let full: ScheduleResult;
-let lean: ScheduleResult;
+let s: ScheduleResult;
 
 beforeAll(() => {
   base = optimise(0.6, { tries: 1000, seed: 424242 }).dials;
-  full = optimiseSchedule(base);
-  lean = leanestSchedule(base);
+  s = fullSpendSchedule(base);
 }, 120_000);
 
-const sumSpend = (s: YearSpend) => LEVERS.reduce((t, l) => t + s[l.id], 0);
+const sumSpend = (x: YearSpend) => LEVERS.reduce((t, l) => t + x[l.id], 0);
+const nevOf = (schedule: YearSpend[]) =>
+  pkgModel({ ...base, schedule }).years.reduce((t, y) => t + nevParts(y).nevM, 0);
 
 describe('a schedule that copies the flat split', () => {
   it('reproduces the flat result exactly', () => {
@@ -50,71 +50,75 @@ describe('a schedule that copies the flat split', () => {
   });
 });
 
-for (const [name, get] of [['everything worth its water', () => full], ['only what the goal needs', () => lean]] as const) {
-  describe(`the budget: ${name}`, () => {
-    it('never spends more than the annual budget', () => {
-      for (const row of get().rows) {
-        expect(row.totalM).toBeLessThanOrEqual(base.budgetM + 1e-9);
-        expect(row.unspentM).toBeGreaterThanOrEqual(-1e-9);
+describe('the full-spend budget', () => {
+  it('spends exactly the whole budget every year', () => {
+    for (const row of s.rows) {
+      expect(row.totalM).toBeCloseTo(base.budgetM, 6);
+      expect(Math.abs(row.unspentM)).toBeLessThan(1e-6);
+      expect(sumSpend(row.spend) + row.committedM).toBeCloseTo(base.budgetM, 6);
+    }
+  });
+
+  it('reaches the healthy floor with its margin by the horizon and holds it', () => {
+    expect(s.meetsGoal).toBe(true);
+    expect(s.targetFt).toBeCloseTo(V('healthy_min') + 0.5, 9);
+    expect(s.result.final.elevationFt).toBeGreaterThanOrEqual(s.targetFt);
+  });
+
+  it('funds no programme past its capacity', () => {
+    const caps: [keyof YearSpend, string][] = [['cloudM', 'cloud'], ['phragM', 'phrag'], ['cropM', 'crop'], ['onfarmM', 'onfarm']];
+    for (const row of s.rows) {
+      for (const [id, prefix] of caps) {
+        const saturationM = (V(`${prefix}_cap`) * 1000 * V(`${prefix}_cost`)) / V(`${prefix}_delivery`) / 1e6;
+        expect(row.spend[id]).toBeLessThanOrEqual(saturationM + 1e-6);
       }
-    });
+    }
+  });
 
-    it('adds up every year: lines, contract payments and what is left equal the budget', () => {
-      for (const row of get().rows) {
-        expect(sumSpend(row.spend) + row.committedM + row.unspentM).toBeCloseTo(base.budgetM, 9);
-      }
-    });
+  it('net economic value is the sum of its parts every year', () => {
+    for (const row of s.rows) {
+      const p = row.nev;
+      expect(p.lakeM - p.farmLossM - p.livestockLossM + p.wagesM).toBeCloseTo(p.nevM, 9);
+      expect(p.lakeM).toBeCloseTo((row.netToLakeKaf * 1000 * V('lake_value_per_af')) / 1e6, 6);
+    }
+    expect(s.nevM).toBeCloseTo(s.rows.reduce((t, r) => t + r.nev.nevM, 0), 6);
+  });
 
-    it('reaches the healthy floor with its margin by the horizon and holds it', () => {
-      const s = get();
-      expect(s.meetsGoal).toBe(true);
-      expect(s.targetFt).toBeCloseTo(V('healthy_min') + 0.5, 9);
-      expect(s.result.final.elevationFt).toBeGreaterThanOrEqual(s.targetFt);
-    });
+  it('beats the flat split and an even split on net economic value', () => {
+    expect(s.nevM).toBeGreaterThanOrEqual(s.flatNevM);
+    const share = base.budgetM / LEVERS.length;
+    const even = s.rows.map(() => Object.fromEntries(LEVERS.map((l) => [l.id, share])) as unknown as YearSpend);
+    expect(s.nevM).toBeGreaterThanOrEqual(nevOf(even));
+  });
 
-    it('funds no programme past its cap', () => {
-      const caps: [keyof YearSpend, string][] = [['cloudM', 'cloud'], ['phragM', 'phrag'], ['onfarmM', 'onfarm']];
-      for (const row of get().rows) {
-        for (const [id, prefix] of caps) {
-          const saturationM = (V(`${prefix}_cap`) * 1000 * V(`${prefix}_cost`)) / V(`${prefix}_delivery`) / 1e6;
-          expect(row.spend[id]).toBeLessThanOrEqual(saturationM + 1e-6);
-        }
-      }
-    });
-
-    it('funds nothing that buys no water: taking any line away loses water', () => {
-      const s = get();
-      // Spot-check a spread of years rather than all of them, to keep the suite quick.
-      for (const i of [0, 5, 14, s.rows.length - 1]) {
-        for (const { id } of LEVERS) {
-          if (s.schedule[i][id] <= 1e-6) continue;
+  it('cannot be improved by moving one block of money between two lines in a year', () => {
+    // Spot-check: a local optimum should not gain from a simple swap.
+    const blockM = 2;
+    for (const i of [2, 10, 20]) {
+      for (const from of LEVERS) {
+        if (s.schedule[i][from.id] < blockM) continue;
+        for (const to of LEVERS) {
+          if (to.id === from.id) continue;
           const schedule = s.schedule.slice();
-          schedule[i] = { ...schedule[i], [id]: 0 };
+          schedule[i] = { ...schedule[i], [from.id]: schedule[i][from.id] - blockM, [to.id]: schedule[i][to.id] + blockM };
           const r = pkgModel({ ...base, schedule });
-          const lost = s.result.years.reduce((t, y, k) => t + y.netToLakeKaf - r.years[k].netToLakeKaf, 0);
-          expect(lost).toBeGreaterThan(0);
+          if (r.years.some((y) => y.unspentM < -1e-6)) continue;
+          const gain = r.years.reduce((t, y) => t + nevParts(y).nevM, 0) - s.nevM;
+          // A greedy build in whole steps leaves only small gains on the table.
+          expect(gain).toBeLessThan(0.01 * s.nevM);
         }
       }
-    });
-
-    it('passes every arithmetic check', () => {
-      for (const c of reconcile(get().result)) expect(c.ok, c.label).toBe(true);
-    });
-  });
-}
-
-describe('the two budgets against each other', () => {
-  it('the full build puts at least as much water in the lake as the flat split', () => {
-    expect(full.result.final.elevationFt).toBeGreaterThanOrEqual(full.flat.final.elevationFt);
+    }
   });
 
-  it('the lean build spends no more than the full one, and pays less for its dearest acre-foot', () => {
-    expect(lean.totalSpentM).toBeLessThanOrEqual(full.totalSpentM + 1e-6);
-    expect(lean.cutoffPerAf).toBeLessThan(full.cutoffPerAf);
+  it('counts money spent past good value only where it was actually spent', () => {
+    for (const row of s.rows) {
+      expect(row.pastValueM).toBeGreaterThanOrEqual(0);
+      expect(row.pastValueM).toBeLessThanOrEqual(row.totalM + 1e-6);
+    }
   });
 
-  it('the full build pays no acre-foot above the lake value', () => {
-    expect(full.cutoffPerAf).toBe(V('lake_value_per_af'));
-    expect(full.worstCostPerAf).toBeLessThanOrEqual(V('lake_value_per_af'));
+  it('passes every arithmetic check', () => {
+    for (const c of reconcile(s.result)) expect(c.ok, c.label).toBe(true);
   });
 });

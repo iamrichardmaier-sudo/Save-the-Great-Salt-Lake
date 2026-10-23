@@ -89,3 +89,6 @@ Stated plainly, because an unchecked number presented as checked is worse than a
   implying support that does not exist.
 - The 2026 polling figures and the willingness-to-pay study were not read at source; their links
   resolve and are cited as reported.
+- The average wage used to value jobs the budget creates ($65,800 a job-year) is statewide 2024
+  covered wages over covered employment as reported from the Workforce Services annual table. The
+  table could not be opened from this session, so the figure is held as an assumption.

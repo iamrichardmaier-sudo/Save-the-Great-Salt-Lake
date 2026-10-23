@@ -1,17 +1,16 @@
 /**
  * The budget, year by year.
  *
- * A flat split keeps paying a lever after it has stopped turning money into water: a programme
- * past its cap, rights nobody is willing to sell, monitoring whose next dollar barely moves the
- * delivery share. This walks the years in order and gives each one only what still buys water,
- * leaving the rest unspent.
+ * Every year spends its whole budget. What moves is where the money goes: each year is split to
+ * do the most economic good across everyone the plan touches, while the lake still reaches the
+ * healthy floor by the horizon and stays there.
  *
  * Every decision is measured on the same pure model rather than on a formula of its own, so a
  * saturation point here can never disagree with what the model would deliver.
  */
 
 import { V } from './data';
-import { DEFAULT_DIALS, NO_SPEND, pkgModel, type Dials, type PkgResult, type YearSpend } from './model';
+import { DEFAULT_DIALS, NO_SPEND, pkgModel, type Dials, type PkgResult, type YearRow, type YearSpend } from './model';
 
 export type LeverId = keyof YearSpend;
 
@@ -24,6 +23,31 @@ export const LEVERS: { id: LeverId; label: string }[] = [
   { id: 'onfarmM', label: 'On-farm optimisation' },
 ];
 
+/**
+ * A year's net economic value, in $M.
+ *
+ * Water reaching the lake at what an acre-foot is worth there, less the farm revenue and livestock
+ * receipts it takes, plus the wages of the transition and monitoring jobs the budget creates.
+ * Lake-economy jobs and farm field jobs are left out on purpose: the lake value already counts the
+ * lake economy, and lost farm revenue already counts farm wages, so adding them again would count
+ * the same dollars twice.
+ */
+export interface NevParts {
+  lakeM: number;
+  farmLossM: number;
+  livestockLossM: number;
+  wagesM: number;
+  nevM: number;
+}
+
+export function nevParts(y: YearRow): NevParts {
+  const lakeM = y.benefitM;
+  const farmLossM = y.farmRevenueLostM;
+  const livestockLossM = y.livestockReceiptsAtRiskM;
+  const wagesM = (y.transitionJobs * V('wage_per_job')) / 1e6;
+  return { lakeM, farmLossM, livestockLossM, wagesM, nevM: lakeM - farmLossM - livestockLossM + wagesM };
+}
+
 export interface ScheduleRow {
   year: number;
   spend: YearSpend;
@@ -31,11 +55,12 @@ export interface ScheduleRow {
   committedM: number;
   totalM: number;
   unspentM: number;
-  /** What the flat split would have spent on each line that year. */
-  flat: YearSpend;
+  /** Money that went where its water cost more than the lake value, because nothing better was left. */
+  pastValueM: number;
   netToLakeKaf: number;
   elevationFt: number;
   flatElevationFt: number;
+  nev: NevParts;
 }
 
 export interface ScheduleResult {
@@ -50,29 +75,23 @@ export interface ScheduleResult {
   /** Reaches the target by the horizon and never falls back below it afterwards. */
   meetsGoal: boolean;
   totalSpentM: number;
-  totalSavedM: number;
-  /** The worst water any funded increment bought, in dollars per acre-foot. */
-  worstCostPerAf: number;
-  /** The dearest water an increment was allowed to buy, in dollars per acre-foot. */
-  cutoffPerAf: number;
+  /** Net economic value over the plan, and the same for the flat split. */
+  nevM: number;
+  flatNevM: number;
+  /** Extra weight on water needed to meet the goal; zero when the most economic split already does. */
+  lambda: number;
+  pastValueM: number;
+  pastValueYears: number;
 }
 
 const STEP_M = 1;
-const EPS_KAF = 1e-6;
+const EPS = 1e-9;
 
-/** Water reaching the lake, summed from year `from` to the horizon, in KAF. */
-function waterFrom(r: PkgResult, from: number): number {
+const sumFrom = (r: PkgResult, from: number, f: (y: YearRow) => number) => {
   let s = 0;
-  for (let i = from; i < r.years.length; i++) s += r.years[i].netToLakeKaf;
+  for (let i = from; i < r.years.length; i++) s += f(r.years[i]);
   return s;
-}
-
-/** Public money spent from year `from` to the horizon, in $M. */
-function moneyFrom(r: PkgResult, from: number): number {
-  let s = 0;
-  for (let i = from; i < r.years.length; i++) s += r.years[i].publicSpendM;
-  return s;
-}
+};
 
 function withSpend(schedule: YearSpend[], i: number, lever: LeverId, value: number): YearSpend[] {
   const next = schedule.slice();
@@ -81,117 +100,85 @@ function withSpend(schedule: YearSpend[], i: number, lever: LeverId, value: numb
 }
 
 /**
- * Build the budget one year at a time.
+ * Build the budget one year at a time, spending all of it.
  *
- * Each year's money goes out in small increments, each to whichever line buys the most water per
- * dollar, counting water through the horizon and money through the horizon. Counting both ways
- * matters: a right bought now keeps delivering after it vests, but it also commits payments in the
- * years after, and phragmites cleared now shows up years later.
+ * Each year's money goes out in small amounts, each to whichever line adds the most net economic
+ * value per dollar, counted through the horizon: a right bought now keeps delivering after it
+ * vests but commits payments in later years, phragmites cleared now shows up years later, and the
+ * scarcity charge eases as the lake recovers. A programme is funded only up to its capacity. When
+ * every line's next dollar is poor value the money still goes out, to the least poor.
  *
- * An increment is funded only while the water it buys is worth at least what it costs: no more
- * than the lake value of an acre-foot. Past that point the money is a diminishing return, and it is
- * left unspent. Increments shrink once the coarse ones stop paying, so a cap is filled rather than
- * overrun or left short. Nothing is funded that a later year's contracts could not pay for inside the cap.
- * A final pass trims each line back to the least money that delivers the same water, which removes
- * the part of the last increment that ran past a cap.
+ * `lambda` adds weight to water on top of its lake value, for when the most economic split alone
+ * would leave the lake short of the goal.
  */
-export function optimiseSchedule(over: Partial<Dials> = {}, opts: { stepM?: number; bufferFt?: number; maxCostPerAf?: number } = {}): ScheduleResult {
-  const base: Dials = { ...DEFAULT_DIALS, ...over, schedule: undefined };
-  const step = opts.stepM ?? STEP_M;
-  const targetFt = V('healthy_min') + (opts.bufferFt ?? 0.5);
-  const flat = pkgModel(base);
+function build(base: Dials, lambda: number, step: number, targetFt: number, flat: PkgResult): ScheduleResult {
   const n = flat.years.length;
-  const maxCostPerAf = opts.maxCostPerAf ?? V('lake_value_per_af');
-
-  let schedule: YearSpend[] = Array.from({ length: n }, () => ({ ...NO_SPEND }));
-  let current = pkgModel({ ...base, schedule });
-  let worstCostPerAf = 0;
-
-  const fitsUnderCap = (r: PkgResult) => r.years.every((y) => y.unspentM >= -1e-9);
-
-  // A programme funded to its cap stays there for the rest of the year, so it need not be asked
-  // again. Only the cap counts: a programme can also buy nothing while the mandate is filling the
-  // same gap, and that changes as soon as another line closes it.
+  const lakeValue = V('lake_value_per_af');
   const saturationM: Partial<Record<LeverId, number>> = {
     cloudM: (V('cloud_cap') * V('cloud_cost')) / V('cloud_delivery') / 1000,
     phragM: (V('phrag_cap') * V('phrag_cost')) / V('phrag_delivery') / 1000,
     cropM: (V('crop_cap') * V('crop_cost')) / V('crop_delivery') / 1000,
     onfarmM: (V('onfarm_cap') * V('onfarm_cost')) / V('onfarm_delivery') / 1000,
   };
+  const score = (r: PkgResult, from: number) =>
+    sumFrom(r, from, (y) => nevParts(y).nevM + (lambda * y.netToLakeKaf * lakeValue) / 1000);
+  const fitsUnderCap = (r: PkgResult) => r.years.every((y) => y.unspentM >= -1e-6);
+
+  let schedule: YearSpend[] = Array.from({ length: n }, () => ({ ...NO_SPEND }));
+  let current = pkgModel({ ...base, schedule });
+  const pastValue: number[] = new Array(n).fill(0);
 
   for (let i = 0; i < n; i++) {
-    const dead = new Set<LeverId>();
-    // Coarse increments first, then finer ones to fill the part of a cap a coarse one would overrun.
-    for (const size of [step, step / 4, step / 20]) for (;;) {
+    for (;;) {
       const room = current.years[i].unspentM;
-      if (room < 1e-9) break;
-      const inc = Math.min(size, room);
-      const water0 = waterFrom(current, i);
-      const money0 = moneyFrom(current, i);
+      if (room < EPS) break;
+      const score0 = score(current, i);
+      const water0 = sumFrom(current, i, (y) => y.netToLakeKaf);
+      const money0 = sumFrom(current, i, (y) => y.publicSpendM);
 
-      let best: { lever: LeverId; r: PkgResult; costPerAf: number } | null = null;
+      let best: { lever: LeverId; inc: number; r: PkgResult; perM: number; costPerAf: number } | null = null;
       for (const { id } of LEVERS) {
-        if (dead.has(id)) continue;
-        const trial = withSpend(schedule, i, id, schedule[i][id] + inc);
-        const r = pkgModel({ ...base, schedule: trial });
-        const dWater = waterFrom(r, i) - water0;
-        if (dWater <= EPS_KAF || !fitsUnderCap(r)) {
-          if (dWater <= EPS_KAF && schedule[i][id] >= (saturationM[id] ?? Infinity) - 1e-9) dead.add(id);
-          continue;
-        }
-        const costPerAf = ((moneyFrom(r, i) - money0) * 1e6) / (dWater * 1000);
-        if (!best || costPerAf < best.costPerAf) best = { lever: id, r, costPerAf };
+        // A programme is never funded past its capacity: there the money buys nothing at all.
+        const headroom = (saturationM[id] ?? Infinity) - schedule[i][id];
+        const inc = Math.min(step, room, headroom);
+        if (inc < EPS) continue;
+        const r = pkgModel({ ...base, schedule: withSpend(schedule, i, id, schedule[i][id] + inc) });
+        if (!fitsUnderCap(r)) continue;
+        const dMoney = sumFrom(r, i, (y) => y.publicSpendM) - money0;
+        const perM = (score(r, i) - score0) / Math.max(dMoney, EPS);
+        const dWater = sumFrom(r, i, (y) => y.netToLakeKaf) - water0;
+        const costPerAf = dWater > EPS ? (dMoney * 1e6) / (dWater * 1000) : Infinity;
+        if (!best || perM > best.perM) best = { lever: id, inc, r, perM, costPerAf };
       }
-      if (!best || best.costPerAf > maxCostPerAf) break;
 
-      schedule = withSpend(schedule, i, best.lever, schedule[i][best.lever] + inc);
+      // Nothing can take money (every programme at capacity, no rights to buy): monitoring has no cap.
+      if (!best) {
+        const r = pkgModel({ ...base, schedule: withSpend(schedule, i, 'monitoringM', schedule[i].monitoringM + room) });
+        best = { lever: 'monitoringM', inc: room, r, perM: 0, costPerAf: Infinity };
+      }
+
+      if (best.costPerAf > lakeValue) pastValue[i] += best.inc;
+      schedule = withSpend(schedule, i, best.lever, schedule[i][best.lever] + best.inc);
       current = best.r;
-      worstCostPerAf = Math.max(worstCostPerAf, best.costPerAf);
     }
   }
 
-  // Trim: the least money on each line that delivers the same water in every year.
-  const sameWater = (r: PkgResult) => r.years.every((y, k) => y.netToLakeKaf >= current.years[k].netToLakeKaf - EPS_KAF);
-  for (let i = 0; i < n; i++) {
-    for (const { id } of LEVERS) {
-      let hi = schedule[i][id];
-      if (hi <= 0) continue;
-      let lo = Math.max(0, hi - step);
-      if (!sameWater(pkgModel({ ...base, schedule: withSpend(schedule, i, id, lo) }))) {
-        for (let k = 0; k < 30; k++) {
-          const mid = (lo + hi) / 2;
-          if (sameWater(pkgModel({ ...base, schedule: withSpend(schedule, i, id, mid) }))) hi = mid;
-          else lo = mid;
-        }
-        lo = hi;
-      }
-      schedule = withSpend(schedule, i, id, lo);
-    }
-  }
-
-  const result = pkgModel({ ...base, schedule });
+  const result = current;
   const rows: ScheduleRow[] = result.years.map((y, i) => ({
     year: y.year,
     spend: schedule[i],
     committedM: y.leaseBudgetSpendM - schedule[i].leaseM,
     totalM: y.publicSpendM,
     unspentM: y.unspentM,
-    flat: {
-      monitoringM: flat.years[i].monitoringSpendM,
-      leaseM: flat.years[i].leaseBudgetSpendM,
-      cloudM: flat.years[i].cloudSpendM,
-      phragM: flat.years[i].phragSpendM,
-      cropM: flat.years[i].cropSpendM,
-      onfarmM: flat.years[i].onfarmSpendM,
-    },
+    pastValueM: pastValue[i],
     netToLakeKaf: y.netToLakeKaf,
     elevationFt: y.elevationFt,
     flatElevationFt: flat.years[i].elevationFt,
+    nev: nevParts(y),
   }));
 
   const firstIdx = result.years.findIndex((y) => y.elevationFt >= targetFt);
   const meetsGoal = firstIdx >= 0 && result.years.slice(firstIdx).every((y) => y.elevationFt >= targetFt);
-  const totalSpentM = rows.reduce((s, r) => s + r.totalM, 0);
 
   return {
     schedule,
@@ -201,29 +188,43 @@ export function optimiseSchedule(over: Partial<Dials> = {}, opts: { stepM?: numb
     targetFt,
     firstYearAtTarget: firstIdx >= 0 ? result.years[firstIdx].year : null,
     meetsGoal,
-    totalSpentM,
-    totalSavedM: base.budgetM * n - totalSpentM,
-    worstCostPerAf,
-    cutoffPerAf: maxCostPerAf,
+    totalSpentM: rows.reduce((s, r) => s + r.totalM, 0),
+    nevM: rows.reduce((s, r) => s + r.nev.nevM, 0),
+    flatNevM: flat.years.reduce((s, y) => s + nevParts(y).nevM, 0),
+    lambda,
+    pastValueM: pastValue.reduce((s, v) => s + v, 0),
+    pastValueYears: pastValue.filter((v) => v > 1e-6).length,
   };
 }
 
 /**
- * The leanest budget that still meets the goal.
- *
- * The same year-by-year build, but with the dearest acceptable acre-foot pulled down from the
- * lake value until any lower would miss the target. Everything above that cut-off is money the
- * goal does not need. If even the full build misses the goal, the full build is returned and
- * says so.
+ * The full-spend budget: the most economic split of every year's whole budget that still meets the
+ * goal. Tries the most economic split first; if that leaves the lake short, raises the weight on
+ * water just far enough to meet it. If no weight meets it, returns the most water it found and says
+ * the goal is missed.
  */
-export function leanestSchedule(over: Partial<Dials> = {}, opts: { bufferFt?: number; iterations?: number } = {}): ScheduleResult {
-  let best = optimiseSchedule(over, { bufferFt: opts.bufferFt });
-  if (!best.meetsGoal) return best;
+export function fullSpendSchedule(
+  over: Partial<Dials> = {},
+  opts: { stepM?: number; bufferFt?: number; iterations?: number; maxLambda?: number } = {},
+): ScheduleResult {
+  const base: Dials = { ...DEFAULT_DIALS, ...over, schedule: undefined };
+  const step = opts.stepM ?? STEP_M;
+  const targetFt = V('healthy_min') + (opts.bufferFt ?? 0.5);
+  const flat = pkgModel(base);
+
+  const economic = build(base, 0, step, targetFt, flat);
+  if (economic.meetsGoal) return economic;
+
+  const maxLambda = opts.maxLambda ?? 20;
+  const waterHeavy = build(base, maxLambda, step, targetFt, flat);
+  if (!waterHeavy.meetsGoal) return waterHeavy;
+
   let lo = 0;
-  let hi = best.cutoffPerAf;
-  for (let k = 0; k < (opts.iterations ?? 7); k++) {
+  let hi = maxLambda;
+  let best = waterHeavy;
+  for (let k = 0; k < (opts.iterations ?? 6); k++) {
     const mid = (lo + hi) / 2;
-    const trial = optimiseSchedule(over, { bufferFt: opts.bufferFt, maxCostPerAf: mid });
+    const trial = build(base, mid, step, targetFt, flat);
     if (trial.meetsGoal) {
       best = trial;
       hi = mid;

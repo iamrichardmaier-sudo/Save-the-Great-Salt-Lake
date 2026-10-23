@@ -10,7 +10,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { DEFAULT_DIALS, pkgModel, type Dials } from './model';
 import { sensitivity, simulate } from './simulate';
-import { optimiseSchedule, type ScheduleResult } from './schedule';
+import { fullSpendSchedule, type ScheduleResult } from './schedule';
 import { TABS, headerSummary, type Ctx } from './ui/tabs';
 import { CONTROLS } from './ui/controls';
 import { resetProvenance } from './ui/format';
@@ -19,9 +19,9 @@ function ctxFor(over: Partial<Dials> = {}): Ctx {
   const d = { ...DEFAULT_DIALS, ...over };
   const r = pkgModel(d);
   let plan: ScheduleResult | undefined;
-  // The lean search reruns the full build several times; the tab renders the same either way.
-  const schedule = () => (plan ??= optimiseSchedule(d, { stepM: 5 }));
-  return { d, r, sim: simulate(r, { runs: 40, seed: 5 }), tornado: sensitivity(d, 6), scheduleMode: 'full', schedule };
+  // A coarse step and no search for the goal weight keep the render suite quick.
+  const schedule = () => (plan ??= fullSpendSchedule(d, { stepM: 5, iterations: 0, maxLambda: 0 }));
+  return { d, r, sim: simulate(r, { runs: 40, seed: 5 }), tornado: sensitivity(d, 6), schedule };
 }
 
 let host: HTMLElement;
