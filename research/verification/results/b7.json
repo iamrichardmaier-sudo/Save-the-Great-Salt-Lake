@@ -1,0 +1,453 @@
+[
+ {
+  "value_new": 857,
+  "low_new": 665,
+  "high_new": 1100,
+  "quote": "Most agricultural irrigated lands (by area and depletion volume) in GSL Basin are in Hay/Turf crop group ... nearly all the depletions in this category are alfalfa and grass hay.",
+  "locator": "Section 2.5, Figure 2-5 (PDF p.17, report p.2-6); totals in Table 2-3 (p.2-3)",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources / Jacobs",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "same report, Executive Summary",
+    "publisher": "Utah DWRe",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "There was an estimated average of 1.32 million AF for 2019 through 2023 for the entire GSL Basin and 830,000 AF for the Utah portion.",
+    "locator": "Executive summary, Major findings"
+   }
+  ],
+  "arithmetic": "Hay/Turf bars in Fig 2-5 (eeMETRIC, whole basin incl. ID/WY/NV), read from chart: 2019 ~665, 2020 ~1,000, 2021 ~1,015, 2022 ~885, 2023 ~720 KAF -> mean ~857 KAF (~65% of the 1,324 KAF total in Table 2-3). Utah-only portion ~0.65 x 830 = ~540 KAF. Model's 1,055 = 399,500 ac x 2.64 AF/ac (application_mean, water APPLIED) = 1,054.7 KAF, i.e. it appears to be applied water, not depletion.",
+  "notes": "Figure values are read off a bar chart (+/-20 KAF). eeMETRIC is the report's base case; GridET runs ~15-30% higher (total up to 1.7 MAF), so 1,055 is reachable only in wet-ET years or GridET. Scope: whole basin incl. Idaho/Wyoming; Utah-only ~540 KAF. Coefficient is unused in the model (UNUSED_ON_PURPOSE).",
+  "confidence": "Medium",
+  "id": "hay_depletion",
+  "value_model": 1055,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": 228000,
+  "low_new": 220000,
+  "high_new": 270000,
+  "quote": "Forage - land used for all hay and haylage, grass silage, and greenchop ... Irrigated ... acres",
+  "locator": "2022 Census of Agriculture, Vol.1 Ch.2 County Level, Utah Table 24 'Selected Crops Harvested: 2022', forage rows by county",
+  "url": "https://nass.usda.gov/Publications/AgCensus/2022/Full_Report/Volume_1,_Chapter_2_County_Level/Utah/st49_2_024_024.pdf",
+  "source_title": "2022 Census of Agriculture, Utah county-level Table 24",
+  "publisher": "USDA NASS",
+  "year": 2024,
+  "extra_sources": [
+   {
+    "title": "Opportunities and Costs for Agricultural Water Optimization in the GSL Basin",
+    "publisher": "Utah DWRe / Jacobs",
+    "year": 2026,
+    "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+    "quote": "Table B-2. Distribution of Great Salt Lake Basin Irrigated Alfalfa and Corn Acreage ... Total ... 353,955",
+    "locator": "Appendix B, Table B-2 (alfalfa only; Utah subbasins 224,215; Idaho 118,816; Wyoming 9,182; Nevada 1,742)"
+   },
+   {
+    "title": "2024 Utah Agricultural Statistics (Annual Bulletin)",
+    "publisher": "USDA NASS",
+    "year": 2024,
+    "url": "https://data.nass.usda.gov/Statistics_by_State/Utah/Publications/Annual_Statistical_Bulletin/2024-Agricultural-Statistics.pdf",
+    "quote": "All Hay: Area Harvested ... 2023 ... 660 (1,000 acres)",
+    "locator": "p.15, All Hay table (statewide)"
+   }
+  ],
+  "arithmetic": "County set (Utah part of GSL basin): Box Elder, Cache, Rich, Weber, Davis, Morgan, Summit, Salt Lake, Utah, Tooele, Wasatch, Juab. Irrigated forage acres: 48,790+44,129+33,824+12,445+2,276+5,413+15,295+742+35,392+10,103+11,535 = 219,944 + Wasatch (withheld, total forage 8,911) ~8,000 => ~228,000. All forage (irrigated+dry) in those counties = 269,789. Cross-check: WRLU alfalfa in Utah subbasins 224,215 (Table B-2) + grass hay.",
+  "notes": "399,500 was not found in NASS or DWR. It is roughly the WHOLE-basin hay figure (alfalfa 353,955 incl. ID/WY/NV + some grass hay), but a Utah crop levy can only fall on Utah ground, so the Utah-portion irrigated figure (~228k) is the defensible value. If the model intends whole-basin scope, keep ~400k but say so. Juab and Summit are only partly in the basin (upper bound effect small).",
+  "confidence": "Medium",
+  "id": "hay_acres",
+  "value_model": 399500,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "Statewide, projected population growth coincides with substantial household growth, from 1.2 million in 2025 to 2.3 million in 2065.",
+  "locator": "Gardner Institute long-term projections press release, 'Household growth'",
+  "url": "https://www.utahbusiness.com/press-releases/2025/11/19/utah-population-projected-reach-over-5-million-2065-growth-change/",
+  "source_title": "Utah's population projected to reach 5.6 million by 2065 (Gardner Policy Institute release)",
+  "publisher": "Kem C. Gardner Policy Institute",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Utah's Regional M&I Water Conservation Goals",
+    "publisher": "Utah DWRe",
+    "year": 2019,
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "quote": "“average lot size” in this case refers to the total residential area developed divided by the total number of residential units in each county, including multi-family units. It should not be interpreted as the average lot size for single family homes only.",
+    "locator": "Section 4, text immediately above Table 4-9 (PDF p.45)"
+   }
+  ],
+  "arithmetic": "Independent inputs: 1.2M households (Gardner 2025) x 0.86 basin share (UPC 2025, see share_in_basin) x 0.72 = 743,040. Model chain: 3.65M implied pop / 2.83 x 0.80 x 0.72 = 743k. Same result: the model's low share (0.80) and low household size (2.83) offset each other.",
+  "notes": "RESOLVES findings.md lawn discrepancy: Table 4-9's landscaped area (Salt Lake 4,239 etc.) is per residential UNIT including multifamily, so it must be multiplied by ALL basin households (~1.02-1.03M), not by the 72% 'with a lawn'. Population-weighted (UPC 2025) landscaped area per unit for the 12 basin counties = 5,789 sq ft; 1.02M units x 5,789 = ~136,000 landscaped acres (model: 743k x 6,938 = 118,000). Then 408.5 KAF -> 36 in/yr and 371 KAF -> 33 in/yr, both plausible (Table 4-7: JVWCD homeowner average applied 50 in; statewide irrigation efficiency ~63%). So the fix is to pair the published per-unit area with all households (or keep 743k for compliance counts but use 5,789 sq ft x ~1.02M units for acreage). 0.72 share_with_lawn remains an assumption.",
+  "confidence": "Medium",
+  "id": "basin_lawns",
+  "value_model": 743000,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": 371,
+  "low_new": 340,
+  "high_new": 410,
+  "quote": "Outdoor residential water use is the largest single category of municipal water use, averaging 108 gpcd or approximately 45% of statewide municipal use",
+  "locator": "Section 4, 'Residential—Outdoors' (report p.23); Table B-6 'Res. Outdoor 108' (2015)",
+  "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+  "source_title": "Utah's Regional M&I Water Conservation Goals",
+  "publisher": "Utah Division of Water Resources",
+  "year": 2019,
+  "extra_sources": [
+   {
+    "title": "Water Use Reporting",
+    "publisher": "Utah DWRe",
+    "year": 2026,
+    "url": "https://water.utah.gov/water-use-reporting/",
+    "quote": "The Division of Water Resources’ method of calculating GPCD accounts for all water delivered to all customers.",
+    "locator": "page text (sources/text/dwr_mi_reporting.txt)"
+   },
+   {
+    "title": "Utah's Regional M&I Water Conservation Goals",
+    "publisher": "Utah DWRe",
+    "year": 2019,
+    "url": "https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf",
+    "quote": "Homeowner Average 2000–2002 ... 50",
+    "locator": "Table 4-7, JVWCD Demonstration Garden, total seasonal water applied (inches)"
+   }
+  ],
+  "arithmetic": "108 gal/person/day x 3,066,224 basin pop (UPC 2025, 12 counties) x 365 / 325,851 gal/AF = 370.9 KAF. Region-weighted check: total M&I gpcd 2015 (Salt Lake 210, Weber 250, Provo 222, Bear 304) weighted by population ~229 gpcd x 45% = ~103 gpcd -> ~355 KAF. 2015 per-capita rates; post-2015 conservation would lower it, population growth raises it.",
+  "notes": "408.5 KAF was not found in dwr_gsl or dwr_regional_goals. The DWRe figure is water DELIVERED (all potable+secondary delivered to customers), which answers the model's open question: it is delivered, not depleted. Depletion (ET) would be roughly 60-65% of it at the reported ~63% irrigation efficiency (~230 KAF). Delivered also includes multifamily landscaping and unmetered secondary water.",
+  "confidence": "Medium",
+  "id": "lawn_water",
+  "value_model": 408.5,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "farmers can receive compensation for temporarily leasing a portion of their water rights to benefit the Great Salt Lake. Full-season leasing will be limited to no more than two of every five years.",
+  "locator": "FAQ, H.B. 410 Water Leasing Amendments answer",
+  "url": "https://greatsaltlake.utah.gov/faq/",
+  "source_title": "Frequently Asked Questions",
+  "publisher": "Great Salt Lake Commissioner's Office (State of Utah)",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Water Right Title Information",
+    "publisher": "Utah Division of Water Rights",
+    "year": 2026,
+    "url": "https://www.waterrights.utah.gov/titleInfo/",
+    "quote": "In Utah, water rights can be owned and transferred separately from the land upon which they are used.",
+    "locator": "page text"
+   },
+   {
+    "title": "Frequently Asked Questions",
+    "publisher": "GSL Commissioner's Office",
+    "year": 2026,
+    "url": "https://greatsaltlake.utah.gov/faq/",
+    "quote": "Water leasing opportunities are generally not coupled with the option to buy those water rights later. Permanent water right acquisitions take place outside of leasing opportunities and are administered by the Great Salt Lake Watershed Enhancement Trust.",
+    "locator": "Water Rights & Leasing"
+   }
+  ],
+  "arithmetic": "If the 2-in-5 cap did apply, holding a constant annual volume would need 5/2 = 2.5x the enrolled acres (the 'multiplier' the model declines to apply).",
+  "notes": "State sources support the interpretation: the cap is described for temporary full-season leases, and permanent acquisitions are a separate track (Watershed Enhancement Trust). Could not open the HB 410 bill text itself (le.utah.gov page returns only navigation); the legal reading should be checked against the enrolled text. No published rotational-fallowing ratio for lease-to-own instruments found; the 2.5 ratio is only arithmetic from the cap.",
+  "confidence": "Medium",
+  "id": "lease_to_own_rotation_multiplier",
+  "value_model": 1,
+  "verdict": "evidence"
+ },
+ {
+  "value_new": null,
+  "low_new": 150000,
+  "high_new": 600000,
+  "quote": "The amount of hay exported for Utah has varied between 10% and 20% of production.",
+  "locator": "USU hay pricing factsheet, exports paragraph",
+  "url": "https://farmanalysis.usu.edu/static/hay_pricing/pdfs/factsheet.pdf",
+  "source_title": "Predicting Current and Future Alfalfa Hay Prices (factsheet)",
+  "publisher": "Utah State University Extension",
+  "year": 2020,
+  "extra_sources": [
+   {
+    "title": "Should Utah be exporting its alfalfa?",
+    "publisher": "Salt Lake Tribune",
+    "year": 2023,
+    "url": "https://sltrib.com/news/environment/2023/03/16/should-utah-be-exporting-its",
+    "quote": "He estimated the share of Utah-grown hay sent overseas to be around 6 to 8%, or 120,000 to 160,000 tons last year when the total harvest was just over 2 million tons.",
+    "locator": "article body"
+   },
+   {
+    "title": "2022 Census of Agriculture, Utah Table 24",
+    "publisher": "USDA NASS",
+    "year": 2024,
+    "url": "https://nass.usda.gov/Publications/AgCensus/2022/Full_Report/Volume_1,_Chapter_2_County_Level/Utah/st49_2_024_024.pdf",
+    "quote": "Forage ... tons, dry equivalent",
+    "locator": "Table 24, forage rows (basin counties sum 893,966 tons)"
+   },
+   {
+    "title": "2024 Utah Agricultural Statistics",
+    "publisher": "USDA NASS",
+    "year": 2024,
+    "url": "https://data.nass.usda.gov/Statistics_by_State/Utah/Publications/Annual_Statistical_Bulletin/2024-Agricultural-Statistics.pdf",
+    "quote": "All Cattle & Calves ... 750,000",
+    "locator": "County estimates, cattle Jan 1 2024 (basin 12 counties = 340,600 head)"
+   }
+  ],
+  "arithmetic": "Statewide all-hay production 2.49-2.62M tons (2023-2024); 10-20% exported = 250k-520k tons; grower estimate 6-8% overseas = 120k-160k tons. Basin-county forage production 2022 = 893,966 tons dry equivalent; basin cattle 340,600 head (no published feed-demand figure found to subtract).",
+  "notes": "596,000 tons not found in NASS. NASS publishes production and stocks, not livestock forage demand or export tonnage by county. Overseas exports are a lower bound on 'surplus' (interstate sales to CA/ID dairies also leave the basin). Suggested range spans published export estimates up to the model value.",
+  "confidence": "Low",
+  "id": "herd_feed_surplus",
+  "value_model": 596000,
+  "verdict": "unsupported"
+ },
+ {
+  "value_new": 1200000,
+  "low_new": 1100000,
+  "high_new": 1270000,
+  "quote": "Statewide, projected population growth coincides with substantial household growth, from 1.2 million in 2025 to 2.3 million in 2065.",
+  "locator": "Key findings, 'Household growth'",
+  "url": "https://www.utahbusiness.com/press-releases/2025/11/19/utah-population-projected-reach-over-5-million-2065-growth-change/",
+  "source_title": "Utah long-term planning projections (press release)",
+  "publisher": "Kem C. Gardner Policy Institute",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "Most Utahns are willing to open their wallets for the Great Salt Lake",
+    "publisher": "Salt Lake Tribune",
+    "year": 2026,
+    "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+    "quote": "Utahns are collectively willing to pay up to $162 million per year across the state’s 1.1 million households each year.",
+    "locator": "article body"
+   },
+   {
+    "title": "UPC State and County Population Estimates 2020-2025",
+    "publisher": "Utah Population Committee / Gardner Institute",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/12/UPC-State-and-County-Population-Estimates-with-Components-of-Change-2020-2025.xlsx",
+    "quote": "State of Utah ... 3551149.88",
+    "locator": "sheet 'Population Estimates', 2025 column"
+   }
+  ],
+  "arithmetic": "Model: $162M / $128 per household = 1,265,625. Gardner 2025: ~1.2M households; UPC pop 3,551,150 / ~2.96 = 1.2M. The WTP source itself used 1.1M (162M/1.1M = $147).",
+  "notes": "Back-solved figure is ~5% above Gardner's official 2025 household count. Using 1.2M with $128 gives $154M/yr.",
+  "confidence": "Medium",
+  "id": "state_households",
+  "value_model": 1265625,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "more than half of state voters (58%) prefer state solutions that incentivize water-efficient landscaping, while 22% think the state should impose restrictions with penalties on cosmetic water use",
+  "locator": "Deseret News/Hinckley Institute poll by Morning Consult, March 6-10 2026, 800 registered voters, +/-3",
+  "url": "https://www.yahoo.com/news/articles/poll-utahns-willing-unwilling-save-010000750.html",
+  "source_title": "Poll: What Utahns are willing — and unwilling — to do to save water (Deseret News, syndicated)",
+  "publisher": "Deseret News / Hinckley Institute of Politics",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Utah Voters Put Water Ahead of Data-Center Growth + poll report xlsx",
+    "publisher": "Noble Predictive Insights",
+    "year": 2026,
+    "url": "https://7453540.fs1.hubspotusercontent-na1.net/hubfs/7453540/UTPOP/2026/260908_UTPOP_Data%20Centers%20PR%20Poll%20Report..xlsx",
+    "quote": "(no incentives/penalties question in the release or in the topline workbook)",
+    "locator": "all question tables, sheet 'Total'"
+   },
+   {
+    "title": "Poll: How far will Utahns go to conserve water?",
+    "publisher": "Deseret News",
+    "year": 2026,
+    "url": "(cited source deseret_2026; downloaded copy sources/text/deseret_2026.txt)",
+    "quote": "Gen X was the most likely (27%) to favor incentives for water-efficient landscaping",
+    "locator": "May 2026 poll, five-option version (sources/text/deseret_2026.txt)"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Value confirmed, but the citation is wrong: noble_2026 (Sept 2026 UTPOP) has no such question. Source is the March 2026 Deseret News/Hinckley poll. Note the May 2026 Deseret/Hinckley poll offered five options and incentives fell to <=27% in every generation, so 58% is specific to the March two-way-ish wording.",
+  "confidence": "High",
+  "id": "pref_incentives",
+  "value_model": 0.58,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "22% think the state should impose restrictions with penalties on cosmetic water use (like watering lawns). ... those who were unemployed were most likely (28%) to favor imposing restrictions with penalties.",
+  "locator": "Deseret News/Hinckley poll, March 6-10 2026, 800 registered voters",
+  "url": "https://www.yahoo.com/news/articles/poll-utahns-willing-unwilling-save-010000750.html",
+  "source_title": "Poll: What Utahns are willing — and unwilling — to do to save water",
+  "publisher": "Deseret News / Hinckley Institute of Politics",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Poll: How far will Utahns go to conserve water? (May 2026)",
+    "publisher": "Deseret News",
+    "year": 2026,
+    "url": "(cited source deseret_2026; downloaded copy sources/text/deseret_2026.txt)",
+    "quote": "Baby boomers were the most likely (29%) to favor the state penalizing cosmetic water use",
+    "locator": "sources/text/deseret_2026.txt"
+   }
+  ],
+  "arithmetic": "",
+  "notes": "Confirmed from Deseret/Hinckley March 2026, not noble_2026 (fix citation). 'Penalties lose in every subgroup' is consistent: highest subgroup reported is 28% (unemployed) in March and 29% (boomers) in May.",
+  "confidence": "High",
+  "id": "pref_penalties",
+  "value_model": 0.22,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "estimated it would take $98.6 million to $421.6 million annually to compensate Utah farmers with incentives to reduce irrigation and conserve enough for the Great Salt Lake to stabilize and refill.",
+  "locator": "article body (citing a 2025 study)",
+  "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+  "source_title": "Most Utahns are willing to open their wallets to save the Great Salt Lake",
+  "publisher": "Salt Lake Tribune",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Reducing irrigation for livestock feed crops is needed to save Great Salt Lake, study argues (Oregon State Univ. release on Ripple et al., Environmental Challenges, Jan 2025)",
+    "publisher": "Water Online / Oregon State University",
+    "year": 2025,
+    "url": "https://www.wateronline.com/doc/reducing-irrigation-for-livestock-feed-crops-is-needed-to-save-great-salt-lake-study-argues-0001",
+    "quote": "could be compensated at a cost ranging from $29 to $124 per Utah resident per year. The state’s population is 3.4 million.",
+    "locator": "article body"
+   }
+  ],
+  "arithmetic": "$29 x 3.4M = $98.6M; $124 x 3.4M = $421.6M.",
+  "notes": "Primary study is the Oregon State paper (Environmental Challenges, 2025), not the Weber State survey; cite it directly.",
+  "confidence": "High",
+  "id": "farmer_compensation_low",
+  "value_model": 98.6,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "estimated it would take $98.6 million to $421.6 million annually to compensate Utah farmers",
+  "locator": "article body",
+  "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+  "source_title": "Most Utahns are willing to open their wallets to save the Great Salt Lake",
+  "publisher": "Salt Lake Tribune",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "OSU study release",
+    "publisher": "Water Online / Oregon State University",
+    "year": 2025,
+    "url": "https://www.wateronline.com/doc/reducing-irrigation-for-livestock-feed-crops-is-needed-to-save-great-salt-lake-study-argues-0001",
+    "quote": "$29 to $124 per Utah resident per year. The state’s population is 3.4 million.",
+    "locator": "article body"
+   }
+  ],
+  "arithmetic": "$124 x 3.4M = $421.6M.",
+  "notes": "As above.",
+  "confidence": "High",
+  "id": "farmer_compensation_high",
+  "value_model": 421.6,
+  "verdict": "confirmed"
+ },
+ {
+  "value_new": null,
+  "low_new": null,
+  "high_new": null,
+  "quote": "projects the data center campus would divert about 1,215 acre-feet of water annually at full buildout ... leaving net depletion of about 987 acre-feet a year.",
+  "locator": "Stratos (Box Elder) water-right change application coverage",
+  "url": "https://www.sltrib.com/news/2026/10/20/kevin-olearys-utah-data-center/",
+  "source_title": "Kevin O'Leary's Utah data center (water-right application)",
+  "publisher": "Salt Lake Tribune",
+  "year": 2026,
+  "extra_sources": [
+   {
+    "title": "Utah Nuclear Lifecycle Innovation Campus RFI booklet",
+    "publisher": "Utah Office of Energy Development",
+    "year": 2026,
+    "url": "https://energy.utah.gov/wp-content/uploads/RFI-High-Level-Booklet.pdf",
+    "quote": "Fuel and power-cycle activities may require ~15,000 gallons per day",
+    "locator": "Environmental section (water scarcity)"
+   },
+   {
+    "title": "Large Data Center Water Use Reporting",
+    "publisher": "Utah Division of Water Rights",
+    "year": 2026,
+    "url": "https://waterrights.utah.gov/data-centers/",
+    "quote": "data centers larger than 10,000 sq. ft. that intend to draw 75 acre feet or more of water annually",
+    "locator": "page text (no project list published yet)"
+   }
+  ],
+  "arithmetic": "Stratos ~1.215 KAF diverted (0.987 KAF depleted); nuclear campus 15,000 gpd x 365 / 325,851 = 0.017 KAF. These two sum to ~1.2 KAF; the rest of 19.078 KAF (Meta/QTS Eagle Mountain, reactors) could not be traced.",
+  "notes": "Cited sources (BEA GDP by industry; Macknick 2012 water factors) contain no announced project water volumes; 19.078 KAF is likely built from Macknick per-MWh factors x assumed reactor capacity, which is an assumption not an announcement. Meta/QTS report closed-loop cooling with no published annual volume. Division of Water Rights reporting (HB 76, from July 2026) should become the source.",
+  "confidence": "Low",
+  "id": "industrial_pipeline_water",
+  "value_model": 19.078,
+  "verdict": "unsupported"
+ },
+ {
+  "value_new": 2.96,
+  "low_new": 2.9,
+  "high_new": 3.0,
+  "quote": "a typical Utah household decreasing from nearly 3.0 people in 2025 to 2.3 in 2065.",
+  "locator": "Key findings, 'Smaller household sizes'",
+  "url": "https://www.utahbusiness.com/press-releases/2025/11/19/utah-population-projected-reach-over-5-million-2065-growth-change/",
+  "source_title": "Utah long-term planning projections (press release)",
+  "publisher": "Kem C. Gardner Policy Institute",
+  "year": 2025,
+  "extra_sources": [
+   {
+    "title": "UPC State and County Population Estimates 2020-2025",
+    "publisher": "Utah Population Committee",
+    "year": 2025,
+    "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/12/UPC-State-and-County-Population-Estimates-with-Components-of-Change-2020-2025.xlsx",
+    "quote": "State of Utah ... 3551149.88 (2025)",
+    "locator": "sheet 'Population Estimates'"
+   }
+  ],
+  "arithmetic": "3,551,150 / 1.2M households = 2.96 (household population slightly lower than total, so ~2.9-3.0).",
+  "notes": "2.83 is not the 2025 value; it matches a projection year roughly in the 2030s. Census ACS API was unavailable (maintenance) so ACS could not be cross-checked; ACS has historically put Utah near 3.0.",
+  "confidence": "Medium",
+  "id": "people_per_home",
+  "value_model": 2.83,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": 0.86,
+  "low_new": 0.84,
+  "high_new": 0.87,
+  "quote": "Total Population by County: 2020-2025 ... State of Utah 3551149.88",
+  "locator": "UPC estimates workbook, sheet 'Population Estimates', 2025 column",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/12/UPC-State-and-County-Population-Estimates-with-Components-of-Change-2020-2025.xlsx",
+  "source_title": "UPC State and County Population Estimates with Components of Change 2020-2025",
+  "publisher": "Utah Population Committee / Kem C. Gardner Policy Institute",
+  "year": 2025,
+  "extra_sources": [],
+  "arithmetic": "2025: Box Elder 62,911 + Cache 145,865 + Davis 381,339 + Juab 13,364 + Morgan 13,341 + Rich 2,812 + Salt Lake 1,240,937 + Summit 43,303 + Tooele 84,320 + Utah 765,515 + Wasatch 39,588 + Weber 272,929 = 3,066,224 / 3,551,150 = 0.863. Excluding Juab and half of Summit: 0.854.",
+  "notes": "County boundaries approximate the hydrologic basin (Juab, Summit, Tooele partly outside). Range 0.84-0.87.",
+  "confidence": "High",
+  "id": "share_in_basin",
+  "value_model": 0.8,
+  "verdict": "corrected"
+ },
+ {
+  "value_new": null,
+  "low_new": 5500,
+  "high_new": 12000,
+  "quote": "5 – 10K PERMANENT JOBS Estimated once fully operational",
+  "locator": "Workforce section, p.29 (illustrative permanent workforce by function)",
+  "url": "https://energy.utah.gov/wp-content/uploads/RFI-High-Level-Booklet.pdf",
+  "source_title": "Utah Nuclear Lifecycle Innovation Campus RFI booklet",
+  "publisher": "Utah Office of Energy Development",
+  "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "Nuclear campus 5,000-10,000 permanent (state estimate, contingent on DOE selection) + data-centre operations (hundreds each). 11,900 is within reach of the upper end.",
+  "notes": "dws_jobs (DWS employment update landing page) contains no project job counts. The bulk of any such total is the speculative nuclear campus (DOE MOU only, not a commitment). Meta Eagle Mountain operational job counts (reported ~300+) were seen only in search snippets, not opened.",
+  "confidence": "Low",
+  "id": "industrial_pipeline_jobs",
+  "value_model": 11900,
+  "verdict": "unsupported"
+ }
+]

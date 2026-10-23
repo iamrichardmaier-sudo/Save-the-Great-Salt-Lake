@@ -205,5 +205,131 @@
   "action": "confirm_with_caveat",
   "reviewed": "2026-10-23",
   "why": "4,190 is the Strategic Plan's contingency floor (p.26); the plan and Strike Team place 'serious adverse effects' below 4,192 ft. Relabel or switch to 4,192 depending on what the label should mean."
+ },
+ "lease_base_rate": {
+  "action": "accept",
+  "value": 250,
+  "low": 150,
+  "high": 700,
+  "reviewed": "2026-10-23",
+  "why": "Ag Water Optimization report 2026, Sec 5.1 / Table B-8: full-season alfalfa lease $236 per AF; Gardner Institute water banking brief (Feb 2023): 'cost per acre-foot may range between $150 and $300'. 380 matches Colorado River programmes, not the GSL basin."
+ },
+ "state_interest": {
+  "action": "accept_as_assumption",
+  "value": 0.03,
+  "low": 0.018,
+  "high": 0.045,
+  "reviewed": "2026-10-23",
+  "why": "Utah Treasurer 2025 Debt Affordability Study: 'average rate of 1.82% on outstanding GO debt' with 'higher long-term interest rates' now; PTIF earnings ~4.0% (Dec 2025). 3% is a judgement between them, labelled assumption."
+ },
+ "lake_jobs_full": {
+  "action": "accept",
+  "value": 7706,
+  "low": 3557,
+  "high": 9000,
+  "reviewed": "2026-10-23",
+  "why": "le.utah.gov interim 2022 00004675 slide 'Estimated Total Economic Impact' (Bioeconomics 2012, 2010 data): TOTAL ALL SECTORS 7,706 (direct+indirect+induced); direct 3,557. No source found for 8,650."
+ },
+ "livestock_jobs_at_risk": {
+  "action": "relabel_assumption",
+  "reviewed": "2026-10-23",
+  "why": "No cited source has 1,900; BLS QCEW 2024: cattle and dairy wage jobs ~1,670 statewide, ~1,000 in basin counties (self-employed not counted)."
+ },
+ "hay_value_per_af": {
+  "action": "accept_range",
+  "low": 150,
+  "high": 500,
+  "reviewed": "2026-10-23",
+  "why": "NASS 2025 Utah alfalfa ~$748/acre; / ~3 ft consumed = 245 (model); / 1.5 AF/acre fallowing saving (state 2026 study) = ~$500."
+ },
+ "capital_price": {
+  "action": "accept_range",
+  "low": 3000,
+  "high": 12100,
+  "reviewed": "2026-10-23",
+  "why": "Cedar City paid ~$12,100/AF in 2023 (Western Water); capitalised Utah lease rates give ~$3,000-8,300/AF. The ~$208/AF figure was a bankruptcy purchase of mineral brine rights plus a plant."
+ },
+ "mandate_pull": {
+  "action": "confirm_with_caveat",
+  "reviewed": "2026-10-23",
+  "why": "SCPP grew 64 -> 109 projects, 38,000 -> 64,000 AF (KJZZ syndication of Aspen Journalism), but credited to a fixed price, not a mandate threat."
+ },
+ "pref_incentives": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "0.58 confirmed in the March 2026 Deseret News/Hinckley poll (800 voters), not noble_2026."
+ },
+ "pref_penalties": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "0.22 confirmed in the March 2026 Deseret News/Hinckley poll, not noble_2026."
+ },
+ "farmer_compensation_low": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "$29/resident x 3.4M from the Oregon State study (Environmental Challenges, 2025); cite it directly. Still used nowhere in the model."
+ },
+ "farmer_compensation_high": {
+  "action": "fix_citation",
+  "reviewed": "2026-10-23",
+  "why": "$124/resident x 3.4M, same Oregon State study. Still used nowhere in the model."
+ },
+ "hay_acres": {
+  "action": "accept_with_check",
+  "value": 228000,
+  "reviewed": "2026-10-23",
+  "why": "2022 Census of Agriculture irrigated hay land, 12 Utah basin counties (Wasatch withheld, ~8,000 estimated). 399,500 only fits with Idaho and Wyoming, which a Utah levy cannot reach. Recompute county sum before applying."
+ },
+ "hay_depletion": {
+  "action": "accept_with_check",
+  "value": 857,
+  "reviewed": "2026-10-23",
+  "why": "2019-23 Hay/Turf depletion read from Fig 2-5 of the 2026 Ag Optimization report (+/-20 KAF, whole basin; Utah-only ~540). 1,055 = 399,500 acres x 2.64 = water applied. Used nowhere in the model; tie it to CONSUMERS or delete."
+ },
+ "lawn_water": {
+  "action": "accept_with_check",
+  "value": 371,
+  "reviewed": "2026-10-23",
+  "why": "108 gpcd residential outdoor (2015) x 3.07M basin residents; DWR counts it as delivered water. Apply together with the lawn cluster (basin_lawns, landscape_sqft, people_per_home, share_in_basin) and re-check the lawn_inches reconciliation."
+ },
+ "state_households": {
+  "action": "accept",
+  "value": 1200000,
+  "reviewed": "2026-10-23",
+  "why": "Gardner Institute 2025: ~1.2M Utah households."
+ },
+ "people_per_home": {
+  "action": "accept",
+  "value": 2.96,
+  "reviewed": "2026-10-23",
+  "why": "Gardner Institute 2025 household size 'nearly 3.0'; 2.83 looks like a 2030s projection."
+ },
+ "share_in_basin": {
+  "action": "accept",
+  "value": 0.86,
+  "reviewed": "2026-10-23",
+  "why": "2025 population estimates for the 12 basin counties / state."
+ },
+ "basin_lawns": {
+  "action": "confirm_with_caveat",
+  "reviewed": "2026-10-23",
+  "why": "1.2M x 0.86 x 0.72 = 743k; the old household size and basin share errors cancelled. Agent also resolves findings.md lawn mismatch: Table 4-9 area is per residential unit, so multiply by all ~1.02M basin households; see results/b7.json."
+ },
+ "herd_feed_surplus": {
+  "action": "relabel_assumption",
+  "low": 150000,
+  "high": 600000,
+  "reviewed": "2026-10-23",
+  "why": "Not in NASS; published export estimates 6-20% of Utah's ~2.5M tons = 150k-520k tons."
+ },
+ "industrial_pipeline_water": {
+  "action": "relabel_assumption",
+  "reviewed": "2026-10-23",
+  "why": "Cited sources hold no project volumes; only ~1.2 KAF traced (Stratos data center 1,215 AF diverted; Tooele nuclear campus ~15,000 gal/day). Display only."
+ },
+ "industrial_pipeline_jobs": {
+  "action": "relabel_assumption",
+  "reviewed": "2026-10-23",
+  "why": "Not in the cited DWS page; state nuclear campus booklet estimates 5,000-10,000 permanent jobs, contingent on federal selection. Display only."
  }
 }

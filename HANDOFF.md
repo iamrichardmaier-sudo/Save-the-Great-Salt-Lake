@@ -32,7 +32,7 @@ Earlier in the same session, also done and pushed:
 | Priority ranking | `research/verification/rankings.json` ranks every coefficient by two measures: how far it moves the 2055 lake level, and how much it changes the budget's net economic value (NEV) across its range. Built on the optimised package `optimise(0.6, {seed: 424242})`. |
 | How it connects | Done. `src/connections.ts`, the "How it connects" tab, `src/connections.test.ts`, and `npm run trace` → `research/dependencies.json`. |
 | Wage per job | Checked at source: DWS Table 19, $65,801. Recorded in `src/data.ts` and `research/findings.md`. |
-| Research batches | **5 of 8 finished and reviewed**: b1, b2, b3, b4, b6. Results are in `research/verification/results/*.json`. Still to do: b5, b7 and `tables`. |
+| Research batches | **7 of 8 finished and reviewed**: b1–b7, covering all 105 coefficients. Results are in `research/verification/results/*.json`. Still to do: `tables` (side tables, legal assumptions, source list). |
 | Review decisions | `research/verification/decisions.json`. Every accepted change, with the quote I re-checked at source myself. **Nothing has been applied to `src/data.ts` yet**, except the wage. |
 
 ### Accepted changes (from `decisions.json`), not yet applied
@@ -51,6 +51,14 @@ Earlier in the same session, also done and pushed:
 | turf_need | 30 → **24** | 20–30 | Jackson & Mohadjer 2003 (display only) |
 | lake_now | 4,191.1 → **4,189.7** | | USGS 10010000 on 2026-09-30 (provisional); 4,191.1 was the 2025-09-30 reading. Now below serious_low. |
 | inflow_cv | 0.35 → **0.50** | 0.40–0.65 | Agent computed it from USGS Bear, Weber and Jordan daily flows; re-run before relying on it |
+| lease_base_rate | 380 → **250** | 150–700 | State 2026 study $236/AF; Gardner brief $150–300 |
+| state_interest | 0.015 → **0.03** (assumption) | 0.018–0.045 | Treasurer: 1.82% on old debt; PTIF ~4% now |
+| lake_jobs_full | 8,650 → **7,706** | 3,557–9,000 | Bioeconomics 2012 total (direct + indirect + induced) |
+| state_households / people_per_home / share_in_basin | → **1.2M / 2.96 / 0.86** | | Gardner 2025 |
+| check before applying | hay_acres → ~228,000; hay_depletion → ~857; lawn_water → ~371 | | Computed by agents; recompute first. Apply the lawn figures as one cluster and re-check the lawn reconciliation. |
+| ranges only (b5) | hay_value_per_af 150–500; capital_price 3,000–12,100; herd_feed_surplus 150k–600k | | |
+| citation fixes | pref_incentives, pref_penalties → Deseret/Hinckley Mar 2026; farmer_compensation_* → Oregon State 2025 | | |
+| more relabels to assumption | livestock_jobs_at_risk, industrial_pipeline_water, industrial_pipeline_jobs, herd_feed_surplus | | |
 | deferred | mi_depletion (328 is in no source; ~354 proposed), charge_base (~1,938) | | Restructure together with CONSUMERS in the tables batch |
 | ranges only | crop_cost 276–493; application_cv 0.25–0.6; phrag_lag 2–5; phrag_cap 17–57; ramp_years high 10; onfarm_cap 15–110; retire_capacity low 20; compliance_floor 0.05–0.55 | | see decisions.json |
 | relabel to assumption | growth_draw_2055, urban_to_lake (range 0.1–0.45), streamflow_decline_2055, phrag_delivery | | no source states them |
@@ -59,7 +67,7 @@ Earlier in the same session, also done and pushed:
 
 ## Left to do
 
-1. **Finish research.** Batches b5, b7 and `tables` (the side tables, legal assumptions and source list) were still running when this was written. If their files aren't in `research/verification/results/`, re-run them:
+1. **Finish research.** Batch `tables` (the side tables, legal assumptions and source list) were still running when this was written. If their files aren't in `research/verification/results/`, re-run them:
    - Brief: `research/verification/brief.md`. Its paths point at a scratchpad that no longer exists; replace them with `research/verification/...`.
    - Inputs: `research/verification/batches/`.
    - Review every "corrected" record yourself against the source before accepting it, and add it to `decisions.json`.

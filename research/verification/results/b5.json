@@ -1,0 +1,256 @@
+[
+ {
+  "id": "mandate_pull",
+  "value_model": 0.7,
+  "verdict": "evidence",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "For the 2024 iteration of the program, UCRC officials offered a fixed price per acre-foot that applicants could take or leave — no haggling this time. ... the 2024 program had nearly double the participation, with 109 projects and nearly 64,000 acre-feet of water expected to be conserved.",
+  "locator": "Section 'SCPP participation doubles in 2024'",
+  "url": "https://kjzz.org/content/1881386/using-less-colorado-river-takes-willing-farmer-and-45-million-federal-funds",
+  "source_title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds (Aspen Journalism/KUNC, syndicated by KJZZ)",
+  "publisher": "Aspen Journalism / KUNC (KJZZ syndication)", "year": 2024,
+  "extra_sources": [
+   {"title":"Lower Colorado Basin States' Compromise on Water Conservation","publisher":"Greenberg Traurig","year":2023,"url":"https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation","quote":"To avoid federal government action, California, Arizona, and Nevada created a \"Lower Basin Plan,\" ... agreed to voluntarily conserve three million acre-feet","locator":"paras 1 and 4"}
+  ],
+  "arithmetic": "2023: 64 projects, ~38,000 AF; 2024: 109 projects, ~64,000 AF. 109/64 = 1.70; 64,000/38,000 = 1.68. Jump minus 1 = 0.70, which equals the model value.",
+  "notes": "The aspenjournalism.org original is rate-limited (429), so I read the identical syndicated KJZZ copy. The 1.7x jump is confirmed. The article credits it to the fixed take-or-leave price, more lead time and outreach, not to a threat of curtailment, so it is a weak analogue for a mandate. The model's basis says this too. The closest mandate-threat analogue is the 2023 Lower Basin deal: states pledged 3 MAF over 3 years to head off federal cuts proposed in the Draft SEIS. That shows a credible threat moves voluntary volumes, but the source gives no participation multiplier. Nothing published measures this parameter directly. 0.7 borrows the size of a price-design effect.",
+  "confidence": "Low"
+ },
+ {
+  "id": "lease_elasticity",
+  "value_model": 1,
+  "verdict": "evidence",
+  "value_new": null, "low_new": null, "high_new": 5,
+  "quote": "The program paid about $45 million to participants in 2023 and 2024 combined ... nearly $29 million in payments to water users in 2024 ... about 38,000 acre-feet of water was conserved across the four states, which cost nearly $16 million.",
+  "locator": "Section 'SCPP participation doubles in 2024'",
+  "url": "https://kjzz.org/content/1881386/using-less-colorado-river-takes-willing-farmer-and-45-million-federal-funds",
+  "source_title": "Using less of the Colorado River takes a willing farmer and $45 million in federal funds",
+  "publisher": "Aspen Journalism / KUNC", "year": 2024,
+  "extra_sources": [],
+  "arithmetic": "Average price 2023 = $16M/38,000 AF = $421/AF. 2024 = $29M/64,000 AF = $453/AF (ag price posted at ~$500). Quantity ratio 1.68. Implied supply elasticity = ln(1.68)/ln(453/421) = 0.52/0.073 = 7.1, or ln(1.68)/ln(500/421) = 3.0 against the posted price.",
+  "notes": "The model's scarcity term is (1+held/qRef)^(1/e), so e acts as a supply elasticity. The only observed price-quantity pair (SCPP 2023 to 2024) points to elastic supply (e about 3–7), but program redesign confounds it, so it is not causal. The irrigation-demand meta-analysis (Scheierling et al. 2006, WRR) is still blocked at Wiley and I did not open it, so I quote nothing from it. Suggest raising the high end to about 5. There is no basis to move the central value of 1.",
+  "confidence": "Low"
+ },
+ {
+  "id": "lease_base_rate",
+  "value_model": 380,
+  "verdict": "corrected",
+  "value_new": 250, "low_new": 150, "high_new": 700,
+  "quote": "Ceasing alfalfa irrigation early and full-season leasing were the top-performing leasing options, with an average cost of $236 per AF.",
+  "locator": "Section 5.1 (PDF p.29); Appendix B Table B-8 (PDF p.55): Full Season alfalfa 1.50 AF/acre, $236/AF",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah Division of Water Resources (GSL Basin Integrated Plan)", "year": 2026,
+  "extra_sources": [
+   {"title":"Water Banking and Leasing (GSL options brief)","publisher":"Kem C. Gardner Policy Institute / GSL Strike Team","year":2023,"url":"https://gardner.utah.edu/wp-content/uploads/GSL-Options-Banking.pdf?x71849","quote":"Existing water markets suggest the cost per acre-foot may range between $150 and $300.","locator":"p.1, Key Facts"},
+   {"title":"Test program on Price River (Utah SCPP 2023)","publisher":"Salt Lake Tribune","year":2023,"url":"https://www.sltrib.com/news/environment/2023/11/30/test-program-price-river-promises/","quote":"Leases conserved an estimated 15,090 acre-feet in 2023 ... Utah farmers received $5.4 million in state and federal funds","locator":"body"},
+   {"title":"Using less of the Colorado River takes a willing farmer and $45 million in federal funds","publisher":"Aspen Journalism/KUNC via KJZZ","year":2024,"url":"https://kjzz.org/content/1881386/using-less-colorado-river-takes-willing-farmer-and-45-million-federal-funds","quote":"Colorado, Utah and Wyoming paid agricultural water users about $500 an acre-foot","locator":"SCPP section"}
+  ],
+  "arithmetic": "Utah SCPP 2023: $5.4M/15,090 AF = $358/AF. SCPP 2023 all states: $16M/38,000 = $421/AF. Lower Basin 2023: $1.0–1.2B/2.3 MAF = $435–522/AF. GSL-basin figures: $236/AF (state WTA, 2026) and $150–300/AF (Strike Team/Gardner 2023).",
+  "notes": "$380 matches Colorado River program prices ($358–500/AF). The basis says 'in the basin', and for the GSL basin the 2026 state WTA study and the Strike Team brief both put full-season ag leasing near $236–300/AF of depletion. I suggest $250 (rounded mid of $236 and the $150–300 market range). Keep $380 as a sensitivity case for Colorado-style pricing. HB 410 (2026) sets rates from commodity prices, and the program's first payments come in 2027, so there is no GSL transaction price yet. Sources disagree on units: the DWRe figures are per AF of depletion saved, while SCPP is per AF of conserved consumptive use, so they are broadly comparable.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "capital_price",
+  "value_model": 6000,
+  "verdict": "evidence",
+  "value_new": null, "low_new": 3000, "high_new": 12100,
+  "quote": "purchase 942.75 acre-feet of water from LeBaron Ranch Holdings for just over $12,100 per acre-foot, totaling approximately $11,412,997. About 90% of the water purchased from LeBaron Ranch Holdings is dated 1860",
+  "locator": "article body",
+  "url": "https://www.western-water.com/2023/10/03/utah-city-buys-historic-water-rights-for-sustainability/",
+  "source_title": "Utah city buys historic water rights for sustainability (Cedar City purchase)",
+  "publisher": "Western Water / Cedar City News", "year": 2023,
+  "extra_sources": [
+   {"title":"Utah wins $30M bid to secure US Magnesium facility, water rights for Great Salt Lake","publisher":"KUTV/KJZZ-TV","year":2026,"url":"https://kjzz.com/news/local/utah-wins-30m-bid-to-secure-us-magnesium-facility-water-rights-for-great-salt-lake","quote":"The winning bid ... would see the Beehive State take ownership of the facility, as well as roughly 144,790 acre-feet of water rights.","locator":"body"},
+   {"title":"Utah's effort to save the Great Salt Lake: historic water law, major acquisitions and a federal partnership","publisher":"Utah House of Representatives","year":2026,"url":"https://house.utleg.gov/utahs-effort-to-save-the-great-salt-lake-historic-water-law-major-acquisitions-and-a-federal-partnership/","quote":"purchasing 144,000 acre-feet of water rights annually and other assets for $30 million","locator":"US Magnesium section"},
+   {"title":"Water Banking and Leasing","publisher":"Kem C. Gardner Policy Institute / GSL Strike Team","year":2023,"url":"https://gardner.utah.edu/wp-content/uploads/GSL-Options-Banking.pdf?x71849","quote":"Existing water markets suggest the cost per acre-foot may range between $150 and $300.","locator":"p.1 (this is an annual LEASE cost, not a purchase price)"}
+  ],
+  "arithmetic": "US Mag: $30M/144,790 AF = $207/AF (the model's ~$208). Capitalised lease: $250/AF/yr at 3–4% = $6,250–8,300/AF, and $150/yr at 5% = $3,000/AF. Cedar City: $12,100/AF (southern Utah, municipal buyer, 1860 priority).",
+  "notes": "The 'Utah figures an order of magnitude lower' are not comparable sale prices. The ~$208/AF is a bankruptcy-auction price for brine-extraction rights, bundled with a defunct Superfund-site plant, and it did not buy consumptive ag water. The ~$250 figure is the Strike Team's annual lease cost ($150–300/AF/yr), not a capital price. Capitalising Utah lease rates gives about $3,000–8,300/AF, and the one documented arm's-length Utah purchase of senior ag rights is $12,100/AF (municipal buyer, so an upper bound). $6,000 is consistent with the Utah evidence. The low of $250 is implausible for consumptive ag rights, so I suggest low about $3,000 and high about $12,000. A Wasatch Front or Bear River ag-right transaction series (WestWater) was not found publicly.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "lease_rate_ceiling",
+  "value_model": 6,
+  "verdict": "evidence",
+  "value_new": null, "low_new": 1.5, "high_new": 6,
+  "quote": "the Bureau of Reclamation initially said it would cap payments at $650 per acre-foot, then later revised it down to $595 for farmers like Cotner who raise alfalfa to sell, and $621 for those who grow alfalfa to feed their own cattle herds.",
+  "locator": "article body",
+  "url": "https://www.sltrib.com/news/environment/2023/11/30/test-program-price-river-promises/",
+  "source_title": "Test program on Utah's Price River (SCPP)",
+  "publisher": "Salt Lake Tribune", "year": 2023,
+  "extra_sources": [
+   {"title":"Opportunities and Costs for Agricultural Water Optimization in the GSL Basin","publisher":"Utah DWRe","year":2026,"url":"https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf","quote":"Delaying the start of irrigation (split-season leasing scenarios 3-6) had moderate cost-effectiveness, with costs ranging from $340 to $371 per AF.","locator":"Section 5.1, PDF p.29"}
+  ],
+  "arithmetic": "Highest observed ag lease payment $650/AF = 1.7x of $380, or 2.6x of a $250 base. The model ceiling is 6 x $380 = $2,280/AF, about 3.5x the highest observed lease payment.",
+  "notes": "This is a policy cap, so evidence only bounds it. Observed lease prices top out at roughly 1.5–2.6x the base. Capitalised M&I purchase prices ($12,100/AF at 4%, about $480/yr) also sit under 2x. A ceiling of 6 is permissive and is rarely binding against observed data. A central value of about 2–3 would match observed scarcity premia. The irrigation_elasticity_meta source is still blocked and was not opened.",
+  "confidence": "Low"
+ },
+ {
+  "id": "state_interest",
+  "value_model": 0.015,
+  "verdict": "corrected",
+  "value_new": 0.03, "low_new": 0.018, "high_new": 0.045,
+  "quote": "The State pays an average rate of 1.82% on outstanding GO debt. ... several factors make additional debt less attractive at present, including higher long-term interest rates",
+  "locator": "Treasurer's letter / highlights, p.1–3",
+  "url": "https://treasurer.utah.gov/wp-content/uploads/2025-Debt-Affordability-Study_Released-November-1.pdf",
+  "source_title": "2025 Debt Affordability Study",
+  "publisher": "Utah State Treasurer", "year": 2025,
+  "extra_sources": [
+   {"title":"PTIF Portfolio Statistics as of December 31, 2025","publisher":"Utah State Treasurer","year":2025,"url":"https://treasurer.utah.gov/wp-content/uploads/20251231-PTIF-Stats-and-Holdings.pdf","quote":"365 Day Interest Rate 4.01%","locator":"Portfolio Summary, p.1"},
+   {"title":"PTIF Portfolio Statistics as of June 30, 2025","publisher":"Utah State Treasurer","year":2025,"url":"https://treasurer.utah.gov/wp-content/uploads/20250630-PTIF-Stats-and-Holdings.pdf","quote":"365-day rate 4.48%","locator":"Portfolio Summary"}
+  ],
+  "arithmetic": "Range runs from the legacy average GO coupon (1.82%) to the state's cash opportunity cost (PTIF 4.0–4.5%). The midpoint is about 3%.",
+  "notes": "The cited gsl_commissioner page has no interest rate (I checked the text). The 1.82% is the weighted rate on old GO debt, mostly issued in 2010–2020 at low rates (the 2020 issue had a 1.595% TIC). The Treasurer notes higher long-term rates now, and the state earns about 4% on idle cash in the PTIF, which is the true opportunity cost of instalment payments. New 15–20-yr AAA GO debt in 2025–26 would price well above 1.5%, but I found no recent Utah GO TIC to quote. I suggest 3%, range 1.8–4.5%.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "repossession_discount",
+  "value_model": 0.26,
+  "verdict": "evidence",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "A special tabulation of 2012 Census of Agriculture data for more than two thousand Utah farms revealed yields ranging from under 1 ton to more than 12 tons per acre. The median yield was 3.4 tons, and the average was 4 tons per acre.",
+  "locator": "Appendix B.1.1.5, PDF p.50–51; Tables B-2 and B-3",
+  "url": "https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf",
+  "source_title": "Opportunities and Costs for Agricultural Water Optimization in the Great Salt Lake Basin",
+  "publisher": "Utah DWRe", "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "Acreage-weighted yield classes (Table B-2 acres x Table B-3 yields): mean 4.02 t/ac. Lowest third of acres (all 2-cut ground plus part of 4-cut flood) averages 3.10 t/ac, so 1 - 3.10/4.02 = 0.23 below the mean. This ignores within-class spread, so the true figure is larger. For a normal distribution the bottom-third mean is mu - 1.09 sigma, so 0.26 implies a yield CV of 0.24. Median/mean = 3.4/4.0 shows right skew.",
+  "notes": "The 2026 state yield classes support a bottom-third discount of about 0.23 or more, so 0.26 is reasonable. Caveat: repossession through eminent domain requires just compensation at fair market value, so the discount must come from selecting low-value ground, not from paying under market. I did not open the Utah condemnation statutes. Neither cited NASS source page gives a yield distribution.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "mandate_floor",
+  "value_model": 1100,
+  "verdict": "evidence",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "To reach the minimum healthy lake elevation (4,198 feet) by 2055, mean annual inflows would likely need to be ~2,465 KAF. Between 2000 and 2025, inflows averaged 1,665 KAF per year.",
+  "locator": "Figure 11 sidebar 'Inflows needed to reach healthy lake elevations', PDF p.24 (report p.4 of section)",
+  "url": "https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf",
+  "source_title": "Great Salt Lake Data and Insights Summary",
+  "publisher": "Great Salt Lake Strike Team", "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "Required added mean inflow = 2,465 - 1,665 = 800 KAF/yr at the lake. A 1,100 KAF/yr mandated cut delivers 800 KAF only if about 73% of it reaches the lake (800/1,100).",
+  "notes": "This is a policy choice. The state's updated water budget puts the whole recovery gap at about 800 KAF/yr of added inflow, so a 1,100 KAF/yr mandate floor is roughly the full gap grossed up for delivery losses. It is an upper-end sizing, because the model's mandate only covers what voluntary levers miss. The Strike Team calls the scenarios 'not prescriptive'.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "mandate_phase",
+  "value_model": 10,
+  "verdict": "evidence",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "Last year Utah's governor, Spencer Cox, pledged to refill the Great Salt Lake by 2034, when the city is slated to host the winter Olympic games.",
+  "locator": "article body",
+  "url": "https://www.nybooks.com/online/2026/06/14/putting-the-lake-to-work-great-salt-lake/",
+  "source_title": "Putting the Lake to Work",
+  "publisher": "New York Review of Books", "year": 2026,
+  "extra_sources": [
+   {"title":"Great Salt Lake Data and Insights Summary","publisher":"GSL Strike Team","year":2026,"url":"https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf","quote":"To reach the minimum healthy lake elevation (4,198 feet) by 2055","locator":"Figure 11 sidebar, PDF p.24"},
+   {"title":"Lower Colorado Basin States' Compromise on Water Conservation","publisher":"Greenberg Traurig","year":2023,"url":"https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation","quote":"agreed to voluntarily conserve three million acre-feet of water over the next three years","locator":"para 1"}
+  ],
+  "arithmetic": "From 2026: the 2034 pledge is about 8 years and the 2055 planning horizon is about 29 years. The Lower Basin cut was phased over 3 years.",
+  "notes": "This is a policy choice. Published targets bound it between about 8 years (political pledge) and 29 years (Strike Team horizon), so 10 years sits near the aggressive end. The cited Distribution Management Plan page (waterrights.utah.gov homepage text) has no phase-in figure. I tried California SGMA's 20-year statutory phase-in as an analogue, but its pages were blocked or empty, so it is not used.",
+  "confidence": "Low"
+ },
+ {
+  "id": "hay_value_per_af",
+  "value_model": 245,
+  "verdict": "range_revised",
+  "value_new": null, "low_new": 150, "high_new": 500,
+  "quote": "HAY, ALFALFA 480,000 [acres harvested] 4.3 TONS / ACRE 2,064,000 TONS 176 $ / TON 359,136,000",
+  "locator": "2025 State Agriculture Overview, Utah, Crops table",
+  "url": "https://www.nass.usda.gov/Quick_Stats/Ag_Overview/stateOverview.php?state=UTAH",
+  "source_title": "2025 State Agriculture Overview: Utah",
+  "publisher": "USDA NASS", "year": 2025,
+  "extra_sources": [
+   {"title":"Opportunities and Costs for Agricultural Water Optimization in the GSL Basin","publisher":"Utah DWRe","year":2026,"url":"https://water.utah.gov/wp-content/uploads/2026/05/GSL-BIP_AgWaterOptimizationReport_FINAL_2026-04-21.pdf","quote":"Full season leasing yields the largest reduction in depletion per acre—1.5 AF/acre","locator":"App. B.1.1.10, PDF p.55; benchmark price '$212 per ton' 25-yr avg, PDF p.50"}
+  ],
+  "arithmetic": "Revenue per acre (2025) = $359.136M / 480,000 ac = $748/ac (4.3 t x $174 effective). Divided by alfalfa ET of about 3.05 ft gives $245/AF (the model value). Divided by 2.64 AF/ac application gives $283. Divided by the 1.5 AF/ac depletion actually saved by fallowing (DWRe 2026) gives $499/AF. With the 25-yr average price ($212 x 4.0 t = $848/ac): $278/AF at 3.05 ft, $565/AF at 1.5 AF/ac.",
+  "notes": "The cited NASS Utah landing page has no figures, so I used the NASS 2025 Utah overview. $245 holds if the divisor is full alfalfa consumptive use (about 3 ft). The model applies it to 'forced' water, which is depletion delivered to the lake. Per AF of depletion removed, the state's 2026 study implies only 1.5 AF/ac is saved, so gross receipts lost per AF are about $500. I suggest raising high to about $500 and recording the denominator choice. I found no Hill et al. (2011) ET value in an opened source, so 3.05 ft is back-solved, not quoted.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "farm_jobs_per_1000_acres",
+  "value_model": 19.2,
+  "verdict": "confirmed",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "agricultural activity employed over 16,000 people and used nearly one-fifth of Utah's land",
+  "locator": "article body (reporting Kem C. Gardner Policy Institute 'Portrait of Agriculture', 2022 Census basis)",
+  "url": "https://www.deseret.com/utah/2025/12/18/utah-farms-generated-2-billion-in-2022/",
+  "source_title": "Utah farms generated $2 billion in 2022",
+  "publisher": "Deseret News (reporting Kem C. Gardner Policy Institute)", "year": 2025,
+  "extra_sources": [
+   {"title":"2022 Census of Agriculture, Utah, Table 9","publisher":"USDA NASS","year":2024,"url":"https://www.nass.usda.gov/Publications/AgCensus/2022/Full_Report/Volume_1,_Chapter_1_State_Level/Utah/st49_1_009_010.pdf","quote":"Irrigated land ... acres 853,471 1,097,219","locator":"Table 9 (2022, 2017)"},
+   {"title":"2022 Census of Agriculture, Utah, Table 52","publisher":"USDA NASS","year":2024,"url":"https://www.nass.usda.gov/Publications/AgCensus/2022/Full_Report/Volume_1,_Chapter_1_State_Level/Utah/st49_1_052_052.pdf","quote":"Producers ... 33,270 ... Primary occupation: Farming 10,318","locator":"Table 52"}
+  ],
+  "arithmetic": "16,000 / 853,471 irrigated acres x 1000 = 18.7 jobs per 1,000 ac (model 19.2, within 3%). Using 2017 acres (1,097,219) gives 14.6.",
+  "notes": "This is confirmed at about 18.7. The cited DWS page covers nonfarm jobs only. Caveats: the Gardner figure ('over 16,000') is a headcount that includes part-time labour, and nearly half worked under 150 days a year. Counting all 33,270 producers would give a far higher ratio. The numerator includes range livestock, so applying it to hay overstates losses, as the model's note says.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "lake_jobs_full",
+  "value_model": 8650,
+  "verdict": "corrected",
+  "value_new": 7706, "low_new": 3557, "high_new": 9000,
+  "quote": "Total Employment (Full and Part-time Jobs) Recreation Sector 1,217 236 310 1,764 / Industrial Sector 1,967 1,288 2,112 5,368 / Aquaculture (brine shrimp eggs) 373 63 138 574 / TOTAL ALL SECTORS 7,706",
+  "locator": "Slide 'Estimated Total Economic Impact' (columns Direct/Indirect/Induced/Total), PDF p.24; figures from Bioeconomics Inc. 2012 (2010 data)",
+  "url": "https://le.utah.gov/interim/2022/pdf/00004675.pdf",
+  "source_title": "Natural Resources, Agriculture, and Environment Interim Committee materials (DNR Great Salt Lake presentation)",
+  "publisher": "Utah Legislature / Utah DNR", "year": 2022,
+  "extra_sources": [
+   {"title":"Industry and Recreation","publisher":"Great Salt Lake (State of Utah)","year":2026,"url":"https://greatsaltlake.utah.gov/industry-recreation/","quote":"The Great Salt Lake contributes over $2 billion annually to Utah's economy and provides over 7,700 direct jobs.","locator":"para 1"}
+  ],
+  "arithmetic": "Direct jobs = 1,217 + 1,967 + 373 = 3,557. Total including indirect and induced = 7,706.",
+  "notes": "The only traceable figure is 7,706 total jobs (direct + indirect + induced) from the 2012 Bioeconomics study using 2010 data. The state website calls this '7,700 direct jobs', which is wrong: direct jobs are 3,557. The model's 8,650 is not in any opened source. If it comes from scaling 7,700 by a recovery share, it double-counts, because the 2010 lake was near healthy levels. US Magnesium has since closed and its rights were bought by the state, which pushes industrial jobs lower. I did not find a Gardner ~9,000-job study. I suggest 7,706 for total jobs, or 3,557 if the model wants direct jobs only.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "livestock_jobs_at_risk",
+  "value_model": 1900,
+  "verdict": "unsupported",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "",
+  "locator": "BLS QCEW 2024 annual averages, private ownership, NAICS 1121 (cattle ranching and farming) and 112 (animal production)",
+  "url": "https://data.bls.gov/cew/data/api/2024/a/area/49000.csv",
+  "source_title": "Quarterly Census of Employment and Wages, Utah 2024 annual",
+  "publisher": "U.S. Bureau of Labor Statistics", "year": 2025,
+  "extra_sources": [
+   {"title":"QCEW 2024 annual, basin counties (Box Elder 49003, Cache 49005, Salt Lake 49035, Utah 49049, Weber 49057, Davis, Morgan, Rich, Summit, Tooele, Wasatch)","publisher":"BLS","year":2025,"url":"https://data.bls.gov/cew/data/api/2024/a/area/49005.csv","quote":"NAICS 1121 employment: Box Elder 142, Cache 173, Salt Lake 165, Utah 330 (others suppressed)","locator":"own_code 5, industry 1121"}
+  ],
+  "arithmetic": "Utah statewide 2024 QCEW: NAICS 1121 = 1,670 jobs (beef 11211 = 594, dairy 11212 = 1,076). NAICS 112 = 2,581. Basin counties with disclosed 1121: 142 + 173 + 165 + 330 = 810, about 850–1,000 with suppressed cells. Disclosed NAICS 112 in basin counties = 1,283.",
+  "notes": "The cited DWS and NASS pages hold no dairy or beef employment figure. QCEW wage-and-salary cattle employment in the basin is about 1,000 (1,670 statewide), below the model's 1,900 'at risk' value, which is itself only a share of basin employment. 1,900 is defensible only if self-employed ranch and dairy proprietors (not in QCEW) are counted, and I found no published basin count of those. The range 800–3,500 brackets the QCEW-only and with-proprietors cases. I could not trace the hard-coded 213.1 $M livestock receipts in model.ts.",
+  "confidence": "Low"
+ },
+ {
+  "id": "wtp_household",
+  "value_model": 128,
+  "verdict": "confirmed",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "Those who were moderately sure their financial contributions would make a difference were willing to pay between $113 and $144 per household each year.",
+  "locator": "article body; survey fielded August 2025, 1,050 respondents, manuscript under peer review",
+  "url": "https://www.sltrib.com/news/environment/2026/10/16/most-utahns-are-willing-open-their/",
+  "source_title": "Most Utahns are willing to open their wallets to save the Great Salt Lake",
+  "publisher": "Salt Lake Tribune (Weber State University study)", "year": 2026,
+  "extra_sources": [],
+  "arithmetic": "(113 + 144)/2 = 128.5, rounded to 128. Cross-check: article says 'up to $162 million per year across the state's 1.1 million households', and $162M / 1.1M = $147 per household.",
+  "notes": "The value is the midpoint of the 'moderately sure' range and is confirmed. The full range runs from $36.56 (low certainty, water bill) to $485.10 (high certainty, taxes), so $113–144 is the moderate-certainty band only. The manuscript is not public yet (under peer review), so this rests on press coverage.",
+  "confidence": "Medium"
+ },
+ {
+  "id": "mandate_penalty",
+  "value_model": 0,
+  "verdict": "evidence",
+  "value_new": null, "low_new": null, "high_new": null,
+  "quote": "pay an administrative fine not to exceed: (A) $5,000 for each knowing violation; or (B) $1,000 for each violation that is not knowing; (ii) replace up to 200% of water taken",
+  "locator": "Utah Code 73-2-26(1)(a)",
+  "url": "https://le.utah.gov/xcode/Title73/Chapter2/C73-2-S26_1800010118000101.html",
+  "source_title": "Utah Code 73-2-26, Administrative penalties (State Engineer)",
+  "publisher": "Utah Legislature", "year": 2026,
+  "extra_sources": [
+   {"title":"Lower Colorado Basin States' Compromise on Water Conservation","publisher":"Greenberg Traurig","year":2023,"url":"https://www.gtlaw.com/en/insights/2023/5/lower-colorado-basin-states-compromise-on-water-conservation","quote":"federal compensation ... for three quarters of the water savings, or 2.3 million acre-feet, which could amount to as much as $1 to $1.2 billion","locator":"para 4"}
+  ],
+  "arithmetic": "The 200% replacement rule in $/AF is 2 AF per AF taken. At $250–380/AF lease value that is about $500–760/AF. Lower Basin compensation = $1.0–1.2B / 2.3 MAF = $435–522/AF.",
+  "notes": "This is a policy choice (default 0, sweep up to 2,440 = lake value). Existing Utah enforcement is a flat per-violation fine ($1k/$5k) plus up to 200% water replacement, which works out to about $500–760/AF at current lease prices. That is a published anchor for a non-zero penalty well below the $2,440 upper sweep. Utah forfeiture law (7-year nonuse; see utah_water_right_title source) carries no $/AF penalty.",
+  "confidence": "Low"
+ }
+]
