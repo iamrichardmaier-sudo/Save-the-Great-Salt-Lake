@@ -91,7 +91,7 @@ export const CONTROLS: Control[] = [
 
   // ── Mandate
   {
-    key: 'mandateFloorKaf', label: 'Mandated cut, if the rest falls short', kind: 'range', min: 0, max: 1000, step: 25, group: 'Mandate',
+    key: 'mandateFloorKaf', label: 'Mandated cut, if the rest falls short', kind: 'range', min: 0, max: 1200, step: 25, group: 'Mandate',
     display: (v: number) => (v === 0 ? 'none' : `${num(v, 0)} KAF/yr floor`), coef: 'mandate_floor',
     help: 'A floor, not an order on top: it only takes what the voluntary levers did not already find.',
   },

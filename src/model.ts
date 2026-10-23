@@ -303,6 +303,9 @@ export interface YearRow {
   rightsOwnedKaf: number;
   shepherdedKaf: number;
   forcedKaf: number;
+  voluntaryNetToLakeKaf: number;
+  mandateFineRevenueM: number;
+  mandateLoadBearing: boolean;
   repossessedKaf: number;
   grossDeliveredKaf: number;
   growthDrawKaf: number;
@@ -358,6 +361,8 @@ export interface PkgResult {
   acresOutOfIrrigation: number;
   hayTonsLost: number;
   pricePaidPerAf: number;
+  rightsNeededToHoldHealthyKaf: number;
+  durableRightsGapKaf: number;
   ceilingBinds: boolean;
 }
 
@@ -476,7 +481,8 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     );
     const notSellCost = d.mandatePenaltyPerAf;
     const mandPush = 1 + Math.min(1, notSellCost / V('irrigation_net_value')) * V('mandate_pull');
-    const leaseCap = (V('lease_capacity') + V('retire_capacity')) * mandPush;
+    const leaseCap = ((V('lease_capacity') + V('retire_capacity')) * mandPush) /
+      V('lease_to_own_rotation_multiplier');
     const room = Math.max(0, leaseCap - heldKaf);
 
     const qRef = V('lease_capacity') + V('retire_capacity');
@@ -531,21 +537,26 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
       }
     }
 
-    // ── The mandate: a floor that only takes what the voluntary levers missed.
+    // ── The mandate: a floor that only takes what the voluntary levers missed, and
+    // only while that forced water is still load-bearing for the healthy floor.
     const phaseShare = Math.min(1, (i + 1) / Math.max(1, d.mandatePhaseYears));
     const required = d.mandateFloorKaf * phaseShare;
     const shepherded = Math.min(rightsHeld + cumulativeRepossessed, shepherdCap) * (1 - agUsed);
     const voluntaryGross = programKaf + charge.behaviouralKaf + levy.waterKaf + lawn.waterNotApplied + shepherded;
-    const forced = Math.max(0, required - voluntaryGross);
-
-    // ── Delivery, and the floor the state's own rights put under it.
-    const delivered =
-      shepherded +
-      (programKaf + levy.waterKaf + lawn.toLake + (charge.behaviouralKaf * limDeliv) / deliv) * ramp +
-      (forced * limDeliv) / deliv;
     const floor = shepherded * deliv;
     const growthDraw = V('growth_draw_2055') * t;
     const streamflowDecline = V('streamflow_decline_2055') * t;
+    const healthyHoldAdded = Math.max(0, inflowToHoldKaf(V('healthy_min')) - baseInflow);
+    const voluntaryDelivered =
+      shepherded +
+      (programKaf + levy.waterKaf + lawn.toLake + (charge.behaviouralKaf * limDeliv) / deliv) * ramp;
+    const voluntaryNet = Math.max(floor, voluntaryDelivered * deliv - growthDraw - streamflowDecline);
+    const mandateLoadBearing = voluntaryNet < healthyHoldAdded - 1e-6;
+    const forced = mandateLoadBearing ? Math.max(0, required - voluntaryGross) : 0;
+    const mandateFineRevenueM = 0;
+
+    // ── Delivery, and the floor the state's own rights put under it.
+    const delivered = voluntaryDelivered + (forced * limDeliv) / deliv;
     const net = Math.max(floor, delivered * deliv - growthDraw - streamflowDecline);
 
     // ── The lake.
@@ -587,6 +598,9 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
       rightsOwnedKaf: ownedKaf,
       shepherdedKaf: shepherded,
       forcedKaf: forced,
+      voluntaryNetToLakeKaf: voluntaryNet,
+      mandateFineRevenueM,
+      mandateLoadBearing,
       repossessedKaf: cumulativeRepossessed,
       grossDeliveredKaf: delivered,
       growthDrawKaf: growthDraw,
@@ -620,6 +634,11 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
   }
 
   const final = years[years.length - 1];
+  const rightsNeededToHoldHealthyKaf = Math.max(
+    0,
+    (inflowToHoldKaf(V('healthy_min')) - baseInflow) / Math.max(1e-9, final.deliveryShare),
+  );
+  const durableRightsGapKaf = Math.max(0, rightsNeededToHoldHealthyKaf - final.rightsOwnedKaf);
 
   // How the water was obtained, which is what the politics turns on.
   const bought = final.shepherdedKaf;
@@ -639,7 +658,8 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
 
   const lastCharge = chargeModel(final.chargeRate);
   const leaseCapFinal = (V('lease_capacity') + V('retire_capacity')) *
-    (1 + Math.min(1, d.mandatePenaltyPerAf / V('irrigation_net_value')) * V('mandate_pull'));
+    (1 + Math.min(1, d.mandatePenaltyPerAf / V('irrigation_net_value')) * V('mandate_pull')) /
+    V('lease_to_own_rotation_multiplier');
 
   const agWaterRemoved = lastCharge.agCutKaf + final.levyKaf + final.forcedKaf + final.shepherdedKaf;
   const acres = (agWaterRemoved * 1000) / V('application_mean');
@@ -669,6 +689,8 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     acresOutOfIrrigation: acres,
     hayTonsLost: acres * V('hay_yield'),
     pricePaidPerAf: final.shepherdedKaf > 0 ? (final.leaseSpendM * 1e6) / (final.shepherdedKaf * 1000) : 0,
+    rightsNeededToHoldHealthyKaf,
+    durableRightsGapKaf,
     ceilingBinds: final.rightsHeldKaf >= leaseCapFinal - 1,
   };
 }
