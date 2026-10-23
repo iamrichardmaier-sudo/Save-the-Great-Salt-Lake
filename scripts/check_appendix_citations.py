@@ -18,6 +18,8 @@ for path in sorted(glob.glob("appendix/[0-9][0-9]-*.md")):
         cited.setdefault(url, set()).add(label)
 
 listed = set(re.findall(r"\]\((https?://[^)\s]+)\)", open(BIB, encoding="utf-8").read()))
+# DOI links sit beside an entry's cited URL, so they are not entries of their own.
+listed = {u for u in listed if not u.startswith("https://doi.org/")}
 
 uncited = sorted(listed - set(cited))
 missing = sorted(set(cited) - listed)
