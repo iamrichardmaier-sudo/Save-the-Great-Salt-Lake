@@ -11,8 +11,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "check-links": "tsx scripts/check-links.ts",
-    "schedule": "tsx scripts/budget-schedule.ts"
+    "check-links": "NODE_USE_ENV_PROXY=1 tsx scripts/check-links.ts",
+    "schedule": "tsx scripts/budget-schedule.ts",
+    "trace": "tsx scripts/trace-dependencies.ts"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",

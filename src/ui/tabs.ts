@@ -21,12 +21,19 @@ import { areaSqMi, equilibriumFt, inflowToHoldKaf } from '../lake';
 import { levyModel, seasonCoverage, type Dials, type PkgResult } from '../model';
 import { budgetSweep, levelForAdded, type SimResult, type TornadoRow } from '../simulate';
 import { LEVERS, type ScheduleResult } from '../schedule';
+import { CALCULATING, OUTPUTS, STAGES, impacts, traceDependencies } from '../connections';
+import modelSrc from '../model.ts?raw';
+import lakeSrc from '../lake.ts?raw';
+import scheduleSrc from '../schedule.ts?raw';
+import simulateSrc from '../simulate.ts?raw';
+import tabsSrc from './tabs.ts?raw';
 import { controlsByGroup } from './controls';
 import {
   dollarsShort,
   escapeHtml,
   feet,
   fig,
+  figCoef,
   kafYr,
   millions,
   millionsYr,
@@ -37,6 +44,7 @@ import {
 import {
   drawBars,
   drawCalibration,
+  drawFlow,
   drawJobs,
   drawLake,
   drawLine,
@@ -1269,6 +1277,110 @@ const calibrationTab: Tab = {
   },
 };
 
+// ───────────────────────────── How it connects ─────────────────────────────
+
+/** The model's own source, read at build time so the map always matches the code. */
+const SOURCE_FILES = {
+  'model.ts': modelSrc,
+  'lake.ts': lakeSrc,
+  'schedule.ts': scheduleSrc,
+  'simulate.ts': simulateSrc,
+  'ui/tabs.ts': tabsSrc,
+};
+
+const connectionsTab: Tab = {
+  id: 'connections',
+  label: 'How it connects',
+  group: 'detail',
+  render({ d, schedule }) {
+    const feeds = traceDependencies(SOURCE_FILES);
+    const impact = new Map(impacts({ ...d, schedule: undefined }, schedule()).map((x) => [x.id, x]));
+    const calc = COEFS.filter((c) => [...(feeds.get(c.id) ?? [])].some((st) => CALCULATING.has(st)));
+    const displayOnly = COEFS.filter((c) => feeds.has(c.id) && !calc.includes(c));
+    const unused = COEFS.filter((c) => !feeds.has(c.id));
+    const stageLabel = new Map(STAGES.map((st) => [st.id, st.label]));
+    const byLake = [...impact.values()].sort((a, b) => b.lakeSwingFt - a.lakeSwingFt).map((x) => x.id);
+    const byNev = [...impact.values()].sort((a, b) => b.nevSwingM - a.nevSwingM).map((x) => x.id);
+    const rank = (c: (typeof COEFS)[number]) =>
+      Math.min(impact.has(c.id) ? byLake.indexOf(c.id) : 999, impact.has(c.id) ? byNev.indexOf(c.id) : 999);
+
+    const rows = [...COEFS]
+      .sort((a, b) => rank(a) - rank(b))
+      .map((c) => {
+        const x = impact.get(c.id);
+        const stages = [...(feeds.get(c.id) ?? [])].map((st) => stageLabel.get(st) ?? st);
+        return `<tr>
+          <td>${figCoef(c.id)} <span class="hint">${escapeHtml(c.label)}</span></td>
+          <td><span class="pill pill-${c.status}">${c.status}</span></td>
+          <td>${stages.length ? escapeHtml(stages.join(', ')) : '<span class="none">nothing</span>'}</td>
+          <td>${x ? fig(feet(x.lakeSwingFt, 2), { formula: `2055 lake level with ${c.id} at the top of its range − at the bottom`, assumed: true }) : '<span class="none">no range</span>'}</td>
+          <td>${x ? fig(millions(x.nevSwingM, 0), { formula: `plan net economic value with ${c.id} at the top of its range − at the bottom, same yearly split`, assumed: true }) : '<span class="none">no range</span>'}</td>
+        </tr>`;
+      })
+      .join('');
+
+    return `
+      <div class="tiles">
+        ${tile('Numbers in the model', fig(String(COEFS.length), { note: 'Every coefficient in data.ts.' }), 'each with a basis, a status and its sources')}
+        ${tile('Feed a calculation', fig(String(calc.length), { formula: 'coefficients read by the model, lake, budget or simulation code', assumed: true }), 'traced from the model’s own source code')}
+        ${tile('Explanation only', fig(String(displayOnly.length), { formula: 'coefficients only quoted on the page', assumed: true }), 'quoted on the page for context; no result depends on them')}
+        ${tile('Used nowhere', fig(String(unused.length), { formula: 'coefficients neither calculated with nor quoted', assumed: true }), unused.length ? escapeHtml(unused.map((c) => c.id).join(', ')) : 'every number is used', unused.length ? 'tile-bad' : 'tile-ok')}
+      </div>
+
+      ${chart('chart-connections', 'How the inputs flow through the model', 'Read left to right. A line’s width is how many numbers travel along it. Hover a box to light up what it touches.')}
+
+      <section class="prose">
+        <h3>Reading the table</h3>
+        <p>
+          Each number is pushed to the bottom and then the top of its own plausible range, everything
+          else held, and the change recorded twice: in the ${fig(String(d.horizon), { note: 'The horizon the model runs to.' })}
+          lake level, and in the plan’s net economic value with the year-by-year split held as it is.
+          The table is sorted by whichever of the two a number moves more, so the numbers that decide
+          the answer come first. A number with no stated range is a fixed fact or a policy setting.
+        </p>
+      </section>
+
+      <table class="data">
+        <caption>Every number, what it feeds, and how much it moves the answer</caption>
+        <thead><tr><th>Number</th><th>Status</th><th>Feeds</th><th>Moves the lake</th><th>Moves net value</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  },
+  mount(root) {
+    const el = byId(root, 'chart-connections');
+    if (!el) return;
+    const feeds = traceDependencies(SOURCE_FILES);
+    const groups = [...new Set(COEFS.map((c) => c.group))];
+    const groupCount = (g: string) => COEFS.filter((c) => c.group === g).length;
+    const used = STAGES.filter((st) => COEFS.some((c) => feeds.get(c.id)?.has(st.id)));
+    const links = new Map<string, number>();
+    for (const c of COEFS) {
+      for (const st of feeds.get(c.id) ?? []) {
+        const key = `g:${c.group}|s:${st}`;
+        links.set(key, (links.get(key) ?? 0) + 1);
+      }
+    }
+    for (const st of used) {
+      for (const o of st.outputs) {
+        const weight = COEFS.filter((c) => feeds.get(c.id)?.has(st.id)).length;
+        links.set(`s:${st.id}|o:${o}`, weight);
+      }
+    }
+    drawFlow(
+      el,
+      [
+        groups.map((g) => ({ id: `g:${g}`, label: g, tag: String(groupCount(g)) })),
+        used.map((st) => ({ id: `s:${st.id}`, label: st.label })),
+        OUTPUTS.map((o) => ({ id: `o:${o.id}`, label: o.label })),
+      ],
+      [...links.entries()].map(([k, weight]) => {
+        const [from, to] = k.split('|');
+        return { from, to, weight };
+      }),
+    );
+  },
+};
+
 export const TABS: Tab[] = [
   nowTab,
   targetTab,
@@ -1285,6 +1397,7 @@ export const TABS: Tab[] = [
   simsTab,
   baselineTab,
   calibrationTab,
+  connectionsTab,
   indexTab,
 ];
 

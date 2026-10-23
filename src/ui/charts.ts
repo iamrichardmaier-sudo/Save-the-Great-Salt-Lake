@@ -681,3 +681,98 @@ export function drawCalibration(
       .text(row.format(row.defaultValue));
   }
 }
+
+// ───────────────────────── Connections ─────────────────────────
+
+export interface FlowNode {
+  id: string;
+  label: string;
+  /** A short count or note drawn after the label. */
+  tag?: string;
+}
+
+export interface FlowLink {
+  from: string;
+  to: string;
+  /** How many coefficients ride this link; sets the stroke width. */
+  weight: number;
+}
+
+/**
+ * Three columns joined by curves: inputs on the left, the parts of the model in the middle, the
+ * outputs on the right. A link's width is how many coefficients travel along it, so the heaviest
+ * paths through the model stand out. Hovering a node lights up everything it touches.
+ */
+export function drawFlow(el: HTMLElement, columns: [FlowNode[], FlowNode[], FlowNode[]], links: FlowLink[]): void {
+  const rowH = 24;
+  const rows = Math.max(...columns.map((c) => c.length));
+  const height = rows * rowH + 40;
+  const { svg, size } = svgFor(el, height);
+  const narrow = size.width < 560;
+  const colW = (size.width - 16) / 3;
+  const nodeW = colW - (narrow ? 14 : 34);
+  const xs = [8, 8 + colW, 8 + 2 * colW];
+  const pos = new Map<string, { x: number; y: number; col: number }>();
+  columns.forEach((col, c) => {
+    const offset = ((rows - col.length) * rowH) / 2;
+    col.forEach((n, i) => pos.set(n.id, { x: xs[c], y: 24 + offset + i * rowH, col: c }));
+  });
+
+  const maxW = Math.max(1, ...links.map((l) => l.weight));
+  const linkG = svg.append('g').attr('fill', 'none');
+  const paths = linkG
+    .selectAll('path')
+    .data(links.filter((l) => pos.has(l.from) && pos.has(l.to)))
+    .join('path')
+    .attr('d', (l) => {
+      const a = pos.get(l.from)!;
+      const b = pos.get(l.to)!;
+      const x1 = a.x + nodeW;
+      const y1 = a.y + rowH / 2 - 3;
+      const x2 = b.x;
+      const y2 = b.y + rowH / 2 - 3;
+      const mx = (x1 + x2) / 2;
+      return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;
+    })
+    .attr('stroke', 'var(--c1)')
+    .attr('stroke-opacity', 0.28)
+    .attr('stroke-width', (l) => 1 + (l.weight / maxW) * 7);
+  paths.append('title').text((l) => `${l.weight} coefficient${l.weight === 1 ? '' : 's'}`);
+
+  const nodeG = svg.append('g');
+  const all = columns.flat();
+  const nodes = nodeG
+    .selectAll('g')
+    .data(all)
+    .join('g')
+    .attr('transform', (n) => `translate(${pos.get(n.id)!.x},${pos.get(n.id)!.y})`)
+    .style('cursor', 'default');
+  nodes
+    .append('rect')
+    .attr('width', nodeW)
+    .attr('height', rowH - 6)
+    .attr('rx', 4)
+    .attr('fill', 'var(--panel)')
+    .attr('stroke', 'var(--line)');
+  nodes
+    .append('text')
+    .attr('x', 6)
+    .attr('y', rowH / 2 + 1)
+    .attr('font-size', narrow ? 10 : 11.5)
+    .attr('fill', 'var(--ink)')
+    .text((n) => fitLabel(n.tag ? `${n.label} · ${n.tag}` : n.label, nodeW - 10))
+    .append('title')
+    .text((n) => (n.tag ? `${n.label} · ${n.tag}` : n.label));
+
+  // Hover a node: keep its links, fade the rest.
+  nodes
+    .on('mouseenter', (_e, n) => {
+      paths.attr('stroke-opacity', (l) => (l.from === n.id || l.to === n.id ? 0.75 : 0.06));
+    })
+    .on('mouseleave', () => paths.attr('stroke-opacity', 0.28));
+
+  const heads = ['Inputs, by group', 'Part of the model', 'What it decides'];
+  heads.forEach((h, c) =>
+    svg.append('text').attr('x', xs[c]).attr('y', 14).attr('font-size', 11).attr('fill', 'var(--ink-3)').text(fitLabel(h, nodeW)),
+  );
+}
