@@ -47,35 +47,27 @@ The margin is under 0.1 ft, so each of these alone misses the goal:
 - no repossession;
 - the pessimistic end of any of 33 uncertain numbers.
 
-## Done
+## Done, by the seven items in the brief
 
-| Item | Where |
-|---|---|
-| Research records, all 102 coefficients | `research/verification/results/b1–b7.json` |
-| Side tables and source list (89 rows) | `research/verification/results/tables.json`, written by `research/verification/tools/tables_records.py` |
-| Reviewer decisions, each re-opened at source | `research/verification/decisions.json`. A decision can override the quote and locator when the reviewer re-derived the value. |
-| Generated citations | `src/verification.ts` (`VERIFICATION` per coefficient, `TABLE_VERIFICATION` per table row) and `src/research-sources.ts`. Rebuild with `npm run verification`. |
-| Values applied | `src/data.ts`. Every correction is listed with its effect in `research/findings.md`. |
-| Lake area curve | Replaced with the USGS 2023 elevation-area table at one-foot steps. `inflow_efficiency` re-fitted from 1.03 to 0.933. |
-| CONSUMERS restructure | Rebuilt from the Strike Team 2020–24 table; sums to 2,387 KAF. `mi_depletion` 328 → 354.4, `charge_base` 1,912 → 1,938.4. |
-| Goal search and new default package | `scripts/goal-search.ts` → `research/goal-search.json`. Defaults are in `src/model.ts` (`DEFAULT_DIALS`) and the policy coefficients in `src/data.ts`. |
-| Optimiser changes | See the next table. |
-| Effect of each correction | `npm run effects` → `research/correction-effects.json`. The pre-correction package is kept in `research/pre-correction-package.json`. |
-| Year-by-year budget | `npm run schedule` → `research/budget-schedule.csv` |
-| Dependency map | `npm run trace` → `research/dependencies.json`; also the "How it connects" tab |
-| Index tab | Verdict, Locator and Quote columns, with source links and the old value for each correction; a section listing every side-table row |
-| Findings | `research/findings.md` |
-| Report | Claude Doc: https://claude.ai/artifact/Nps2hg3JcK3B1Fop79PtkA, mirrored in `research/report.md` |
-| Screenshots | `research/screenshots/`: Index and How-it-connects tabs, desktop (1280 px) and phone (390 px) |
-| Tests | `npx vitest run`: 204 pass. The one failure, "header summary adapts when a lever is switched off", failed before this work began. |
+| # | Item | State | Where |
+|---|---|---|---|
+| 1 | Side-tables research | Done | `research/verification/results/tables.json` (89 rows, written by `research/verification/tools/tables_records.py`). Decisions in `decisions.json`. CONSUMERS sums to 2,387 KAF; `mi_depletion` 328 → 354.4 and `charge_base` 1,912 → 1,938.4. The area curve is the USGS 2023 table; `inflow_efficiency` 1.03 → 0.933. `npm run verification` rebuilds `src/verification.ts` (`VERIFICATION`, `TABLE_VERIFICATION`). |
+| 2 | Failing tests, plus new coverage tests | Done | 204 pass. The header-summary test still fails, as it did before this work. New tests: every coefficient has a verdict and a checked date; every confirmed or corrected record has a quote and a locator. The schedule test asserts that the default package meets the goal, and that a weaker package reports `meetsGoal=false` with its shortfall. |
+| 3 | Index tab | Done | Verdict, Locator and Quote columns, with source links and the old value for each correction; a section listing every side-table row |
+| 4 | `research/findings.md` | Done | Verified, corrected (old → new, with effect), unsupported and no-evidence lists, plus the caveats |
+| 5 | Rerun and before/after | Done | `research/budget-schedule.csv` and `research/dependencies.json`. `research/correction-effects.json` holds the effect of each correction (`npm run effects`); `research/goal-search.json` holds the goal search. README updated. |
+| 6 | Research report | Done | https://claude.ai/artifact/Nps2hg3JcK3B1Fop79PtkA, mirrored in `research/report.md`. See the section order below. |
+| 7 | Ship | Done, except the republish | tsc clean; vitest as above; check-links clean apart from the exceptions below. Screenshots are in `research/screenshots/`. Pushed. The hosted model could not be republished: the link returns "artifact not found" for this account. |
 
-Optimiser changes:
+The report's sections follow item 6 of the brief, in this order:
+1. Headline findings, including the missed goal
+2. Every number (value, units, verdict, old → new, locator, quote, source), with the side tables
+3. Assumptions with evidence
+4. Effect on results
+5. Connection map
+6. Sources
 
-| Change | Why |
-|---|---|
-| Scores progress toward 4,198.5 ft by the horizon, not only net water | A package that delivers the goal too late should score lower |
-| No longer moves the price of a water right | It is a market assumption, not a policy |
-| Ignores watering asks under 5% | They trigger the lawn-fine flaw below |
+The goal search was a later decision. The owner chose to keep $100M a year and do everything possible within the dial ranges, and to keep the resulting package as the default. The package is defined in `scripts/goal-search.ts`, `DEFAULT_DIALS` in `src/model.ts`, and the policy coefficients in `src/data.ts`. The pre-correction package is kept in `research/pre-correction-package.json`.
 
 ## Still open
 
