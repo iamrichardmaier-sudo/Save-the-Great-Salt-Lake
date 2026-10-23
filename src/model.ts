@@ -54,7 +54,27 @@ export interface Dials {
   finePerViolation: number;
 
   longDrought: boolean;
+
+  /**
+   * Optional spending set year by year, indexed from the start year. When present it replaces the
+   * flat spending dials above; a year past its end spends nothing. Rights already under contract
+   * are paid whether or not the year lists them, because a contract is not discretionary.
+   */
+  schedule?: YearSpend[];
 }
+
+/** One year's spending, in $M, when the budget is set year by year rather than flat. */
+export interface YearSpend {
+  monitoringM: number;
+  /** New rights and repossession. Payments on rights already under contract come on top. */
+  leaseM: number;
+  cloudM: number;
+  phragM: number;
+  cropM: number;
+  onfarmM: number;
+}
+
+export const NO_SPEND: YearSpend = { monitoringM: 0, leaseM: 0, cloudM: 0, phragM: 0, cropM: 0, onfarmM: 0 };
 
 export const DEFAULT_DIALS: Dials = {
   startYear: 2027,
@@ -319,6 +339,14 @@ export interface YearRow {
   fineRevenueM: number;
   leaseSpendM: number;
   programSpendM: number;
+  /** Public money by line. Lease includes payments on rights already under contract. */
+  monitoringSpendM: number;
+  leaseBudgetSpendM: number;
+  cloudSpendM: number;
+  phragSpendM: number;
+  cropSpendM: number;
+  onfarmSpendM: number;
+  unspentM: number;
   /** Prices and rates. */
   chargeRate: number;
   leaseRatePerAf: number;
@@ -402,26 +430,34 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
   const goalElevationFt = equilibriumFt(baseInflow + goalKaf);
 
   // Money that buys no water but decides how much of the rest arrives.
-  const monitoring = Math.min(d.monitoringM, d.budgetM);
-  const spend = Math.max(0, d.budgetM - monitoring);
+  const flatMonitoring = Math.min(d.monitoringM, d.budgetM);
+  const spend = Math.max(0, d.budgetM - flatMonitoring);
 
   // Lease-to-own takes its slice first; named programmes may claw some back.
-  let leaseBudget = Math.min(spend, d.leaseToOwnM);
-  let programBudget = spend - leaseBudget;
+  let flatLeaseBudget = Math.min(spend, d.leaseToOwnM);
+  let programBudget = spend - flatLeaseBudget;
   const namedBudget = d.cloudM + d.phragM + d.cropSwitchM;
   if (namedBudget > programBudget) {
     const over2 = namedBudget - programBudget;
-    leaseBudget = Math.max(0, leaseBudget - over2);
-    programBudget = spend - leaseBudget;
+    flatLeaseBudget = Math.max(0, flatLeaseBudget - over2);
+    programBudget = spend - flatLeaseBudget;
   }
   const restBudget = Math.max(0, programBudget - namedBudget);
+  const flatSpend: YearSpend = {
+    monitoringM: flatMonitoring,
+    leaseM: flatLeaseBudget,
+    cloudM: d.cloudM,
+    phragM: d.phragM,
+    cropM: d.cropSwitchM,
+    onfarmM: restBudget,
+  };
 
   const lawn = lawnModel(d);
   const levy = levyModel(d.cropLevyPerAf, d.levyThresholdAfPerAcre);
 
   // Delivery share: what survives the trip from farm headgate to open water.
-  const measurementGain = V('measurement_gain_max') * (1 - Math.exp(-monitoring / V('measurement_gain_scale')));
-  const deliv = Math.min(1, V('delivery_base') * (1 + measurementGain));
+  const deliveryShareFor = (monitoringM: number) =>
+    Math.min(1, V('delivery_base') * (1 + V('measurement_gain_max') * (1 - Math.exp(-monitoringM / V('measurement_gain_scale')))));
   const limDeliv = V('forced_delivery_penalty');
 
   // State carried from year to year.
@@ -441,6 +477,9 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     const year = d.startYear + i;
     const t = i / Math.max(1, nYears - 1);
     const ramp = Math.min(1, (i + 1) / V('ramp_years'));
+    const s = d.schedule ? (d.schedule[i] ?? NO_SPEND) : flatSpend;
+    const monitoring = s.monitoringM;
+    const deliv = deliveryShareFor(monitoring);
 
     // ── Shepherding capacity: the binding constraint on everything acquired.
     const monitorBoost = V('shepherd_monitor_max') * (1 - Math.exp((-V('shepherd_monitor_rate') * monitoring) / V('shepherd_monitor_max')));
@@ -463,12 +502,12 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     const fundsForRights = charge.revenueM + levy.revenueM * (1 - d.levyToTransition) + lawn.fineRevenue / 1e6;
 
     // ── Programmes, cheapest delivered water first.
-    const cloud = runProgram('cloud', 'Cloud seeding', d.cloudM, V('cloud_cost'), V('cloud_delivery'), V('cloud_cap'), ramp);
-    const phragNow = runProgram('phrag', 'Phragmites removal', d.phragM, V('phrag_cost'), V('phrag_delivery'), V('phrag_cap'), ramp);
+    const cloud = runProgram('cloud', 'Cloud seeding', s.cloudM, V('cloud_cost'), V('cloud_delivery'), V('cloud_cap'), ramp);
+    const phragNow = runProgram('phrag', 'Phragmites removal', s.phragM, V('phrag_cost'), V('phrag_delivery'), V('phrag_cap'), ramp);
     phragPipeline.push(phragNow.deliveredKaf);
     const phragArriving = i >= V('phrag_lag') ? phragPipeline[i - V('phrag_lag')] : 0;
-    const crop = runProgram('crop', 'Crop switching', d.cropSwitchM + fundsForTransition, V('crop_cost'), V('crop_delivery'), V('crop_cap'), ramp);
-    const onfarm = runProgram('onfarm', 'On-farm optimisation', restBudget, V('onfarm_cost'), V('onfarm_delivery'), V('onfarm_cap'), ramp);
+    const crop = runProgram('crop', 'Crop switching', s.cropM + fundsForTransition, V('crop_cost'), V('crop_delivery'), V('crop_cap'), ramp);
+    const onfarm = runProgram('onfarm', 'On-farm optimisation', s.onfarmM, V('onfarm_cost'), V('onfarm_delivery'), V('onfarm_cap'), ramp);
 
     const programKaf = cloud.deliveredKaf + phragArriving + crop.deliveredKaf + onfarm.deliveredKaf;
 
@@ -502,8 +541,13 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     const vestYears = Number.isFinite(payoffYears) ? Math.max(1, Math.round(payoffYears)) : nYears * 2;
 
     // Pay for rights already under contract, then buy what is left.
-    const committedM = tranches.reduce((s, x) => s + (x.kaf * 1000 * x.ratePerAf) / 1e6, 0);
-    const availableM = Math.max(0, leaseBudget + fundsForRights - committedM);
+    const committedM = tranches.reduce((sum, x) => sum + (x.kaf * 1000 * x.ratePerAf) / 1e6, 0);
+    // Flat: contract payments come out of the lease slice. Year by year: they are paid on top of
+    // the year's new-rights money, from charge revenue first and the budget for the rest.
+    const committedFromBudgetM = d.schedule ? Math.max(0, committedM - fundsForRights) : 0;
+    const availableM = d.schedule
+      ? s.leaseM + Math.max(0, fundsForRights - committedM)
+      : Math.max(0, s.leaseM + fundsForRights - committedM);
     const affordableKaf = (availableM * 1e6) / leaseRate / 1000;
     const boughtThisYear = Math.max(0, Math.min(room, affordableKaf));
     if (boughtThisYear > 0) tranches.push({ kaf: boughtThisYear, ratePerAf: leaseRate, yearsLeft: vestYears });
@@ -571,7 +615,7 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     const excessTons = Math.max(0, tonsLost - V('herd_feed_surplus'));
     const livestockShare = tonsLost > 0 ? Math.min(1, excessTons / Math.max(1, tonsLost)) : 0;
     const livestockJobsLost = V('livestock_jobs_at_risk') * livestockShare;
-    const transitionJobs = (d.cropSwitchM + fundsForTransition + monitoring) * V('transition_jobs_per_m');
+    const transitionJobs = (s.cropM + fundsForTransition + monitoring) * V('transition_jobs_per_m');
     const recovery = clamp(
       (elevation - V('lake_now')) / Math.max(0.01, goalElevationFt - V('lake_now')),
       0,
@@ -583,6 +627,9 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     const farmRevenueLostM = (forced * 1000 * V('hay_value_per_af')) / 1e6;
     const livestockReceiptsM = (livestockJobsLost / Math.max(1, V('livestock_jobs_at_risk'))) * 213.1;
     const benefitM = (net * 1000 * V('lake_value_per_af')) / 1e6;
+    const leaseBudgetSpendM = s.leaseM + committedFromBudgetM;
+    const programSpendM = s.cloudM + s.phragM + s.cropM + s.onfarmM;
+    const publicSpendM = d.schedule ? monitoring + leaseBudgetSpendM + programSpendM : d.budgetM;
 
     years.push({
       year,
@@ -612,7 +659,14 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
       levyRevenueM: levy.revenueM,
       fineRevenueM: lawn.fineRevenue / 1e6,
       leaseSpendM: committedM + (boughtThisYear * 1000 * leaseRate) / 1e6,
-      programSpendM: d.cloudM + d.phragM + d.cropSwitchM + restBudget,
+      programSpendM,
+      monitoringSpendM: monitoring,
+      leaseBudgetSpendM,
+      cloudSpendM: s.cloudM,
+      phragSpendM: s.phragM,
+      cropSpendM: s.cropM,
+      onfarmSpendM: s.onfarmM,
+      unspentM: d.budgetM - monitoring - leaseBudgetSpendM - programSpendM,
       chargeRate: rate,
       leaseRatePerAf: leaseRate,
       payoffYears,
@@ -623,10 +677,10 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
       transitionJobs,
       lakeJobs,
       netJobs: transitionJobs + lakeJobs - fieldJobsLost - livestockJobsLost,
-      publicSpendM: d.budgetM,
+      publicSpendM,
       farmRevenueLostM,
       livestockReceiptsAtRiskM: livestockReceiptsM,
-      totalCostM: d.budgetM + farmRevenueLostM + livestockReceiptsM,
+      totalCostM: publicSpendM + farmRevenueLostM + livestockReceiptsM,
       benefitM,
     });
 
@@ -654,7 +708,8 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
   );
   const farmKept = 1 - clamp(ordered / Math.max(1, V('ag_depletion')), 0, 1);
   const wtpTotalM = (V('wtp_household') * V('state_households')) / 1e6;
-  const costShare = clamp(d.budgetM / wtpTotalM, 0, 1);
+  const meanSpendM = years.reduce((sum, y) => sum + y.publicSpendM, 0) / years.length;
+  const costShare = clamp(meanSpendM / wtpTotalM, 0, 1);
 
   const lastCharge = chargeModel(final.chargeRate);
   const leaseCapFinal = (V('lease_capacity') + V('retire_capacity')) *
@@ -674,10 +729,10 @@ export function pkgModel(over: Partial<Dials> = {}): PkgResult {
     shortfallKaf: Math.max(0, goalKaf - final.netToLakeKaf),
     lawn,
     programs: [
-      runProgram('cloud', 'Cloud seeding', d.cloudM, V('cloud_cost'), V('cloud_delivery'), V('cloud_cap'), 1),
-      runProgram('phrag', 'Phragmites removal', d.phragM, V('phrag_cost'), V('phrag_delivery'), V('phrag_cap'), 1),
-      runProgram('crop', 'Crop switching', d.cropSwitchM + levy.revenueM * d.levyToTransition, V('crop_cost'), V('crop_delivery'), V('crop_cap'), 1),
-      runProgram('onfarm', 'On-farm optimisation', restBudget, V('onfarm_cost'), V('onfarm_delivery'), V('onfarm_cap'), 1),
+      runProgram('cloud', 'Cloud seeding', final.cloudSpendM, V('cloud_cost'), V('cloud_delivery'), V('cloud_cap'), 1),
+      runProgram('phrag', 'Phragmites removal', final.phragSpendM, V('phrag_cost'), V('phrag_delivery'), V('phrag_cap'), 1),
+      runProgram('crop', 'Crop switching', final.cropSpendM + levy.revenueM * d.levyToTransition, V('crop_cost'), V('crop_delivery'), V('crop_cap'), 1),
+      runProgram('onfarm', 'On-farm optimisation', final.onfarmSpendM, V('onfarm_cost'), V('onfarm_delivery'), V('onfarm_cap'), 1),
     ],
     levy,
     charge: lastCharge,
@@ -759,9 +814,17 @@ export function reconcile(r: PkgResult): Check[] {
   );
 
   add(
+    'year_spend',
+    'Each year\'s spending lines and what is left unspent add up to the budget',
+    f.monitoringSpendM + f.leaseBudgetSpendM + f.cloudSpendM + f.phragSpendM + f.cropSpendM + f.onfarmSpendM + f.unspentM,
+    d.budgetM,
+    'Monitoring, rights, the four programmes and anything not needed, in the final year.',
+  );
+
+  add(
     'cost',
     'Total cost is public money plus what it takes without paying',
-    d.budgetM + f.farmRevenueLostM + f.livestockReceiptsAtRiskM,
+    f.publicSpendM + f.farmRevenueLostM + f.livestockReceiptsAtRiskM,
     f.totalCostM,
     'The public budget alone is never presented as the cost.',
   );

@@ -11,6 +11,7 @@ npm install
 npm run dev          # the model, at http://localhost:5173
 npm test             # model and render regression suite
 npm run check-links  # re-fetch every cited URL
+npm run schedule     # the year-by-year budget, to research/budget-schedule.csv
 npm run build        # production bundle in dist/
 ```
 
@@ -21,8 +22,8 @@ revenue it currently produces, restore the Great Salt Lake to a healthy level, a
 every affected party can live with. Scope is the Great Salt Lake basin — the Bear, Weber and
 Jordan drainages.
 
-Fifteen tabs, in two groups. **The plan**: where we are, where we need to be, getting there year
-by year, levers and budget, and the first-through-third-order impacts. **Detail**: crop transition,
+Sixteen tabs, in two groups. **The plan**: where we are, where we need to be, getting there year
+by year, levers and budget, the budget year by year, and the first-through-third-order impacts. **Detail**: crop transition,
 residential lawns, drivers and growth, value of water, legal assumptions, risks and weaknesses,
 simulations, baselines, calibration, and a full index of sources, assumptions and constraints.
 
@@ -35,6 +36,7 @@ simulations, baselines, calibration, and a full index of sources, assumptions an
 | `src/lake.ts` | The physical core: a closed-basin evaporation balance. |
 | `src/model.ts` | The package model. Pure: no DOM, no globals, no clock. |
 | `src/simulate.ts` | Stochastic inflow sequences, the sensitivity sweep, and the optimiser. |
+| `src/schedule.ts` | The budget year by year: each year's money goes only where it still buys water. |
 | `src/ui/` | Formatting with provenance, d3 charts, dials, and the tabs. |
 
 Two rules hold the thing together. **No numeral is typed into any sentence**: every figure in
@@ -77,6 +79,21 @@ takes far more water than the current shortfall suggests.
   lake**, which is the entire economic case and why the package takes water from there.
 - **Data centres and the lake are not competing for the same water.** Every announced industrial
   project together needs a small fraction of what this package moves.
+
+## The budget, year by year
+
+A flat split keeps paying a lever after it has stopped turning money into water. The budget tab
+builds each year separately: money goes out in small amounts, each to the line that buys the most
+water per dollar through the horizon, and stops when the next acre-foot would cost more than a
+cut-off. Two cut-offs are shown. **Everything worth its water** pays up to the lake value of an
+acre-foot. **Only what the goal needs** lowers the cut-off until any lower would miss the healthy
+floor (plus a half-foot margin) by the horizon. Charges, levy, mandate and lawn rules are not moved.
+
+Built on the package the optimiser picks at its default weighting, the first spends almost all of
+the budget from the third year on. The second meets the same goal with roughly a fifth of it,
+because the charge, the levy and the rights the charge revenue buys do most of the work. Spending
+can also be partly self-defeating: the charge winds down as the lake recovers, so some of the water
+a dollar buys is given back in later years, and the search counts that.
 
 ## Checking it
 

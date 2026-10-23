@@ -20,6 +20,7 @@ import { SOURCES, source } from '../sources';
 import { areaSqMi, equilibriumFt, inflowToHoldKaf } from '../lake';
 import { levyModel, seasonCoverage, type Dials, type PkgResult } from '../model';
 import { budgetSweep, levelForAdded, type SimResult, type TornadoRow } from '../simulate';
+import { LEVERS, type ScheduleResult } from '../schedule';
 import { controlsByGroup } from './controls';
 import {
   dollarsShort,
@@ -27,6 +28,7 @@ import {
   feet,
   fig,
   kafYr,
+  millions,
   millionsYr,
   num,
   pct,
@@ -48,7 +50,14 @@ export interface Ctx {
   r: PkgResult;
   sim: SimResult;
   tornado: TornadoRow[];
+  /** Which year-by-year budget the budget tab shows. */
+  scheduleMode: ScheduleMode;
+  /** The year-by-year budget, built on demand: it runs the model thousands of times. */
+  schedule(mode: ScheduleMode): ScheduleResult;
 }
+
+/** 'full' funds everything worth its lake value; 'lean' only what the goal needs. */
+export type ScheduleMode = 'full' | 'lean';
 
 export interface Tab {
   id: string;
@@ -233,6 +242,110 @@ const targetTab: Tab = {
         height: 280,
       });
     }
+  },
+};
+
+// ───────────────────────────── Year-by-year budget ─────────────────────────────
+
+const SPEND_COLORS: Record<string, string> = {
+  monitoringM: 'var(--c6)',
+  leaseM: LEVER_COLORS.rights,
+  cloudM: LEVER_COLORS.cloud,
+  phragM: LEVER_COLORS.phrag,
+  cropM: LEVER_COLORS.crop,
+  onfarmM: LEVER_COLORS.onfarm,
+};
+
+const budgetTab: Tab = {
+  id: 'budget',
+  label: '5 · Budget, year by year',
+  group: 'plan',
+  render({ d, schedule, scheduleMode }) {
+    const s = schedule(scheduleMode);
+    const nYears = s.rows.length;
+    const ceilingM = d.budgetM * nYears;
+    const leanNote = 'only the money whose water the goal still needs, found by lowering the dearest acceptable acre-foot until any lower would miss the goal';
+    const fullNote = 'every dollar that buys water worth at least what it costs, at the lake value of an acre-foot';
+    const tableRows = s.rows
+      .map((row) => {
+        const cells = LEVERS.map(({ id, label }) => {
+          const extra = id === 'leaseM' && row.committedM > 1e-6 ? ' including contract payments' : '';
+          return `<td>${fig(millions(id === 'leaseM' ? row.spend.leaseM + row.committedM : row.spend[id], 1), { formula: `${label}${extra}, funded only while it still buys water`, assumed: true })}</td>`;
+        }).join('');
+        return `<tr>
+          <td>${row.year}</td>
+          ${cells}
+          <td>${fig(millions(row.totalM, 1), { formula: 'sum of the lines in this row', assumed: true })}</td>
+          <td>${fig(millions(row.unspentM, 1), { formula: 'the annual budget − what this year spends', assumed: true })}</td>
+          <td>${fig(feet(row.elevationFt, 2), { formula: 'the lake responding year by year to the inflow this budget delivers', assumed: true })}</td>
+        </tr>`;
+      })
+      .join('');
+
+    return `
+      <div class="tiles">
+        ${tile('Spent over the plan', fig(millions(s.totalSpentM, 0), { formula: 'sum of every year’s spending', assumed: true }), `against ${fig(millions(ceilingM, 0), { formula: 'annual budget x years in the plan', coef: 'budget' })} at the full budget every year`)}
+        ${tile('Not needed', fig(millions(s.totalSavedM, 0), { formula: 'annual budget x years − what the plan spends', assumed: true }), 'money that would have bought no water, or water the rule below does not pay for', s.totalSavedM > 0 ? 'tile-ok' : '')}
+        ${tile(`Lake in ${s.rows[nYears - 1].year}`, fig(feet(s.result.final.elevationFt, 2), { formula: 'the lake responding year by year to the inflow this budget delivers', assumed: true }), `the flat split reaches ${fig(feet(s.flat.final.elevationFt, 2), { formula: 'the same package with the same spending every year', assumed: true })}`, s.meetsGoal ? 'tile-ok' : 'tile-bad')}
+        ${tile('Goal first met', s.firstYearAtTarget !== null ? fig(String(s.firstYearAtTarget), { formula: 'first year the lake stands at or above the target', assumed: true }) : 'not by the horizon', `target ${fig(feet(s.targetFt, 1), { formula: 'bottom of the healthy range + a safety margin', coef: 'healthy_min' })}${s.meetsGoal ? ', and held every year after' : ''}`, s.meetsGoal ? 'tile-ok' : 'tile-bad')}
+      </div>
+
+      <div class="optimiser">
+        <div role="group" aria-label="Which budget">
+          <button type="button" class="${scheduleMode === 'full' ? 'btn-primary' : 'btn-ghost'}" data-schedule="full" aria-pressed="${scheduleMode === 'full'}">Everything worth its water</button>
+          <button type="button" class="${scheduleMode === 'lean' ? 'btn-primary' : 'btn-ghost'}" data-schedule="lean" aria-pressed="${scheduleMode === 'lean'}">Only what the goal needs</button>
+        </div>
+        <p class="opt-note">
+          This view funds ${scheduleMode === 'lean' ? leanNote : fullNote}. The dearest acre-foot it pays for is
+          ${fig(perAf(s.cutoffPerAf), scheduleMode === 'lean' ? { formula: 'lowest cut-off that still meets the goal', assumed: true } : { coef: 'lake_value_per_af' })}.
+          Charges, levy, mandate and lawn rules stay as set; only the money moves.
+          ${scheduleMode === 'full' ? 'The other view searches for its cut-off and takes several seconds.' : ''}
+        </p>
+      </div>
+
+      ${chart('chart-budget-stack', 'Where each year’s money goes', 'Stacked by spending line. The gap between the top of the stack and the annual budget is money no line could turn into water worth its cost that year.')}
+
+      <section class="prose">
+        <h3>How each year is decided</h3>
+        <p>
+          Each year’s budget goes out in small amounts, each to whichever line buys the most water
+          per dollar, counting water and money through ${fig(String(s.rows[nYears - 1].year), { note: 'The horizon the model runs to.' })}.
+          A right bought now keeps delivering after it vests but commits payments in later years;
+          phragmites cleared now reaches the lake
+          ${fig(`${num(V('phrag_lag'), 0)} years`, { coef: 'phrag_lag' })} later, so clearing in the
+          last of those years buys nothing before the horizon. A line stops being funded once its next
+          dollar buys water dearer than the cut-off, or none at all because the programme is at
+          capacity, sellers are exhausted, or the early-year ramp limits what it can deliver.
+        </p>
+        <p>
+          A programme’s ramp is a calendar in this model, not a consequence of spending, so a year with
+          little money does not delay later years. Real programmes need early spending to build up; read
+          the light early years as the money the model says cannot yet be turned into water.
+        </p>
+      </section>
+
+      <table class="data">
+        <caption>The budget, year by year</caption>
+        <thead><tr><th>Year</th>${LEVERS.map((l) => `<th>${escapeHtml(l.label)}</th>`).join('')}<th>Spent</th><th>Not needed</th><th>Lake</th></tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>`;
+  },
+  mount(root, { schedule, scheduleMode }) {
+    const el = byId(root, 'chart-budget-stack');
+    if (!el) return;
+    const s = schedule(scheduleMode);
+    drawStack(
+      el,
+      {
+        years: s.rows.map((r) => r.year),
+        keys: LEVERS.map((l) => ({ id: l.id, label: l.label, color: SPEND_COLORS[l.id] })),
+        values: Object.fromEntries(
+          LEVERS.map((l) => [l.id, s.rows.map((r) => (l.id === 'leaseM' ? r.spend.leaseM + r.committedM : r.spend[l.id]))]),
+        ),
+      },
+      300,
+      '$M',
+    );
   },
 };
 
@@ -1173,6 +1286,7 @@ export const TABS: Tab[] = [
   targetTab,
   pathTab,
   allocTab,
+  budgetTab,
   pkgTab,
   cropsTab,
   lawnTab,

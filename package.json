@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "check-links": "tsx scripts/check-links.ts"
+    "check-links": "tsx scripts/check-links.ts",
+    "schedule": "tsx scripts/budget-schedule.ts"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
