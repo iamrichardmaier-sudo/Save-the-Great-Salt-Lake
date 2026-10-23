@@ -1,0 +1,29 @@
+# 2B.3 Our assumptions regarding delivery and shepherding
+
+Freeing water upstream does not put it in the lake. Unless it is measured, legally protected and tracked down the rivers, a downstream user can divert it. We call that protection shepherding, and we assume both a limit on how much water can be shepherded each year and a share that is lost on the way. These are among the most consequential numbers in our model: the growth of shepherding capacity moves the 2055 lake by 1.85 ft across its range, and the delivery share by 1.43 ft. Both are assumptions, because no one has yet measured them.
+
+## The delivery share
+
+**What we assume.** 85% of shepherded water reaches the lake before monitoring, rising to 89.8% in our run once monitoring is paid for. **Basis.** The share covers losses to evaporation and seepage on the way and water never formally dedicated. Measured transit losses on Western streams run from about 0% to 13%: on Elkhead Creek in Colorado, early interpretation suggested "a transit loss of nearly 10 percent" ([U.S. Geological Survey, 2010](https://pubs.usgs.gov/sir/2010/5198)). That supports 85% to 95% for conveyance alone.
+
+**The analogues.** The best evidence is from the lake itself. The Watershed Enhancement Trust's 2025 report notes that a transaction of 7,213 acre-feet "could not be delivered during season", about 10% of the 72,485 acre-feet transacted, which implies a delivered share of about 0.90 ([Great Salt Lake Watershed Enhancement Trust, 2026](https://media.audubon.org/2026-04/GSLWET_Impact_Report_2025.pdf)). We rate it 4: the right place and mechanism, but the Trust accounts on a diversion basis and reports no measured arrivals. California's Walker River transfers to Walker Lake, a terminal lake, report only volumes released, such as 25,000 acre-feet in 2023 ([California State Water Resources Control Board, 2024](https://www.waterboards.ca.gov/waterrights/water_issues/programs/petitions/docs/2024/2024-walker-river-transfer-order.pdf)); we rate them 2 for this purpose. We searched for a measured ratio of water arriving at a terminal lake to water dedicated upstream and found none. **Verdict:** evidence; range 0.70 to 0.95.
+
+## Shepherding capacity
+
+**Where it starts.** We assume the system can shepherd 150 KAF a year in 2027. The state reports water dedicated and delivered to the lake rising from 18,386 acre-feet in 2021 to 149,277 in 2024 and 163,468 in 2025, the last figure preliminary ([Great Salt Lake Strike Team, 2026](https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2026/03/GSL-Summary-Mar2026.pdf)). Much of this is water that mineral companies agreed not to take from the lake itself, rather than water sent down the rivers; river-delivered dedications are about 70 to 135 KAF. **Verdict:** confirmed.
+
+**How fast it grows.** We assume 25 KAF a year, every year. **Basis.** Dedicated deliveries grew by an average of 36.3 KAF a year from 2021 to 2025, but by only 14.2 KAF between 2024 and 2025, and the Trust's river transactions grew by about 4 KAF a year over 2023–2025. That brackets the rate between about 5 and 35 KAF a year. Growth is lumpy, and the 2023–2024 jump came mostly from in-lake mineral rights rather than river shepherding. Our 25 KAF is a policy-driven upper-middle value. As of October 2025 only three saved-water change applications had been filed. **Verdict:** evidence; range 0 to 80 KAF. This is the fourth most sensitive figure in our model: if capacity grew at only 5 KAF a year, much of the water our package frees could not be delivered.
+
+## What monitoring buys
+
+Monitoring buys no water. It buys the measurement, accounting and legal capacity that let more water be shepherded and less of it lost. We model two effects, each saturating, so the first dollars buy the most:
+
+```latex
+\text{extra capacity} = 50 \text{ KAF} \times \left(1 - e^{-2.4 \times M / 50}\right), \qquad \text{delivery gain} = 0.10 \times \left(1 - e^{-M / \$60\text{M}}\right)
+```
+
+where M is monitoring spending in $M a year. At $50M a year, monitoring raises shepherding capacity by about 45 KAF (to 895 KAF in 2055) and the delivery share to 0.898.
+
+**Basis.** No source links monitoring dollars to delivered water; every one we found is qualitative. The State Engineer "must accurately measure water to verify that the conserved water is safeguarded from intervening diverters and delivered to the lake" ([Great Salt Lake Strike Team, 2025](https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/01/GSL-Jan2025.pdf)). Water commissioners on 13 distribution systems in the basin monitor about 700 measurement sites ([Utah Division of Water Rights, 2025a](https://waterrights.utah.gov/GSLDMP/final_GSL_distribution_management_plan_2025101.pdf)).
+
+**The analogues.** Utah now runs an accounting tool that tracks "the quantity of Dedicated Water delivered to or in the lake" ([Utah Division of Water Rights, 2025b](https://waterrights.utah.gov/GSLDMP/)); we rate it 4 as institutional confirmation of the mechanism, though it publishes no effect size. The Walker River order funds the modernisation of un-modernised gauges and a conveyance-loss study as part of shepherding water to Walker Lake ([California State Water Resources Control Board, 2024](https://www.waterboards.ca.gov/waterrights/water_issues/programs/petitions/docs/2024/2024-walker-river-transfer-order.pdf)); we rate it 4. Metering also changes behaviour: a Weber Basin study found secondary-water meters "reduced consumption by 20% to 29%" ([Vandenack, 2022](https://www.standard.net/news/environment/2022/aug/15/weber-basin-study-secondary-water-meters-drive-down-consumption)), which we rate 3 because it measures demand, not delivery. **Verdict:** no evidence for the size of either effect; the 10-point cap and the $60M scale are modelling judgements. Across their ranges they move the 2055 lake by 0.50 ft and 0.37 ft.

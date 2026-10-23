@@ -1,0 +1,33 @@
+# 2A.7 Our assumptions regarding residential lawns
+
+Our proposal asks for no cut in lawn watering, so none of the figures here changes our results; every lawn figure moves the 2055 lake by less than 0.01 ft. We set them out because lawns are the second-largest use of water in the basin and the first place many people look for savings. The evidence says lawn restrictions are unpopular, hard to enforce, and deliver little water to the lake.
+
+## Lawns and their water
+
+**How many lawns.** We assume 743,000 basin homes have an irrigated lawn. This is derived:
+
+```latex
+1.2\text{M households} \times 0.86 \text{ in the basin} \times 0.72 \text{ with a lawn} \approx 743{,}000
+```
+
+Utah had about 1.2 million households in 2025, of nearly 3.0 people each ([Kem C. Gardner Policy Institute, 2025](https://www.utahbusiness.com/press-releases/2025/11/19/utah-population-projected-reach-over-5-million-2065-growth-change/)), and 86% of Utahns live in the twelve basin counties ([Utah Population Committee, 2025](https://d36oiwf74r1rap.cloudfront.net/wp-content/uploads/2025/12/UPC-State-and-County-Population-Estimates-with-Components-of-Change-2020-2025.xlsx)). The 72% with a lawn lies between the 65% of Utah homes that are detached houses and the 73.5% that are single-family homes of any kind ([U.S. Census Bureau, 2025](https://api.censusreporter.org/1.0/data/show/latest?table_ids=B25024,B25032&geo_ids=04000US49,05000US49035)). **Verdict:** confirmed for the count; evidence for the 72%.
+
+**How much water.** We assume the basin's lawns use 371 KAF a year: 108 gallons a person a day of residential outdoor use, the state's 2015 average ([Utah Division of Water Resources, 2019](https://conservewater.utah.gov/wp-content/uploads/2021/05/Regional-Water-Conservation-Goals-Report-Final.pdf)), times 3.07 million basin residents. Each home averages 5,785 square feet of landscaping, the population-weighted average of the same report's county figures. Together these imply about 45 inches of water a year on the basin's lawns, against about 50 inches measured on average homes and the 24 inches that turf actually needs near Salt Lake City ([Jackson & Mohadjer, 2003](https://www.irrigation.org/IA/FileUploads/IA/Resources/TechnicalPapers/2003/SavingUtahWaterInTheFifthYearOfDrought.pdf)). **Verdict:** corrected. Whether the 371 KAF is water delivered or water consumed is unresolved; the state's own budget counts 408.5 KAF of lawn depletion in 2024 (tab 2B.6).
+
+## Enforcement and fines
+
+**The economics.** A household waters its lawn because it values a green yard. A watering restriction works only if the expected penalty, the chance of a citation times the fine times the chance it is collected, exceeds what the household gains by watering. We assume a season of lawn watering is worth $140 to a household. Two anchors put it higher: Australian households would pay about A$239 a year to avoid continuous severe restrictions ([Hensher et al., 2006](https://eml.berkeley.edu/~train/papers/HensherShoreTrain.pdf)), and a Salt Lake City household spends about $288 a season on summer outdoor water ([Salt Lake City Department of Public Utilities, 2026](https://www.slc.gov/utilities/pay-my-bill/current-rates/)). A Las Vegas study of turf-removal rebates implies households need roughly $105 a season to give up a lawn ([Brelsford & Abbott, 2018](https://arxiv.org/pdf/1803.04593)); we rate it 3, since Nevada water is dearer and its yards smaller. Our $140 sits between. **Verdict:** evidence.
+
+**Compliance without enforcement.** We assume 35% of households comply with no enforcement at all. Restrictions alone do little: a study of permanent outdoor watering restrictions found they "had surprisingly little effect on average summer water use" ([University of Waterloo, 2020](https://uwaterloo.ca/news/media/outdoor-watering-restrictions-only-work-hottest-driest)). **Verdict:** range revised to 5% to 55%.
+
+**What enforcement achieves.** A randomised trial of automated enforcement in Fresno, California, covering more than 80,000 households, found it "decreases water use by 3 percent and violations by 17 percent" ([University of Chicago Energy & Environment Lab, 2022](https://eelab.epic.uchicago.edu/?p=1060)); we rate it 2, as an urban Californian case. Whether certainty of punishment matters more than its size is contested: a study of industrial pollution found certainty more effective only where enforcement was already strong, and severity dominant in most of the sample ([Earnhart & Friesen, 2022](https://le.uwpress.org/content/wple/early/2022/08/16/le.030521-0024R1.full.pdf)); we rate it 2. We assume 75% of fines are collected, close to the 69% a state audit found for parking fines ([Office of the New York State Comptroller, 2017](https://www.osc.ny.gov/files/local-government/audits/2017-10/lgsa-audit-city-2015-utica.pdf)), since water fines added to a utility bill should collect better. **Verdict:** evidence.
+
+## How much reaches the lake
+
+**What we assume.** A quarter of any water a city saves reaches the lake. **Basis.** Most water not applied to a lawn was not going to be consumed anyway, and what is freed can be taken by growth or by downstream users. The state's turf figures put an upper bound of about 44% on the share of water saved that is depletion saved. **The analogue.** In Salt Lake County in 2023, 45% of residential, institutional and other water use returned through the county's reclamation plants, so 55% was consumed ([Jordan Valley Water Conservancy District, 2024](https://waterrights.utah.gov/per-capita-consumptive-use/Reports/2023-Salt-Lake.pdf)). We rate it 5: the right place and mechanism, measured. It is an average for all household use, not the share of a lawn saving that is protected all the way to the lake, which is lower. **Verdict:** unsupported as a figure; an assumption between those bounds.
+
+## Why we ask for no cut
+
+Only 22% of Utah voters favour restrictions with penalties on cosmetic water use, while 58% prefer incentives ([Deseret News & Hinckley Institute of Politics, 2026](https://www.deseret.com/politics/2026/05/27/poll-utahns-concerned-about-water-great-salt-lake/)). With a quarter of the saving reaching the lake, enforcement weak and penalties unpopular, a lawn cut buys little water at a high political cost.
+
+We also found a flaw in the model's lawn module. It raises full fine revenue from any watering ask, however small, and that money buys water rights. A 0.02% ask moved the 2055 lake by 0.6 ft, which is an artefact, not a result. The goal search ignores asks under 5%, and our package asks for none, so our results are not affected; the module should be fixed before anyone relies on a small lawn ask (tab 5).
