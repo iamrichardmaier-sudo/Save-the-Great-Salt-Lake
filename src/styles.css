@@ -6,119 +6,12 @@
  * lining numerals so a table of acre-feet reads as a document rather than a spreadsheet.
  */
 
-:root {
-  /* Mineral palette: lake blue against a cool paper, salt and alkali for the neutrals. */
-  --bg: #f2f4f5;
-  --panel: #ffffff;
-  --panel-2: #e9edef;
-  --ink: #141d23;
-  --ink-2: #44555f;
-  --ink-3: #6d808a;
-  --line: #d3dade;
-  --line-strong: #b4c0c6;
+@import './ui/theme.css';
 
-  --accent: #0d6a88;
-  --accent-soft: #e2eef3;
-  --accent-ink: #084a60;
-
-  --c-ok: #1f6b4a;
-  --c-warn: #9a6207;
-  --c-bad: #9c2f26;
-  --c-bad-deep: #6d1f19;
-  --c-muted: #b9c4ca;
-  --c-taken: #7a4a12;
-
-  /* Series colours, distinguishable in both themes and for common colour blindness. */
-  --c1: #0d6a88;
-  --c2: #1f6b4a;
-  --c3: #2f8f78;
-  --c4: #d9a033;
-  --c5: #b5651d;
-  --c6: #6b5ca5;
-  --c7: #b0477f;
-  --c8: #4f7fa8;
-
-  --healthy: rgba(31, 107, 74, 0.1);
-  --band: rgba(13, 106, 136, 0.16);
-
-  --font-body: 'Libre Franklin', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-fig: 'Spectral', Georgia, 'Times New Roman', serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-
-  --radius: 7px;
-  --shadow: 0 1px 2px rgba(20, 29, 35, 0.06), 0 8px 24px rgba(20, 29, 35, 0.07);
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --bg: #0d1417;
-    --panel: #151f24;
-    --panel-2: #1d2a31;
-    --ink: #e7eef1;
-    --ink-2: #aebdc5;
-    --ink-3: #80929b;
-    --line: #27353d;
-    --line-strong: #3a4c56;
-
-    --accent: #4bb3d4;
-    --accent-soft: #10323f;
-    --accent-ink: #9ad8ec;
-
-    --c-ok: #4ca97d;
-    --c-warn: #d4a04a;
-    --c-bad: #e0685c;
-    --c-bad-deep: #a8463c;
-    --c-muted: #4a5c66;
-    --c-taken: #c08a46;
-
-    --c1: #4bb3d4;
-    --c2: #4ca97d;
-    --c3: #57c0a6;
-    --c4: #e3b85c;
-    --c5: #d98f4f;
-    --c6: #9b8ed6;
-    --c7: #d87bab;
-    --c8: #7fa9cc;
-
-    --healthy: rgba(76, 169, 125, 0.12);
-    --band: rgba(75, 179, 212, 0.18);
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
-    color-scheme: dark;
-  }
-}
-
-:root[data-theme='dark'] {
-  --bg: #0d1417;
-  --panel: #151f24;
-  --panel-2: #1d2a31;
-  --ink: #e7eef1;
-  --ink-2: #aebdc5;
-  --ink-3: #80929b;
-  --line: #27353d;
-  --line-strong: #3a4c56;
-  --accent: #4bb3d4;
-  --accent-soft: #10323f;
-  --accent-ink: #9ad8ec;
-  --c-ok: #4ca97d;
-  --c-warn: #d4a04a;
-  --c-bad: #e0685c;
-  --c-bad-deep: #a8463c;
-  --c-muted: #4a5c66;
-  --c-taken: #c08a46;
-  --c1: #4bb3d4;
-  --c2: #4ca97d;
-  --c3: #57c0a6;
-  --c4: #e3b85c;
-  --c5: #d98f4f;
-  --c6: #9b8ed6;
-  --c7: #d87bab;
-  --c8: #7fa9cc;
-  --healthy: rgba(76, 169, 125, 0.12);
-  --band: rgba(75, 179, 212, 0.18);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
-  color-scheme: dark;
-}
+/*
+ * Design tokens live in ui/theme.css and nowhere else, so the four parallel streams and this
+ * page cannot drift apart. Everything below styles components from those tokens.
+ */
 
 * { box-sizing: border-box; }
 

@@ -1,60 +1,86 @@
 /*
  * Design tokens.
  *
- * Every stream styles from these and nothing else — no literal colours in any view, or the four
- * streams will not look like one app. Values here are lifted from the existing palette so nothing
- * changes today; they get overwritten with the Lovable design reference when it lands.
+ * Values taken from the Lovable design reference, repository
+ * iamrichardmaier-sudo/great-salt-lake-futures at commit fd65115.
+ *
+ * The token NAMES are ours and do not change — four streams are already building against them.
+ * Only the values come from the reference. Where the reference had no equivalent (the eight
+ * series colours), they are derived from its own hues so the charts belong to the same app.
+ *
+ * Colours are in oklch, as the reference wrote them: perceptually even, so a lightness change
+ * means the same thing at every hue.
+ *
+ * Every stream styles from these and nothing else. A literal colour anywhere in a view is a bug —
+ * it will look wrong in one of the two themes, and it will drift from the other three streams.
  *
  * Three theme states, because the viewer has three: an explicit light choice, an explicit dark
- * choice, and no choice at all (most people), where only the media query speaks.
+ * choice, and no choice at all, which is most people and where only the media query speaks.
  */
 
 :root {
-  /* Surfaces, from the page up */
-  --bg: #f2f4f5;
-  --panel: #ffffff;
-  --panel-2: #e9edef;
+  /* Surfaces, from the page up. Warm paper against cool ink. */
+  --bg: oklch(0.975 0.006 85);
+  --panel: oklch(0.99 0.004 85);
+  --panel-2: oklch(0.945 0.008 80);
 
   /* Text, in descending emphasis */
-  --ink: #141d23;
-  --ink-2: #44555f;
-  --ink-3: #6d808a;
+  --ink: oklch(0.24 0.025 240);
+  --ink-2: oklch(0.38 0.022 238);
+  --ink-3: oklch(0.5 0.02 235);
 
   /* Rules and edges */
-  --line: #d3dade;
-  --line-strong: #b4c0c6;
+  --line: oklch(0.89 0.012 80);
+  --line-strong: oklch(0.8 0.016 80);
 
-  /* The one accent */
-  --accent: #0d6a88;
-  --accent-soft: #e2eef3;
-  --accent-ink: #084a60;
+  /* The one accent: lake blue */
+  --accent: oklch(0.45 0.08 225);
+  --accent-soft: oklch(0.92 0.025 215);
+  --accent-ink: oklch(0.3 0.06 225);
+  --ring: oklch(0.55 0.08 225);
 
   /* Meaning, kept separate from the accent */
-  --c-ok: #1f6b4a;
-  --c-warn: #9a6207;
-  --c-bad: #9c2f26;
-  --c-bad-deep: #6d1f19;
-  --c-muted: #b9c4ca;
-  --c-taken: #7a4a12;
+  --c-ok: oklch(0.45 0.09 155);
+  --c-warn: oklch(0.52 0.12 65);
+  --c-bad: oklch(0.577 0.2 27);
+  --c-bad-deep: oklch(0.45 0.17 27);
+  --c-muted: oklch(0.78 0.014 80);
+  --c-taken: oklch(0.5 0.08 60);
+
+  /*
+   * Gain and cost, for the running readout under the playback bar. The design reference carries
+   * these as first-class tokens with soft backgrounds for the chips, so we do too.
+   */
+  --gain: oklch(0.45 0.09 155);
+  --gain-soft: oklch(0.93 0.04 155);
+  --cost: oklch(0.52 0.12 65);
+  --cost-soft: oklch(0.94 0.05 75);
+
+  /* Slider and scrubber rails */
+  --track: oklch(0.9 0.012 80);
 
   /* Series colours: eight, distinguishable in both themes and for common colour blindness */
-  --c1: #0d6a88;
-  --c2: #1f6b4a;
-  --c3: #2f8f78;
-  --c4: #d9a033;
-  --c5: #b5651d;
-  --c6: #6b5ca5;
-  --c7: #b0477f;
-  --c8: #4f7fa8;
+  --c1: oklch(0.45 0.08 225);
+  --c2: oklch(0.45 0.09 155);
+  --c3: oklch(0.52 0.08 190);
+  --c4: oklch(0.62 0.11 75);
+  --c5: oklch(0.52 0.12 50);
+  --c6: oklch(0.48 0.1 300);
+  --c7: oklch(0.5 0.12 345);
+  --c8: oklch(0.58 0.06 245);
 
-  /* Lake-specific washes */
-  --healthy: rgba(31, 107, 74, 0.1);
-  --band: rgba(13, 106, 136, 0.16);
+  /* Lake washes: the healthy band, and the uncertainty band */
+  --healthy: oklch(0.45 0.09 155 / 0.1);
+  --band: oklch(0.45 0.08 225 / 0.16);
 
   /* Type: a serif for figures, a grotesque for interface text, mono for data */
-  --font-body: 'Libre Franklin', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-fig: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-fig: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Small uppercase labels are letterspaced throughout the design */
+  --tracking-label: 0.14em;
+  --tracking-eyebrow: 0.18em;
 
   /* Spacing scale: use these rather than arbitrary pixel values */
   --space-1: 4px;
@@ -63,75 +89,107 @@
   --space-4: 22px;
   --space-5: 34px;
 
-  --radius: 7px;
-  --radius-lg: 10px;
-  --shadow: 0 1px 2px rgba(20, 29, 35, 0.06), 0 8px 24px rgba(20, 29, 35, 0.07);
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 1px 2px oklch(0.24 0.025 240 / 0.05), 0 8px 24px oklch(0.24 0.025 240 / 0.06);
 
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0d1417;
-    --panel: #151f24;
-    --panel-2: #1d2a31;
-    --ink: #e7eef1;
-    --ink-2: #aebdc5;
-    --ink-3: #80929b;
-    --line: #27353d;
-    --line-strong: #3a4c56;
-    --accent: #4bb3d4;
-    --accent-soft: #10323f;
-    --accent-ink: #9ad8ec;
-    --c-ok: #4ca97d;
-    --c-warn: #d4a04a;
-    --c-bad: #e0685c;
-    --c-bad-deep: #a8463c;
-    --c-muted: #4a5c66;
-    --c-taken: #c08a46;
-    --c1: #4bb3d4;
-    --c2: #4ca97d;
-    --c3: #57c0a6;
-    --c4: #e3b85c;
-    --c5: #d98f4f;
-    --c6: #9b8ed6;
-    --c7: #d87bab;
-    --c8: #7fa9cc;
-    --healthy: rgba(76, 169, 125, 0.12);
-    --band: rgba(75, 179, 212, 0.18);
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+    --bg: oklch(0.19 0.018 235);
+    --panel: oklch(0.225 0.02 235);
+    --panel-2: oklch(0.26 0.018 235);
+
+    --ink: oklch(0.93 0.01 85);
+    --ink-2: oklch(0.8 0.015 220);
+    --ink-3: oklch(0.7 0.02 220);
+
+    --line: oklch(0.32 0.018 235);
+    --line-strong: oklch(0.42 0.02 235);
+
+    --accent: oklch(0.72 0.08 215);
+    --accent-soft: oklch(0.3 0.04 220);
+    --accent-ink: oklch(0.9 0.03 210);
+    --ring: oklch(0.72 0.08 215);
+
+    --c-ok: oklch(0.78 0.11 155);
+    --c-warn: oklch(0.8 0.12 75);
+    --c-bad: oklch(0.7 0.19 22);
+    --c-bad-deep: oklch(0.58 0.16 22);
+    --c-muted: oklch(0.45 0.018 235);
+    --c-taken: oklch(0.72 0.09 60);
+
+    --gain: oklch(0.78 0.11 155);
+    --gain-soft: oklch(0.3 0.05 155);
+    --cost: oklch(0.8 0.12 75);
+    --cost-soft: oklch(0.32 0.05 70);
+
+    --track: oklch(0.33 0.02 235);
+
+    --c1: oklch(0.72 0.08 215);
+    --c2: oklch(0.78 0.11 155);
+    --c3: oklch(0.75 0.09 185);
+    --c4: oklch(0.8 0.12 75);
+    --c5: oklch(0.72 0.12 50);
+    --c6: oklch(0.72 0.11 300);
+    --c7: oklch(0.74 0.12 345);
+    --c8: oklch(0.76 0.06 240);
+
+    --healthy: oklch(0.78 0.11 155 / 0.12);
+    --band: oklch(0.72 0.08 215 / 0.18);
+
+    --shadow: 0 1px 2px oklch(0 0 0 / 0.4), 0 10px 30px oklch(0 0 0 / 0.35);
+
     color-scheme: dark;
   }
 }
 
 :root[data-theme='dark'] {
-  --bg: #0d1417;
-  --panel: #151f24;
-  --panel-2: #1d2a31;
-  --ink: #e7eef1;
-  --ink-2: #aebdc5;
-  --ink-3: #80929b;
-  --line: #27353d;
-  --line-strong: #3a4c56;
-  --accent: #4bb3d4;
-  --accent-soft: #10323f;
-  --accent-ink: #9ad8ec;
-  --c-ok: #4ca97d;
-  --c-warn: #d4a04a;
-  --c-bad: #e0685c;
-  --c-bad-deep: #a8463c;
-  --c-muted: #4a5c66;
-  --c-taken: #c08a46;
-  --c1: #4bb3d4;
-  --c2: #4ca97d;
-  --c3: #57c0a6;
-  --c4: #e3b85c;
-  --c5: #d98f4f;
-  --c6: #9b8ed6;
-  --c7: #d87bab;
-  --c8: #7fa9cc;
-  --healthy: rgba(76, 169, 125, 0.12);
-  --band: rgba(75, 179, 212, 0.18);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+  --bg: oklch(0.19 0.018 235);
+  --panel: oklch(0.225 0.02 235);
+  --panel-2: oklch(0.26 0.018 235);
+
+  --ink: oklch(0.93 0.01 85);
+  --ink-2: oklch(0.8 0.015 220);
+  --ink-3: oklch(0.7 0.02 220);
+
+  --line: oklch(0.32 0.018 235);
+  --line-strong: oklch(0.42 0.02 235);
+
+  --accent: oklch(0.72 0.08 215);
+  --accent-soft: oklch(0.3 0.04 220);
+  --accent-ink: oklch(0.9 0.03 210);
+  --ring: oklch(0.72 0.08 215);
+
+  --c-ok: oklch(0.78 0.11 155);
+  --c-warn: oklch(0.8 0.12 75);
+  --c-bad: oklch(0.7 0.19 22);
+  --c-bad-deep: oklch(0.58 0.16 22);
+  --c-muted: oklch(0.45 0.018 235);
+  --c-taken: oklch(0.72 0.09 60);
+
+  --gain: oklch(0.78 0.11 155);
+  --gain-soft: oklch(0.3 0.05 155);
+  --cost: oklch(0.8 0.12 75);
+  --cost-soft: oklch(0.32 0.05 70);
+
+  --track: oklch(0.33 0.02 235);
+
+  --c1: oklch(0.72 0.08 215);
+  --c2: oklch(0.78 0.11 155);
+  --c3: oklch(0.75 0.09 185);
+  --c4: oklch(0.8 0.12 75);
+  --c5: oklch(0.72 0.12 50);
+  --c6: oklch(0.72 0.11 300);
+  --c7: oklch(0.74 0.12 345);
+  --c8: oklch(0.76 0.06 240);
+
+  --healthy: oklch(0.78 0.11 155 / 0.12);
+  --band: oklch(0.72 0.08 215 / 0.18);
+
+  --shadow: 0 1px 2px oklch(0 0 0 / 0.4), 0 10px 30px oklch(0 0 0 / 0.35);
+
   color-scheme: dark;
 }

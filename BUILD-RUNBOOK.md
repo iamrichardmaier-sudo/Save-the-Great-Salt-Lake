@@ -20,7 +20,37 @@ first before touching the second. A working app missing the 3D lake beats four b
 
 ---
 
-## Step 1 — Lovable design shell
+## Step 1 — Lovable design shell ✅ DONE
+
+The design came back at `iamrichardmaier-sudo/great-salt-lake-futures` (commit `fd65115`) and its
+tokens are already mapped into `src/ui/theme.css`. **The shell layout below is the one every
+stream builds into — read it before starting.**
+
+**Type:** Fraunces for figures and headings, IBM Plex Sans for interface text, IBM Plex Mono for
+data. Numbers are serif and tabular. Small labels are uppercase and letterspaced
+(`--tracking-label`), eyebrows more so (`--tracking-eyebrow`) and in the accent colour.
+
+**Shell:**
+- **Header** — eyebrow, serif title, one-line subtitle, bottom border.
+- **Body** — a left rail 320px wide holding the levers, bordered right; main area beside it. Below
+  `lg` the rail stacks above the main area instead.
+- **Main** — a two-column grid: charts span both columns, map and 3D lake sit side by side under
+  them. One column below `md`.
+- **Footer** — bordered top, panel background, holding the whole playback bar: a round outlined
+  play button, the year in large serif, the scrubber, year labels beneath, then the gain and cost
+  chips.
+
+**Components:**
+- **Cards** — `--radius-lg`, one-pixel border, panel background, no shadow. A caption bar across
+  the top: uppercase, letterspaced, muted, with a bottom border.
+- **Sliders** — a 4px rounded rail in `--track`, filled in `--accent`, with a 14px round thumb
+  carrying a 2px accent border on a panel fill.
+- **Chips** — fully rounded, `--gain-soft` or `--cost-soft` background with `--gain` or `--cost`
+  text and a small matching dot.
+
+Separation is done with borders, not shadows. Keep it that way.
+
+### The original prompt, for reference
 
 Only a design reference comes out of this. No app logic, no model, no data. Keep it cheap: one
 prompt, one screen, then stop. Screenshot it, export the CSS, and we lift the look.
@@ -41,8 +71,7 @@ prompt, one screen, then stop. Screenshot it, export the CSS, and we lift the lo
 >
 > Stop after this one screen. Do not add pages or features.
 
-**Then:** screenshot it light and dark, and copy the generated CSS custom properties — colours,
-font stack, spacing scale, radii. That is the handoff into Step 2.
+**Done.** The tokens are in `src/ui/theme.css` and the existing page already renders in them.
 
 ---
 
