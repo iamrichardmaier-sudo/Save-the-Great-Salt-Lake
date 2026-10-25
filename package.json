@@ -16,6 +16,8 @@
   "devDependencies": {
     "@types/d3": "^7.4.3",
     "@types/node": "^22.10.5",
+    "@types/three": "^0.170.0",
+    "@types/topojson-client": "^3.1.5",
     "jsdom": "26.1.0",
     "tsx": "4.19.2",
     "typescript": "5.7.3",
@@ -23,6 +25,8 @@
     "vitest": "3.0.5"
   },
   "dependencies": {
-    "d3": "7.9.0"
+    "d3": "7.9.0",
+    "three": "^0.170.0",
+    "topojson-client": "^3.1.0"
   }
 }
